@@ -1,0 +1,45 @@
+<head>
+  <title>Clinical Scenario Repository Prototype</title>
+</head>
+
+<body>
+
+<header>
+  <h1>Clinical Scenario Repository Prototype</h1>
+
+  <!-- Form to add a new scenario -->
+  {{> NewScenarioForm}}
+
+</header>
+
+	<p>Content of the database</p>
+     <ul>
+  	  {{#each scenarios}}
+        {{> scenario}}
+      {{/each}}
+    </ul>
+</body>
+
+
+<template name="NewScenarioForm">
+  <form class="new-scenario">
+    <label>Title</label>
+    <textarea type="text" name="title" rows="1" cols="75" placeholder="Type to add a title"></textarea><br/>
+    <label>Description</label><br/>
+    <textarea type="text" name="description" rows="4" cols="100" placeholder="Type to add a description" ></textarea><br/>
+
+    <!--div here for control buttons -->
+    <div class="control-buttons">
+    	<button class="save-scenario" title="Save Scenario">Save</button>
+    	<button class="submit-scenario" title="Submit for approval">Submit</button>
+    </div>
+  </form>
+</template>
+
+
+<template name="scenario">
+  <li>
+  	<button class="delete">&times;</button>
+  	<span>{{title}}</span>
+  </li>
+</template>
