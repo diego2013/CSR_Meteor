@@ -7,6 +7,8 @@
 <header>
   <h1>Clinical Scenario Repository Prototype</h1>
 
+  {{> loginButtons}}
+
   <!-- Form to add a new scenario -->
   {{> NewScenarioForm}}
 
@@ -30,8 +32,8 @@
 
     <!--div here for control buttons -->
     <div class="control-buttons">
-    	<button class="save-scenario" title="Save Scenario">Save</button>
-    	<button class="submit-scenario" title="Submit for approval">Submit</button>
+    	<button class="save-scenario" name="saveButton" title="Save Scenario">Save</button>
+    	<button class="submit-scenario" name="submitButton" title="Submit for approval">Submit</button>
     </div>
   </form>
 </template>
@@ -40,6 +42,6 @@
 <template name="scenario">
   <li>
   	<button class="delete">&times;</button>
-  	<span>{{title}}</span>
+  	<span>created by: {{username}}. Title: {{title}} Descrp: {{description}} </span>
   </li>
 </template>
