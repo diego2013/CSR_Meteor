@@ -7,7 +7,7 @@ if (Meteor.isClient) {
   // counter starts at 0
   //Session.setDefault("counter", 0);
 
-  //
+  //HELPERS
   Template.body.helpers({
     scenarios: function () {
       return Scenarios.find({}, {sort: {createdAt: -1}});
@@ -18,6 +18,7 @@ if (Meteor.isClient) {
   }
   });
 
+  //EVENTS
   Template.NewScenarioForm.events({
   "submit .new-scenario": function (event) {
    // "click .save-scenario": function (event) {
@@ -25,6 +26,17 @@ if (Meteor.isClient) {
     //console.log("saving...");
     var title = event.target.title.value;
     var description = event.target.description.value;
+
+    //Validations
+    //1. Title can't be empty
+    if(title===""){
+      throw new Meteor.Error("'Title' can NOT be empty"); //TO-DO do something with this error
+    }
+
+    //2. Description can't be empty
+    if(description===""){
+      throw new Meteor.Error("'Description' can NOT be empty");//TO-DO do something with this error
+    }
 
     //var title = "title".value;
     //console.log(title);
@@ -38,6 +50,10 @@ if (Meteor.isClient) {
 
     // Prevent default form submit
     return false;
+  },
+
+  "click .submit-scenario":function (event) {
+    console.log("submitted scenario "+this._id);
   }
 });
 
