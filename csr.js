@@ -4,6 +4,8 @@
 //CLIENT SIDE
 if (Meteor.isClient) {
   Meteor.subscribe("scenarios");
+
+
   // counter starts at 0
   //Session.setDefault("counter", 0);
 
@@ -24,8 +26,8 @@ if (Meteor.isClient) {
    // "click .save-scenario": function (event) {
     // This function is called when the new scenario form is submitted
     //console.log("saving...");
-    var title = event.target.title.value;
-    var description = event.target.description.value;
+    var title = trimInput(event.target.title.value);
+    var description = trimInput(event.target.description.value);
 
     //Validations
     //1. Title can't be empty
@@ -68,12 +70,19 @@ Template.scenario.events({
   Accounts.ui.config({
     passwordSignupFields: "USERNAME_ONLY"
   });
+
+     // trim whitespace helper
+  var trimInput = function(val) {
+    return val.replace(/^\s*|\s*$/g, "");
+  }
 }
 
 
 Meteor.methods({
+
+  
   saveScenario: function(title, description){
-    // Make sure the user is logged in before modifiing a scenario
+    // Make sure the user is logged in before allowing manipulating a scenario
     if (! Meteor.userId()) {
       throw new Meteor.Error("not-authorized");
     }
@@ -87,6 +96,8 @@ Meteor.methods({
     });
 
   },
+
+
   deleteScenario: function(scnID){
     var scenario = Scenarios.findOne(scnID);    //fetch
     if (scenario.owner !== Meteor.userId()) {
@@ -114,6 +125,8 @@ if (Meteor.isServer) {
       { owner: this.userId }
     ]*/
   });
+
+
 
   
 }

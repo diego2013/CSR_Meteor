@@ -1,18 +1,37 @@
 <head>
   <title>Clinical Scenario Repository Prototype</title>
+
+  <link rel="icon" href="favicon.ico" type="image/x-icon"/>
+ <!-- <link href="./favicon.ico" rel="shortcut icon"> -->
 </head>
 
 <body>
 
 <header>
-  <h1>Clinical Scenario Repository Prototype</h1>
+  <!--<h1>Clinical Scenario Repository Prototype</h1> -->
 
-  {{> loginButtons}}
+  {{> loginButtons}} <!-- TODO: move to the left. Make sure the popup box displays ok -->
+  <div>
+    <table  border="1" style="margin-left:auto;margin-right:auto; margin-bottom:0px">
+	    <tr>
+	    <!-- /Users/diego/documents/meteor/csr/img/mdpnp-small.png -->
+		    <td><img id="mdpnpLogo" alt="MD PnP Logo" style="float:left;" src="/img/mdpnp-small.png" width="150" height="45"/></td>
+		    <td style="font-size:28px; color:#606060 ; text-align:justify;">Clinical Scenario Repository Prototype</td>
+		    <td style="height:10px; text-align:justify;"> © 2013 <a href="http://www.mdpnp.org/" target="_blank">MD PnP Program</a></td>
+		    <td style="height:10px; text-align:justify; vertical-align: center; padding-left:20px"><a href="mailto:info@mdpnp.org?Subject=Clinical%20Scenario%20Repository" target="_top">info@mdpnp.org</a></td>
+		    <!--<td style="margin-left:auto; padding-left:20px; vertical-align: top;">{{> loginButtons}}</td> -->
+	    </tr>
+
+    </table>
+  </div>
+
+ 
 
   <!-- Form to add a new scenario -->
-  {{> NewScenarioForm}}
+  
 
 </header>
+{{> NewScenarioForm}}
 
 	<p>Content of the database</p>
      <ul>
@@ -21,6 +40,26 @@
       {{/each}}
     </ul>
 </body>
+
+<template name="ApplicationLayout">
+
+  <navbar>
+    {{> yield "navbar"}}
+  </navbar>
+
+  <mainpanel>
+    {{> yield}}
+  </mainpanel>
+
+  <footer>
+    {{> yield "footer"}}
+  </footer>
+</template>
+
+<!-- Footer common to all pages -->
+<template name="MainFooter">
+  Some post specific footer content.
+</template>
 
 
 <template name="NewScenarioForm">
