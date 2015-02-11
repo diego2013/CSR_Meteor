@@ -5,7 +5,24 @@
 if (Meteor.isClient) {
   Meteor.subscribe("scenarios");
 
+  //ROUTES
 
+  Router.route('/new', function () {
+    this.render('NewScenarioForm');
+  });
+
+  Router.map(function(){
+    this.route('home', {path: '/'} );
+    this.route('NewScenarioForm');
+    this.route('disclaimer');
+
+  //  this.route('home');
+  //  this.route('solution');
+  //  this.route('post', function () {
+  //    this.layout('ApplicationLayout');
+  //  });
+  });
+//
   // counter starts at 0
   //Session.setDefault("counter", 0);
 
@@ -56,6 +73,22 @@ if (Meteor.isClient) {
 
   "click .submit-scenario":function (event) {
     console.log("submitted scenario "+this._id);
+  }
+});
+
+
+Template.NavBar.events({
+    "click #create-new-scn": function () {
+    Router.go('NewScenarioForm');
+  },
+    "click #list-scn": function () {
+    console.log("list-scn... ");
+  },
+    "click #goToHomePage": function () {
+    Router.go('/');
+  },
+    "click #disclaimerPage": function () {
+    Router.go('disclaimer');
   }
 });
 
