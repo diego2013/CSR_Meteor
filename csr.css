@@ -69,7 +69,9 @@ form {
 ul {
   margin: 0;
   padding: 0;
- /* background: white;*/
+  list-style-type: disc;
+  list-style: square outside none;
+  /* background: white; */
 }
 
 .delete {
@@ -83,9 +85,10 @@ ul {
 
 li {
   position: relative;
-  list-style: none;
-  padding: 15px;
-  /* border-bottom: #eee solid 1px;  */
+   list-style: none; 
+  /* list-style-type: disc; */
+   padding: 15px; 
+   /* border-bottom: #eee solid 1px;  */
 }
 
 li .text {

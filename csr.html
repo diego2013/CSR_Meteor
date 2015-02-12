@@ -12,7 +12,7 @@
 
   {{> loginButtons}} <!-- TODO: move to the left. Make sure the popup box displays ok -->
   <div>
-    <table  border="1" style="margin-left:auto;margin-right:auto;">
+    <table   style="margin-left:auto;margin-right:auto;">
 	    <tr>
 	    <!-- /Users/diego/documents/meteor/csr/img/mdpnp-small.png -->
 		    <td><img id="mdpnpLogo" alt="MD PnP Logo" style="float:left;" src="/img/mdpnp-small.png" width="150" height="45"/></td>
@@ -30,20 +30,13 @@
 
 </body>
 
-<template name="ApplicationLayout">
-</template>
-
-<!-- Footer common to all pages -->
-<template name="MainFooter">
-  Some post specific footer content.
-</template>
 
 <template name="NavBar">
  <div>
     <table  style="margin-left:auto;margin-right:auto; margin-top:5px">
 	    <tr>
 	    	<td><button type="button"  id="create-new-scn" class="create-new-scn" name="createNewScnButton" title="Create a new Clinical Scenario or Good Idea">Create New Scenario</button></td>
-	    	<td><button type="button" id="list-scn" name="listScnButton" title="List scn">List Scenario</button></td>
+	    	<td><button type="button" id="list-scn" name="listScnButton" title="List scn">List Scenarios</button></td>
 	    	<td><button type="button" id="goToHomePage" name="goToHomePageButton" title="Go to Homepage">Go to Homepage</button></td>
 	    	<td><button type="button" id="disclaimerPage" name="disclaimerButton" title="See Disclaimer">See disclaimer</button></td>
 	    	<td><button type="button" id="feedbackPage" name="feedbackPage" title="Contribute to improve this website">Feedback</button></td>
@@ -54,27 +47,14 @@
 </template>
 
 
-<template name="NewScenarioForm">
-  <form class="new-scenario">
-    <label>Title</label>
-    <textarea type="text" name="title" rows="1" cols="75" placeholder="Type to add a title"></textarea><br/>
-    <label>Description</label><br/>
-    <textarea type="text" name="description" rows="4" cols="100" placeholder="Type to add a description" ></textarea><br/>
 
-    <!--div here for control buttons -->
-    <div class="control-buttons">
-    	<button class="save-scenario" name="saveButton" title="Save Scenario">Save</button>
-    	<button type="button" class="submit-scenario" name="submitButton" title="Submit for approval">Submit</button>
-    </div>
-  </form>
-</template>
 
 <!-- not working. Probably I can't have a template inside of a template -->
 <template name="scenarioList">
 	<p>Content of the database</p>
     <ul>
   	  {{#each scenarios}}
-        {{> scenario}}
+        {{ > scenario }}
       {{/each}}
     </ul>
 </template>
@@ -89,17 +69,15 @@
 
 
 <template name="complexLayout">
-  <div class="left">
-    {{> yield region="menu"}}
-  </div>
-
 
   <div class="main">
     {{> yield}}
   </div>
+
   <div class="bottom">
     {{> yield region="footer"}}
   </div>
+
 </template>
 
 

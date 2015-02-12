@@ -7,11 +7,6 @@ if (Meteor.isClient) {
 
   //ROUTES
 
-  Router.route('/new', function () {
-    this.render('NewScenarioForm');
-  });
-
-
   //global Router option to use a default layout template for all routes 
   Router.configure({
     layoutTemplate: 'complexLayout',
@@ -26,12 +21,19 @@ if (Meteor.isClient) {
   Router.map(function(){
     this.route('home', {path: '/'});
     this.route('NewScenarioForm');
-    this.route('scenarioList');
+    this.route('new', function(){
+      this.render('NewScenarioForm');
+    })
+    this.route('scenarioList', {
+    data: function () { return Scenarios}
+  }
+  );
     //footer
     this.route('disclaimer');
     this.route('privacyStatement');
     this.route('contactInfo');
     this.route('FeedbackForm');
+
 
     //test
     this.route('post', {
@@ -43,23 +45,11 @@ if (Meteor.isClient) {
       }
     });
 
-    //default route?
-    this.route('notFound', {
-      path: '*'
-    });
-
-  //  this.route('home');
-  //  this.route('solution');
-  //  this.route('post', function () {
-  //    this.layout('ApplicationLayout');
-  //  });
   });
-//
-  // counter starts at 0
-  //Session.setDefault("counter", 0);
+
 
   //HELPERS
-  Template.body.helpers({
+  Template.scenarioList.helpers({
     scenarios: function () {
       return Scenarios.find({}, {sort: {createdAt: -1}});
     },
