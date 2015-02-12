@@ -69,7 +69,7 @@
   </form>
 </template>
 
-
+<!-- not working. Probably I can't have a template inside of a template -->
 <template name="scenarioList">
 	<p>Content of the database</p>
     <ul>
@@ -84,6 +84,52 @@
   	<button class="delete">&times;</button>
   	<span>created by: {{username}}. Title: {{title}} Descrp: {{description}} </span>
   </li>
+</template>
+
+
+
+<template name="complexLayout">
+  <div class="left">
+    {{> yield region="menu"}}
+  </div>
+
+
+  <div class="main">
+    {{> yield}}
+  </div>
+  <div class="bottom">
+    {{> yield region="footer"}}
+  </div>
+</template>
+
+
+<!-- for test purposes -->
+<template name="Post">
+  Some Post content.
+</template>
+
+
+<!-- Default template for not found pages -->
+<template name="NotFound">
+  The page you requested does not exit.
+</template>
+
+<template name="Loading">
+  Loading... (Thank you you your patience)
+</template>
+
+<!-- Footer common to all pages -->
+<template name="FooterTemplate">
+  <div>
+    <table  cellpadding="10" style="margin-left:auto;margin-right:auto; margin-top:5px; ">
+	    <tr>
+	    	<td><a href="{{ pathFor 'disclaimer' }}">Disclaimer</a></td>
+	    	<td><a href="{{ pathFor 'privacyStatement' }}">Privacy Statement</a></td>
+	    	<td><a href="{{ pathFor 'contactInfo' }}">Contact - About MD PnP</a></td>
+	    	<td><a href="{{ pathFor 'FeedbackForm' }}">Feedback</a></td>    	
+	    </tr>
+	</table>
+</div>	
 </template>
 
 

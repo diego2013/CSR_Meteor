@@ -11,10 +11,42 @@ if (Meteor.isClient) {
     this.render('NewScenarioForm');
   });
 
+
+  //global Router option to use a default layout template for all routes 
+  Router.configure({
+    layoutTemplate: 'complexLayout',
+    loadingTemplate: "Loading",
+    notFoundTemplate: "NotFound",
+    yieldTemplates: {
+        'FooterTemplate': {to: 'footer'}
+      }
+  });
+
+  //map routes with templates
   Router.map(function(){
-    this.route('home', {path: '/'} );
+    this.route('home', {path: '/'});
     this.route('NewScenarioForm');
+    this.route('scenarioList');
+    //footer
     this.route('disclaimer');
+    this.route('privacyStatement');
+    this.route('contactInfo');
+    this.route('FeedbackForm');
+
+    //test
+    this.route('post', {
+      //path: '/',
+      layoutTemplate: 'complexLayout',
+      yieldTemplates: {
+        //'myMenu': {to: 'menu'},
+        'FooterTemplate': {to: 'footer'}
+      }
+    });
+
+    //default route?
+    this.route('notFound', {
+      path: '*'
+    });
 
   //  this.route('home');
   //  this.route('solution');
@@ -83,12 +115,16 @@ Template.NavBar.events({
   },
     "click #list-scn": function () {
     console.log("list-scn... ");
+    Router.go('scenarioList');
   },
     "click #goToHomePage": function () {
     Router.go('/');
   },
     "click #disclaimerPage": function () {
     Router.go('disclaimer');
+  },
+    "click #feedbackPage": function () {
+    Router.go('FeedbackForm');
   }
 });
 
