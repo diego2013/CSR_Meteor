@@ -130,3 +130,7 @@ header .hide-completed {
     padding-bottom: 5px;
   }
 }
+
+.red-asterisk{
+	color:red;
+}

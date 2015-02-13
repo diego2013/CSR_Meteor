@@ -1,0 +1,23 @@
+<template name="NewScenarioForm">
+  <form class="new-scenario">
+
+    <span style="font-size:12pt;">Guidelines</span>
+      <ul>
+          <li>A brief explanation of an event is enough to describe a scenario. Try to keep information relevant, short and simple. Click on "example" to see an illustrative example on how an actual scenario would complete each field.</li>
+          <li>Do not include protected health information. Omit actual names of individuals or institutions.</li>
+          <li>Try avoid submitting scenarios redundant to the ones already in the repository.</li>
+          <li>Once you have described the risk to patient safety you are welcome, but not required, to enter some additional information by clicking the "Add Further Details" button.</li>
+      </ul>  
+
+    <label>Title</label>
+    <textarea type="text" name="title" rows="1" cols="75" placeholder="Type to add a title"></textarea><br/>
+    <label>Description</label><br/>
+    <textarea type="text" name="description" rows="4" cols="100" placeholder="Type to add a description" ></textarea><br/>
+
+    <!--div here for control buttons -->
+    <div class="control-buttons">
+    	<button class="save-scenario" name="saveButton" title="Save Scenario">Save</button>
+    	<button type="button" class="submit-scenario" name="submitButton" title="Submit for approval">Submit</button>
+    </div>
+  </form>
+</template>

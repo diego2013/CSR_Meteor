@@ -1,3 +1,69 @@
 <template name="FeedbackForm">
-  Feedback template
+
+  <h1>Feedback and Suggestions</h1>
+
+  <div id="header">
+  <p>As part of the Clinical Scenario Repository <em>beta testing process</em> we would like to know you opinion about this site.
+  Your feedback, ideas and suggestions can help us improve this repository,  thus delivering a better tool to help improve patient safety
+  and Healthcare.
+  </p>
+
+  <p>Please, let us kow your impression about this site.</p>
+
+  <p> The <span class="red-asterisk">red asterisk (*)</span>  in the form indicates a mandatory field.</p>
+
+  </div>
+
+
+  <div>
+  <form id="feedbackPanel" class="feedbackPanel" >
+  	<div>
+  		 How would you rate this website? <span class="red-asterisk">*</span> <br/>
+		<textarea type="text" name="rateSite" rows="3" cols="75" placeholder="What was you overall experience using this site?"></textarea>
+
+		<br/> Is the repository easy to navigate and use? <br/>
+		<textarea type="text" name="rateNavigation" rows="3" cols="75" placeholder="Which problems did you encounter to navigate and find content?"></textarea>
+
+		<br/> Is the information and functionality logically organized? <br/>
+		<textarea type="text" name="rateOrganization" rows="3" cols="75" placeholder="Which problems did you encounter to navigate and find content?"></textarea>
+
+		<br/> Did you have trouble logging in? <br/>
+		<textarea type="text" name="rateLogin" rows="3" cols="75" placeholder="What was the problem?"></textarea>
+
+		<br/> Are there any unclear questions or fields? <br/>
+		<textarea type="text" name="rateClarity" rows="3" cols="75" placeholder="Which ones?"></textarea>
+
+		<br/> Are the any missing fields, sections or elements? <br/>
+		<textarea type="text" name="rateSections" rows="3" cols="75" placeholder="What would you add?"></textarea>
+
+		<br/> Would you find this useful if it was available to your department? Who would find it useful? <br/>
+		<textarea type="text" name="rateUsefulness" rows="3" cols="75" placeholder="Who would find it useful?"></textarea>
+
+		<br/> Does the website appear professional and trustworthy? <br/>
+		<textarea type="text" name="rateAppearance" rows="3" cols="75" placeholder="If not, why not?"></textarea>
+
+		<br/> Do you like the visual design of the website? 
+			<select>
+			  <option value="optionIdontknow">I do not know</option>
+			  <option value="optionYes">Yes</option>
+			  <option value="optionNo">No</option>  
+			  <option value="optionIdontunderstand">I do not understand the question</option>
+			</select>
+		<br/>
+
+		<br/> Do you have any other suggestions, requests or complaints?<br/>
+		<textarea type="text" name="rateGeneral" rows="3" cols="75" placeholder="What else can you tell us to improve the site?"></textarea>
+
+	</div>
+
+	<div>
+		<button  type="button" id="submitFeedback" name="submitButton" title="Submit feedback">Submit Feedback</button>
+	</div>
+
+ </form>
+ </div>
+
+ 
+
+
 </template>

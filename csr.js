@@ -59,6 +59,8 @@ if (Meteor.isClient) {
   }
   });
 
+
+
   //EVENTS
   Template.NewScenarioForm.events({
   "submit .new-scenario": function (event) {
@@ -95,6 +97,38 @@ if (Meteor.isClient) {
 
   "click .submit-scenario":function (event) {
     console.log("submitted scenario "+this._id);
+  }
+});
+
+Template.FeedbackForm.events({
+  //on click submit button from Feedback form
+  //"submit .feedbackPanel": function (event) {
+  //    var rateSite = trimInput(event.target.rateSite.value);
+  //    var rateNavigation = trimInput(event.target.rateNavigation.value);
+  //    console.log("submitting feedback "+ rateSite+" "+rateNavigation);
+  //}
+
+  //detect a submit event on the feedback form
+  //'submit form': function(){
+  //   console.log("Form submitted "+event.target);
+  //   var rateSite = trimInput(event.target.rateSite.value);
+  //   var rateNavigation = trimInput(event.target.rateNavigation.value);
+  //   console.log("submitting feedback "+ rateSite+" "+rateNavigation);
+  //
+  //   return false;// Prevent default form submit
+  //}
+  
+  
+  //"click #submitFeedback": function(event) {
+    //detect a click event in the form FeedbackForm
+    "click #feedbackPanel": function(event) {
+  
+      var rateSite = trimInput(event.currentTarget.rateSite.value);
+      var rateNavigation = trimInput(event.currentTarget.rateNavigation.value);
+      console.log(rateSite);
+      var buttonName = event.target.name;
+      console.log(buttonName);
+
   }
 });
 
