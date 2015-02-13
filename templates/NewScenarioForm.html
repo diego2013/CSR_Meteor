@@ -1,5 +1,5 @@
 <template name="NewScenarioForm">
-  <form class="new-scenario">
+  <form id="newScenarioForm" class="new-scenario">
 
     <span style="font-size:12pt;">Guidelines</span>
       <ul>
@@ -10,14 +10,20 @@
       </ul>  
 
     <label>Title</label>
-    <textarea type="text" name="title" rows="1" cols="75" placeholder="Type to add a title"></textarea><br/>
+    <textarea type="text" id="title" name="title" rows="1" cols="75" placeholder="Type to add a title"></textarea><br/>
     <label>Description</label><br/>
-    <textarea type="text" name="description" rows="4" cols="100" placeholder="Type to add a description" ></textarea><br/>
+    <textarea type="text" id="description" name="description" rows="4" cols="100" placeholder="Type to add a description" ></textarea><br/>
 
     <!--div here for control buttons -->
-    <div class="control-buttons">
-    	<button class="save-scenario" name="saveButton" title="Save Scenario">Save</button>
-    	<button type="button" class="submit-scenario" name="submitButton" title="Submit for approval">Submit</button>
+    <div id="botonera" class="control-buttons">
+    	<!--<button class="save-scenario" name="saveButton" title="Save Scenario">Save</button>-->
+        <button type="submit" id="saveScenarioButton" name="saveButton" title="Save Scenario" value="Save">Save</button>
+    	<button type="submit" id="submitScenarioButton" name="submitButton" title="Submit for approval" value="Submit" >Submit</button> 
+        
+        <!--<input type="submit" id="saveScenarioButton" name="action" title="Save Scenario" value="Save" />
+        <input type="submit" id="submitScenarioButton" name="action" title="Submit for approval" value="Submit" />
+        -->
+        
     </div>
   </form>
 </template>

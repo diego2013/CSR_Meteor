@@ -63,72 +63,111 @@ if (Meteor.isClient) {
 
   //EVENTS
   Template.NewScenarioForm.events({
-  "submit .new-scenario": function (event) {
-   // "click .save-scenario": function (event) {
-    // This function is called when the new scenario form is submitted
-    //console.log("saving...");
-    var title = trimInput(event.target.title.value);
-    var description = trimInput(event.target.description.value);
+
+  //"click #newScenarioForm": function(event) {
+  // "submit #newScenarioForm": function(event, template) {
+    "click #saveScenarioButton": function(event, template) {
+
+    event.preventDefault(); 
+    var title = template.find("#title").value;
+    var description = template.find("#description").value;
+
+    //var title = trimInput(event.target.title.value);
+    //var description = trimInput(event.target.description.value);
 
     //Validations
     //1. Title can't be empty
-    if(title===""){
-      throw new Meteor.Error("'Title' can NOT be empty"); //TO-DO do something with this error
-    }
+    //if(title===""){
+    //  throw new Meteor.Error("'Title' can NOT be empty"); //TO-DO do something with this error
+    //}
+//
+    ////2. Description can't be empty
+    //if(description===""){
+    //  throw new Meteor.Error("'Description' can NOT be empty");//TO-DO do something with this error
+    //}
 
-    //2. Description can't be empty
-    if(description===""){
-      throw new Meteor.Error("'Description' can NOT be empty");//TO-DO do something with this error
-    }
+    var buttonPressed = event.target.name.value;
+   // console.log(event.currentTarget);
+    console.log("title "+title+" description "+description+" Button "+buttonPressed);
 
-    //var title = "title".value;
-    //console.log(title);
-    //console.log(event);
-    Meteor.call("saveScenario", title, description);
-    
-
-    // Clear form
-    event.target.title.value = "";
-    event.target.description.value = "";
-
-    // Prevent default form submit
-    return false;
-  },
-
-  "click .submit-scenario":function (event) {
-    console.log("submitted scenario "+this._id);
+    //return false;
   }
+  , "click #submitScenarioButton": function(event, template) {
+
+    event.preventDefault(); 
+    var title = template.find("#title").value;
+    var description = template.find("#description").value;
+    //var title = trimInput(event.target.title.value);
+    //var description = trimInput(event.target.description.value);
+
+    //Validations
+    //1. Title can't be empty
+    //if(title===""){
+    //  throw new Meteor.Error("'Title' can NOT be empty"); //TO-DO do something with this error
+    //}
+//
+    ////2. Description can't be empty
+    //if(description===""){
+    //  throw new Meteor.Error("'Description' can NOT be empty");//TO-DO do something with this error
+    //}
+
+
+    //console.log(event.currentTarget);
+    console.log("title "+title+" description "+description+" Button "+buttonPressed);
+
+    //return false;
+  }
+  
+
+  //"submit .new-scenario": function (event) {
+  // // "click .save-scenario": function (event) {
+  //  // This function is called when the new scenario form is submitted
+  //  //console.log("saving...");
+  //  var title = trimInput(event.target.title.value);
+  //  var description = trimInput(event.target.description.value);
+//
+  //  //Validations
+  //  //1. Title can't be empty
+  //  if(title===""){
+  //    throw new Meteor.Error("'Title' can NOT be empty"); //TO-DO do something with this error
+  //  }
+//
+  //  //2. Description can't be empty
+  //  if(description===""){
+  //    throw new Meteor.Error("'Description' can NOT be empty");//TO-DO do something with this error
+  //  }
+//
+  //  //var title = "title".value;
+  //  //console.log(title);
+  //  //console.log(event);
+  //  Meteor.call("saveScenario", title, description);
+  //  
+
+ //  // Clear form
+ //  event.target.title.value = "";
+ //  event.target.description.value = "";
+
+ //  // Prevent default form submit
+ //  return false;
+ //},
+
+ //"click .submit-scenario":function (event) {
+ //  console.log("submitted scenario "+this._id);
+ //}
 });
 
 Template.FeedbackForm.events({
-  //on click submit button from Feedback form
-  //"submit .feedbackPanel": function (event) {
-  //    var rateSite = trimInput(event.target.rateSite.value);
-  //    var rateNavigation = trimInput(event.target.rateNavigation.value);
-  //    console.log("submitting feedback "+ rateSite+" "+rateNavigation);
-  //}
 
-  //detect a submit event on the feedback form
-  //'submit form': function(){
-  //   console.log("Form submitted "+event.target);
-  //   var rateSite = trimInput(event.target.rateSite.value);
-  //   var rateNavigation = trimInput(event.target.rateNavigation.value);
-  //   console.log("submitting feedback "+ rateSite+" "+rateNavigation);
-  //
-  //   return false;// Prevent default form submit
-  //}
-  
-  
-  //"click #submitFeedback": function(event) {
-    //detect a click event in the form FeedbackForm
-    "click #feedbackPanel": function(event) {
-  
-      var rateSite = trimInput(event.currentTarget.rateSite.value);
-      var rateNavigation = trimInput(event.currentTarget.rateNavigation.value);
-      console.log(rateSite);
-      var buttonName = event.target.name;
-      console.log(buttonName);
+  //detect a submit event in the form FeedbackForm
+  "submit #feedbackPanel": function(event) {
 
+    event.preventDefault(); // Prevent default form submit
+    //template.find("#title").value;
+    var rateSite = trimInput(event.target.rateSite.value);
+    var rateNavigation = trimInput(event.target.rateNavigation.value);
+    console.log(rateSite);
+  
+    //return false;    // Prevent default form submit
   }
 });
 
