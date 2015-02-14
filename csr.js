@@ -66,94 +66,37 @@ if (Meteor.isClient) {
 
   //"click #newScenarioForm": function(event) {
   // "submit #newScenarioForm": function(event, template) {
-    "click #saveScenarioButton": function(event, template) {
+    "click input[type=submit]": function(event, template) {
+      event.preventDefault(); 
 
-    event.preventDefault(); 
-    var title = template.find("#title").value;
-    var description = template.find("#description").value;
+      // Collects data from the form into an object
+      var title = template.find("#title").value;
+      var description = template.find("#description").value;
+      var buttonPressed = '';
 
-    //var title = trimInput(event.target.title.value);
-    //var description = trimInput(event.target.description.value);
+      //Validations
+      //1. Title can't be empty
+      //if(title===""){
+      //  throw new Meteor.Error("'Title' can NOT be empty"); //TO-DO do something with this error
+      //}
 
-    //Validations
-    //1. Title can't be empty
-    //if(title===""){
-    //  throw new Meteor.Error("'Title' can NOT be empty"); //TO-DO do something with this error
-    //}
-//
-    ////2. Description can't be empty
-    //if(description===""){
-    //  throw new Meteor.Error("'Description' can NOT be empty");//TO-DO do something with this error
-    //}
+      //2. Description can't be empty
+      //if(description===""){
+      //  throw new Meteor.Error("'Description' can NOT be empty");//TO-DO do something with this error
+      //}
 
-    var buttonPressed = event.target.name.value;
-   // console.log(event.currentTarget);
-    console.log("title "+title+" description "+description+" Button "+buttonPressed);
+      if (event.target.id == "saveScenarioButton") {
+          // Save the scenario
+          buttonPressed = "saveScenarioButton";
+      } else if (event.target.id == "submitScenarioButton") {
+          // Submit the scenario
+          buttonPressed = "submitScenarioButton";
+      }
 
-    //return false;
-  }
-  , "click #submitScenarioButton": function(event, template) {
-
-    event.preventDefault(); 
-    var title = template.find("#title").value;
-    var description = template.find("#description").value;
-    //var title = trimInput(event.target.title.value);
-    //var description = trimInput(event.target.description.value);
-
-    //Validations
-    //1. Title can't be empty
-    //if(title===""){
-    //  throw new Meteor.Error("'Title' can NOT be empty"); //TO-DO do something with this error
-    //}
-//
-    ////2. Description can't be empty
-    //if(description===""){
-    //  throw new Meteor.Error("'Description' can NOT be empty");//TO-DO do something with this error
-    //}
-
-
-    //console.log(event.currentTarget);
-    console.log("title "+title+" description "+description+" Button "+buttonPressed);
-
-    //return false;
-  }
+      console.log("title "+title+" description "+description+" Button "+buttonPressed);
+      //  Meteor.call("saveScenario", title, description);
+    }
   
-
-  //"submit .new-scenario": function (event) {
-  // // "click .save-scenario": function (event) {
-  //  // This function is called when the new scenario form is submitted
-  //  //console.log("saving...");
-  //  var title = trimInput(event.target.title.value);
-  //  var description = trimInput(event.target.description.value);
-//
-  //  //Validations
-  //  //1. Title can't be empty
-  //  if(title===""){
-  //    throw new Meteor.Error("'Title' can NOT be empty"); //TO-DO do something with this error
-  //  }
-//
-  //  //2. Description can't be empty
-  //  if(description===""){
-  //    throw new Meteor.Error("'Description' can NOT be empty");//TO-DO do something with this error
-  //  }
-//
-  //  //var title = "title".value;
-  //  //console.log(title);
-  //  //console.log(event);
-  //  Meteor.call("saveScenario", title, description);
-  //  
-
- //  // Clear form
- //  event.target.title.value = "";
- //  event.target.description.value = "";
-
- //  // Prevent default form submit
- //  return false;
- //},
-
- //"click .submit-scenario":function (event) {
- //  console.log("submitted scenario "+this._id);
- //}
 });
 
 Template.FeedbackForm.events({
