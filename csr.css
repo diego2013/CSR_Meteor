@@ -68,9 +68,9 @@ form {
 
 ul {
   margin: 0;
-  padding: 0;
-  list-style-type: disc;
-  list-style: square outside none;
+  padding: 5px;
+
+  /*list-style: square outside none ; */
   /* background: white; */
 }
 
@@ -85,9 +85,9 @@ ul {
 
 li {
   position: relative;
-   list-style: none; 
-  /* list-style-type: disc; */
-   padding: 15px; 
+  list-style: disc outside none;
+  display: list-item;
+  margin-left: 1em;
    /* border-bottom: #eee solid 1px;  */
 }
 
@@ -131,6 +131,7 @@ header .hide-completed {
   }
 }
 
-.red-asterisk{
+
+.red-asterisk {
 	color:red;
 }
