@@ -9,3 +9,4 @@ accounts-ui
 accounts-password
 accounts-google
 iron:router
+blaze

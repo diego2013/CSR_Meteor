@@ -43,6 +43,7 @@
 	    	<!-- <td><button type="button" id="disclaimerPage" name="disclaimerButton" title="See Disclaimer">See disclaimer</button></td>  -->
 	    	<td><button type="button" id="feedbackPage" name="feedbackPage" title="Contribute to improve this website">Feedback</button></td>
 	    	<td><button type="button" id="goToHomePage" name="goToHomePageButton" title="Go to Homepage">Go to Homepage</button></td>
+	    	<td><button type="button" id="testPost" name="post" title="Test purposes">Post (Test)</button></td>
 	    	
 	    </tr>
 	</table>
@@ -85,7 +86,22 @@
 
 <!-- for test purposes -->
 <template name="Post">
-  Some Post content.
+  This is the (dynanyc) Post template.
+
+  <div class="main">
+    {{> Template.dynamic template=whichOne}}
+  </div>
+
+  <button type="button" id="toPostOne"  title="Go to post one ">Post One</button>
+  <button type="button" id="toPostTwo"  title="Go to post two ">Post Two</button>
+</template>
+
+<template name="postOne">
+	This is the Post One template.	
+</template>
+
+<template name="postTwo">
+	This is the Post Two template.	
 </template>
 
 

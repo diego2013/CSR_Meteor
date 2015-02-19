@@ -14,6 +14,15 @@ FeedbackCollection = new Mongo.Collection("FeedbackCollection");
 //Aux variables
 var whichOne = 'one';
 
+//Constants
+var _SCENARIO_FORM_STEP = 'SCENARIO_FORM_STEP'; //Step of the scenario submission process
+var _SCENARIO_FORM_STEP_BASIC_INFO = 'SCENARIO_FORM_STEP_BASIC_INFO'; 
+var _SCENARIO_FORM_STEP_ADVANCED_INFO = 'SCENARIO_FORM_STEP_ADVANCED_INFO'; 
+var _SCENARIO_FORM_STEP_SOLUTION = 'SCENARIO_FORM_STEP_SOLUTION'; 
+var _SCENARIO_FORM_STEP_BASIC_INFO_templateName = "scenarioFormBasicInfo"; 
+var _SCENARIO_FORM_STEP_ADVANCED_INFO_templateName = "scenarioFormAdvancedInfo"; 
+var _SCENARIO_FORM_STEP_SOLUTION_templateName = "scenarioFormSolution"; 
+
 
 //CLIENT SIDE
 if (Meteor.isClient) {
@@ -35,10 +44,17 @@ if (Meteor.isClient) {
   Router.map(function(){
     this.route('home', {path: '/'});
 
-    this.route('NewScenarioForm');
+    this.route('NewScenarioForm' , 
+      function ()  {
+        if(Session.get(_SCENARIO_FORM_STEP)===undefined){
+          Session.set(_SCENARIO_FORM_STEP, _SCENARIO_FORM_STEP_BASIC_INFO);//initialize
+        }
+        this.render('NewScenarioForm');
+      }
+    );
     this.route('new', function(){
       this.render('NewScenarioForm');
-    })
+    });
     this.route('scenarioList', {
       data: function () { return Scenarios}
       }
@@ -72,20 +88,35 @@ if (Meteor.isClient) {
 
     isOwner: function () {
       return this.owner === Meteor.userId();
-  }
+    }
   });
 
   Template.Post.helpers({
-  whichOne: function () {
-    //return Session.get('step') ? 'postOne' : 'postTwo'
-    var newScenarioStep = Session.get('step');
-    if(newScenarioStep=='one')
-      return 'postOne';
-    else
-      return 'postTwo';
-    // note that we return a string - per http://docs.meteor.com/#template_dynamic
-  }
-});
+    whichOne: function () {
+      //return Session.get('step') ? 'postOne' : 'postTwo'
+      var newScenarioStep = Session.get('step');
+      if(newScenarioStep=='one')
+        return 'postOne';
+      else
+        return 'postTwo';
+      // note that we return a string - per http://docs.meteor.com/#template_dynamic
+    }
+  });
+
+  Template.NewScenarioForm.helpers({
+
+    newScenarioStep : function(){
+      var newScenarioStep = Session.get(_SCENARIO_FORM_STEP);
+      if(newScenarioStep === _SCENARIO_FORM_STEP_BASIC_INFO)
+        return _SCENARIO_FORM_STEP_BASIC_INFO_templateName;
+      else if(newScenarioStep === _SCENARIO_FORM_STEP_ADVANCED_INFO)
+        return _SCENARIO_FORM_STEP_ADVANCED_INFO_templateName;
+      else if(newScenarioStep === _SCENARIO_FORM_STEP_SOLUTION)
+        return _SCENARIO_FORM_STEP_SOLUTION_templateName;
+      else //default
+        return _SCENARIO_FORM_STEP_BASIC_INFO_templateName
+    }
+  });
 
 
 
@@ -94,6 +125,7 @@ if (Meteor.isClient) {
 
   //"click #newScenarioForm": function(event) {
   // "submit #newScenarioForm": function(event, template) {
+    //input[type=button]
     "click input[type=submit]": function(event, template) {
       event.preventDefault(); 
 
@@ -124,8 +156,25 @@ if (Meteor.isClient) {
       console.log("title "+title+" description "+description+" Button "+buttonPressed);
       //  Meteor.call("saveScenario", title, description);
     }
+    //onClick button change template
+    , "click #goToStep1": function(){
+      Session.set(_SCENARIO_FORM_STEP, _SCENARIO_FORM_STEP_BASIC_INFO);
+      hideScenarioFormButtons();
+    }
+    , "click #goToStep2": function(){
+      Session.set(_SCENARIO_FORM_STEP, _SCENARIO_FORM_STEP_ADVANCED_INFO);
+      hideScenarioFormButtons();
+    }
+    , "click #goToStep3": function(){
+      Session.set(_SCENARIO_FORM_STEP, _SCENARIO_FORM_STEP_SOLUTION);
+      hideScenarioFormButtons();
+    }
+
   
 });
+
+
+
 
 Template.FeedbackForm.events({
 
@@ -164,12 +213,13 @@ Template.FeedbackForm.events({
       rateGeneral : rateGeneral
     }
 
-    //Meteor.call("saveFeedback", feedbackDto);
+    Meteor.call("saveFeedback", feedbackDto);
     //TODO? clean from
     Router.go("/FeedbackFormThakYou") //redirect user to "Thank you page"
 
   }
 });
+
 
 //only for test purposes 
 Template.Post.events({
@@ -191,25 +241,29 @@ Template.Post.events({
 
 Template.NavBar.events({
     "click #create-new-scn": function () {
-    Router.go('NewScenarioForm');
-  },
+      //Router.go('NewScenarioForm');
+      Session.set(_SCENARIO_FORM_STEP, _SCENARIO_FORM_STEP_BASIC_INFO);
+      //hideScenarioFormButtons();
+      Router.go('NewScenarioForm');
+
+    },
     "click #list-scn": function () {
-    console.log("list-scn... ");
-    Router.go('scenarioList');
-  },
+      console.log("list-scn... ");
+      Router.go('scenarioList');
+    },
     "click #goToHomePage": function () {
-    Router.go('/');
-  },
+      Router.go('/');
+    },
     "click #disclaimerPage": function () {
-    Router.go('disclaimer');
-  },
+      Router.go('disclaimer');
+    },
     "click #feedbackPage": function () {
-    Router.go('FeedbackForm');
-  },
+      Router.go('FeedbackForm');
+    },
     "click #testPost": function () {
-     Session.set("step", 'one'); 
-     Router.go('post');
-  }
+      Session.set("step", 'one'); 
+      Router.go('post');
+    }
 });
 
 Template.scenario.events({
@@ -230,7 +284,33 @@ var trimInput = function(val) {
   return val.replace(/^\s*|\s*$/g, "");
 }
 
-}
+
+//Hides the button corresponding to the panel of the Scenario Form
+// in which we are by changing the button class.
+var hideScenarioFormButtons = function(){
+
+//remove the hiddenButton class from all three buttons
+  $("#goToStep1").removeClass("hiddenButton");
+  $("#goToStep2").removeClass("hiddenButton");
+  $("#goToStep3").removeClass("hiddenButton");
+
+//figure out in which panel we are and add the hiddenButton class to just that button
+  var newScenarioStep = Session.get(_SCENARIO_FORM_STEP);
+  if(newScenarioStep === _SCENARIO_FORM_STEP_BASIC_INFO){
+    $("#goToStep1").addClass("hiddenButton");
+  }
+  else if(newScenarioStep === _SCENARIO_FORM_STEP_ADVANCED_INFO){
+    $("#goToStep2").addClass("hiddenButton");
+  }
+  else if(newScenarioStep === _SCENARIO_FORM_STEP_SOLUTION){
+    $("#goToStep3").addClass("hiddenButton");
+  }else //default
+    $("#goToStep1").addClass("hiddenButton");
+ 
+ }
+
+}//meteor.isClient
+
 
 
 Meteor.methods({
@@ -303,8 +383,6 @@ if (Meteor.isServer) {
       { owner: this.userId }
     ]*/
   });
-
-
 
   
 }

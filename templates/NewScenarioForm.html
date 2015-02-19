@@ -1,18 +1,12 @@
+<!-- Main template for a Scenario -->
 <template name="NewScenarioForm">
   <form id="newScenarioForm" class="new-scenario">
 
-    <span style="font-size:12pt;"><b>Guidelines</b></span>
-      <ul>
-          <li>A brief explanation of an event is enough to describe a scenario. Try to keep information relevant, short and simple. Click on "example" to see an illustrative example on how an actual scenario would complete each field.</li>
-          <li>Do not include protected health information. Omit actual names of individuals or institutions.</li>
-          <li>Try avoid submitting scenarios redundant to the ones already in the repository.</li>
-          <li>Once you have described the risk to patient safety you are welcome, but not required, to enter some additional information by clicking the "Add Further Details" button.</li>
-      </ul>  
+    <div class="main">
+        {{> Template.dynamic template=newScenarioStep}}
+    </div>
 
-    <label>Title</label>
-    <textarea type="text" id="title" name="title" rows="1" cols="75" placeholder="Type to add a title"></textarea><br/>
-    <label>Description</label><br/>
-    <textarea type="text" id="description" name="description" rows="4" cols="100" placeholder="Type to add a description" ></textarea><br/>
+
 
     <!--div here for control buttons -->
     <div id="controlButtons">
@@ -21,11 +15,44 @@
     	<button type="submit" id="submitScenarioButton" name="submitButton" title="Submit for approval" value="Submit" >Submit</button> 
         -->
         
-        <input type="submit" id="saveScenarioButton" name="saveButton" title="Save Scenario" value="Save" />
-        <input type="submit" id="submitScenarioButton" name="submitButton" title="Submit for approval" value="Submit" />
-        <button type="button" id="none" name="none" title="Submit for approval" >none</button> 
+        <input type="submit" id="saveScenarioButton" name="saveButton" title="Save the chages in this scenario" value="Save" />
+        <button type="button" id="goToStep1" name="none1" title="Go to the Basic Information panel" >Go back to basic information</button> 
+        <button type="button" id="goToStep2" name="none2" title="Go to the Advanced Information panel" >Add further details</button> 
+        <button type="button" id="goToStep3" name="none3" title="Propose a solution for this scenario" >Propose a solution</button>
+        <input type="submit" id="submitScenarioButton" name="submitButton" title="Submit for approval" value="Finish and Submit" />
+        
         
         
     </div>
   </form>
+</template>
+
+<!-- Template for the first step of the New Scenario submission: Basic info -->
+<template name="scenarioFormBasicInfo">
+        
+    <span style="font-size:12pt;"><b>Guidelines</b></span>
+    <ul>
+        <li>A brief explanation of an event is enough to describe a scenario. Try to keep information relevant, short and simple. Click o"example" to see an illustrative example on how an actual scenario would complete each field.</li>
+        <li>Do not include protected health information. Omit actual names of individuals or institutions.</li>
+        <li>Try avoid submitting scenarios redundant to the ones already in the repository.</li>
+        <li>Once you have described the risk to patient safety you are welcome, but not required, to enter some additional information bclicking the "Add Further Details" button.</li>
+    </ul>  
+
+    <label>Title</label>
+    <textarea type="text" id="title" name="title" rows="1" cols="75" placeholder="Type to add a title"></textarea><br/>
+    <label>Description</label><br/>
+    <textarea type="text" id="description" name="description" rows="4" cols="100" placeholder="Type to add a description" ></textarea><br/>
+
+</template>
+
+<!-- Template for the second step of the New Scenario submission: Advanced info -->
+<template name="scenarioFormAdvancedInfo">
+    This is the template for the Scenario Form Advanced Info Step. <br/>
+    This template needs to be completed.
+</template>
+
+<!-- Template for the Third step of the New Scenario submission: Solution -->
+<template name="scenarioFormSolution">
+    This is the template for the Scenario Form Solution Step. <br/>
+    This template needs to be completed.
 </template>
