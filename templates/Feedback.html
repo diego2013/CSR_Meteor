@@ -1,3 +1,7 @@
+<!-- @author diego@mdpnp.org-->
+
+
+<!-- Template for the Feedback form -->
 <template name="FeedbackForm">
 
   <h1>Feedback and Suggestions</h1>
@@ -63,7 +67,21 @@
  </form>
  </div>
 
- 
+</template>
 
 
+<!-- Template for the "Thank you for your feedback" page displayed after user submits feedback-->
+<template name="FeedbackFormThakYou">
+	<span style="font-size:12pt;"><b>Thank you for your feedback</b></span>
+
+	<p>The feedback you provided helps us to improve this <b>Clinical Scenario Repository</b> © and build a better tool for clinicians, clinical engineers, researchers and public in general, ultimately improving patient safety and Healthcare. </p>
+
+	<div>
+     <table  cellpadding="15" style="margin-left:auto;margin-right:auto;">
+	     <tr>
+	     <td><a href="{{ pathFor 'new' }}">Click here to enter a new clinical scenario</a></td>
+	     <td><a href="{{ pathFor 'home' }}">Click here to examine the clinical scenario collection</a></td>
+	     </tr>
+	 </table>  
+	</div>  
 </template>

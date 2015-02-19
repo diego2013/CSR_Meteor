@@ -1,4 +1,18 @@
-  Scenarios = new Mongo.Collection("scenarios");
+/**
+This csr.js file is part of the implementetion of the MD PnP's (www.mdpnp.org)
+Clinical Scenrio Repository protoype using JavaScript and the Meteor Framework.
+
+@author diego@mdpnp.org
+@version 1.0
+
+*/
+
+//Database collections
+Scenarios = new Mongo.Collection("scenarios");
+FeedbackCollection = new Mongo.Collection("FeedbackCollection");
+
+//Aux variables
+var whichOne = 'one';
 
 
 //CLIENT SIDE
@@ -20,30 +34,32 @@ if (Meteor.isClient) {
   //map routes with templates
   Router.map(function(){
     this.route('home', {path: '/'});
+
     this.route('NewScenarioForm');
     this.route('new', function(){
       this.render('NewScenarioForm');
     })
     this.route('scenarioList', {
-    data: function () { return Scenarios}
-  }
-  );
+      data: function () { return Scenarios}
+      }
+    );
+    
     //footer
     this.route('disclaimer');
     this.route('privacyStatement');
     this.route('contactInfo');
-    this.route('FeedbackForm');
+    this.route('FeedbackForm'); //feedback form
+    this.route('FeedbackFormThakYou'); //"thank you" page after submitting feedback
 
 
     //test
-    this.route('post', {
-      //path: '/',
-      layoutTemplate: 'complexLayout',
-      yieldTemplates: {
-        //'myMenu': {to: 'menu'},
-        'FooterTemplate': {to: 'footer'}
+    this.route('post'
+     , 
+      function ()  {
+      Session.set("step", 'one');//initialize
+      this.render("Post");
       }
-    });
+    );
 
   });
 
@@ -58,6 +74,18 @@ if (Meteor.isClient) {
       return this.owner === Meteor.userId();
   }
   });
+
+  Template.Post.helpers({
+  whichOne: function () {
+    //return Session.get('step') ? 'postOne' : 'postTwo'
+    var newScenarioStep = Session.get('step');
+    if(newScenarioStep=='one')
+      return 'postOne';
+    else
+      return 'postTwo';
+    // note that we return a string - per http://docs.meteor.com/#template_dynamic
+  }
+});
 
 
 
@@ -105,13 +133,59 @@ Template.FeedbackForm.events({
   "submit #feedbackPanel": function(event) {
 
     event.preventDefault(); // Prevent default form submit
+    //harvest values from the form
     //template.find("#title").value;
     var rateSite = trimInput(event.target.rateSite.value);
     var rateNavigation = trimInput(event.target.rateNavigation.value);
-    console.log(rateSite);
-  
-    //return false;    // Prevent default form submit
+    var rateOrganization = trimInput(event.target.rateOrganization.value);
+    var rateLogin = trimInput(event.target.rateLogin.value);
+    var rateClarity = trimInput(event.target.rateClarity.value); 
+
+    var rateSections = trimInput(event.target.rateSections.value);
+    var rateUsefulness = trimInput(event.target.rateUsefulness.value);
+    var rateAppearance = trimInput(event.target.rateAppearance.value);
+    var rateGeneral = trimInput(event.target.rateGeneral.value);
+
+    //validation
+    if(rateSite===""){
+      window.alert("Fields marked with an asterisk are mandatory");
+        throw new Meteor.Error("'rateSite' can NOT be empty"); //TO-DO do something with this error
+    }
+
+    var feedbackDto = {
+      rateSite : rateSite,
+      rateNavigation : rateNavigation,
+      rateOrganization :rateOrganization,
+      rateLogin : rateLogin,
+      rateClarity : rateClarity,
+      rateSections :rateSections,
+      rateUsefulness : rateUsefulness,
+      rateAppearance : rateAppearance,
+      rateGeneral : rateGeneral
+    }
+
+    //Meteor.call("saveFeedback", feedbackDto);
+    //TODO? clean from
+    Router.go("/FeedbackFormThakYou") //redirect user to "Thank you page"
+
   }
+});
+
+//only for test purposes 
+Template.Post.events({
+
+  "click #toPostOne": function(event){
+    event.preventDefault(); // Prevent default form submit
+    whichOne = 'one';
+    Session.set("step", whichOne);
+
+  }, 
+  "click #toPostTwo": function(event){
+    event.preventDefault(); // Prevent default form submit
+    whichOne = 'two'; 
+    Session.set("step", whichOne);
+  }
+  
 });
 
 
@@ -131,6 +205,10 @@ Template.NavBar.events({
   },
     "click #feedbackPage": function () {
     Router.go('FeedbackForm');
+  },
+    "click #testPost": function () {
+     Session.set("step", 'one'); 
+     Router.go('post');
   }
 });
 
@@ -141,21 +219,24 @@ Template.scenario.events({
   }
 });
 
-  //to configure the accounts UI to use usernames instead of email addresses
-  Accounts.ui.config({
-    passwordSignupFields: "USERNAME_ONLY"
-  });
+//To configure the accounts UI to use usernames instead of email addresses
+Accounts.ui.config({
+  passwordSignupFields: "USERNAME_ONLY"
+});
 
-     // trim whitespace helper
-  var trimInput = function(val) {
-    return val.replace(/^\s*|\s*$/g, "");
-  }
+//Aux functions  
+// trim whitespace helper
+var trimInput = function(val) {
+  return val.replace(/^\s*|\s*$/g, "");
+}
+
 }
 
 
 Meteor.methods({
 
-  
+  //persist an scenario
+  //save-insert
   saveScenario: function(title, description){
     // Make sure the user is logged in before allowing manipulating a scenario
     if (! Meteor.userId()) {
@@ -180,6 +261,28 @@ Meteor.methods({
       throw new Meteor.Error("not-authorized");
     }
     Scenarios.remove(scnID);
+  },
+
+  //Feedback
+  saveFeedback : function (feedbackDto){
+
+    var username =Meteor.userId()?Meteor.user().username :"anonymous";
+    var userID = Meteor.userId()? Meteor.userId():"anonymous";
+
+    FeedbackCollection.insert({
+          rateSite : feedbackDto.rateSite,
+          rateNavigation : feedbackDto.rateNavigation,
+          rateOrganization : feedbackDto.rateOrganization,
+          rateLogin : feedbackDto.rateLogin,
+          rateClarity : feedbackDto.rateClarity,
+          rateSections : feedbackDto.rateSections,
+          rateUsefulness : feedbackDto.rateUsefulness,
+          rateAppearance : feedbackDto.rateAppearance,
+          rateGeneral : feedbackDto.rateGeneral,
+          username : username,
+          userID : userID
+    });
+
   }
 
 
