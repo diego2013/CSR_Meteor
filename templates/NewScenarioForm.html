@@ -39,20 +39,43 @@
     </ul>  
 
     <label>Title</label>
-    <textarea type="text" id="title" name="title" rows="1" cols="75" placeholder="Type to add a title"></textarea><br/>
+    <textarea type="text" id="title" name="title" rows="1" cols="75" placeholder="Type to add a title">{{title}}</textarea><br/>
     <label>Description</label><br/>
-    <textarea type="text" id="description" name="description" rows="4" cols="100" placeholder="Type to add a description" ></textarea><br/>
+    <textarea type="text" id="description" name="description" rows="4" cols="100" placeholder="Type to add a description" >{{description}}</textarea><br/>
 
 </template>
 
 <!-- Template for the second step of the New Scenario submission: Advanced info -->
 <template name="scenarioFormAdvancedInfo">
-    This is the template for the Scenario Form Advanced Info Step. <br/>
-    This template needs to be completed.
+    <span style="font-size:12pt;"><b>Additional Information</b></span>
+    <p>Step 2 of 3 (optional): Add additional information about the scenario.</p>
+    <ul>
+        <li>Add further details about contributing actors or events that happened or could happen in this kind of scenario.</li>
+        <li>No fields are mandatory. Complete the information in the tabs that you think is relevant for the case and submit when it is ready.</li>
+        <li>abs can be visited in any order, and not all of them may be need to be visited in order to accurately describe the scenario.</li>
+    </ul>
+    *** Here goes a tabbed panel *** <br/>
+    *** This template needs to be completed (Sorry). ***
 </template>
 
 <!-- Template for the Third step of the New Scenario submission: Solution -->
 <template name="scenarioFormSolution">
-    This is the template for the Scenario Form Solution Step. <br/>
-    This template needs to be completed.
+    <span style="font-size:12pt;"><b>Share a Good Idea</b></span>
+    <p>Step 3 of 3 (optional): Propose a solution for a barrier in patient safety or share a <em>good idea</em>.</p>
+    <ul>
+        <li>Share a good idea to improve Healthcare, clinical processes or patient safety. </li>
+        <li>Describe, in any degree of detail you feel comfortable with, what you think could provide a solution for a barrier in patient safety.</li>        
+        <li>Feel welcome to address early any potential new risks in the workflow or systems introduced by the solution.</li>
+        <li>Discuss or highlight the benefits of your proposed solution or idea.</li>
+    </ul>
+
+    <label>Title: </label>
+    <label>{{title}}</label><br/>
+
+    <label>Describe Your Good Idea or Solution</label><br/>
+    <textarea type="text" id="solutionDescription" rows="1" cols="75" >{{solutionDescription}}</textarea><br/>
+    <label>Benefits of the New System</label><br/>
+    <textarea type="text" id="benefitsDescription"  rows="1" cols="75" >{{benefitsDescription}}</textarea><br/>
+    <label>Foreseen Risks of the New System</label><br/>
+    <textarea type="text" id="risksDescription"  rows="1" cols="75" >{{risksDescription}}</textarea><br/>
 </template>

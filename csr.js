@@ -14,6 +14,9 @@ FeedbackCollection = new Mongo.Collection("FeedbackCollection");
 //Aux variables
 var whichOne = 'one';
 
+//Var
+var currentScenarioDTO = {title:'', description:''};
+
 //Constants
 var _SCENARIO_FORM_STEP = 'SCENARIO_FORM_STEP'; //Step of the scenario submission process
 var _SCENARIO_FORM_STEP_BASIC_INFO = 'SCENARIO_FORM_STEP_BASIC_INFO'; 
@@ -49,7 +52,14 @@ if (Meteor.isClient) {
         //if(Session.get(_SCENARIO_FORM_STEP)===undefined){
         //  Session.set(_SCENARIO_FORM_STEP, _SCENARIO_FORM_STEP_BASIC_INFO);//initialize
         //}
-        this.render('NewScenarioForm');
+        this.render('NewScenarioForm', {
+          //data : function () { return Scenarios.findOne({_id: "vpsoQ9QkeGBCK9P3N"}) }//just for testing
+          data : currentScenarioDTO,
+          yieldTemplates: {
+            'scenarioFormBasicInfo': {to: 'newScenarioStep'}
+          }
+          
+        });
         hideScenarioFormButtons();
       }
     );
@@ -140,9 +150,11 @@ if (Meteor.isClient) {
       event.preventDefault(); 
 
       // Collects data from the form into an object
-      var title = template.find("#title").value;
-      var description = template.find("#description").value;
+      //var title = template.find("#title").value;
+      //var description = template.find("#description").value;
       var buttonPressed = '';
+      //this.currentScenarioDTO = collectScenarioInfo(template) ;
+      collectScenarioInfo();
 
       //Validations
       //1. Title can't be empty
@@ -163,19 +175,22 @@ if (Meteor.isClient) {
           buttonPressed = "submitScenarioButton";
       }
 
-      console.log("title "+title+" description "+description+" Button "+buttonPressed);
+      console.log("title "+currentScenarioDTO.title+" description "+currentScenarioDTO.description+" Button "+buttonPressed);
       //  Meteor.call("saveScenario", title, description);
     }
     //onClick button change template
     , "click #goToStep1": function(){
+      collectScenarioInfo();
       Session.set(_SCENARIO_FORM_STEP, _SCENARIO_FORM_STEP_BASIC_INFO);
       hideScenarioFormButtons();
     }
     , "click #goToStep2": function(){
+      collectScenarioInfo();
       Session.set(_SCENARIO_FORM_STEP, _SCENARIO_FORM_STEP_ADVANCED_INFO);
       hideScenarioFormButtons();
     }
-    , "click #goToStep3": function(){
+    , "click #goToStep3": function(event, template){
+      collectScenarioInfo();
       Session.set(_SCENARIO_FORM_STEP, _SCENARIO_FORM_STEP_SOLUTION);
       hideScenarioFormButtons();
     }
@@ -251,11 +266,12 @@ Template.Post.events({
 
 Template.NavBar.events({
     "click #create-new-scn": function () {
-      //Router.go('NewScenarioForm');
       Session.set(_SCENARIO_FORM_STEP, _SCENARIO_FORM_STEP_BASIC_INFO);
+      //TODO should clear data from form (scenarionDTO var) 
+      //myScenarioDto = {title:'', description:''};
+      cleanNewScenarioForm();
       hideScenarioFormButtons();
       Router.go('NewScenarioForm');
-
     },
     "click #list-scn": function () {
       console.log("list-scn... ");
@@ -318,7 +334,55 @@ var hideScenarioFormButtons = function(){
   }else //default
     $("#goToStep1").addClass("hiddenButton");
  
- }
+ };
+
+ //sets the variable currentScenarioDTO with the information from the templates
+ //XXX TODO
+ var collectScenarioInfo = function(){
+  // Collects data from the form into an object
+  if(Session.get(_SCENARIO_FORM_STEP) === _SCENARIO_FORM_STEP_BASIC_INFO){
+    currentScenarioDTO.title = $('#title').val();
+    currentScenarioDTO.description = $("#description").val();
+  } else  if(Session.get(_SCENARIO_FORM_STEP) === _SCENARIO_FORM_STEP_SOLUTION){
+    currentScenarioDTO.solutionDescription = $('#solutionDescription').val();
+    currentScenarioDTO.benefitsDescription = $("#benefitsDescription").val();
+    currentScenarioDTO.risksDescription = $("#risksDescription").val();
+  }
+
+  //return currentScenarioDTO;
+
+// console.log("template name "+template.id);
+// if(template === undefined){
+//   return myScenarioDto;
+// }else{
+
+//   console.log($('#titleRemainder').val());
+//   var title = template.find("#title").value; //$('#title').val(),
+//   var description = template.find("#description").value;
+//   //should use myScenarioDTO?
+//   var scenarioDto = {
+//     title : title,
+//     description : description
+// 
+//   };
+//   console.log("title: "+scenarioDto.title+" description: "+scenarioDto.description);
+//   myScenarioDto = scenarioDto;
+//   return scenarioDto;
+// }
+ };
+
+ //Cleans the input fields of the new scenario form
+ var cleanNewScenarioForm = function(){
+  //scenarioFormBasicInfo
+  $('#title').val("");
+  $('#description').val("");
+  //scenarioFormAdvancedInfo
+  //TODO
+  //scenarioFormSolution
+  $('#solutionDescription').val("");
+  $('#benefitsDescription').val("");
+  $('#risksDescription').val("");
+ };
 
 }//meteor.isClient
 
