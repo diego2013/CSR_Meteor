@@ -46,10 +46,11 @@ if (Meteor.isClient) {
 
     this.route('NewScenarioForm' , 
       function ()  {
-        if(Session.get(_SCENARIO_FORM_STEP)===undefined){
-          Session.set(_SCENARIO_FORM_STEP, _SCENARIO_FORM_STEP_BASIC_INFO);//initialize
-        }
+        //if(Session.get(_SCENARIO_FORM_STEP)===undefined){
+        //  Session.set(_SCENARIO_FORM_STEP, _SCENARIO_FORM_STEP_BASIC_INFO);//initialize
+        //}
         this.render('NewScenarioForm');
+        hideScenarioFormButtons();
       }
     );
     this.route('new', function(){
@@ -72,8 +73,9 @@ if (Meteor.isClient) {
     this.route('post'
      , 
       function ()  {
-      Session.set("step", 'one');//initialize
-      this.render("Post");
+        console.log("routing post")
+        Session.set("step", 'one');//initialize
+        this.render("Post");
       }
     );
 
@@ -91,6 +93,7 @@ if (Meteor.isClient) {
     }
   });
 
+//This tempalte exists only for experimenting purposes
   Template.Post.helpers({
     whichOne: function () {
       //return Session.get('step') ? 'postOne' : 'postTwo'
@@ -105,6 +108,8 @@ if (Meteor.isClient) {
 
   Template.NewScenarioForm.helpers({
 
+
+    //returns the template name of the dynamic template in the NewScenarioForm template  
     newScenarioStep : function(){
       var newScenarioStep = Session.get(_SCENARIO_FORM_STEP);
       if(newScenarioStep === _SCENARIO_FORM_STEP_BASIC_INFO)
@@ -114,7 +119,12 @@ if (Meteor.isClient) {
       else if(newScenarioStep === _SCENARIO_FORM_STEP_SOLUTION)
         return _SCENARIO_FORM_STEP_SOLUTION_templateName;
       else //default
-        return _SCENARIO_FORM_STEP_BASIC_INFO_templateName
+        return _SCENARIO_FORM_STEP_BASIC_INFO_templateName;
+    },
+    //returns if the parameter provided is the same than the ssesion variable "_SCENARIO_FORM_STEP"
+    isScenarioStep: function(step) {
+      var newScenarioStep = Session.get(_SCENARIO_FORM_STEP);
+      return step==newScenarioStep;
     }
   });
 
@@ -243,7 +253,7 @@ Template.NavBar.events({
     "click #create-new-scn": function () {
       //Router.go('NewScenarioForm');
       Session.set(_SCENARIO_FORM_STEP, _SCENARIO_FORM_STEP_BASIC_INFO);
-      //hideScenarioFormButtons();
+      hideScenarioFormButtons();
       Router.go('NewScenarioForm');
 
     },
@@ -296,6 +306,7 @@ var hideScenarioFormButtons = function(){
 
 //figure out in which panel we are and add the hiddenButton class to just that button
   var newScenarioStep = Session.get(_SCENARIO_FORM_STEP);
+
   if(newScenarioStep === _SCENARIO_FORM_STEP_BASIC_INFO){
     $("#goToStep1").addClass("hiddenButton");
   }
