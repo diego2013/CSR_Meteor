@@ -7,14 +7,18 @@ Clinical Scenrio Repository protoype using JavaScript and the Meteor Framework.
 
 */
 
-//Database collections
+//Database collections (Meteor.server MyCollection = new Mongo.Collection('collection-name-in-mongo'))
 Scenarios = new Mongo.Collection("scenarios");
+//AllScenarios = new Mongo.Collection("scenariosAll");
 FeedbackCollection = new Mongo.Collection("FeedbackCollection");
+AllTheUsers = Meteor.users; //new Mongo.Collection(Meteor.users);
+
 
 //Aux variables
 var whichOne = 'one';
 
 //Var
+//content of the ScenarioForm
 var currentScenarioDTO = {title:'', description:''};
 
 //Constants
@@ -29,7 +33,17 @@ var _SCENARIO_FORM_STEP_SOLUTION_templateName = "scenarioFormSolution";
 
 //CLIENT SIDE
 if (Meteor.isClient) {
-  Meteor.subscribe("scenarios");
+  //Meteor.subscribe("scenarios");
+  Meteor.subscribe('myScenarios');  //scenarios of the current user
+  Meteor.subscribe('scenariosAll'); //all available scenarios
+
+  // partial collections (Minimongo collections)
+  MyScenarios = new Mongo.Collection('myScenarios');
+  ScenariosAll = new Mongo.Collection('scenariosAll');
+ 
+  Meteor.subscribe("allUsersList");
+  Meteor.subscribe('userdata');
+
 
   //ROUTES
 
@@ -66,10 +80,17 @@ if (Meteor.isClient) {
     this.route('new', function(){
       this.render('NewScenarioForm');
     });
-    this.route('scenarioList', {
+    this.route('scenarioList' /*, {
       data: function () { return Scenarios}
-      }
+      }*/
     );
+
+    this.route('userList');
+    this.route('userProfile' //, {data :function () { return userDTO.findOne({_id: this.userId} ) }}
+       //,{data :function () { return Meteor.user()}} //working code
+       // , { data: function(){return Meteor.users.findOne()} } //working code 
+      ,{data : function(){ return Meteor.users.findOne() }}
+      );
     
     //footer
     this.route('disclaimer');
@@ -95,7 +116,9 @@ if (Meteor.isClient) {
   //HELPERS
   Template.scenarioList.helpers({
     scenarios: function () {
-      return Scenarios.find({}, {sort: {createdAt: -1}});
+      //return Scenarios.find({}, {sort: {createdAt: -1}});
+      return MyScenarios.find({}, {sort: {createdAt: -1}});
+      //return ScenariosAll.find({}, {sort: {createdAt: -1}});
     },
 
     isOwner: function () {
@@ -117,8 +140,6 @@ if (Meteor.isClient) {
   });
 
   Template.NewScenarioForm.helpers({
-
-
     //returns the template name of the dynamic template in the NewScenarioForm template  
     newScenarioStep : function(){
       var newScenarioStep = Session.get(_SCENARIO_FORM_STEP);
@@ -138,6 +159,24 @@ if (Meteor.isClient) {
     }
   });
 
+ Template.userProfile.helpers({
+   userLoggedIn : function(){
+     return Meteor.userId();
+   }/*, 
+   userData : function(){
+     return userDTO;
+   }*/
+ });
+
+ Template.userList.helpers({
+    usuarios: function () { return Meteor.users.find(
+      //return AllUsersList.find(
+      //return AllTheUsers.find(
+      //  {_id: /*'GDpyG7Ytu8urGhAcT'*/ Meteor.userId()}
+        );
+    },
+ });
+
 
 
   //EVENTS
@@ -150,8 +189,8 @@ if (Meteor.isClient) {
       event.preventDefault(); 
 
       // Collects data from the form into an object
-      //var title = template.find("#title").value;
-      //var description = template.find("#description").value;
+      var title = template.find("#title").value;
+      var description = template.find("#description").value;
       var buttonPressed = '';
       //this.currentScenarioDTO = collectScenarioInfo(template) ;
       collectScenarioInfo();
@@ -167,6 +206,8 @@ if (Meteor.isClient) {
       //  throw new Meteor.Error("'Description' can NOT be empty");//TO-DO do something with this error
       //}
 
+      //TODO Probably we can distinguish between inserts and updates with the _id property
+
       if (event.target.id == "saveScenarioButton") {
           // Save the scenario
           buttonPressed = "saveScenarioButton";
@@ -176,7 +217,9 @@ if (Meteor.isClient) {
       }
 
       console.log("title "+currentScenarioDTO.title+" description "+currentScenarioDTO.description+" Button "+buttonPressed);
-      //  Meteor.call("saveScenario", title, description);
+     // Meteor.call("saveScenario", title, description);
+     //Meteor.call("saveScenario", currentScenarioDTO.title, currentScenarioDTO.description);
+     Meteor.call("saveScenario", currentScenarioDTO);
     }
     //onClick button change template
     , "click #goToStep1": function(){
@@ -289,6 +332,12 @@ Template.NavBar.events({
     "click #testPost": function () {
       Session.set("step", 'one'); 
       Router.go('post');
+    },
+    "click #goToMyProfile": function(){
+      Router.go("userProfile");
+    }, 
+    "click #listUsers" : function(){
+      Router.go("userList");
     }
 });
 
@@ -303,6 +352,7 @@ Template.scenario.events({
 Accounts.ui.config({
   passwordSignupFields: "USERNAME_ONLY"
 });
+
 
 //Aux functions  
 // trim whitespace helper
@@ -397,10 +447,29 @@ Meteor.methods({
     if (! Meteor.userId()) {
       throw new Meteor.Error("not-authorized");
     }
+    console.log("inserting scn "+title);
+    //TODO Probably we can distinguish between inserts and updates with the _id property
 
     Scenarios.insert({
       title: title,                     //title of the scenario
       description: description,         //description of the scenario
+      createdAt: new Date(),            // current time
+      owner: Meteor.userId(),           // _id of logged in user
+      username: Meteor.user().username  // username of logged in user
+    });
+
+  },
+
+  saveScenario: function(currentScenarioDTO){
+    // Make sure the user is logged in before allowing manipulating a scenario
+    if (! Meteor.userId()) {
+      throw new Meteor.Error("not-authorized");
+    }
+    //TODO Probably we can distinguish between inserts and updates with the _id property
+
+    Scenarios.insert({
+      title: currentScenarioDTO.title,                     //title of the scenario
+      description: currentScenarioDTO.description,         //description of the scenario
       createdAt: new Date(),            // current time
       owner: Meteor.userId(),           // _id of logged in user
       username: Meteor.user().username  // username of logged in user
@@ -450,14 +519,44 @@ if (Meteor.isServer) {
     // code to run on server at startup
   });
 
-  Meteor.publish("scenarios", function () {
-    return Scenarios.find({owner: this.userId });
+  //Meteor.publish("scenarios", function () {
+  //  return Scenarios.find({owner: this.userId });
+//
+  //  /* $or: [
+  //    { status: "public" },
+  //    { owner: this.userId }
+  //  ]*/
+  //});
 
-    /* $or: [
-      { status: "public" },
-      { owner: this.userId }
-    ]*/
-  });
+
+
+/*
+  Meteor.publish("scenariosAll", function () {
+    return Scenarios.find({});
+  });*/
+
+//Publish all scenarios from the current user
+Meteor.publish('myScenarios', function(){
+    Mongo.Collection._publishCursor( Scenarios.find({owner: this.userId }), this, 'myScenarios'); 
+    this.ready();
+});
+
+//Publish all scenarios in the database 
+Meteor.publish('scenariosAll', function(){
+    Mongo.Collection._publishCursor( Scenarios.find({}), this, 'scenariosAll'); 
+    this.ready();
+});
+
+
+//Publish info about users
+Meteor.publish('userdata', function() {
+    this.ready();
+    return Meteor.users.findOne({_id: this.userId});
+});
+ 
+Meteor.publish("allUsersList", function(){ 
+  return Meteor.users.find(); 
+})
 
   
 }

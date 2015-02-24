@@ -1,0 +1,50 @@
+<!-- Template for the user profile -->
+<template name="userProfile">
+	<form id="userProfileForm" >
+		This is the user profile template <br/>
+
+		{{#if userLoggedIn}}
+			{{> userDataTemplate}}
+		{{else}}
+			{{> userProfileError}}
+		{{/if}}
+	{{#if currentUser}}
+
+		<p>hola {{username}}</p>
+
+	{{/if}}
+	</form>
+
+</template>
+
+
+<!-- Template with the data associated to this user's profile -->
+<template name="userDataTemplate"> 
+	This is the user data template <br/>
+	{{#if currentUser}}
+		<p>Hello {{username}} {{createdAt}}</p>
+	{{/if}}
+
+</template>
+
+<!-- Template to display error message -->
+<template name="userProfileError">
+	This is the ERROR ERROR ERROR template 
+</template>
+
+<!-- Template to list all users-->
+<template name="userList">
+	<p>Content of the database: Users</p>
+    <ul>
+  	  {{#each usuarios}}
+        {{ > userProf }}
+      {{/each}}
+    </ul>
+</template>
+
+<template name="userProf">
+  <li>
+
+  	<span>username: {{username}}. ID: {{_id}}. Created at: {{createdAt}} </span>
+  </li>
+</template>
