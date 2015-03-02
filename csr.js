@@ -43,6 +43,12 @@ if (Meteor.isClient) {
  
   Meteor.subscribe("allUsersList");
   Meteor.subscribe('userdata');
+  //we may also need 
+  /* Deps.autorun or 
+  Tracker.autorun(function () {
+    Meteor.subscribe("userData");
+    Meteor.subscribe("allUserData");
+});*/
 
 
   //ROUTES
@@ -67,7 +73,7 @@ if (Meteor.isClient) {
         //  Session.set(_SCENARIO_FORM_STEP, _SCENARIO_FORM_STEP_BASIC_INFO);//initialize
         //}
         this.render('NewScenarioForm', {
-          //data : function () { return Scenarios.findOne({_id: "vpsoQ9QkeGBCK9P3N"}) }//just for testing
+          //data : function () { return Scenarios.findOne({_id: "pjK3T4yvryfpcgmvJ"}) },//just for testing
           data : currentScenarioDTO,
           yieldTemplates: {
             'scenarioFormBasicInfo': {to: 'newScenarioStep'}
@@ -84,12 +90,15 @@ if (Meteor.isClient) {
       data: function () { return Scenarios}
       }*/
     );
+    this.route('findByIDTemplate');
+    this.route('findByIDErrorTemplate');
 
     this.route('userList');
     this.route('userProfile' //, {data :function () { return userDTO.findOne({_id: this.userId} ) }}
        //,{data :function () { return Meteor.user()}} //working code
        // , { data: function(){return Meteor.users.findOne()} } //working code 
-      ,{data : function(){ return Meteor.users.findOne() }}
+       ,{data : function(){ return AllTheUsers.findOne() }}
+      //,{data : function(){ return Meteor.users.findOne() }}//working code
       );
     
     //footer
@@ -169,9 +178,9 @@ if (Meteor.isClient) {
  });
 
  Template.userList.helpers({
-    usuarios: function () { return Meteor.users.find(
+    usuarios: function () { //return Meteor.users.find(
       //return AllUsersList.find(
-      //return AllTheUsers.find(
+      return AllTheUsers.find(
       //  {_id: /*'GDpyG7Ytu8urGhAcT'*/ Meteor.userId()}
         );
     },
@@ -338,6 +347,9 @@ Template.NavBar.events({
     }, 
     "click #listUsers" : function(){
       Router.go("userList");
+    }, 
+    "click #findByID" : function(){
+      Router.go("findByIDTemplate");
     }
 });
 
@@ -345,6 +357,27 @@ Template.scenario.events({
   "click .delete": function () {
     console.log("deleting... "+this._id+" "+this.title);
     Meteor.call("deleteScenario", this._id);
+  }
+});
+
+Template.findByIDTemplate.events({
+  //on click the search button
+  "click #searchByIDButton" : function(event, template){
+    //1. validation that the input is valid
+    var scenarioID = template.find("#findByIDbox").value;
+    scenarioID = scenarioID.trim();
+    findByID(scenarioID); 
+  }
+
+});
+
+Template.findByIDErrorTemplate.events({
+  //on click the search button
+  "click #searchByIDButton" : function(event, template){
+    //1. validation that the input is valid
+    var scenarioID = template.find("#findByIDbox").value;
+    scenarioID = scenarioID.trim();
+    findByID(scenarioID);
   }
 });
 
@@ -434,6 +467,34 @@ var hideScenarioFormButtons = function(){
   $('#risksDescription').val("");
  };
 
+//Finds a sceanrio from the current collection by ID
+var findByID = function(scenarioID){
+   //1. validation that the input is valid
+   if(scenarioID==='')
+     alert("The scenario ID can not be empty")
+   else{
+     //2. Search
+     currentScenarioDTO = ScenariosAll.findOne({_id: scenarioID});
+
+     //3. Check authorization: user must be scenario owner or scenario must be "approved"
+     if(currentScenarioDTO===undefined ||
+       currentScenarioDTO.owner != Meteor.userId()){
+       //console.log(JSON.stringify(currentScenarioDTO));
+       Router.go('findByIDErrorTemplate', {scenarioID : scenarioID});
+       //redirect to error page
+     }else{
+       Session.set(_SCENARIO_FORM_STEP, _SCENARIO_FORM_STEP_BASIC_INFO);
+       Router.go("/newScenarioForm", {
+         data : currentScenarioDTO,
+         yieldTemplates: {
+               'scenarioFormBasicInfo': {to: 'newScenarioStep'}
+         }
+       });
+     }
+
+   } 
+ }
+
 }//meteor.isClient
 
 
@@ -507,7 +568,16 @@ Meteor.methods({
           userID : userID
     });
 
-  }
+  },
+
+/*  findByID: function(scnID){
+    var scenario = Scenarios.findOne(scnID);    //fetch
+    if (scenario.owner !== Meteor.userId()) {
+    // If the current user is not thescenario owner
+      throw new Meteor.Error("not-authorized");
+    }
+    return scenario;*/
+
 
 
 });
@@ -551,7 +621,10 @@ Meteor.publish('scenariosAll', function(){
 //Publish info about users
 Meteor.publish('userdata', function() {
     this.ready();
-    return Meteor.users.findOne({_id: this.userId});
+    //return Meteor.users.findOne({_id: this.userId});
+    //XXX This may be causing Exception from sub blablabla Error: Publish function can only return a Cursor or an array of Cursors
+ 
+    return Meteor.users.find(); 
 });
  
 Meteor.publish("allUsersList", function(){ 
