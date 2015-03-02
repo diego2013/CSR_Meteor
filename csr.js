@@ -367,6 +367,8 @@ Template.findByIDTemplate.events({
     var scenarioID = template.find("#findByIDbox").value;
     scenarioID = scenarioID.trim();
     findByID(scenarioID); 
+    //clear
+    template.find("#findByIDbox").value = "";
   }
 
 });
@@ -378,6 +380,8 @@ Template.findByIDErrorTemplate.events({
     var scenarioID = template.find("#findByIDbox").value;
     scenarioID = scenarioID.trim();
     findByID(scenarioID);
+    //clear
+    template.find("#findByIDbox").value = "";
   }
 });
 
