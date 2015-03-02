@@ -20,6 +20,7 @@ var whichOne = 'one';
 //Var
 //content of the ScenarioForm
 var currentScenarioDTO = {title:'', description:''};
+var auxScenarioID;
 
 //Constants
 var _SCENARIO_FORM_STEP = 'SCENARIO_FORM_STEP'; //Step of the scenario submission process
@@ -184,6 +185,13 @@ if (Meteor.isClient) {
       //  {_id: /*'GDpyG7Ytu8urGhAcT'*/ Meteor.userId()}
         );
     },
+ });
+
+ Template.findByIDErrorTemplate.helpers({
+    scenarioID : function(){
+      //return auxScenarioID;
+      return Session.get('auxScenarioID');
+    }
  });
 
 
@@ -483,13 +491,16 @@ var findByID = function(scenarioID){
      //3. Check authorization: user must be scenario owner or scenario must be "approved"
      if(currentScenarioDTO===undefined ||
        currentScenarioDTO.owner != Meteor.userId()){
+       auxScenarioID = scenarioID;
+     Session.set('auxScenarioID', scenarioID);
        //console.log(JSON.stringify(currentScenarioDTO));
-       Router.go('findByIDErrorTemplate', {scenarioID : scenarioID});
+       Router.go('/findByIDErrorTemplate');
+       //Router.go('findByIDErrorTemplate', {data : function() {return scenarioID}});
        //redirect to error page
      }else{
        Session.set(_SCENARIO_FORM_STEP, _SCENARIO_FORM_STEP_BASIC_INFO);
        Router.go("/newScenarioForm", {
-         data : currentScenarioDTO,
+        // data : currentScenarioDTO,
          yieldTemplates: {
                'scenarioFormBasicInfo': {to: 'newScenarioStep'}
          }
