@@ -19,8 +19,7 @@ var whichOne = 'one';
 
 //Var
 //content of the ScenarioForm
-var currentScenarioDTO = {title:'', description:''};
-var auxScenarioID;
+var currentScenarioDTO = {_id: undefined, title:'', description:''};
 
 //Constants
 var _SCENARIO_FORM_STEP = 'SCENARIO_FORM_STEP'; //Step of the scenario submission process
@@ -70,16 +69,12 @@ if (Meteor.isClient) {
 
     this.route('NewScenarioForm' , 
       function ()  {
-        //if(Session.get(_SCENARIO_FORM_STEP)===undefined){
-        //  Session.set(_SCENARIO_FORM_STEP, _SCENARIO_FORM_STEP_BASIC_INFO);//initialize
-        //}
         this.render('NewScenarioForm', {
           //data : function () { return Scenarios.findOne({_id: "pjK3T4yvryfpcgmvJ"}) },//just for testing
           data : currentScenarioDTO,
           yieldTemplates: {
             'scenarioFormBasicInfo': {to: 'newScenarioStep'}
-          }
-          
+          }          
         });
         hideScenarioFormButtons();
       }
@@ -166,6 +161,9 @@ if (Meteor.isClient) {
     isScenarioStep: function(step) {
       var newScenarioStep = Session.get(_SCENARIO_FORM_STEP);
       return step==newScenarioStep;
+    }, 
+    currentScenarioDTO : function(){
+      return Session.get('currentScenarioDTO');
     }
   });
 
@@ -189,7 +187,6 @@ if (Meteor.isClient) {
 
  Template.findByIDErrorTemplate.helpers({
     scenarioID : function(){
-      //return auxScenarioID;
       return Session.get('auxScenarioID');
     }
  });
@@ -233,10 +230,17 @@ if (Meteor.isClient) {
           buttonPressed = "submitScenarioButton";
       }
 
-      console.log("title "+currentScenarioDTO.title+" description "+currentScenarioDTO.description+" Button "+buttonPressed);
-     // Meteor.call("saveScenario", title, description);
-     //Meteor.call("saveScenario", currentScenarioDTO.title, currentScenarioDTO.description);
-     Meteor.call("saveScenario", currentScenarioDTO);
+      //Meteor.call("saveScenario", currentScenarioDTO); //working code
+      Meteor.call("saveScenario", currentScenarioDTO, function(err, callbackScenarioDTO) {
+      //callback function
+          if (err)
+              console.log(err);
+
+          currentScenarioDTO._id = callbackScenarioDTO._id;
+          Session.set('currentScenarioDTO', currentScenarioDTO);
+          Router.go("/newScenarioForm");
+      });
+
     }
     //onClick button change template
     , "click #goToStep1": function(){
@@ -258,6 +262,9 @@ if (Meteor.isClient) {
   
 });
 
+Template.NewScenarioForm._id = function() {
+  return Session.get('q');
+};
 
 
 
@@ -466,17 +473,20 @@ var hideScenarioFormButtons = function(){
 // }
  };
 
- //Cleans the input fields of the new scenario form
+ //Cleans the input fields of the new scenario form as well as the currentScenarioDTO aux var
  var cleanNewScenarioForm = function(){
   //scenarioFormBasicInfo
-  $('#title').val("");
-  $('#description').val("");
+  $('#title').val("");  currentScenarioDTO.title = "";
+  $('#description').val("");  currentScenarioDTO.description = "";
   //scenarioFormAdvancedInfo
   //TODO
   //scenarioFormSolution
-  $('#solutionDescription').val("");
-  $('#benefitsDescription').val("");
-  $('#risksDescription').val("");
+  $('#solutionDescription').val("");  currentScenarioDTO.solutionDescription = "";
+  $('#benefitsDescription').val("");  currentScenarioDTO.benefitsDescription = "";
+  $('#risksDescription').val("");     currentScenarioDTO.risksDescription = "";
+
+  currentScenarioDTO._id = undefined;
+  Session.set("currentScenarioDTO", currentScenarioDTO);
  };
 
 //Finds a sceanrio from the current collection by ID
@@ -491,12 +501,12 @@ var findByID = function(scenarioID){
      //3. Check authorization: user must be scenario owner or scenario must be "approved"
      if(currentScenarioDTO===undefined ||
        currentScenarioDTO.owner != Meteor.userId()){
-       auxScenarioID = scenarioID;
-     Session.set('auxScenarioID', scenarioID);
-       //console.log(JSON.stringify(currentScenarioDTO));
-       Router.go('/findByIDErrorTemplate');
-       //Router.go('findByIDErrorTemplate', {data : function() {return scenarioID}});
-       //redirect to error page
+
+        Session.set('auxScenarioID', scenarioID);
+         //console.log(JSON.stringify(currentScenarioDTO));
+        Router.go('/findByIDErrorTemplate'); //redirect to error page
+        //Router.go('findByIDErrorTemplate', {data : function() {return scenarioID}});
+        
      }else{
        Session.set(_SCENARIO_FORM_STEP, _SCENARIO_FORM_STEP_BASIC_INFO);
        Router.go("/newScenarioForm", {
@@ -541,16 +551,35 @@ Meteor.methods({
     if (! Meteor.userId()) {
       throw new Meteor.Error("not-authorized");
     }
-    //TODO Probably we can distinguish between inserts and updates with the _id property
 
-    Scenarios.insert({
-      title: currentScenarioDTO.title,                     //title of the scenario
-      description: currentScenarioDTO.description,         //description of the scenario
-      createdAt: new Date(),            // current time
-      owner: Meteor.userId(),           // _id of logged in user
-      username: Meteor.user().username  // username of logged in user
-    });
 
+    //distinguish between inserts and updates with the _id property
+    // we could have used the "upsert" modifier of the update
+    if(currentScenarioDTO._id===undefined){
+      //insert
+      currentScenarioDTO.createdAt = new Date();              //current time
+      currentScenarioDTO.modifiededAt =  currentScenarioDTO.createdAt;
+      currentScenarioDTO.owner = Meteor.userId();             // _id of logged in user
+      currentScenarioDTO.username = Meteor.user().username;   // username of logged in user
+/*      var scenarioUID = Scenarios.insert({
+        title: currentScenarioDTO.title,                     //title of the scenario
+        description: currentScenarioDTO.description,         //description of the scenario
+        createdAt: new Date(),            // current time
+        owner: Meteor.userId(),           // _id of logged in user
+        username: Meteor.user().username  // username of logged in user
+       });
+*/
+    var scenarioUID = Scenarios.insert(currentScenarioDTO);
+    currentScenarioDTO._id = scenarioUID;
+
+    }else{
+      //update
+       currentScenarioDTO.modifiededAt = new Date();
+
+       Scenarios.update(currentScenarioDTO._id, currentScenarioDTO)
+    }
+
+    return currentScenarioDTO;
   },
 
 
