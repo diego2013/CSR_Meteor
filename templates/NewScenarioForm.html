@@ -1,7 +1,6 @@
 <!-- Main template for a Scenario -->
 <template name="NewScenarioForm">
   <form id="newScenarioForm" class="new-scenario">
-
     <div class="main">
         {{> Template.dynamic template=newScenarioStep}}
     </div>
@@ -35,10 +34,13 @@
         <li>A brief explanation of an event is enough to describe a scenario. Try to keep information relevant, short and simple. Click o"example" to see an illustrative example on how an actual scenario would complete each field.</li>
         <li>Do not include protected health information. Omit actual names of individuals or institutions.</li>
         <li>Try avoid submitting scenarios redundant to the ones already in the repository.</li>
-        <li>Once you have described the risk to patient safety you are welcome, but not required, to enter some additional information bclicking the "Add Further Details" button.</li>
+        <li>Once you have described the risk to patient safety you are welcome, but not required, to enter some additional information by clicking the "Add Further Details" button.</li>
     </ul>  
 
-{{_id}} <br/>
+
+    {{#if printScnearioMetainfo}}
+        <b>Scenario UID:</b> {{_id}} <b>Saved last:</b> {{formattedModifiedDate}}<br/>
+    {{/if}}
 
     <label>Title</label>
     <textarea type="text" id="title" name="title" rows="1" cols="75" placeholder="Type to add a title">{{title}}</textarea><br/>
@@ -54,7 +56,7 @@
     <ul>
         <li>Add further details about contributing actors or events that happened or could happen in this kind of scenario.</li>
         <li>No fields are mandatory. Complete the information in the tabs that you think is relevant for the case and submit when it is ready.</li>
-        <li>abs can be visited in any order, and not all of them may be need to be visited in order to accurately describe the scenario.</li>
+        <li>Tabs can be visited in any order, and not all of them may be needed to be visited in order to accurately describe the scenario.</li>
     </ul>
     *** Here goes a tabbed panel *** <br/>
     *** This template needs to be completed (Sorry). ***
