@@ -179,15 +179,19 @@ if (Meteor.isClient) {
 
   });
 
-Template.scenarioFormBasicInfo.helpers({
-  //Indicates if the header with the scenario metainfo (UID, Dates) shall be displayed
-    printScnearioMetainfo : function(){
-      var scn = Session.get('currentScenarioDTO');
-      console.log("print scn"+ scn._id +" "+ (scn._id!=undefined));
-      console.log("print DTO"+ currentScenarioDTO._id +" "+ (currentScenarioDTO._id!=undefined));
-      return Session.get('currentScenarioDTO')._id!=undefined;
-    }
-});
+  Template.scenarioFormBasicInfo.helpers({
+    //Indicates if the header with the scenario metainfo (UID, Dates) shall be displayed
+      printScnearioMetainfo : function(){
+        return Session.get('currentScenarioDTO')._id!=undefined;
+      }
+  });
+
+  Template.scenarioFormSolution.helpers({
+    //Indicates if the header with the scenario metainfo (UID, Dates) shall be displayed
+      printScnearioMetainfo : function(){
+        return Session.get('currentScenarioDTO')._id!=undefined;
+      }
+  });
 
  Template.userProfile.helpers({
    userLoggedIn : function(){
@@ -391,6 +395,10 @@ Template.scenario.events({
   "click .delete": function () {
     console.log("deleting... "+this._id+" "+this.title);
     Meteor.call("deleteScenario", this._id);
+  },
+  "click #gothere" : function(event){
+    //find by ID, with the scn ID being in the text of the button just clicked
+    findByID(event.target.innerText);
   }
 });
 
@@ -544,7 +552,7 @@ var findByID = function(scenarioID){
         
      }else{
        Session.set(_SCENARIO_FORM_STEP, _SCENARIO_FORM_STEP_BASIC_INFO);
-       //Session.set("currentScenarioDTO", currentScenarioDTO);
+       Session.set("currentScenarioDTO", currentScenarioDTO);
        Router.go("/newScenarioForm", {
         // data : currentScenarioDTO,
          yieldTemplates: {

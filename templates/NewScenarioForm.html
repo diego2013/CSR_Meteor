@@ -73,8 +73,12 @@
         <li>Discuss or highlight the benefits of your proposed solution or idea.</li>
     </ul>
 
-    <label>Title: </label>
-    <label>{{title}}</label><br/>
+    <label><b>Title: </b></label>
+    <label>{{title}}</label>
+    {{#if printScnearioMetainfo}}
+        <b>Scenario UID:</b> {{_id}} <b>Saved last:</b> {{formattedModifiedDate}}
+    {{/if}}
+    <br/>
 
     <label>Describe Your Good Idea or Solution</label><br/>
     <textarea type="text" id="solutionDescription" rows="1" cols="75" >{{solutionDescription}}</textarea><br/>
