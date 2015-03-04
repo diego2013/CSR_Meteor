@@ -80,7 +80,6 @@ if (Meteor.isClient) {
       function ()  {
         currentScenarioDTO = Session.get("currentScenarioDTO"); 
         this.render('NewScenarioForm', {
-          //data : function () { return Scenarios.findOne({_id: "pjK3T4yvryfpcgmvJ"}) },//just for testing
           data : currentScenarioDTO,
           yieldTemplates: {
             'scenarioFormBasicInfo': {to: 'newScenarioStep'}
@@ -89,6 +88,15 @@ if (Meteor.isClient) {
         hideScenarioFormButtons();
       }
     );
+
+    //Find scenarios using the URL
+    this.route('/NewScenarioForm/:_id', function () {
+      currentScenarioDTO = ScenariosAll.findOne({_id: this.params._id.trim()});
+      //if currentScenarioDTO===undefined redirect to error page instead??
+      Session.set("currentScenarioDTO", currentScenarioDTO);
+      this.render('NewScenarioForm', {data: currentScenarioDTO});
+     // findByID(this.params._id.trim()); //TODO Find out why it doesn't work with this call
+    });
     this.route('new', function(){
       this.render('NewScenarioForm');
     });
@@ -97,6 +105,9 @@ if (Meteor.isClient) {
       }*/
     );
     this.route('findByIDTemplate');
+    this.route('/findByIDTemplate/:_id', function () {
+      findByID(this.params._id);
+    });
     this.route('findByIDErrorTemplate');
 
     this.route('userList');
@@ -540,6 +551,7 @@ var findByID = function(scenarioID){
    else{
      //2. Search
      currentScenarioDTO = ScenariosAll.findOne({_id: scenarioID});
+    // console.log("recovered "+JSON.stringify(currentScenarioDTO));
 
      //3. Check authorization: user must be scenario owner or scenario must be "approved"
      if(currentScenarioDTO===undefined ||
