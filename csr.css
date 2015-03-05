@@ -136,6 +136,10 @@ header .hide-completed {
   }
 }
 
+.allToLeft {
+  float: left;
+  position: relative;
+}
 
 .red-asterisk {
 	color:red;

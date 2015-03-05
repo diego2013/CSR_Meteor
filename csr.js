@@ -691,6 +691,8 @@ Meteor.methods({
 
   deleteScenario: function(scnID){
     var scenario = Scenarios.findOne(scnID);    //fetch
+    console.log("ID "+scnID);
+    console.log(JSON.stringify(scenario));
     if (scenario.owner !== Meteor.userId()) {
     // If the current user is not thescenario owner
       throw new Meteor.Error("not-authorized");

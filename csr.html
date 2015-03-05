@@ -10,8 +10,10 @@
 <header>
   <!--<h1>Clinical Scenario Repository Prototype</h1> -->
 
-  {{> loginButtons}} <!-- TODO: move to the left. Make sure the popup box displays ok -->
+ <!-- TODO: move to the left. Make sure the popup box displays ok -->
+  <span class="allToLeft"> {{> loginButtons}} </span>
   <div>
+
     <table   style="margin-left:auto;margin-right:auto;">
 	    <tr>
 	    <!-- /Users/diego/documents/meteor/csr/img/mdpnp-small.png -->
@@ -22,6 +24,7 @@
 		    <!--<td style="margin-left:auto; padding-left:20px; vertical-align: top;">{{> loginButtons}}</td> -->
 	    </tr>
     </table>
+
     {{> NavBar}}
   </div>
 
@@ -34,9 +37,11 @@
 
 <!-- Template for the navigation buttons -->
 <template name="NavBar">
+
  <div>
     <table  style="margin-left:auto;margin-right:auto; margin-top:5px">
 	    <tr>
+	    
 	    	<td><button type="button"  id="create-new-scn" class="create-new-scn" name="createNewScnButton" title="Create a new Clinical Scenario or Good Idea">Create New Scenario</button></td>
 	    	<td><button type="button" id="list-scn" name="listScnButton" title="Search and list scenarios">Search Scenarios</button></td>
 	    	<td><button type="button" id="findByID" name="findByIDButton" title="Find a scenario by ID">Find by ID</button></td>
@@ -51,7 +56,6 @@
 	</table>
 </div>	
 </template>
-
 
 
 <!-- Template to list all scenarios-->
@@ -70,7 +74,6 @@
   	<span style="line-height: 30px" > <b>created by:</b> {{username}}. <button id="gothere" class="other" name={{_id}}>Visit Scenario</button> <b>UID:</b> {{_id}} <b> Saved last:</b> {{formattedModifiedDate}}  <b>Title:</b> {{title}} <b>Descrp:</b>   {{description}} <b>Status: </b> {{status}}</span>
   </li>
 </template>
-
 
 
 <template name="complexLayout">
