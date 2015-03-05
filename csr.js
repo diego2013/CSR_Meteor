@@ -218,6 +218,12 @@ if (Meteor.isClient) {
           return false;
         else
           return Session.get('currentScenarioDTO')._id!=undefined;
+      },
+      editableScn : function(){
+        if(Session.get('currentScenarioDTO')==undefined)
+          return true;
+        else
+          return Session.get('currentScenarioDTO').status==scenarioStatusEnum.UNSUBMITTED;
       }
   });
 
@@ -503,6 +509,7 @@ var trimInput = function(val) {
 // in which we are by changing the button class.
 var hideScenarioFormButtons = function(){
 
+//1. Navigation buttons
 //remove the hiddenButton class from all three buttons
   $("#goToStep1").removeClass("hiddenButton");
   $("#goToStep2").removeClass("hiddenButton");
@@ -522,6 +529,14 @@ var hideScenarioFormButtons = function(){
   }else //default
     $("#goToStep1").addClass("hiddenButton");
  
+ //   //2. Save and Submit buttons
+ //   if(Session.get('currentScenarioDTO')==undefined ||
+ //        Session.get('currentScenarioDTO').status==scenarioStatusEnum.UNSUBMITTED){
+ //      $("#saveScenarioButton").removeClass("hiddenButton");
+ //   }else{
+ //    $("#saveScenarioButton").addClass("hiddenButton");
+ //   }
+
  };
 
  //sets the variable currentScenarioDTO with the information from the templates
