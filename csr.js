@@ -293,11 +293,7 @@ if (Meteor.isClient) {
       } else if (event.target.id == "submitScenarioButton") {
           // Submit the scenario
           //1. Offer disclaimer
-          var agrees = window.confirm("Here goes the disclaimer");
-          if(agrees)
-            console.log("Si, quiero");
-          else
-            console.log("No, ni muerto");
+          Router.go('scenarioFormSubmitConfirmation');
 
           //2. if disclaimer is accepted, SAVE and submit (update scenario status)
       }
@@ -430,7 +426,7 @@ Template.scenario.events({
   },
   "click #gothere" : function(event){
     //find by ID, with the scn ID being in the text of the button just clicked
-    findByID(event.target.innerText);
+    findByID(event.target.name);
   }
 });
 
