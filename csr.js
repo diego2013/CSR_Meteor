@@ -111,7 +111,14 @@ if (Meteor.isClient) {
     this.route('new', function(){
       this.render('NewScenarioForm');
     });
-    this.route('scenarioFormSubmitConfirmation');
+    this.route('scenarioFormSubmitConfirmation',  function () {
+        currentScenarioDTO = Session.get("currentScenarioDTO"); 
+        this.render('scenarioFormSubmitConfirmation', { data : currentScenarioDTO } );
+      });
+    this.route('scenarioFormThankYou',  function () {
+       currentScenarioDTO = Session.get("currentScenarioDTO"); 
+      this.render('scenarioFormThankYou', { data : currentScenarioDTO } );
+    });
 
     this.route('scenarioList' /*, {
       data: function () { return Scenarios}
@@ -292,10 +299,7 @@ if (Meteor.isClient) {
           });
       } else if (event.target.id == "submitScenarioButton") {
           // Submit the scenario
-          //1. Offer disclaimer
           Router.go('scenarioFormSubmitConfirmation');
-
-          //2. if disclaimer is accepted, SAVE and submit (update scenario status)
       }
 
     }
@@ -320,7 +324,33 @@ if (Meteor.isClient) {
 });
 
 
+Template.scenarioFormSubmitConfirmation.events({
 
+  "click #declineSubmit": function(){
+      Router.go("NewScenarioForm");//redirect to the Scenario Form
+  },
+  "click #acceptSubmit": function(event, template){
+    var acceptChecked = $("#acceptanceCheck").prop("checked");
+    if(acceptChecked){
+      //1. save (persist) scenario
+      //2. redirect to thank you page (on callback)
+      currentScenarioDTO = Session.get('currentScenarioDTO');
+      currentScenarioDTO.status = scenarioStatusEnum.SUBMITTED;
+      Meteor.call("saveScenario", currentScenarioDTO, function(err, callbackScenarioDTO) {
+          //callback function
+             if (err){
+                console.log(err);
+                //redirect to "Sorry the wasa problem - retry page"
+             }
+            currentScenarioDTO = callbackScenarioDTO;
+            Session.set('currentScenarioDTO', currentScenarioDTO);
+            Router.go("scenarioFormThankYou");//2. redirect to thank you page (on callback)
+          });  
+    }else{
+      window.alert("Mark that you have understood the Clinical Scenario Repository policies to submit you scenario");
+    }
+  }
+});
 
 Template.FeedbackForm.events({
 
@@ -384,7 +414,7 @@ Template.Post.events({
   
 });
 
-
+//Events on the navigation bar
 Template.NavBar.events({
     "click #create-new-scn": function () {
       Session.set(_SCENARIO_FORM_STEP, _SCENARIO_FORM_STEP_BASIC_INFO);
@@ -495,7 +525,6 @@ var hideScenarioFormButtons = function(){
  };
 
  //sets the variable currentScenarioDTO with the information from the templates
- //XXX TODO
  var collectScenarioInfo = function(){
   // Collects data from the form into an object
   if(Session.get(_SCENARIO_FORM_STEP) === _SCENARIO_FORM_STEP_BASIC_INFO){
@@ -507,41 +536,23 @@ var hideScenarioFormButtons = function(){
     currentScenarioDTO.risksDescription = $("#risksDescription").val();
   }
 
-  //Session.set("currentScenarioDTO", currentScenarioDTO);//DAG
+  Session.set("currentScenarioDTO", currentScenarioDTO);
   //return currentScenarioDTO;
-
-// console.log("template name "+template.id);
-// if(template === undefined){
-//   return myScenarioDto;
-// }else{
-
-//   console.log($('#titleRemainder').val());
-//   var title = template.find("#title").value; //$('#title').val(),
-//   var description = template.find("#description").value;
-//   //should use myScenarioDTO?
-//   var scenarioDto = {
-//     title : title,
-//     description : description
-// 
-//   };
-//   console.log("title: "+scenarioDto.title+" description: "+scenarioDto.description);
-//   myScenarioDto = scenarioDto;
-//   return scenarioDto;
-// }
  };
 
  //Cleans the input fields of the new scenario form as well as the currentScenarioDTO aux var
  var cleanNewScenarioForm = function(){
 
-  var auxCopy = {
+  var newCleanScenarioDTO = {
     title : '',
     description : '',
     solutionDescription : '',
     benefitsDescription : '',
-    risksDescription : ''
+    risksDescription : '',
+    status : scenarioStatusEnum.UNSUBMITTED //new
 
   };
-  currentScenarioDTO = auxCopy;
+  currentScenarioDTO = newCleanScenarioDTO;
   //this copy of a new object is to force the creation of a new DTO that
   // does not have an _Id. This way, we won't need to overwrite the one
   // the DTO has and create a problem for Meteor Mongo inserts
@@ -636,7 +647,7 @@ Meteor.methods({
       currentScenarioDTO.modifiedAt =  currentScenarioDTO.createdAt;
       currentScenarioDTO.owner = Meteor.userId();             // _id of logged in user
       currentScenarioDTO.username = Meteor.user().username;   // username of logged in user
-      currentScenarioDTO.status = scenarioStatusEnum.UNSUBMITTED;
+      //currentScenarioDTO.status = scenarioStatusEnum.UNSUBMITTED;
       currentScenarioDTO.formattedModifiedDate = currentScenarioDTO.modifiedAt.toString().substring(0, 24);
 /*      var scenarioUID = Scenarios.insert({
         title: currentScenarioDTO.title,                     //title of the scenario
