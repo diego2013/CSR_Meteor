@@ -92,14 +92,27 @@ if (Meteor.isClient) {
     //Find scenarios using the URL
     this.route('/NewScenarioForm/:_id', function () {
       currentScenarioDTO = ScenariosAll.findOne({_id: this.params._id.trim()});
-      //if currentScenarioDTO===undefined redirect to error page instead??
-      Session.set("currentScenarioDTO", currentScenarioDTO);
+      console.log(JSON.stringify(currentScenarioDTO));
+     
       this.render('NewScenarioForm', {data: currentScenarioDTO});
+       Session.set("currentScenarioDTO", currentScenarioDTO);
+      
+     // console.log(currentScenarioDTO===undefined)
+//
+     // if (currentScenarioDTO===undefined){
+     //   Session.set('auxScenarioID', this.params._id.trim());
+     //   Router.go('/findByIDErrorTemplate'); //redirect to error page
+     // }else{
+     //   Session.set("currentScenarioDTO", currentScenarioDTO);
+     //   this.render('NewScenarioForm', {data: currentScenarioDTO});
+     // }
      // findByID(this.params._id.trim()); //TODO Find out why it doesn't work with this call
     });
     this.route('new', function(){
       this.render('NewScenarioForm');
     });
+    this.route('scenarioFormSubmitConfirmation');
+
     this.route('scenarioList' /*, {
       data: function () { return Scenarios}
       }*/
@@ -192,15 +205,23 @@ if (Meteor.isClient) {
 
   Template.scenarioFormBasicInfo.helpers({
     //Indicates if the header with the scenario metainfo (UID, Dates) shall be displayed
+    // It will in case the currentScenarioDTO in session has a valid _id
       printScnearioMetainfo : function(){
-        return Session.get('currentScenarioDTO')._id!=undefined;
+        if(Session.get('currentScenarioDTO')==undefined)
+          return false;
+        else
+          return Session.get('currentScenarioDTO')._id!=undefined;
       }
   });
 
   Template.scenarioFormSolution.helpers({
     //Indicates if the header with the scenario metainfo (UID, Dates) shall be displayed
+    // It will in case the currentScenarioDTO in session has a valid _id
       printScnearioMetainfo : function(){
-        return Session.get('currentScenarioDTO')._id!=undefined;
+        if(Session.get('currentScenarioDTO')==undefined)
+          return false;
+        else
+          return Session.get('currentScenarioDTO')._id!=undefined;
       }
   });
 
@@ -575,7 +596,6 @@ var findByID = function(scenarioID){
 
    } 
  }
-
 
 
 
