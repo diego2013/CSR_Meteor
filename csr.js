@@ -721,6 +721,7 @@ var updateHarzardList = function(){
 
     var _hazardDescription = $("#hazardDescription").val();
     var _hazardRisk = $("#hazardRisk").val();
+    console.log(_hazardRisk);
     var _hazardSeverity = $("#hazardSeverity").val();
     if(_hazardDescription.trim()!= ''){
       var listItem = {
@@ -737,8 +738,8 @@ var updateHarzardList = function(){
     }
     //clear form
     $("#hazardDescription").val('');
-    $("#hazardRisk").val('');
-    $("#hazardSeverity").val('');
+    //$("#hazardRisk").val('');
+    //$("#hazardSeverity").val('');
 
     return hazardEntryList
 
