@@ -20,6 +20,7 @@ var whichOne = 'one';
 //Var
 //content of the ScenarioForm
 var currentScenarioDTO = { /*_id: undefined,*/ title:'', description:''};
+var hazardEntryList;
 
 //Constants
 var _SCENARIO_FORM_STEP = 'SCENARIO_FORM_STEP'; //Step of the scenario submission process
@@ -28,7 +29,12 @@ var _SCENARIO_FORM_STEP_ADVANCED_INFO = 'SCENARIO_FORM_STEP_ADVANCED_INFO';
 var _SCENARIO_FORM_STEP_SOLUTION = 'SCENARIO_FORM_STEP_SOLUTION'; 
 var _SCENARIO_FORM_STEP_BASIC_INFO_templateName = "scenarioFormBasicInfo"; 
 var _SCENARIO_FORM_STEP_ADVANCED_INFO_templateName = "scenarioFormAdvancedInfo"; 
-var _SCENARIO_FORM_STEP_SOLUTION_templateName = "scenarioFormSolution"; 
+var _SCENARIO_FORM_STEP_SOLUTION_templateName = "scenarioFormSolution";
+
+//Scenario form step 2: Advanced Details
+var _ADVANCEDDETAILS_TAB = 'ADVANCEDDETAILS_TAB'; 
+var _ADT_HAZARDS_templateName = "advancedDetailsHazards"; 
+var _ADT_EQUIPMENT_templateName = "advancedDetailsEquipment"; 
 
 //Scenario states for governance
 var scenarioStatusEnum = {
@@ -238,6 +244,34 @@ if (Meteor.isClient) {
       }
   });
 
+  Template.scenarioFormAdvancedInfo.helpers({
+        //Indicates if the header with the scenario metainfo (UID, Dates) shall be displayed
+    // It will in case the currentScenarioDTO in session has a valid _id
+      printScnearioMetainfo : function(){
+        if(Session.get('currentScenarioDTO')==undefined)
+          return false;
+        else
+          return Session.get('currentScenarioDTO')._id!=undefined;
+      },
+      advancedDetailsTemplateName : function(){
+        var _advancedDetailsTemplateName = Session.get(_ADVANCEDDETAILS_TAB);
+        if(_advancedDetailsTemplateName==undefined)
+          return _ADT_HAZARDS_templateName;
+        else
+          return _advancedDetailsTemplateName;
+      }
+  });
+
+  Template.advancedDetailsHazards.helpers({
+    hazardEntryList : function(){
+      currentScenarioDTO = Session.get('currentScenarioDTO')
+      if(currentScenarioDTO===undefined)
+        return [];
+      else
+        return currentScenarioDTO.hazardEntryList;
+    } 
+});
+
  Template.userProfile.helpers({
    userLoggedIn : function(){
      return Meteor.userId();
@@ -318,6 +352,7 @@ if (Meteor.isClient) {
     , "click #goToStep2": function(){
       collectScenarioInfo();
       Session.set(_SCENARIO_FORM_STEP, _SCENARIO_FORM_STEP_ADVANCED_INFO);
+      Session.set(_ADVANCEDDETAILS_TAB, _ADT_HAZARDS_templateName);
       hideScenarioFormButtons();
     }
     , "click #goToStep3": function(event, template){
@@ -326,9 +361,39 @@ if (Meteor.isClient) {
       hideScenarioFormButtons();
     }
 
-  
 });
 
+Template.scenarioFormAdvancedInfo.events({
+      //onClick button dinamically change template
+      "click #hazardsButton": function(){
+     // collectScenarioInfo();
+      Session.set(_ADVANCEDDETAILS_TAB, _ADT_HAZARDS_templateName);
+     // hideScenarioFormButtons();
+    }
+    , "click #equipmentButton": function(){
+     // collectScenarioInfo();
+      Session.set(_ADVANCEDDETAILS_TAB, _ADT_EQUIPMENT_templateName);
+     // hideScenarioFormButtons();
+    }
+});
+
+//hazardEntryList
+Template.advancedDetailsHazards.events({
+  "click #addNewHazard": function(){
+    hazardEntryList = updateHarzardList();
+    currentScenarioDTO.hazardEntryList = hazardEntryList;
+    Session.set("currentScenarioDTO", currentScenarioDTO);
+  },
+  "click #deleteHazard" : function(event){
+    event.preventDefault();
+    currentScenarioDTO =  Session.get("currentScenarioDTO");
+    hazardEntryList = currentScenarioDTO.hazardEntryList;
+    //find and delete by index
+    hazardEntryList = deleteFromArrayByID(this.id, hazardEntryList)
+    currentScenarioDTO.hazardEntryList = currentScenarioDTO.hazardEntryList;
+    Session.set("currentScenarioDTO", currentScenarioDTO);
+  }
+});
 
 Template.scenarioFormSubmitConfirmation.events({
 
@@ -542,6 +607,9 @@ var hideScenarioFormButtons = function(){
  //sets the variable currentScenarioDTO with the information from the templates
  var collectScenarioInfo = function(){
   // Collects data from the form into an object
+  //console.log("_SCENARIO_FORM_STEP: " + Session.get(_SCENARIO_FORM_STEP) );
+
+
   if(Session.get(_SCENARIO_FORM_STEP) === _SCENARIO_FORM_STEP_BASIC_INFO){
     currentScenarioDTO.title = $('#title').val();
     currentScenarioDTO.description = $("#description").val();
@@ -549,9 +617,22 @@ var hideScenarioFormButtons = function(){
     currentScenarioDTO.solutionDescription = $('#solutionDescription').val();
     currentScenarioDTO.benefitsDescription = $("#benefitsDescription").val();
     currentScenarioDTO.risksDescription = $("#risksDescription").val();
+  } else if(Session.get(_SCENARIO_FORM_STEP) === _SCENARIO_FORM_STEP_ADVANCED_INFO){
+    //determine in which subpanel we are
+    //console.log("_ADVANCEDDETAILS_TAB: "+ Session.get(_ADVANCEDDETAILS_TAB));
+    currentScenarioDTO =  Session.get("currentScenarioDTO");
+    hazardEntryList = currentScenarioDTO.hazardEntryList;
+
+    if(Session.get(_ADVANCEDDETAILS_TAB) === _ADT_HAZARDS_templateName){
+      hazardEntryList = updateHarzardList();
+      currentScenarioDTO.hazardEntryList = hazardEntryList;
+    }
+
+    //console.log(JSON.stringify(currentScenarioDTO));
   }
 
   Session.set("currentScenarioDTO", currentScenarioDTO);
+
   //return currentScenarioDTO;
  };
 
@@ -564,7 +645,8 @@ var hideScenarioFormButtons = function(){
     solutionDescription : '',
     benefitsDescription : '',
     risksDescription : '',
-    status : scenarioStatusEnum.UNSUBMITTED //new
+    status : scenarioStatusEnum.UNSUBMITTED, //new
+    hazardEntryList : [] //new empty "list"
 
   };
   currentScenarioDTO = newCleanScenarioDTO;
@@ -586,7 +668,7 @@ var hideScenarioFormButtons = function(){
   Session.set("currentScenarioDTO", currentScenarioDTO);
  };
 
-//Finds a sceanrio from the current collection by ID
+//Finds a scennrio from the current collection by ID
 var findByID = function(scenarioID){
    //1. validation that the input is valid
    if(scenarioID==='')
@@ -619,6 +701,49 @@ var findByID = function(scenarioID){
    } 
  }
 
+//deletes the element with the given ID from the array
+var deleteFromArrayByID = function(ID, array){
+  for(var i = 0; i<array.length; i++){
+    listItem = array[i];
+    if(listItem.id !=undefined && listItem.id===ID){
+      array.splice(i, 1);
+    }
+  }
+  return array;
+}
+
+//reads the hazard description that is in the form and returns the 
+// updated hazards list
+var updateHarzardList = function(){
+  
+    currentScenarioDTO = Session.get("currentScenarioDTO");
+    hazardEntryList = currentScenarioDTO.hazardEntryList;
+
+    var _hazardDescription = $("#hazardDescription").val();
+    var _hazardRisk = $("#hazardRisk").val();
+    var _hazardSeverity = $("#hazardSeverity").val();
+    if(_hazardDescription.trim()!= ''){
+      var listItem = {
+        hazardDescription : _hazardDescription,
+        hazardRisk : _hazardRisk,
+        hazardSeverity : _hazardSeverity,
+        id :  hazardEntryList.length
+      }
+
+      console.log("Added "+JSON.stringify(listItem));
+  
+      hazardEntryList[hazardEntryList.length] = listItem;
+      //currentScenarioDTO.hazardEntryList = hazardEntryList;
+    }
+    //clear form
+    $("#hazardDescription").val('');
+    $("#hazardRisk").val('');
+    $("#hazardSeverity").val('');
+
+    return hazardEntryList
+
+    //Session.set("currentScenarioDTO", currentScenarioDTO);
+}
 
 
 }//meteor.isClient

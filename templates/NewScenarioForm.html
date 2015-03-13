@@ -62,8 +62,23 @@
         <li>No fields are mandatory. Complete the information in the tabs that you think is relevant for the case and submit when it is ready.</li>
         <li>Tabs can be visited in any order, and not all of them may be needed to be visited in order to accurately describe the scenario.</li>
     </ul>
-    *** Here goes a tabbed panel *** <br/>
-    *** This template needs to be completed (Sorry). ***
+
+    {{#if printScnearioMetainfo}}
+        <b>Scenario UID:</b> {{_id}} <b>Saved last:</b> {{formattedModifiedDate}}<br/>
+    {{/if}}
+
+    <div>
+        <table>
+            <tr>
+                <td><button type="button" id="hazardsButton" title="check Hazards tab">Hazards</button></td>
+                <td><button type="button" id="equipmentButton" title="check Equipment tab">Equipment</button></td>
+            </tr>
+        </table>
+    </div>
+    
+    <div class="main">
+        {{> Template.dynamic template=advancedDetailsTemplateName}}
+    </div>
 </template>
 
 <!-- Template for the Third step of the New Scenario submission: Solution -->
@@ -142,5 +157,55 @@ I understand that I, the scenario submitter, am the ultimate resposible for the 
     <b>{{_id}}</b>
 
     <p>Please, consider <a href="{{ pathFor 'FeedbackForm' }}">taking a brief survey </a> about your experience using this tool to help imporving this Clinical Scenario Repository.</p>
+
+</template>
+
+<!-- Template for step 2: advanced details: Hazards-->
+<template name="advancedDetailsHazards" >
+    <p>Describe current or possible risks to patient safety</p>
+
+    <table border="1">
+        <tr>
+            <td>Description</td>
+            <td>Expected risks</td>
+            <td>Severity</td>
+        </tr>
+        <tr>
+        
+            <td><textarea type="text" id="hazardDescription" rows="1" cols="10" placeholder="Type to add a Description" ></textarea></td>
+            <td><input id="hazardRisk" type="text" /></td>
+            <td><input id="hazardSeverity" type="text" /></td>         
+        </tr>
+    </table>
+
+    <button type="button" id="addNewHazard" >Add Another Hazard Description</button>
+
+    <table border="1">
+        <tr>
+            <td>Description</td>
+            <td>Expected risks</td>
+            <td>Severity</td>
+        </tr>
+        {{#each hazardEntryList}}
+            {{> hazardEntry}}
+        {{/each}}
+    </table>
+
+</template>
+
+<template name="hazardEntry">
+    <tr>
+    <td><label>{{hazardDescription}}</label></td>
+    <td><label>{{hazardRisk}}</label></td>
+    <td><label>{{hazardSeverity}}</label></td>
+    <!--<td><label>{{id}}</label></td>-->
+    <td> <button id="deleteHazard">Delete</button></td>
+    </tr>
+    
+</template>
+
+<!-- Template for step 2: advanced details: Equipment-->
+<template name="advancedDetailsEquipment" >
+    This is the <b>Equipment</b> template.
 
 </template>
