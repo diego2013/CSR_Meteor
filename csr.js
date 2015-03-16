@@ -35,6 +35,8 @@ var _SCENARIO_FORM_STEP_SOLUTION_templateName = "scenarioFormSolution";
 var _ADVANCEDDETAILS_TAB = 'ADVANCEDDETAILS_TAB'; 
 var _ADT_HAZARDS_templateName = "advancedDetailsHazards"; 
 var _ADT_EQUIPMENT_templateName = "advancedDetailsEquipment"; 
+var _ADT_LESSONSLEARNED_templateName = "advancedDetailsLessonsLearned"; 
+                                        
 
 //Scenario states for governance
 var scenarioStatusEnum = {
@@ -219,7 +221,7 @@ if (Meteor.isClient) {
   Template.scenarioFormBasicInfo.helpers({
     //Indicates if the header with the scenario metainfo (UID, Dates) shall be displayed
     // It will in case the currentScenarioDTO in session has a valid _id
-      printScnearioMetainfo : function(){
+      printScenarioMetainfo : function(){
         if(Session.get('currentScenarioDTO')==undefined)
           return false;
         else
@@ -236,7 +238,7 @@ if (Meteor.isClient) {
   Template.scenarioFormSolution.helpers({
     //Indicates if the header with the scenario metainfo (UID, Dates) shall be displayed
     // It will in case the currentScenarioDTO in session has a valid _id
-      printScnearioMetainfo : function(){
+      printScenarioMetainfo : function(){
         if(Session.get('currentScenarioDTO')==undefined)
           return false;
         else
@@ -247,7 +249,7 @@ if (Meteor.isClient) {
   Template.scenarioFormAdvancedInfo.helpers({
         //Indicates if the header with the scenario metainfo (UID, Dates) shall be displayed
     // It will in case the currentScenarioDTO in session has a valid _id
-      printScnearioMetainfo : function(){
+      printScenarioMetainfo : function(){
         if(Session.get('currentScenarioDTO')==undefined)
           return false;
         else
@@ -375,6 +377,12 @@ Template.scenarioFormAdvancedInfo.events({
       Session.set(_ADVANCEDDETAILS_TAB, _ADT_EQUIPMENT_templateName);
      // hideScenarioFormButtons();
     }
+    , "click #LessonsLearnedButton": function(){
+     // collectScenarioInfo();
+      Session.set(_ADVANCEDDETAILS_TAB, _ADT_LESSONSLEARNED_templateName);
+     // hideScenarioFormButtons();
+    }    
+
 });
 
 //hazardEntryList

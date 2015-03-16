@@ -38,7 +38,7 @@
     </ul>  
 
 
-    {{#if printScnearioMetainfo}}
+    {{#if printScenarioMetainfo}}
         <b>Scenario UID:</b> {{_id}} <b>Saved last:</b> {{formattedModifiedDate}}<br/>
     {{/if}}
 
@@ -63,7 +63,7 @@
         <li>Tabs can be visited in any order, and not all of them may be needed to be visited in order to accurately describe the scenario.</li>
     </ul>
 
-    {{#if printScnearioMetainfo}}
+    {{#if printScenarioMetainfo}}
         <b>Scenario UID:</b> {{_id}} <b>Saved last:</b> {{formattedModifiedDate}}<br/>
     {{/if}}
 
@@ -72,6 +72,7 @@
             <tr>
                 <td><button type="button" id="hazardsButton" title="check Hazards tab">Hazards</button></td>
                 <td><button type="button" id="equipmentButton" title="check Equipment tab">Equipment</button></td>
+                <td><button type="button" id="LessonsLearnedButton" title="check Lessons Learned tab">Lessons Learned</button></td>
             </tr>
         </table>
     </div>
@@ -94,7 +95,7 @@
 
     <label><b>Title: </b></label>
     <label>{{title}}</label>
-    {{#if printScnearioMetainfo}}
+    {{#if printScenarioMetainfo}}
         <b>Scenario UID:</b> {{_id}} <b>Saved last:</b> {{formattedModifiedDate}}
     {{/if}}
     <br/>
@@ -224,5 +225,18 @@ I understand that I, the scenario submitter, am the ultimate resposible for the 
 <!-- Template for step 2: advanced details: Equipment-->
 <template name="advancedDetailsEquipment" >
     This is the <b>Equipment</b> template.
+
+</template>
+
+<!-- Template for step 2: advanced details: Lessons Learned-->
+<template name="advancedDetailsLessonsLearned" >
+    <p>What can be learned from this scenario?</p>
+    <textarea type="text" id="lesson" rows="4" cols="75" placeholder="Describe what can be learned from this scenario" >{{lessonsLearned}}</textarea><br/>
+    Do you think this incident could have been prevented or mitigated through better technology?
+    <select id="preventable">
+        <option value ="notSure" autofocus>I am not sure</option>   
+        <option value ="yes">Yes</option>   
+        <option value ="no">No</option>      
+    </select>
 
 </template>
