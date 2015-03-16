@@ -39,7 +39,7 @@
 
 
     {{#if printScenarioMetainfo}}
-        <b>Scenario UID:</b> {{_id}} <b>Saved last:</b> {{formattedModifiedDate}}<br/>
+        <b>Scenario UID:</b> {{_id}} <b>Saved last:</b> {{formatDate createdAt}}<br/>
     {{/if}}
 
     <label>Title</label>
@@ -64,7 +64,7 @@
     </ul>
 
     {{#if printScenarioMetainfo}}
-        <b>Scenario UID:</b> {{_id}} <b>Saved last:</b> {{formattedModifiedDate}}<br/>
+        <b>Scenario UID:</b> {{_id}} <b>Saved last:</b> {{formatDate createdAt}}<br/>
     {{/if}}
 
     <div>
@@ -96,7 +96,7 @@
     <label><b>Title: </b></label>
     <label>{{title}}</label>
     {{#if printScenarioMetainfo}}
-        <b>Scenario UID:</b> {{_id}} <b>Saved last:</b> {{formattedModifiedDate}}
+        <b>Scenario UID:</b> {{_id}} <b>Saved last:</b> {{formatDate createdAt}}
     {{/if}}
     <br/>
 

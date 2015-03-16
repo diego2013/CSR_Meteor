@@ -274,15 +274,6 @@ if (Meteor.isClient) {
     } 
   });
 
-  /*Template.advancedDetailsLessonsLearned.helpers({
-    optionSelectedNotSure : function(){
-      return currentScenarioDTO.preventable == "notSure";
-    },    optionSelectedYes : function(){
-      return currentScenarioDTO.preventable == "yes";
-    },    optionSelectedNo: function(){
-      return currentScenarioDTO.preventable == "no";
-    }
-  });*/
 
  Template.userProfile.helpers({
    userLoggedIn : function(){
@@ -575,9 +566,21 @@ Template.findByIDErrorTemplate.events({
   }
 });
 
+/*
+Returns if the provided option selected in the template is the one that the DTO currently holds
+*/
 UI.registerHelper('selectedLessonLearned', function( value){
   return currentScenarioDTO.preventable == value? {selected:'selected'}: '';
 });
+
+/* Formats a Date using moment.js
+//https://atmospherejs.com/momentjs/moment
+// $ meteor add momentjs:moment
+*/
+UI.registerHelper('formatDate', function(date) {
+  return moment(date).format('MM-DD-YYYY, hh:mm:ss');
+});
+
 
 //To configure the accounts UI to use usernames instead of email addresses
 Accounts.ui.config({
@@ -818,25 +821,13 @@ Meteor.methods({
       currentScenarioDTO.owner = Meteor.userId();             // _id of logged in user
       currentScenarioDTO.username = Meteor.user().username;   // username of logged in user
       //currentScenarioDTO.status = scenarioStatusEnum.UNSUBMITTED;
-      currentScenarioDTO.formattedModifiedDate = currentScenarioDTO.modifiedAt.toString().substring(0, 24);
-/*      var scenarioUID = Scenarios.insert({
-        title: currentScenarioDTO.title,                     //title of the scenario
-        description: currentScenarioDTO.description,         //description of the scenario
-        createdAt: new Date(),            // current time
-        owner: Meteor.userId(),           // _id of logged in user
-        username: Meteor.user().username  // username of logged in user
-       });
-
-*/
-
-    var scenarioUID = Scenarios.insert(currentScenarioDTO);
-    currentScenarioDTO._id = scenarioUID;
+    
+      var scenarioUID = Scenarios.insert(currentScenarioDTO);
+      currentScenarioDTO._id = scenarioUID;
 
     }else{
       //update
        currentScenarioDTO.modifiedAt = new Date();
-       currentScenarioDTO.formattedModifiedDate = currentScenarioDTO.modifiedAt.toString().substring(0, 24);
-
        Scenarios.update(currentScenarioDTO._id, currentScenarioDTO)
     }
 
