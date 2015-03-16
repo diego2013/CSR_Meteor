@@ -272,7 +272,17 @@ if (Meteor.isClient) {
       else
         return currentScenarioDTO.hazardEntryList;
     } 
-});
+  });
+
+  /*Template.advancedDetailsLessonsLearned.helpers({
+    optionSelectedNotSure : function(){
+      return currentScenarioDTO.preventable == "notSure";
+    },    optionSelectedYes : function(){
+      return currentScenarioDTO.preventable == "yes";
+    },    optionSelectedNo: function(){
+      return currentScenarioDTO.preventable == "no";
+    }
+  });*/
 
  Template.userProfile.helpers({
    userLoggedIn : function(){
@@ -565,6 +575,10 @@ Template.findByIDErrorTemplate.events({
   }
 });
 
+UI.registerHelper('selectedLessonLearned', function( value){
+  return currentScenarioDTO.preventable == value? {selected:'selected'}: '';
+});
+
 //To configure the accounts UI to use usernames instead of email addresses
 Accounts.ui.config({
   passwordSignupFields: "USERNAME_ONLY"
@@ -636,9 +650,12 @@ var hideScenarioFormButtons = function(){
       currentScenarioDTO.hazardEntryList = hazardEntryList;
     }
 
-    //console.log(JSON.stringify(currentScenarioDTO));
+    currentScenarioDTO.lessonsLearned = $('#lesson').val();
+    currentScenarioDTO.preventable = $('#preventable').val();
+
   }
 
+ //console.log(JSON.stringify(currentScenarioDTO));
   Session.set("currentScenarioDTO", currentScenarioDTO);
 
   //return currentScenarioDTO;
@@ -654,7 +671,9 @@ var hideScenarioFormButtons = function(){
     benefitsDescription : '',
     risksDescription : '',
     status : scenarioStatusEnum.UNSUBMITTED, //new
-    hazardEntryList : [] //new empty "list"
+    lessonsLearned : '',  //scenarioFormAdvancedInfo.LeesonsLearned
+    preventable : '',     //scenarioFormAdvancedInfo.preventable
+    hazardEntryList : []  //new empty "list"
 
   };
   currentScenarioDTO = newCleanScenarioDTO;
@@ -672,6 +691,8 @@ var hideScenarioFormButtons = function(){
   $('#solutionDescription').val("");  //currentScenarioDTO.solutionDescription = "";
   $('#benefitsDescription').val("");  //currentScenarioDTO.benefitsDescription = "";
   $('#risksDescription').val("");     //currentScenarioDTO.risksDescription = "";
+
+  $('#lesson').val("");
   
   Session.set("currentScenarioDTO", currentScenarioDTO);
  };
