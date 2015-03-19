@@ -26,6 +26,9 @@
   </form>
 </template>
 
+<!-- Templates to move between the different scenario submission steps -->
+<!-- ================================================================= -->
+
 <!-- Template for the first step of the New Scenario submission: Basic info -->
 <template name="scenarioFormBasicInfo">
         
@@ -70,9 +73,10 @@
     <div>
         <table>
             <tr>
-                <td><button type="button" id="hazardsButton" title="check Hazards tab">Hazards</button></td>
-                <td><button type="button" id="equipmentButton" title="check Equipment tab">Equipment</button></td>
-                <td><button type="button" id="LessonsLearnedButton" title="check Lessons Learned tab">Lessons Learned</button></td>
+                <td><button type="button" id="hazardsButton" title="check the Hazards tab">Hazards</button></td>
+                <td><button type="button" id="equipmentButton" title="check the Equipment tab">Equipment</button></td>
+                <td><button type="button" id="lessonsLearnedButton" title="check the Lessons Learned tab">Lessons Learned</button></td>
+                <td><button type="button" id="referencesButton" title="check the References tab">Relevant references</button></td>
             </tr>
         </table>
     </div>
@@ -161,6 +165,9 @@ I understand that I, the scenario submitter, am the ultimate resposible for the 
 
 </template>
 
+<!-- Templates for step 2: advanced details: -->
+<!-- ======================================= -->
+
 <!-- Template for step 2: advanced details: Hazards-->
 <template name="advancedDetailsHazards" >
     <p>Describe current or possible risks to patient safety</p>
@@ -211,6 +218,7 @@ I understand that I, the scenario submitter, am the ultimate resposible for the 
 
 </template>
 
+<!-- Template ot display the info of a single hazard-->
 <template name="hazardEntry">
     <tr>
     <td><label>{{hazardDescription}}</label></td>
@@ -218,8 +226,7 @@ I understand that I, the scenario submitter, am the ultimate resposible for the 
     <td><label>{{hazardSeverity}}</label></td>
     <!--<td><label>{{id}}</label></td>-->
     <td> <button id="deleteHazard">Delete</button></td>
-    </tr>
-    
+    </tr>   
 </template>
 
 <!-- Template for step 2: advanced details: Equipment-->
@@ -228,7 +235,7 @@ I understand that I, the scenario submitter, am the ultimate resposible for the 
 
 </template>
 
-<!-- Template for step 2: advanced details: Lessons Learned-->
+<!-- Template for step : advanced details: Lessons Learned-->
 <template name="advancedDetailsLessonsLearned" >
     <p>What can be learned from this scenario?</p>
     <textarea type="text" id="lesson" rows="4" cols="75" placeholder="Describe what can be learned from this scenario" >{{lessonsLearned}}</textarea><br/>
@@ -239,4 +246,48 @@ I understand that I, the scenario submitter, am the ultimate resposible for the 
         <option value ="no" {{selectedLessonLearned "no"}}>No</option>      
     </select>
 
+</template>
+
+<!-- Template for step : advanced details: Relevant References-->
+<template name="advancedDetailsReferences">
+ <p>Add any relevant online references to this scenario (FDA or Maude reports, articles or white papers, pieces of software and/or other documentation) </p>
+
+ <table>
+     <tr>
+        <th></th>
+        <th>URL of the reference</th>
+        <th>Relevance</th>
+     </tr>
+     <tr>
+         <td><select id="referenceUrlProtocol" >
+             <option value ="http://">http</option>
+             <option value ="https://">https</option>
+         </select></td>
+         <td><textarea type="text" id="referenceUrl" rows="1" cols="35" placeholder="Type the reference url" ></textarea></td>
+         <textarea type="text" id="referenceRelevance" rows="3" cols="40" placeholder="Briefly describe why is important or relevant" ></textarea>
+     </tr>
+
+ </table>
+
+ <button type="button" id="addNewReference" >Add Another Reference</button>
+
+ <table border="1">
+     <tr>
+         <th>URL of the reference</th>
+         <th>Relevance</th>
+     </tr>
+     {{#each referenceEntryList}}
+         {{> referenceEntry}}
+     {{/each}}
+ </table>
+
+</template>
+
+<!-- Template to disply the info of a single reference-->
+<template name="referenceEntry">
+    <tr>
+    <td><a href="{{referenceUrl}}" target="_blank">{{referenceUrl}}</a></td>
+    <td><label>{{referenceRelevance}}</label></td>
+    <td> <button id="deleteReference">Delete</button></td>
+    </tr>   
 </template>

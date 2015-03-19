@@ -35,7 +35,10 @@ var _SCENARIO_FORM_STEP_SOLUTION_templateName = "scenarioFormSolution";
 var _ADVANCEDDETAILS_TAB = 'ADVANCEDDETAILS_TAB'; 
 var _ADT_HAZARDS_templateName = "advancedDetailsHazards"; 
 var _ADT_EQUIPMENT_templateName = "advancedDetailsEquipment"; 
+var _ADT_ROLES_templateName = "advancedDetailsRoles"; 
+var _ADT_PLACES_templateName = "advancedDetailsPlaces"; 
 var _ADT_LESSONSLEARNED_templateName = "advancedDetailsLessonsLearned"; 
+var _ADT_REFERENCES_templateName = "advancedDetailsReferences"; 
                                         
 
 //Scenario states for governance
@@ -69,6 +72,7 @@ if (Meteor.isClient) {
 
 
   //ROUTES
+  //====================================================================
 
   //global Router option to use a default layout template for all routes 
   Router.configure({
@@ -168,7 +172,9 @@ if (Meteor.isClient) {
 
 
 
-  //HELPERS
+  //HELPERS Template helpers
+  //======================================================================
+
   Template.scenarioList.helpers({
     scenarios: function () {
       //return Scenarios.find({}, {sort: {createdAt: -1}});
@@ -274,6 +280,16 @@ if (Meteor.isClient) {
     } 
   });
 
+  Template.advancedDetailsReferences.helpers({
+    referenceEntryList : function(){
+      currentScenarioDTO = Session.get('currentScenarioDTO')
+      if(currentScenarioDTO===undefined)
+        return [];
+      else
+        return currentScenarioDTO.referenceEntryList;
+    } 
+  });
+
 
  Template.userProfile.helpers({
    userLoggedIn : function(){
@@ -299,9 +315,28 @@ if (Meteor.isClient) {
     }
  });
 
+ //OTHER HELPERS
+ //============================================================================================
+
+/*
+Returns if the provided option selected in the template is the one that the DTO currently holds
+*/
+UI.registerHelper('selectedLessonLearned', function( value){
+  return currentScenarioDTO.preventable == value? {selected:'selected'}: '';
+});
+
+/* Formats a Date using moment.js
+//https://atmospherejs.com/momentjs/moment
+// $ meteor add momentjs:moment
+*/
+UI.registerHelper('formatDate', function(date) {
+  return moment(date).format('MM-DD-YYYY, hh:mm:ss');
+});
 
 
-  //EVENTS
+
+  //EVENTS Template events
+  //============================================================================
   Template.NewScenarioForm.events({
 
   //"click #newScenarioForm": function(event) {
@@ -378,11 +413,16 @@ Template.scenarioFormAdvancedInfo.events({
       Session.set(_ADVANCEDDETAILS_TAB, _ADT_EQUIPMENT_templateName);
      // hideScenarioFormButtons();
     }
-    , "click #LessonsLearnedButton": function(){
+    , "click #lessonsLearnedButton": function(){
      // collectScenarioInfo();
       Session.set(_ADVANCEDDETAILS_TAB, _ADT_LESSONSLEARNED_templateName);
      // hideScenarioFormButtons();
     }    
+    , "click #referencesButton": function(){
+     // collectScenarioInfo();
+      Session.set(_ADVANCEDDETAILS_TAB, _ADT_REFERENCES_templateName);
+     // hideScenarioFormButtons();
+    }  
 
 });
 
@@ -400,6 +440,24 @@ Template.advancedDetailsHazards.events({
     //find and delete by index
     hazardEntryList = deleteFromArrayByID(this.id, hazardEntryList)
     currentScenarioDTO.hazardEntryList = currentScenarioDTO.hazardEntryList;
+    Session.set("currentScenarioDTO", currentScenarioDTO);
+  }
+});
+
+//referencesEntryList
+Template.advancedDetailsReferences.events({
+  "click #addNewReference": function(){
+    referenceEntryList = updateReferenceList();
+    currentScenarioDTO.referenceEntryList = referenceEntryList;
+    Session.set("currentScenarioDTO", currentScenarioDTO);
+  },
+  "click #deleteReference" : function(event){
+    event.preventDefault();
+    currentScenarioDTO =  Session.get("currentScenarioDTO");
+    referenceEntryList = currentScenarioDTO.referenceEntryList;
+    //find and delete by index
+    referenceEntryList = deleteFromArrayByID(this.id, referenceEntryList)
+    currentScenarioDTO.referenceEntryList = currentScenarioDTO.referenceEntryList;
     Session.set("currentScenarioDTO", currentScenarioDTO);
   }
 });
@@ -566,21 +624,9 @@ Template.findByIDErrorTemplate.events({
   }
 });
 
-/*
-Returns if the provided option selected in the template is the one that the DTO currently holds
-*/
-UI.registerHelper('selectedLessonLearned', function( value){
-  return currentScenarioDTO.preventable == value? {selected:'selected'}: '';
-});
 
-/* Formats a Date using moment.js
-//https://atmospherejs.com/momentjs/moment
-// $ meteor add momentjs:moment
-*/
-UI.registerHelper('formatDate', function(date) {
-  return moment(date).format('MM-DD-YYYY, hh:mm:ss');
-});
-
+//OTHER CLINET FUNCTIONS
+//========================================================================
 
 //To configure the accounts UI to use usernames instead of email addresses
 Accounts.ui.config({
@@ -588,8 +634,11 @@ Accounts.ui.config({
 });
 
 
-//Aux functions  
-// trim whitespace helper
+//AUX FUNCTIONS
+//=========================================================================
+
+
+// trim whitespace helper function
 var trimInput = function(val) {
   return val.replace(/^\s*|\s*$/g, "");
 }
@@ -653,6 +702,10 @@ var hideScenarioFormButtons = function(){
       currentScenarioDTO.hazardEntryList = hazardEntryList;
     }
 
+    //if we are in this panel?
+    referenceEntryList = updateReferenceList();
+    currentScenarioDTO.referenceEntryList = referenceEntryList;
+
     currentScenarioDTO.lessonsLearned = $('#lesson').val();
     currentScenarioDTO.preventable = $('#preventable').val();
 
@@ -676,7 +729,8 @@ var hideScenarioFormButtons = function(){
     status : scenarioStatusEnum.UNSUBMITTED, //new
     lessonsLearned : '',  //scenarioFormAdvancedInfo.LeesonsLearned
     preventable : '',     //scenarioFormAdvancedInfo.preventable
-    hazardEntryList : []  //new empty "list"
+    hazardEntryList : [],       //new empty "list"
+    referenceEntryList : []     //new empty "list"
 
   };
   currentScenarioDTO = newCleanScenarioDTO;
@@ -753,7 +807,6 @@ var updateHarzardList = function(){
 
     var _hazardDescription = $("#hazardDescription").val();
     var _hazardRisk = $("#hazardRisk").val();
-    console.log(_hazardRisk);
     var _hazardSeverity = $("#hazardSeverity").val();
     if(_hazardDescription.trim()!= ''){
       var listItem = {
@@ -762,49 +815,54 @@ var updateHarzardList = function(){
         hazardSeverity : _hazardSeverity,
         id :  hazardEntryList.length
       }
-
-      console.log("Added "+JSON.stringify(listItem));
   
       hazardEntryList[hazardEntryList.length] = listItem;
       //currentScenarioDTO.hazardEntryList = hazardEntryList;
     }
     //clear form
     $("#hazardDescription").val('');
-    //$("#hazardRisk").val('');
-    //$("#hazardSeverity").val('');
 
     return hazardEntryList
+}
 
-    //Session.set("currentScenarioDTO", currentScenarioDTO);
+
+//reads the reference description that is in the advancedDetailsReferences template
+// and updates the references list
+var updateReferenceList = function(){
+
+    currentScenarioDTO = Session.get("currentScenarioDTO");
+    referenceEntryList = currentScenarioDTO.referenceEntryList;
+
+    var _referenceUrlProtocol = $("#referenceUrlProtocol").val();
+    var _referenceUrl = $("#referenceUrl").val();
+    var _referenceRelevance = $("#referenceRelevance").val();
+    if(_referenceUrl.trim() != ""){
+      var listItem = {
+        referenceUrl : _referenceUrlProtocol + _referenceUrl,
+        referenceRelevance : _referenceRelevance,
+        id : referenceEntryList.length
+      }
+      referenceEntryList[referenceEntryList.length] = listItem;
+    }
+
+    //clean form 
+    $("#referenceUrlProtocol").val("http://");
+    $("#referenceUrl").val('');
+    $("#referenceRelevance").val('');
+
+    return referenceEntryList;
 }
 
 
 }//meteor.isClient
 
 
+//COMMON METHODS 
+//======================================================================================
 
 Meteor.methods({
 
   //persist an scenario
-  //save-insert
-  /*saveScenario: function(title, description){
-    // Make sure the user is logged in before allowing manipulating a scenario
-    if (! Meteor.userId()) {
-      throw new Meteor.Error("not-authorized");
-    }
-    console.log("inserting scn "+title);
-    //TODO Probably we can distinguish between inserts and updates with the _id property
-
-    Scenarios.insert({
-      title: title,                     //title of the scenario
-      description: description,         //description of the scenario
-      createdAt: new Date(),            // current time
-      owner: Meteor.userId(),           // _id of logged in user
-      username: Meteor.user().username  // username of logged in user
-    });
-
-  },*/
-
   saveScenario: function(currentScenarioDTO){
     // Make sure the user is logged in before allowing manipulating a scenario
     if (! Meteor.userId()) {
@@ -834,7 +892,7 @@ Meteor.methods({
     return currentScenarioDTO;
   },
 
-
+  //delete a scenario
   deleteScenario: function(scnID){
     var scenario = Scenarios.findOne(scnID);    //fetch
     console.log("ID "+scnID);
@@ -846,7 +904,7 @@ Meteor.methods({
     Scenarios.remove(scnID);
   },
 
-  //Feedback
+  //save Feedback entry
   saveFeedback : function (feedbackDto){
 
     var username =Meteor.userId()?Meteor.user().username :"anonymous";
@@ -882,6 +940,8 @@ Meteor.methods({
 
 
 //SERVER SIDE
+//======================================================================
+
 if (Meteor.isServer) {
   Meteor.startup(function () {
     // code to run on server at startup
