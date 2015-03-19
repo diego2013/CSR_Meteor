@@ -70,6 +70,14 @@ if (Meteor.isClient) {
     Meteor.subscribe("allUserData");
 });*/
 
+/*Deps.autorun(function(){
+  if(Meteor.userId()){
+    console.log("User Logged in");
+  }else{
+    console.log("user not logged in");
+  }
+});*/
+
 
   //ROUTES
   //====================================================================
@@ -104,21 +112,9 @@ if (Meteor.isClient) {
     //Find scenarios using the URL
     this.route('/NewScenarioForm/:_id', function () {
       currentScenarioDTO = ScenariosAll.findOne({_id: this.params._id.trim()});
-      console.log(JSON.stringify(currentScenarioDTO));
-     
       this.render('NewScenarioForm', {data: currentScenarioDTO});
-       Session.set("currentScenarioDTO", currentScenarioDTO);
+      Session.set("currentScenarioDTO", currentScenarioDTO);
       
-     // console.log(currentScenarioDTO===undefined)
-//
-     // if (currentScenarioDTO===undefined){
-     //   Session.set('auxScenarioID', this.params._id.trim());
-     //   Router.go('/findByIDErrorTemplate'); //redirect to error page
-     // }else{
-     //   Session.set("currentScenarioDTO", currentScenarioDTO);
-     //   this.render('NewScenarioForm', {data: currentScenarioDTO});
-     // }
-     // findByID(this.params._id.trim()); //TODO Find out why it doesn't work with this call
     });
     this.route('new', function(){
       this.render('NewScenarioForm');
@@ -589,7 +585,6 @@ Template.NavBar.events({
 
 Template.scenario.events({
   "click .delete": function () {
-    console.log("deleting... "+this._id+" "+this.title);
     Meteor.call("deleteScenario", this._id);
   },
   "click #gothere" : function(event){
@@ -895,8 +890,8 @@ Meteor.methods({
   //delete a scenario
   deleteScenario: function(scnID){
     var scenario = Scenarios.findOne(scnID);    //fetch
-    console.log("ID "+scnID);
-    console.log(JSON.stringify(scenario));
+    //console.log("ID "+scnID);
+    //console.log(JSON.stringify(scenario));
     if (scenario.owner !== Meteor.userId()) {
     // If the current user is not thescenario owner
       throw new Meteor.Error("not-authorized");
