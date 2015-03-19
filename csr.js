@@ -71,6 +71,7 @@ if (Meteor.isClient) {
 });*/
 
 /*Deps.autorun(function(){
+  //useful to know if the user just logged in or out
   if(Meteor.userId()){
     console.log("User Logged in");
   }else{
@@ -112,9 +113,13 @@ if (Meteor.isClient) {
     //Find scenarios using the URL
     this.route('/NewScenarioForm/:_id', function () {
       currentScenarioDTO = ScenariosAll.findOne({_id: this.params._id.trim()});
-      this.render('NewScenarioForm', {data: currentScenarioDTO});
-      Session.set("currentScenarioDTO", currentScenarioDTO);
-      
+      if(currentScenarioDTO===undefined || currentScenarioDTO.owner != Meteor.userId()){
+        Session.set('auxScenarioID', this.params._id);
+        this.render('/findByIDErrorTemplate');
+      }else{
+        this.render('NewScenarioForm', {data: currentScenarioDTO});
+        Session.set("currentScenarioDTO", currentScenarioDTO);
+      }      
     });
     this.route('new', function(){
       this.render('NewScenarioForm');
