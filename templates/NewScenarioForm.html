@@ -77,6 +77,7 @@
                 <td><button type="button" id="equipmentButton" title="check the Equipment tab">Equipment</button></td>
                 <td><button type="button" id="lessonsLearnedButton" title="check the Lessons Learned tab">Lessons Learned</button></td>
                 <td><button type="button" id="rolesButton" title="check the Roles Involved tab">Roles Involved</button></td>
+                <td><button type="button" id="environmentsButton" title="check the Environments Involved tab">Environments Involved</button></td>
                 <td><button type="button" id="referencesButton" title="check the References tab">Relevant references</button></td>
             </tr>
         </table>
@@ -363,5 +364,67 @@ I understand that I, the scenario submitter, am the ultimate resposible for the 
     <tr>
         <td>{{role}}</td>
         <td> <button type="button" id="deleteRole">Delete</button></td>
+    </tr>
+</template>
+
+<!-- Template for step : advanced details: Environments -->
+<template name="advancedDetailsEnvironments">
+
+    <p>Add further details about the places where this scenario can take place.</p>
+
+    Choose a clinical environment from this list
+    <select id="clinicalEnvironment">
+        <option value='Acute assessment unit'>Acute assessment unit</option>
+        <option value='Ambulatory wing'>Ambulatory wing</option>
+        <option value='Birthing Room/LDR Room/LDRP Room'>Birthing Room/LDR Room/LDRP Room</option>
+        <option value='Breast screening unit'>Breast screening unit</option>
+        <option value='Burn Care Unit'>Burn Care Unit</option>
+        <option value='Cafeteria'>Cafeteria</option>
+        <option value='CCU-cardiac care unit'>CCU-cardiac care unit</option>
+        <option value='Delivery room'>Delivery room</option>
+        <option value='Discharge lounge'>Discharge lounge</option>
+        <option value='Discharge unit'>Discharge unit</option>
+        <option value='ENT-Ear nose and throat'>ENT-Ear nose and throat</option>
+        <option value='ER-emergency room'>ER-emergency room</option>
+        <option value='Geriatrics'>Geriatrics</option>
+        <option value='Hospital room'>Hospital room</option>
+        <option value='ICU-intensive care unit'>ICU-intensive care unit</option>
+        <option value='Lab/pathology'>Lab/pathology</option>
+        <option value='Maternity wards'>Maternity wards</option>
+        <option value='Neonatal unit'>Neonatal unit</option>
+        <option value='Nurse station'>Nurse station</option>
+        <option value='On-call room'>On-call room</option>
+        <option value='OR-operating room'>OR-operating room</option>
+        <option value='Patient bay'>Patient bay</option>
+        <option value='Pediatrics'>Pediatrics</option>
+        <option value='Physical therapy/rehab dept'>Physical therapy/rehab dept</option>
+        <option value='Post surgical care unit'>Post surgical care unit</option>
+        <option value='Psychiatric ward'>Psychiatric ward</option>
+        <option value='Radiology/imaging'>Radiology/imaging</option>
+        <option value='Renal unit'>Renal unit</option>
+        <option value='Telemetry'>Telemetry</option>
+        <option value='Transport'>Transport</option>
+        <option value='Trauma center'>Trauma center</option>
+        <option value='Ultrasound Unit'>Ultrasound Unit</option>
+        <option value='Volunteers room'>Volunteers room</option>
+        <option value='Waiting room'>Waiting room</option>
+        <option value='Wound Care Unit'>Wound Care Unit</option>
+    </select>
+
+    <button type="button" id="addPlace">Add Environment</button>
+
+    <table>
+        {{#each environmentEntryList}}
+            {{> environmentEntry}}
+        {{/each}}
+        <tr></tr>
+    </table>
+</template>
+
+<!-- Template to display the info of a single reference-->
+<template name="environmentEntry">
+    <tr>
+        <td>{{place}}</td>
+        <td> <button type="button" id="deletePlace">Delete</button></td>
     </tr>
 </template>

@@ -36,7 +36,7 @@ var _ADVANCEDDETAILS_TAB = 'ADVANCEDDETAILS_TAB';
 var _ADT_HAZARDS_templateName = "advancedDetailsHazards"; 
 var _ADT_EQUIPMENT_templateName = "advancedDetailsEquipment"; 
 var _ADT_ROLES_templateName = "advancedDetailsRoles"; 
-var _ADT_PLACES_templateName = "advancedDetailsPlaces"; 
+var _ADT_PLACES_templateName = "advancedDetailsEnvironments"; 
 var _ADT_LESSONSLEARNED_templateName = "advancedDetailsLessonsLearned"; 
 var _ADT_REFERENCES_templateName = "advancedDetailsReferences"; 
                                         
@@ -310,6 +310,16 @@ if (Meteor.isClient) {
     } 
   });
 
+  Template.advancedDetailsEnvironments.helpers({
+    environmentEntryList : function(){
+      currentScenarioDTO = Session.get('currentScenarioDTO')
+      if(currentScenarioDTO===undefined)
+        return [];
+      else
+        return currentScenarioDTO.environmentEntryList;
+    } 
+  });
+
   Template.advancedDetailsRoles.helpers({
     roleEntryList : function(){
       currentScenarioDTO = Session.get('currentScenarioDTO')
@@ -458,6 +468,11 @@ Template.scenarioFormAdvancedInfo.events({
       Session.set(_ADVANCEDDETAILS_TAB, _ADT_ROLES_templateName);
      // hideScenarioFormButtons();
     }  
+    , "click #environmentsButton": function(){
+     // collectScenarioInfo();
+      Session.set(_ADVANCEDDETAILS_TAB, _ADT_PLACES_templateName);
+     // hideScenarioFormButtons();
+    }  
 
 });
 
@@ -509,7 +524,22 @@ Template.advancedDetailsRoles.events({
     roleEntryList = currentScenarioDTO.roleEntryList;
     //find and delete by index
     roleEntryList = deleteFromArrayByID(this.id, roleEntryList)
-    currentScenarioDTO.roleEntryList = currentScenarioDTO.roleEntryList;
+    currentScenarioDTO.roleEntryList = roleEntryList;
+    Session.set("currentScenarioDTO", currentScenarioDTO);
+  }
+});
+
+Template.advancedDetailsEnvironments.events({
+  "click #addPlace": function(){
+    currentScenarioDTO.environmentEntryList = updateEnvironmentList();
+    Session.set("currentScenarioDTO", currentScenarioDTO);
+  },
+  "click #deletePlace" : function(event){
+    //event.preventDefault();
+    currentScenarioDTO =  Session.get("currentScenarioDTO");
+    environmentEntryList = currentScenarioDTO.environmentEntryList;
+    //find and delete by index
+    currentScenarioDTO.environmentEntryList = deleteFromArrayByID(this.id, environmentEntryList);
     Session.set("currentScenarioDTO", currentScenarioDTO);
   }
 });
@@ -760,6 +790,9 @@ var hideScenarioFormButtons = function(){
     currentScenarioDTO.lessonsLearned = $('#lesson').val();
     currentScenarioDTO.preventable = $('#preventable').val();
 
+   // currentScenarioDTO.roleEntryList = updateRoleList();
+   // currentScenarioDTO.environmentEntryList = updateEnvironmentList();
+
   }
 
  //console.log(JSON.stringify(currentScenarioDTO));
@@ -782,7 +815,8 @@ var hideScenarioFormButtons = function(){
     preventable : '',     //scenarioFormAdvancedInfo.preventable
     hazardEntryList : [],       //new empty "list"
     referenceEntryList : [],    //new empty "list"
-    roleEntryList : []         //new empty "list"
+    roleEntryList : [],               //new empty "list"
+    environmentEntryList : []         //new empty "list"
 
   };
   currentScenarioDTO = newCleanScenarioDTO;
@@ -915,6 +949,18 @@ var updateRoleList = function(){
    roleEntryList[roleEntryList.length] = item;
    
    return roleEntryList;
+}
+
+//reads the Environments Involved panel and updates the clinical environments list
+var updateEnvironmentList = function(){
+   currentScenarioDTO = Session.get("currentScenarioDTO");
+   environmentEntryList = currentScenarioDTO.environmentEntryList;
+
+   var place = $("#clinicalEnvironment").val();
+   item = {place : place, id : environmentEntryList.length};
+   environmentEntryList[environmentEntryList.length] = item;
+   
+   return environmentEntryList;
 }
 
 
