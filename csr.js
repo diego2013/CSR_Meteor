@@ -73,6 +73,7 @@ if (Meteor.isClient) {
 /*Deps.autorun(function(){
   //useful to know if the user just logged in or out
   if(Meteor.userId()){
+    if currentScenario is unsubmitted and has no owner --> change to this owner
     console.log("User Logged in");
   }else{
     console.log("user not logged in");
@@ -113,13 +114,31 @@ if (Meteor.isClient) {
     //Find scenarios using the URL
     this.route('/NewScenarioForm/:_id', function () {
       currentScenarioDTO = ScenariosAll.findOne({_id: this.params._id.trim()});
+      //check if is a valid scenario or user has permission to see it
+/* IMPROVEMENT. Allows to show scenarios tht have been approved
+      if(currentScenarioDTO===undefined){
+        Session.set('auxScenarioID', this.params._id);
+        this.render('/findByIDErrorTemplate');
+      }else if(currentScenarioDTO.owner != Meteor.userId()){
+        if(currentScenarioDTO.status == scenarioStatusEnum.APPROVED){
+            this.render('NewScenarioForm', {data: currentScenarioDTO});
+            Session.set("currentScenarioDTO", currentScenarioDTO);
+        }else{
+            Session.set('auxScenarioID', this.params._id);
+            this.render('/findByIDErrorTemplate');
+        }
+      }else{
+            this.render('NewScenarioForm', {data: currentScenarioDTO});
+            Session.set("currentScenarioDTO", currentScenarioDTO);
+      }
+*/
       if(currentScenarioDTO===undefined || currentScenarioDTO.owner != Meteor.userId()){
         Session.set('auxScenarioID', this.params._id);
         this.render('/findByIDErrorTemplate');
       }else{
         this.render('NewScenarioForm', {data: currentScenarioDTO});
         Session.set("currentScenarioDTO", currentScenarioDTO);
-      }      
+      }     
     });
     this.route('new', function(){
       this.render('NewScenarioForm');
@@ -291,6 +310,16 @@ if (Meteor.isClient) {
     } 
   });
 
+  Template.advancedDetailsRoles.helpers({
+    roleEntryList : function(){
+      currentScenarioDTO = Session.get('currentScenarioDTO')
+      if(currentScenarioDTO===undefined)
+        return [];
+      else
+        return currentScenarioDTO.roleEntryList;
+    } 
+  });
+
 
  Template.userProfile.helpers({
    userLoggedIn : function(){
@@ -424,6 +453,11 @@ Template.scenarioFormAdvancedInfo.events({
       Session.set(_ADVANCEDDETAILS_TAB, _ADT_REFERENCES_templateName);
      // hideScenarioFormButtons();
     }  
+    , "click #rolesButton": function(){
+     // collectScenarioInfo();
+      Session.set(_ADVANCEDDETAILS_TAB, _ADT_ROLES_templateName);
+     // hideScenarioFormButtons();
+    }  
 
 });
 
@@ -459,6 +493,23 @@ Template.advancedDetailsReferences.events({
     //find and delete by index
     referenceEntryList = deleteFromArrayByID(this.id, referenceEntryList)
     currentScenarioDTO.referenceEntryList = currentScenarioDTO.referenceEntryList;
+    Session.set("currentScenarioDTO", currentScenarioDTO);
+  }
+});
+
+Template.advancedDetailsRoles.events({
+  "click #addActor": function(){
+    roleEntryList = updateRoleList();
+    currentScenarioDTO.roleEntryList = roleEntryList;
+    Session.set("currentScenarioDTO", currentScenarioDTO);
+  },
+  "click #deleteRole" : function(event){
+    //event.preventDefault();
+    currentScenarioDTO =  Session.get("currentScenarioDTO");
+    roleEntryList = currentScenarioDTO.roleEntryList;
+    //find and delete by index
+    roleEntryList = deleteFromArrayByID(this.id, roleEntryList)
+    currentScenarioDTO.roleEntryList = currentScenarioDTO.roleEntryList;
     Session.set("currentScenarioDTO", currentScenarioDTO);
   }
 });
@@ -730,7 +781,8 @@ var hideScenarioFormButtons = function(){
     lessonsLearned : '',  //scenarioFormAdvancedInfo.LeesonsLearned
     preventable : '',     //scenarioFormAdvancedInfo.preventable
     hazardEntryList : [],       //new empty "list"
-    referenceEntryList : []     //new empty "list"
+    referenceEntryList : [],    //new empty "list"
+    roleEntryList : []         //new empty "list"
 
   };
   currentScenarioDTO = newCleanScenarioDTO;
@@ -851,6 +903,18 @@ var updateReferenceList = function(){
     $("#referenceRelevance").val('');
 
     return referenceEntryList;
+}
+
+//reads the Roles Involved panel and updates the clinical roles list
+var updateRoleList = function(){
+   currentScenarioDTO = Session.get("currentScenarioDTO");
+   roleEntryList = currentScenarioDTO.roleEntryList;
+
+   var role = $("#clinicalRole").val();
+   item = {role : role, id : roleEntryList.length};
+   roleEntryList[roleEntryList.length] = item;
+   
+   return roleEntryList;
 }
 
 
