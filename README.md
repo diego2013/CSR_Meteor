@@ -1,7 +1,7 @@
 Clinical Scenario Repository
 ============================
 
-The Clinical Scenario Repository © or CSR © is a web tool that will allow clinicians, clinical engineers and other professionals to document and share technological barriers, near misses and other clinical events that pose a threat to patient safety as well as potential solutions for these threats and simple good ideas to improve patient safety.
+The Clinical Scenario Repository <sup>©</sup> or CSR <sup>©</sup> is a web tool that will allow clinicians, clinical engineers and other professionals to document and share technological barriers, near misses and other clinical events that pose a threat to patient safety as well as potential solutions for these threats and simple good ideas to improve patient safety.
 
 The Clinical Scenario Repository is developed by the [Medical Device 'Plug and Play' Program][1].
 
