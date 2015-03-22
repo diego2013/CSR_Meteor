@@ -233,8 +233,52 @@ I understand that I, the scenario submitter, am the ultimate resposible for the 
 
 <!-- Template for step 2: advanced details: Equipment-->
 <template name="advancedDetailsEquipment" >
-    This is the <b>Equipment</b> template.
+    <p>Add further details about related/involved hardware</p>
 
+    <table>
+        <tr>
+            <th><label>Device Type</label></th>
+            <th><label>Manufacturer</label></th>
+            <th><label>Model</label></th>
+            <th><label>Rosetta - Unique ID</label></th>
+        </tr>
+        <tr>
+        <td><textarea type="text" id="deviceType" rows="1" cols="15" placeholder="Type to add a device type" ></textarea></td>
+        <td><textarea type="text" id="deviceManufacturer" rows="1" cols="15" placeholder="Type to add a device manufacturer" ></textarea></td>
+        <td><textarea type="text" id="deviceModel" rows="1" cols="15" placeholder="Type to add a device model" ></textarea></td>
+        <td><textarea type="text" id="deviceRosetta" rows="1" cols="15" placeholder="Type to add the device's unique ID" ></textarea></td>
+            
+        </tr>
+        
+    </table>
+
+    <button type="button" id="addNewEquipment" >Add Another Equipment Description</button>
+
+    <table border="1">
+        <tr>
+            <th><label>Device Type</label></th>
+            <th><label>Manufacturer</label></th>
+            <th><label>Model</label></th>
+            <th><label>Rosetta - Unique ID</label></th>
+        </tr>
+        {{#each equipmentEntryList}}
+            {{> equipmentEntry}}
+        {{/each}}
+    </table>  
+
+</template>
+
+<template name="equipmentEntry">
+
+    <tr>
+    <td><label>{{deviceType}}</label></td>
+    <td><label>{{manufacturer}}</label></td>
+    <td><label>{{model}}</label></td>
+    <td><label>{{rosetta}}</label></td>
+    <!--<td><label>{{id}}</label></td>-->
+    <td> <button type="button" id="deleteEquipment">Delete</button></td>
+    </tr>  
+  
 </template>
 
 <!-- Template for step : advanced details: Lessons Learned-->

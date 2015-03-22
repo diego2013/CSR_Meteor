@@ -300,6 +300,16 @@ if (Meteor.isClient) {
     } 
   });
 
+  Template.advancedDetailsEquipment.helpers({
+    equipmentEntryList : function(){
+      currentScenarioDTO = Session.get('currentScenarioDTO')
+      if(currentScenarioDTO===undefined)
+        return [];
+      else
+        return currentScenarioDTO.equipmentEntryList;
+    } 
+  });
+
   Template.advancedDetailsReferences.helpers({
     referenceEntryList : function(){
       currentScenarioDTO = Session.get('currentScenarioDTO')
@@ -490,6 +500,22 @@ Template.advancedDetailsHazards.events({
     //find and delete by index
     hazardEntryList = deleteFromArrayByID(this.id, hazardEntryList)
     currentScenarioDTO.hazardEntryList = currentScenarioDTO.hazardEntryList;
+    Session.set("currentScenarioDTO", currentScenarioDTO);
+  }
+});
+
+//equipmentEntryList
+Template.advancedDetailsEquipment.events({
+  "click #addNewEquipment": function(){
+    currentScenarioDTO.equipmentEntryList = updateEquipmentList();
+    Session.set("currentScenarioDTO", currentScenarioDTO);
+  },
+  "click #deleteEquipment" : function(event){
+    event.preventDefault();
+    currentScenarioDTO =  Session.get("currentScenarioDTO");
+    equipmentEntryList = currentScenarioDTO.equipmentEntryList;
+    //find and delete by index
+    currentScenarioDTO.equipmentEntryList = deleteFromArrayByID(this.id, equipmentEntryList)
     Session.set("currentScenarioDTO", currentScenarioDTO);
   }
 });
@@ -816,7 +842,8 @@ var hideScenarioFormButtons = function(){
     hazardEntryList : [],       //new empty "list"
     referenceEntryList : [],    //new empty "list"
     roleEntryList : [],               //new empty "list"
-    environmentEntryList : []         //new empty "list"
+    environmentEntryList : [],        //new empty "list"
+    equipmentEntryList : []           //new empty "list"
 
   };
   currentScenarioDTO = newCleanScenarioDTO;
@@ -909,6 +936,37 @@ var updateHarzardList = function(){
     $("#hazardDescription").val('');
 
     return hazardEntryList
+}
+
+//reads the equipment description that is in the form and returns the 
+// updated equipment list
+var updateEquipmentList = function(){
+  
+    currentScenarioDTO = Session.get("currentScenarioDTO");
+    equipmentEntryList = currentScenarioDTO.equipmentEntryList;
+
+    var _deviceType = $("#deviceType").val();
+    var _manufacturer = $("#deviceManufacturer").val();
+    var _model = $("#deviceModel").val();
+    var _rosetta = $("#deviceRosetta").val();
+    if(_deviceType.trim()!= ''){
+      var listItem = {
+        deviceType : _deviceType,
+        manufacturer : _manufacturer,
+        model : _model,
+        rosetta : _rosetta,
+        id :  equipmentEntryList.length
+      }
+  
+      equipmentEntryList[equipmentEntryList.length] = listItem;
+    }
+    //clear form
+    $("#deviceType").val('');
+    $("#deviceManufacturer").val('');
+    $("#deviceModel").val('');
+    $("#deviceRosetta").val('');
+
+    return equipmentEntryList
 }
 
 
