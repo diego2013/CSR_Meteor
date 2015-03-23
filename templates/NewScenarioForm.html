@@ -61,9 +61,9 @@
     <span style="font-size:12pt;"><b>Additional Information</b></span>
     <p>Step 2 of 3 (optional): Add additional information about the scenario.</p>
     <ul>
-        <li>Add further details about contributing actors or events that happened or could happen in this kind of scenario.</li>
-        <li>No fields are mandatory. Complete the information in the tabs that you think is relevant for the case and submit when it is ready.</li>
-        <li>Tabs can be visited in any order, and not all of them may be needed to be visited in order to accurately describe the scenario.</li>
+        <li>Add more detailed information about contributing factors or events that happened or could happen in this or very similar scenarios.</li>
+        <li>This step is completely optional. No fields are mandatory. Complete the information in the tabs that you think are relevant to describe the event and ignore those for which you do not have relevant information to add.</li>
+        <li>Tabs can be visited in any order. Visting all of them may not be necessary to accuratelly describe the scenario. </li>
     </ul>
 
     {{#if printScenarioMetainfo}}
@@ -241,12 +241,22 @@ I understand that I, the scenario submitter, am the ultimate resposible for the 
             <th><label>Manufacturer</label></th>
             <th><label>Model</label></th>
             <th><label>Rosetta - Unique ID</label></th>
+            <th><label>Trainig related problem</label></th>
+            <th><label>Instructions related problem</label></th>
+            <th><label>Confusing device usage</label></th>
+            <th><label>Software related problem</label></th>
+            <th><label>Hardware related problem</label></th>
         </tr>
         <tr>
         <td><textarea type="text" id="deviceType" rows="1" cols="15" placeholder="Type to add a device type" ></textarea></td>
         <td><textarea type="text" id="deviceManufacturer" rows="1" cols="15" placeholder="Type to add a device manufacturer" ></textarea></td>
         <td><textarea type="text" id="deviceModel" rows="1" cols="15" placeholder="Type to add a device model" ></textarea></td>
         <td><textarea type="text" id="deviceRosetta" rows="1" cols="15" placeholder="Type to add the device's unique ID" ></textarea></td>
+        <td><input type="checkbox" id="trainingRelated"> </td>
+        <td><input type="checkbox" id="instructionsRelated"> </td>
+        <td><input type="checkbox" id="confusingRelated"> </td>
+        <td><input type="checkbox" id="softwareRelated"> </td>
+        <td><input type="checkbox" id="hardwareRelated"> </td>
             
         </tr>
         
@@ -260,6 +270,11 @@ I understand that I, the scenario submitter, am the ultimate resposible for the 
             <th><label>Manufacturer</label></th>
             <th><label>Model</label></th>
             <th><label>Rosetta - Unique ID</label></th>
+            <th><label>Training related problem</label></th>
+            <th><label>Instructions related problem</label></th>
+            <th><label>Confusing device usage</label></th>
+            <th><label>Software related problem</label></th>
+            <th><label>Hardware related problem</label></th>
         </tr>
         {{#each equipmentEntryList}}
             {{> equipmentEntry}}
@@ -275,6 +290,11 @@ I understand that I, the scenario submitter, am the ultimate resposible for the 
     <td><label>{{manufacturer}}</label></td>
     <td><label>{{model}}</label></td>
     <td><label>{{rosetta}}</label></td>
+    <td>{{#if trainingRelated}} <label>yes</label> {{else}} <label>no</label> {{/if}}</td>
+    <td>{{#if instructionsRelated}} <label>yes</label> {{else}} <label>no</label> {{/if}}</td>
+    <td>{{#if confusingRelated}} <label>yes</label> {{else}} <label>no</label> {{/if}}</td>
+    <td>{{#if softwareRelated}} <label>yes</label> {{else}} <label>no</label> {{/if}}</td>
+    <td>{{#if hardwareRelated}} <label>yes</label> {{else}} <label>no</label> {{/if}}</td>
     <!--<td><label>{{id}}</label></td>-->
     <td> <button type="button" id="deleteEquipment">Delete</button></td>
     </tr>  

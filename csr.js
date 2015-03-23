@@ -955,6 +955,11 @@ var updateEquipmentList = function(){
         manufacturer : _manufacturer,
         model : _model,
         rosetta : _rosetta,
+        trainingRelated :  $("#trainingRelated:checked").val(),
+        instructionsRelated : $("#trainingRelated:checked").val(),
+        confusingRelated : $("#confusingRelated:checked").val(),
+        softwareRelated :  $("#confusingRelated:checked").val(),
+        hardwareRelated :  $("#hardwareRelated:checked").val(),
         id :  equipmentEntryList.length
       }
   
@@ -965,6 +970,12 @@ var updateEquipmentList = function(){
     $("#deviceManufacturer").val('');
     $("#deviceModel").val('');
     $("#deviceRosetta").val('');
+
+    $("#trainingRelated").checked = false;
+    $("#trainingRelated").checked = false;
+    $("#confusingRelated:checked").checked = false;
+    $("#confusingRelated:checked").checked = false;
+    $("#hardwareRelated:checked").checked = false;
 
     return equipmentEntryList
 }
