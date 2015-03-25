@@ -6,7 +6,6 @@
     </div>
 
 
-
     <!--div here for control buttons -->
     <div id="controlButtons">
     	<!-- 
@@ -19,9 +18,7 @@
         <button type="button" id="goToStep2" name="none2" title="Go to the Advanced Information panel" >Add further details</button> 
         <button type="button" id="goToStep3" name="none3" title="Propose a solution for this scenario" >Propose a solution</button>
         <input type="submit" id="submitScenarioButton" name="submitButton" title="Submit for approval" value="Finish and Submit" />
-        
-        
-        
+
     </div>
   </form>
 </template>
@@ -176,9 +173,9 @@ I understand that I, the scenario submitter, am the ultimate resposible for the 
 
     <table border="1">
         <tr>
-            <td>Description</td>
-            <td title="Likeness to Predict this Hazard">Predictability</td>
-            <td title="Level of Harm to Patient (per AHRQ Scale)">Severity</td>
+            <th>Description</th>
+            <th title="Likeness to Predict this Hazard">Predictability</th>
+            <th title="Level of Harm to Patient (per AHRQ Scale)">Severity</th>
         </tr>
         <tr>
         
@@ -209,9 +206,9 @@ I understand that I, the scenario submitter, am the ultimate resposible for the 
 
     <table border="1">
         <tr>
-            <td>Description</td>
-            <td>Expected risks</td>
-            <td>Severity</td>
+            <th>Description</th>
+            <th>Expected risks</th>
+            <th>Severity</th>
         </tr>
         {{#each hazardEntryList}}
             {{> hazardEntry}}
