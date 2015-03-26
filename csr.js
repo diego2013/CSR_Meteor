@@ -137,7 +137,7 @@ if (Meteor.isClient) {
         this.render('/findByIDErrorTemplate');
       }else{
         this.render('NewScenarioForm', {data: currentScenarioDTO});
-        Session.set("currentScenarioDTO", currentScenarioDTO);
+        Session.set("currentScenarioDTO", currentScenarioDTO); //Issue #3
       }     
     });
     this.route('new', function(){
@@ -152,9 +152,13 @@ if (Meteor.isClient) {
       this.render('scenarioFormThankYou', { data : currentScenarioDTO } );
     });
 
-    this.route('scenarioList' /*, {
-      data: function () { return Scenarios}
-      }*/
+   //this.route('scenarioList' , function(){
+   //  console.log(JSON.stringify(MyScenarios.find({}, {sort: {createdAt: -1}})));
+   //  this.render('scenarioList', {data : MyScenarios.find({}, {sort: {createdAt: -1}}) })
+   //}
+   //);
+    this.route('scenarioList' 
+      //, {data:  function () { return MyScenarios.find({}, {sort: {createdAt: -1}}) /*return Scenarios*/}} 
     );
     this.route('findByIDTemplate');
     this.route('/findByIDTemplate/:_id', function () {
@@ -802,16 +806,20 @@ var hideScenarioFormButtons = function(){
     //determine in which subpanel we are
     //console.log("_ADVANCEDDETAILS_TAB: "+ Session.get(_ADVANCEDDETAILS_TAB));
     currentScenarioDTO =  Session.get("currentScenarioDTO");
-    hazardEntryList = currentScenarioDTO.hazardEntryList;
+    //hazardEntryList = currentScenarioDTO.hazardEntryList;
 
-    if(Session.get(_ADVANCEDDETAILS_TAB) === _ADT_HAZARDS_templateName){
-      hazardEntryList = updateHarzardList();
-      currentScenarioDTO.hazardEntryList = hazardEntryList;
-    }
+    //if(Session.get(_ADVANCEDDETAILS_TAB) === _ADT_HAZARDS_templateName){
+    //  hazardEntryList = updateHarzardList();
+    //  currentScenarioDTO.hazardEntryList = hazardEntryList;
+    //}
+//
+    //if(Session.get(_ADVANCEDDETAILS_TAB) == _ADT_REFERENCES_templateName){
+    //  currentScenarioDTO.referenceEntryList = updateReferenceList();
+    //}
 
-    //if we are in this panel?
-    referenceEntryList = updateReferenceList();
-    currentScenarioDTO.referenceEntryList = referenceEntryList;
+    ////if we are in this panel?
+    //referenceEntryList = updateReferenceList();
+    //currentScenarioDTO.referenceEntryList = referenceEntryList;
 
     currentScenarioDTO.lessonsLearned = $('#lesson').val();
     currentScenarioDTO.preventable = $('#preventable').val();
@@ -827,7 +835,7 @@ var hideScenarioFormButtons = function(){
   //return currentScenarioDTO;
  };
 
- //Cleans the input fields of the new scenario form as well as the currentScenarioDTO aux var
+ //Cleans the input fields of the new scenario form as well as the currentScenarioDTO session variable
  var cleanNewScenarioForm = function(){
 
   var newCleanScenarioDTO = {
