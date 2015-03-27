@@ -942,6 +942,8 @@ var updateHarzardList = function(){
     }
     //clear form
     $("#hazardDescription").val('');
+    $("#hazardRisk").val("Unknown");
+    $("#hazardSeverity").val("Unknown");
 
     return hazardEntryList
 }
@@ -979,7 +981,8 @@ var updateEquipmentList = function(){
     $("#deviceModel").val('');
     $("#deviceRosetta").val('');
 
-    $("#trainingRelated").attr('checked', false); //.checked = false;
+    //Issue #8. Uncheck all
+    $("#trainingRelated")[0].checked = false;//.attr('checked', false); //.checked = false;
     $("#instructionsRelated").attr('checked', false); //.checked = false;
     $("#confusingRelated").attr('checked', false); //.checked = false;
     $("#softwareRelated").prop('checked', false); //for jQuery 1.6+ //.checked = false;
