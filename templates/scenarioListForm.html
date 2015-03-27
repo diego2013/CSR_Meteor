@@ -1,0 +1,23 @@
+<!-- Template to list all scenarios -->
+<template name="scenarioListTabel">
+	<p>Content of the database</p>
+	<table border="1">
+  		{{#each scenarios}}
+   	    	 <tr> {{ > scenarioRow }} </tr>
+   	    {{/each}}
+    </table>
+</template>
+
+<!-- template with the informatio of a single scenario -->
+<template name="scenarioRow">
+  
+  	<td><button class="delete">DELETE</button></td>
+  	<td> <b>created by:</b> {{username}}. </td>
+  	<td><button id="gothere" class="other" name={{_id}}>Visit Scenario</button> </td>
+  	<td><b>UID:</b> {{_id}} </td>
+  	<td><b> Saved last:</b> {{formattedModifiedDate}}  </td>
+  	<td><b>Title:</b> {{title}} </td>
+  	<td><b>Descrp: </b>   {{description}} </td>
+  	<td><b>Status: </b> {{status}} </td>
+
+</template>
