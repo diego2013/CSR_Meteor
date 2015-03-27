@@ -104,11 +104,11 @@
     <br/>
 
     <label>Describe Your Good Idea or Solution</label><br/>
-    <textarea type="text" id="solutionDescription" rows="1" cols="75" >{{solutionDescription}}</textarea><br/>
+    <textarea type="text" id="solutionDescription" rows="4" cols="75" >{{solutionDescription}}</textarea><br/>
     <label>Benefits of the New System</label><br/>
-    <textarea type="text" id="benefitsDescription"  rows="1" cols="75" >{{benefitsDescription}}</textarea><br/>
+    <textarea type="text" id="benefitsDescription"  rows="4" cols="75" >{{benefitsDescription}}</textarea><br/>
     <label>Foreseen Risks of the New System</label><br/>
-    <textarea type="text" id="risksDescription"  rows="1" cols="75" >{{risksDescription}}</textarea><br/>
+    <textarea type="text" id="risksDescription"  rows="4" cols="75" >{{risksDescription}}</textarea><br/>
 </template>
 
 <!-- Template for the "Finish and Submit" confirmation and  disclaimer page" -->
@@ -412,10 +412,13 @@ I understand that I, the scenario submitter, am the ultimate resposible for the 
     <button type="button" id="addActor">Add Actor</button>
 
     <table>
+        <tr>
+         <th>Clinical Roles</th>
+        </tr>
         {{#each roleEntryList}}
             {{> roleEntry}}
         {{/each}}
-        <tr></tr>
+
     </table>
     
 </template>
@@ -475,6 +478,9 @@ I understand that I, the scenario submitter, am the ultimate resposible for the 
     <button type="button" id="addPlace">Add Environment</button>
 
     <table>
+        <tr>
+         <th>Clinical Environments</th>
+        </tr>
         {{#each environmentEntryList}}
             {{> environmentEntry}}
         {{/each}}
