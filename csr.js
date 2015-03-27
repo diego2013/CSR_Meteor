@@ -152,14 +152,26 @@ if (Meteor.isClient) {
       this.render('scenarioFormThankYou', { data : currentScenarioDTO } );
     });
 
-   //this.route('scenarioList' , function(){
-   //  console.log(JSON.stringify(MyScenarios.find({}, {sort: {createdAt: -1}})));
-   //  this.render('scenarioList', {data : MyScenarios.find({}, {sort: {createdAt: -1}}) })
+   this.route('scenarioList' , function(){
+     this.render('scenarioList', {data : { scenarios : MyScenarios.find({}, {sort: {createdAt: -1}}) }} )
+   });
+   //this.route('scenarioList2' , function(){
+   //  this.render('scenarioList', {
+   //   data : { scenarios : MyScenarios.find({}, {sort: {createdAt: +1}}) },
+   //   template : 'scenarioList'
+   // } )
    //}
    //);
-    this.route('scenarioList' 
-      //, {data:  function () { return MyScenarios.find({}, {sort: {createdAt: -1}}) /*return Scenarios*/}} 
-    );
+////This is working code and is the version that should fly.
+//    this.route('scenarioList', {
+//       //path: 'scenarioList',
+//       data:  function () { return { scenarios : MyScenarios.find({}, {sort: {createdAt: -1}}) /*return Scenarios*/}},
+//       template : 'scenarioList'
+//    }
+//    );
+   //this.route('scenarioList' 
+   //  //, {data:  function () { return MyScenarios.find({}, {sort: {createdAt: -1}}) /*return Scenarios*/}} 
+   //);
     this.route('findByIDTemplate');
     this.route('/findByIDTemplate/:_id', function () {
       findByID(this.params._id);
@@ -200,11 +212,11 @@ if (Meteor.isClient) {
   //======================================================================
 
   Template.scenarioList.helpers({
-    scenarios: function () {
-      //return Scenarios.find({}, {sort: {createdAt: -1}});
-      return MyScenarios.find({}, {sort: {createdAt: -1}});
-      //return ScenariosAll.find({}, {sort: {createdAt: -1}});
-    },
+  //  scenarios: function () {
+  //    //return Scenarios.find({}, {sort: {createdAt: -1}});
+  //    return MyScenarios.find({}, {sort: {createdAt: -1}});
+  //    //return ScenariosAll.find({}, {sort: {createdAt: -1}});
+  //  },
 
     isOwner: function () {
       return this.owner === Meteor.userId();
