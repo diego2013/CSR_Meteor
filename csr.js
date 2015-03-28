@@ -70,15 +70,18 @@ if (Meteor.isClient) {
     Meteor.subscribe("allUserData");
 });*/
 
-/*Deps.autorun(function(){
-  //useful to know if the user just logged in or out
-  if(Meteor.userId()){
-    if currentScenario is unsubmitted and has no owner --> change to this owner
-    console.log("User Logged in");
-  }else{
-    console.log("user not logged in");
-  }
-});*/
+//Deps.autorun(function(){
+//  //useful to know if the user just logged in or out
+//  if(Meteor.userId()){
+//   // if currentScenario is unsubmitted and has no owner --> change to this owner
+//    console.log("User Logged in "+ Meteor.userId());
+//    if(Router.current()!= null)
+//      console.log("Current path "+ Router.current().route.path());
+//  }else{
+//    console.log("user logged out"); //Meteor.user().username
+//    Router.go("/");
+//  }
+//});
 
 
   //ROUTES
@@ -96,7 +99,12 @@ if (Meteor.isClient) {
 
   //map routes with templates
   Router.map(function(){
-    this.route('home', {path: '/'});
+    //this.route('home', {path: '/'});
+    this.route('/', function(){ //This approach seems to be working better that this.route('home', {path: '/'});
+      this.render('home');
+    });
+    this.route('home');
+
 
     this.route('NewScenarioForm' , 
       function ()  {
@@ -751,7 +759,7 @@ Template.findByIDErrorTemplate.events({
 //OTHER CLINET FUNCTIONS
 //========================================================================
 
-//To configure the accounts UI to use usernames instead of email addresses
+//To configure the accounts UI
 Accounts.ui.config({
   //passwordSignupFields: "USERNAME_ONLY"
   passwordSignupFields: 'USERNAME_AND_EMAIL'
