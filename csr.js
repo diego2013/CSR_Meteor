@@ -753,7 +753,8 @@ Template.findByIDErrorTemplate.events({
 
 //To configure the accounts UI to use usernames instead of email addresses
 Accounts.ui.config({
-  passwordSignupFields: "USERNAME_ONLY"
+  //passwordSignupFields: "USERNAME_ONLY"
+  passwordSignupFields: 'USERNAME_AND_EMAIL'
 });
 
 
