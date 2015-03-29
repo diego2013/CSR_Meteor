@@ -13,7 +13,7 @@
  <!-- TODO: move to the left. Make sure the popup box displays ok -->
   <span class="allToLeft"> {{> loginButtons}} </span>
   <div>
-
+  <!-- {{> NavBar}} -->
     <table   style="margin-left:auto;margin-right:auto;">
 	    <tr>
 		    <td><img id="mdpnpLogo" alt="MD PnP Logo" style="float:left;" src="/images/mdpnp-small.png" width="150" height="45"/></td>
@@ -42,6 +42,24 @@
 	    <tr>
 	    
 	    	<td><button type="button"  id="create-new-scn" class="create-new-scn" name="createNewScnButton" title="Create a new Clinical Scenario or Good Idea">Create New Scenario</button></td>
+	    	<!--<td>
+	    		<div class="click-nav">
+	    			<ul class="no-js">
+	    			<li>
+			      		<a href="{{ pathFor 'NewScenarioForm' }}" class="clicker">Create New</a>
+			      	</li>
+	    			</ul>
+	    		</div>
+	    	</td>
+	    	<td>
+	    		<div class="click-nav">
+	    			<ul class="no-js">
+	    			<li>
+			      		<a href="#" class="clicker">Create New 2</a>
+			      	</li>
+	    			</ul>
+	    		</div>
+	    	</td> -->
 	    	<td><button type="button" id="list-scn" name="listScnButton" title="Search and list scenarios">Search Scenarios</button></td>
 	    	<td><button type="button" id="findByID" name="findByIDButton" title="Find a scenario by ID">Find by ID</button></td>
 	    	<!-- <td><button type="button" id="disclaimerPage" name="disclaimerButton" title="See Disclaimer">See disclaimer</button></td>  -->
@@ -50,7 +68,19 @@
 	    	<!-- Issue #5 <td><button type="button" id="goToMyProfile" title="go to my user Profile">User Profile</button></td> -->
 	    	<!-- Issue #5 <td><button type="button" id="listUsers" title="list all users">List Users </button></td> -->
 	    	<!-- <td><button type="button" id="testPost" name="post" title="Test purposes">Post (Test)</button></td>-->
-
+			<!-- <td>
+			 <div class="click-nav">
+			   <ul class="no-js">
+			     <li>
+			       <a href="#" class="clicker">Scenarios<span class="arrow">&#9660;</span></a>
+			       <ul>
+			         <li><a href="{{ pathFor 'scenarioList2' }}">My scenarios</a></li>
+			         <li><a href="#">Approved scenarios</a></li>
+			       </ul>
+			     </li>
+			   </ul>
+			 </div>
+			</td> -->
 	    	
 	    </tr>
 	</table>
@@ -112,7 +142,7 @@
 
 <!-- Default template for not found pages -->
 <template name="NotFound">
-  <p>The page you requested does not exist.</p>
+  <p>The page you requested does not exist or you do not have the appropiate persmissions to execute a certain operation.</p>
 
   <p>Maybe you would want to <a href="{{ pathFor 'new' }}">create a new clinical scenario</a>
 
