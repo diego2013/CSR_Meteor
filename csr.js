@@ -83,6 +83,28 @@ if (Meteor.isClient) {
 //  }
 //});
 
+//var lastUser=null;
+//
+//Meteor.startup(function(){
+//    Deps.autorun(function(){
+//        var userId=Meteor.userId();
+//        if(userId){
+//            console.log(userId+" connected");
+//            if(Router.current()!= null)
+//                console.log("Current path "+ Router.current().route.path());
+//            // do something with Meteor.user()
+//        }
+//        else if(lastUser){
+//            console.log(lastUser._id+" disconnected");
+//            Router.go("/"); // or destry the currentScenarioDto in session by calling cleanNewScenarioForm()
+//            // can't use Meteor.user() anymore
+//            // do something with lastUser (read-only !)
+//           // Meteor.call("userDisconnected",lastUser._id);
+//        }
+//        lastUser=Meteor.user();
+//    });
+//});
+
 
   //ROUTES
   //====================================================================
@@ -100,9 +122,11 @@ if (Meteor.isClient) {
   //map routes with templates
   Router.map(function(){
     //this.route('home', {path: '/'});
-    this.route('/', function(){ //This approach seems to be working better that this.route('home', {path: '/'});
-      this.render('home');
-    });
+   this.route('/', function(){ //This approach seems to be working better that this.route('home', {path: '/'});
+     this.render('home');
+     this.render('FooterTemplate', {to: 'footer'});
+     //Router.go('home');
+   });
     this.route('home');
 
 
@@ -151,13 +175,34 @@ if (Meteor.isClient) {
     this.route('new', function(){
       this.render('NewScenarioForm');
     });
+
+//Template for when we are about to submit a scenario for approval
     this.route('scenarioFormSubmitConfirmation',  function () {
         currentScenarioDTO = Session.get("currentScenarioDTO"); 
-        this.render('scenarioFormSubmitConfirmation', { data : currentScenarioDTO } );
+        if(currentScenarioDTO == undefined || ! Meteor.userId()){
+          //Router.go('/NotFound');
+          this.render('NotFound');
+          this.render('FooterTemplate', {to: 'footer'});
+        }else if (currentScenarioDTO.owner == Meteor.userId() && currentScenarioDTO.status == scenarioStatusEnum.UNSUBMITTED){
+          this.render('scenarioFormSubmitConfirmation', { data : currentScenarioDTO } );
+        }else{
+          this.render('NotFound');
+          this.render('FooterTemplate', {to: 'footer'});
+        }
       });
+
+//Template to confirm submission of scenario
     this.route('scenarioFormThankYou',  function () {
        currentScenarioDTO = Session.get("currentScenarioDTO"); 
-      this.render('scenarioFormThankYou', { data : currentScenarioDTO } );
+       if(currentScenarioDTO==undefined || !Meteor.userId()){
+          this.render('NotFound');
+          this.render('FooterTemplate', {to: 'footer'});
+       } else if(currentScenarioDTO.owner == Meteor.userID() && currentScenarioDTO.status == scenarioStatusEnum.SUBMITTED)
+          this.render('scenarioFormThankYou', { data : currentScenarioDTO } );
+      else{
+          this.render('NotFound');
+          this.render('FooterTemplate', {to: 'footer'});
+      }
     });
 
    this.route('scenarioList' , function(){
