@@ -495,8 +495,29 @@ UI.registerHelper('formatDate', function(date) {
               //Meteor._reload.reload();
           });
       } else if (event.target.id == "submitScenarioButton") {
+          //Validations
+          //1. Title can't be empty
+          //2. Description can't be empty
+         
+          if(currentScenarioDTO.title.trim()=='')
+            window.alert("To submit a scenario for revision and approval, the scenario TITLE can not be empty");
+          else if (currentScenarioDTO.description.trim()==''){
+            window.alert("To submit a scenario for revision and approval, the scenario DESCRIPTION can not be empty");
+          }else{
+             Meteor.call("saveScenario", currentScenarioDTO, function(err, callbackScenarioDTO) {
+             //callback function
+               if (err)
+                  { console.log(err);}
+
+                //currentScenarioDTO._id = callbackScenarioDTO._id;
+                currentScenarioDTO = callbackScenarioDTO;
+                Session.set('currentScenarioDTO', currentScenarioDTO);
+                Router.go('scenarioFormSubmitConfirmation');//submit
+                //Meteor._reload.reload();
+             });
+          }
           // Submit the scenario
-          Router.go('scenarioFormSubmitConfirmation');
+          //Router.go('scenarioFormSubmitConfirmation');
       }
 
     }
