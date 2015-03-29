@@ -516,8 +516,6 @@ UI.registerHelper('formatDate', function(date) {
                 //Meteor._reload.reload();
              });
           }
-          // Submit the scenario
-          //Router.go('scenarioFormSubmitConfirmation');
       }
 
     }
@@ -663,7 +661,8 @@ Template.advancedDetailsEnvironments.events({
 Template.scenarioFormSubmitConfirmation.events({
 
   "click #declineSubmit": function(){
-      Router.go("NewScenarioForm");//redirect to the Scenario Form
+    Session.set(_SCENARIO_FORM_STEP, _SCENARIO_FORM_STEP_BASIC_INFO);
+    Router.go("NewScenarioForm");//redirect to the Scenario Form
   },
   "click #acceptSubmit": function(event, template){
     var acceptChecked = $("#acceptanceCheck").prop("checked");
