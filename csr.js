@@ -19,8 +19,8 @@ var whichOne = 'one';
 
 //Var
 //content of the ScenarioForm
-var currentScenarioDTO = { /*_id: undefined,*/ title:'', description:''};
-var hazardEntryList;
+//var currentScenarioDTO = { /*_id: undefined,*/ title:'', description:''};
+//var hazardEntryList;
 
 //Constants
 var _SCENARIO_FORM_STEP = 'SCENARIO_FORM_STEP'; //Step of the scenario submission process
@@ -462,23 +462,8 @@ UI.registerHelper('formatDate', function(date) {
   // "submit #newScenarioForm": function(event, template) {
     //input[type=button]
     "click input[type=submit]": function(event, template) {
-      event.preventDefault(); 
-
-      // Collects data from the form into an object
-      collectScenarioInfo();
-
-      //Validations
-      //1. Title can't be empty
-      //if(title===""){
-      //  throw new Meteor.Error("'Title' can NOT be empty"); //TO-DO do something with this error
-      //}
-
-      //2. Description can't be empty
-      //if(description===""){
-      //  throw new Meteor.Error("'Description' can NOT be empty");//TO-DO do something with this error
-      //}
-
-      //TODO Probably we can distinguish between inserts and updates with the _id property
+      event.preventDefault();  
+      collectScenarioInfo(); // Collects data from the form into an object
 
       if (event.target.id == "saveScenarioButton") {
           // Save the scenario
@@ -501,8 +486,10 @@ UI.registerHelper('formatDate', function(date) {
          
           if(currentScenarioDTO.title.trim()=='')
             window.alert("To submit a scenario for revision and approval, the scenario TITLE can not be empty");
+            // throw new Meteor.Error("'Title' can NOT be empty"); //TO-DO do something with this error
           else if (currentScenarioDTO.description.trim()==''){
             window.alert("To submit a scenario for revision and approval, the scenario DESCRIPTION can not be empty");
+            //  throw new Meteor.Error("'Description' can NOT be empty");//TO-DO do something with this error
           }else{
              Meteor.call("saveScenario", currentScenarioDTO, function(err, callbackScenarioDTO) {
              //callback function
@@ -878,8 +865,12 @@ var hideScenarioFormButtons = function(){
  //sets the variable currentScenarioDTO with the information from the templates
  var collectScenarioInfo = function(){
   // Collects data from the form into an object
-  //console.log("_SCENARIO_FORM_STEP: " + Session.get(_SCENARIO_FORM_STEP) );
-
+  currentScenarioDTO =  Session.get("currentScenarioDTO");
+  //if there is no scenario, we create a new one.
+  if(currentScenarioDTO==undefined){
+    cleanNewScenarioForm();
+    currentScenarioDTO =  Session.get("currentScenarioDTO");
+  }
 
   if(Session.get(_SCENARIO_FORM_STEP) === _SCENARIO_FORM_STEP_BASIC_INFO){
     currentScenarioDTO.title = $('#title').val();
@@ -890,13 +881,9 @@ var hideScenarioFormButtons = function(){
     currentScenarioDTO.risksDescription = $("#risksDescription").val();
   } else if(Session.get(_SCENARIO_FORM_STEP) === _SCENARIO_FORM_STEP_ADVANCED_INFO){
     //determine in which subpanel we are
-    //console.log("_ADVANCEDDETAILS_TAB: "+ Session.get(_ADVANCEDDETAILS_TAB));
-    currentScenarioDTO =  Session.get("currentScenarioDTO");
-    //hazardEntryList = currentScenarioDTO.hazardEntryList;
 
     //if(Session.get(_ADVANCEDDETAILS_TAB) === _ADT_HAZARDS_templateName){
-    //  hazardEntryList = updateHarzardList();
-    //  currentScenarioDTO.hazardEntryList = hazardEntryList;
+    //  currentScenarioDTO.hazardEntryList = updateHarzardList();
     //}
 //
     //if(Session.get(_ADVANCEDDETAILS_TAB) == _ADT_REFERENCES_templateName){
@@ -904,8 +891,7 @@ var hideScenarioFormButtons = function(){
     //}
 
     ////if we are in this panel?
-    //referenceEntryList = updateReferenceList();
-    //currentScenarioDTO.referenceEntryList = referenceEntryList;
+    //currentScenarioDTO.referenceEntryList = updateReferenceList();
 
     currentScenarioDTO.lessonsLearned = $('#lesson').val();
     currentScenarioDTO.preventable = $('#preventable').val();
