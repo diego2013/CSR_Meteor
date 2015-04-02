@@ -1,18 +1,13 @@
 <!-- Template for the user profile -->
 <template name="userProfile">
 	<form id="userProfileForm" >
-		This is the user profile template <br/>
 
 		{{#if userLoggedIn}}
 			{{> userDataTemplate}}
 		{{else}}
 			{{> userProfileError}}
 		{{/if}}
-	{{#if currentUser}}
 
-		<p>hola {{username}}</p>
-
-	{{/if}}
 	</form>
 
 </template>
@@ -20,16 +15,22 @@
 
 <!-- Template with the data associated to this user's profile -->
 <template name="userDataTemplate"> 
-	This is the user data template <br/>
+	<strong>User Profile</strong> <br/>
 	{{#if currentUser}}
-		<p>Hello {{username}} {{createdAt}}</p>
+		<p>Hello {{username}} </p>
+
+		<p><strong>Member since </strong>{{formatDate createdAt}}</p>
+
+		<p><strong>email: </strong>{{useremail}} <strong>verified: </strong>{{verifiedUseremail}}</p>
 	{{/if}}
 
 </template>
 
 <!-- Template to display error message -->
 <template name="userProfileError">
-	This is the ERROR ERROR ERROR template 
+	There is a problem loading this profile.
+
+	<p>Maybe you need to be logged in?</p> 
 </template>
 
 <!-- Template to list all users-->
@@ -44,7 +45,6 @@
 
 <template name="userProf">
   <li>
-
   	<span>username: {{username}}. ID: {{_id}}. Created at: {{createdAt}} </span>
   </li>
 </template>

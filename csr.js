@@ -434,6 +434,21 @@ if (Meteor.isClient) {
     }
  });
 
+ Template.userDataTemplate.helpers({
+    useremail : function(){
+      if(Meteor.userId() && Meteor.user().emails!=undefined)
+        return Meteor.user().emails[0].address;
+      else
+        return 'not specified';
+    },
+    verifiedUseremail : function(){
+      if(Meteor.userId() && Meteor.user().emails!=undefined)
+        return Meteor.user().emails[0].veified;
+      else
+        return 'not applicable';
+    }
+ });
+
  //OTHER HELPERS
  //============================================================================================
 
