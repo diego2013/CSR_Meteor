@@ -1,6 +1,6 @@
 <!-- Template to list all scenarios -->
 <template name="scenarioListTabel">
-	<p>Content of the database</p>
+	<p>Content of the database: {{scenarios.count}} scenarios</p>
 	<table>
   		{{#each scenarios}}
    	    	 <tr> {{ > scenarioRow }} </tr>
