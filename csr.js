@@ -56,10 +56,12 @@ if (Meteor.isClient) {
   //Meteor.subscribe("scenarios");
   Meteor.subscribe('myScenarios');  //scenarios of the current user
   Meteor.subscribe('scenariosAll'); //all available scenarios
+  Meteor.subscribe('scenariosAllApproved'); //all approved scenarios
 
   // partial collections (Minimongo collections)
   MyScenarios = new Mongo.Collection('myScenarios');
   ScenariosAll = new Mongo.Collection('scenariosAll');
+  scenariosAllApproved = new Mongo.Collection('scenariosAllApproved');
  
   Meteor.subscribe("allUsersList");
   Meteor.subscribe('userdata');
@@ -206,7 +208,12 @@ if (Meteor.isClient) {
     });
 
    this.route('scenarioList' , function(){
-     this.render('scenarioList', {data : { scenarios : MyScenarios.find({}, {sort: {createdAt: -1}}) }} )
+     this.render('scenarioListTabel', {data : { scenarios : MyScenarios.find({}, {sort: {createdAt: -1}}) }} );
+     this.render('FooterTemplate', {to: 'footer'});
+   });
+   this.route('approvedScenarioList' , function(){
+     this.render('scenarioListTabel', {data : { scenarios : scenariosAllApproved.find({}) }} );
+     //this.render('FooterTemplate', {to: 'footer'});
    });
    //this.route('scenarioList2' , function(){
    //  this.render('scenarioList', {
@@ -435,6 +442,8 @@ if (Meteor.isClient) {
  });
 
  Template.userDataTemplate.helpers({
+  //XXX these two functions will eventually need to take care of 
+  // Meteor.user().services.google.email
     useremail : function(){
       if(Meteor.userId() && Meteor.user().emails!=undefined)
         return Meteor.user().emails[0].address;
@@ -761,6 +770,9 @@ Template.NavBar.events({
     },
     "click #list-scn": function () {
       Router.go('scenarioList');
+    },
+    "click #list-approved-scn": function () {
+      Router.go('approvedScenarioList');
     },
     "click #goToHomePage": function () {
       Router.go('/');
@@ -1252,6 +1264,11 @@ Meteor.publish('scenariosAll', function(){
     this.ready();
 });
 
+//Publish all APPROVED scenarios in the database 
+Meteor.publish('scenariosAllApproved', function(){
+    Mongo.Collection._publishCursor( Scenarios.find({status : scenarioStatusEnum.APPROVED}), this, 'scenariosAllApproved'); 
+    this.ready();
+});
 
 //Publish info about users
 Meteor.publish('userdata', function() {

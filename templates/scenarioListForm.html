@@ -1,7 +1,7 @@
 <!-- Template to list all scenarios -->
 <template name="scenarioListTabel">
 	<p>Content of the database</p>
-	<table border="1">
+	<table>
   		{{#each scenarios}}
    	    	 <tr> {{ > scenarioRow }} </tr>
    	    {{/each}}
@@ -15,7 +15,7 @@
   	<td> <b>created by:</b> {{username}}. </td>
   	<td><button id="gothere" class="other" name={{_id}}>Visit Scenario</button> </td>
   	<td><b>UID:</b> {{_id}} </td>
-  	<td><b> Saved last:</b> {{formattedModifiedDate}}  </td>
+  	<td><b>Saved last: </b> {{formatDate modifiedAt}}  </td>
   	<td><b>Title:</b> {{title}} </td>
   	<td><b>Descrp: </b>   {{description}} </td>
   	<td><b>Status: </b> {{status}} </td>
