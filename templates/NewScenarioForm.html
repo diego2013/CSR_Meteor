@@ -1,11 +1,7 @@
 <!-- Main template for a Scenario -->
 <template name="NewScenarioForm">
   <form id="newScenarioForm" class="new-scenario">
-    <div class="main">
-        {{> Template.dynamic template=newScenarioStep}}
-    </div>
-
-
+    
     <!--div here for control buttons -->
     <div id="controlButtons">
     	<!-- 
@@ -20,6 +16,12 @@
         <input type="submit" id="submitScenarioButton" name="submitButton" title="Submit for approval" value="Finish and Submit" />
 
     </div>
+
+    <!-- Div here for main content-->
+    <div class="main">
+        {{> Template.dynamic template=newScenarioStep}}
+    </div>
+
   </form>
 </template>
 
@@ -39,7 +41,7 @@
 
 
     {{#if printScenarioMetainfo}}
-        <b>Scenario UID:</b> {{_id}} <b>Saved last:</b> {{formatDate createdAt}}<br/>
+        <b>Scenario UID:</b> {{_id}} <b>Saved last:</b> {{formatDateTime createdAt}}<br/>
     {{/if}}
 
     <label>Title</label>
@@ -64,7 +66,7 @@
     </ul>
 
     {{#if printScenarioMetainfo}}
-        <b>Scenario UID:</b> {{_id}} <b>Saved last:</b> {{formatDate createdAt}}<br/>
+        <b>Scenario UID:</b> {{_id}} <b>Saved last:</b> {{formatDateTime createdAt}}<br/>
     {{/if}}
 
     <div>
@@ -76,8 +78,25 @@
                 <td><button type="button" id="rolesButton" title="check the Roles Involved tab">Roles Involved</button></td>
                 <td><button type="button" id="environmentsButton" title="check the Environments Involved tab">Environments Involved</button></td>
                 <td><button type="button" id="referencesButton" title="check the References tab">Relevant references</button></td>
+
             </tr>
         </table>
+        <!--<div style="color:#0000FF;display:flex;border: 1px solid red;width:80%;align:center;position:relative; margin: 0 auto;">
+                <div class="click-nav">
+                    <ul class="no-js">
+                    <li>
+                        <a href="#" class="clicker">Hazards</a>
+                    </li>
+                    </ul>
+                </div>
+                <div class="click-nav">
+                    <ul class="no-js">
+                    <li>
+                        <a href="#" class="clicker">Equipment</a>
+                    </li>
+                    </ul>
+                </div>
+        </div>-->
     </div>
     
     <div class="main">
@@ -99,7 +118,7 @@
     <label><b>Title: </b></label>
     <label>{{title}}</label>
     {{#if printScenarioMetainfo}}
-        <b>Scenario UID:</b> {{_id}} <b>Saved last:</b> {{formatDate createdAt}}
+        <b>Scenario UID:</b> {{_id}} <b>Saved last:</b> {{formatDateTime createdAt}}
     {{/if}}
     <br/>
 

@@ -271,17 +271,17 @@ if (Meteor.isClient) {
   //HELPERS Template helpers
   //======================================================================
 
-  Template.scenarioList.helpers({
-  //  scenarios: function () {
-  //    //return Scenarios.find({}, {sort: {createdAt: -1}});
-  //    return MyScenarios.find({}, {sort: {createdAt: -1}});
-  //    //return ScenariosAll.find({}, {sort: {createdAt: -1}});
-  //  },
-
-    isOwner: function () {
-      return this.owner === Meteor.userId();
-    }
-  });
+  //Template.scenarioList.helpers({
+  ////  scenarios: function () {
+  ////    //return Scenarios.find({}, {sort: {createdAt: -1}});
+  ////    return MyScenarios.find({}, {sort: {createdAt: -1}});
+  ////    //return ScenariosAll.find({}, {sort: {createdAt: -1}});
+  ////  },
+//
+  //  isOwner: function () {
+  //    return this.owner === Meteor.userId();
+  //  }
+  //});
 
 //This tempalte exists only for experimenting purposes
   Template.Post.helpers({
@@ -472,8 +472,15 @@ UI.registerHelper('selectedLessonLearned', function( value){
 //https://atmospherejs.com/momentjs/moment
 // $ meteor add momentjs:moment
 */
-UI.registerHelper('formatDate', function(date) {
+
+//Formats a date time using the mask MM-DD-YYYY, hh:mm:ss
+UI.registerHelper('formatDateTime', function(date) {
   return moment(date).format('MM-DD-YYYY, hh:mm:ss');
+});
+
+//Formats a Date using mask MM-DD-YYYY
+UI.registerHelper('formatDate', function(date) {
+  return moment(date).format('MM-DD-YYYY');
 });
 
 
@@ -798,7 +805,7 @@ Template.NavBar.events({
     }
 });
 
-Template.scenario.events({
+Template.scenarioRow.events({
   "click .delete": function () {
     Meteor.call("deleteScenario", this._id);
   },
