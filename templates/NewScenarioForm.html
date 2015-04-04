@@ -517,6 +517,7 @@ I understand that I, the scenario submitter, am the ultimate resposible for the 
 
 <!-- Template containing all the scenario info in one single form -->
 <template name="scenarioCompleteForm">
+<div class="centered">
 
     <b>Scenario UID:</b> {{_id}} <b>Saved last:</b> {{formatDateTime createdAt}}<br/>
 
@@ -606,4 +607,6 @@ I understand that I, the scenario submitter, am the ultimate resposible for the 
     <textarea type="text" id="benefitsDescription"  rows="4" cols="75" {{isScenarioReadOnly}}>{{benefitsDescription}}</textarea><br/>
     <label>Foreseen Risks of the New System</label><br/>
     <textarea type="text" id="risksDescription"  rows="4" cols="75" {{isScenarioReadOnly}}>{{risksDescription}}</textarea><br/>
+
+</div>
 </template>

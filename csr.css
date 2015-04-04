@@ -19,6 +19,11 @@ body {
   font-size: 14px;
 }
 
+.centered{
+  margin-left:100px;
+  margin-right:100px;
+}
+
 .container {
   max-width: 600px;
   margin: 0 auto;
@@ -144,3 +149,26 @@ header .hide-completed {
 .red-asterisk {
 	color:red;
 }
+
+/*Navigation bar*/
+
+.click-nav {/*width:100px;*/}
+.click-nav ul {position:relative;/*font-weight:900;*/ padding: 0px;margin:0px;}
+.click-nav ul li {position:relative;list-style:none;cursor:pointer;margin:0em;padding:0px;margin: 0px;}
+.click-nav ul li ul {position:absolute;left:0;right:0;width:200px; z-index: 1;}
+.click-nav ul .clicker {position:relative;background:#2284B5;/*background:transparent;*/color:#000;}
+.click-nav ul .clicker:hover,.click-nav ul .active {background:#196F9A;}
+/*.click-nav img {position:absolute;top:9px;left:12px;}*/
+.click-nav ul li a {transition:background-color 0.2s ease-in-out;-webkit-transition:background-color 0.2s ease-in-out;
+-moz-transition:background-color 0.2s ease-in-out;display:block;padding: 5px; /*8px 10px 8px 40px;*/background:#FFF;color:#333;text-decoration:none;}
+.click-nav ul li a:hover {background:#F2F2F2;}
+
+.menu .arrow {
+    font-size:11px;
+    line-height:0%;
+}
+
+/* Fallbacks */
+.click-nav .no-js ul {display:none;}
+.click-nav .no-js:hover ul {display:block;}
+
