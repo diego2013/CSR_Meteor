@@ -207,6 +207,19 @@ if (Meteor.isClient) {
       }
     });
 
+    //Template displaying all the info of a scenario
+    this.route('/scenarioComplete/:_id', function(){
+      currentScenarioDTO = ScenariosAll.findOne({_id: this.params._id.trim()});
+      if(currentScenarioDTO===undefined || currentScenarioDTO.owner != Meteor.userId()){
+        Session.set('auxScenarioID', this.params._id);
+        this.render('/findByIDErrorTemplate');
+      }else{
+        this.render('scenarioCompleteForm', {data: currentScenarioDTO});
+        Session.set("currentScenarioDTO", currentScenarioDTO); //Issue #3
+      }
+
+    })
+
    this.route('scenarioList' , function(){
      this.render('scenarioListTabel', {data : { scenarios : MyScenarios.find({}, {sort: {createdAt: -1}}) }} );
      this.render('FooterTemplate', {to: 'footer'});
@@ -416,6 +429,28 @@ if (Meteor.isClient) {
     } 
   });
 
+  Template.scenarioCompleteForm.helpers({
+    scenarioEditable : function(){
+      return false;
+    },
+    hazardEntryListCount : function(){
+      currentScenarioDTO = Session.get('currentScenarioDTO');
+      hazardEntryList = currentScenarioDTO==undefined?[]:currentScenarioDTO.hazardEntryList;
+      if(hazardEntryList==undefined)
+        return 0;
+      else
+        return hazardEntryList.length;
+    },
+    equipmentEntryListCount: function(){
+      currentScenarioDTO = Session.get('currentScenarioDTO');
+      equipmentEntryList = currentScenarioDTO==undefined?[]:currentScenarioDTO.equipmentEntryList;
+      if(equipmentEntryList==undefined)
+        return 0;
+      else
+        return equipmentEntryList.length;
+    }   
+  });
+
 
  Template.userProfile.helpers({
    userLoggedIn : function(){
@@ -466,6 +501,11 @@ Returns if the provided option selected in the template is the one that the DTO 
 */
 UI.registerHelper('selectedLessonLearned', function( value){
   return currentScenarioDTO.preventable == value? {selected:'selected'}: '';
+});
+
+//Returns if a scenario is editable or not
+UI.registerHelper('isScenarioReadOnly', function(){
+  return "readonly";
 });
 
 /* Formats a Date using moment.js
