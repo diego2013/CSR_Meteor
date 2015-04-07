@@ -470,6 +470,16 @@ if (Meteor.isClient) {
     },
  });
 
+ Template.scenarioRow.helpers({
+    showDescrioption: function(description){
+      if(description.length> 50)
+        return description.substring(0, 50)+"...";
+      else
+        return description;
+    }
+});
+
+
  Template.findByIDErrorTemplate.helpers({
     scenarioID : function(){
       return Session.get('auxScenarioID');
