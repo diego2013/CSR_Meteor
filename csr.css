@@ -208,6 +208,8 @@ nav>ul>li>ul>li{
 	margin-left: 0px;
 }
 
+nav ul li:hover {background:#8AB8E6;border-radius:5px }
+
 nav ul li ul {
 	position: absolute;
 	padding:0px;
@@ -218,9 +220,10 @@ nav ul li ul.fallback {display:none;}
 nav ul li ul li:hover a {background:#F7F7F7;}
 
 nav ul li:hover ul.fallback {
-	width: 100%;
+	width: 150%;
 	background:#A9D0F5;
-	display:block;    
+	display:block; 
+	text-align: left;  
 	/*z-index:1;
     opacity:1;*/}
 
@@ -231,6 +234,14 @@ ul.fallback{
     background: #8AB8E6;
     margin-left: 15px;
     border-radius:5px ;
+}
+
+.guidelinesShown{
+	display: block;
+}
+
+.guidelinesHidden{
+	display: none;
 }
 
 /*nav ul li ul {position:absolute;width:110px;background:#FFF;}
