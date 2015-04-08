@@ -140,7 +140,7 @@ if (Meteor.isClient) {
 
    });
 
-   this.route('NewScenarioForm' , 
+   this.route('newScenarioForm' , 
      function ()  {
        currentScenarioDTO = Session.get("currentScenarioDTO"); 
        this.render('NewScenarioForm', {
@@ -583,54 +583,51 @@ UI.registerHelper('formatDate', function(date) {
   //EVENTS Template events
   //============================================================================
   Template.NewScenarioForm.events({
-
-  //"click #newScenarioForm": function(event) {
-  // "submit #newScenarioForm": function(event, template) {
-    //input[type=button]
-    "click input[type=submit]": function(event, template) {
-      event.preventDefault();  
+    "click #saveScenarioButton" : function(){ 
+      //event.preventDefault();  
       collectScenarioInfo(); // Collects data from the form into an object
 
       if (event.target.id == "saveScenarioButton") {
-          // Save the scenario
-          //Meteor.call("saveScenario", currentScenarioDTO); //working code
+        // Save the scenario
+        //Meteor.call("saveScenario", currentScenarioDTO); //working code
+        Meteor.call("saveScenario", currentScenarioDTO, function(err, callbackScenarioDTO) {
+        //callback function
+           if (err)
+              { console.log(err);}
+
+            //currentScenarioDTO._id = callbackScenarioDTO._id;
+            currentScenarioDTO = callbackScenarioDTO;
+            Session.set('currentScenarioDTO', currentScenarioDTO);
+            Router.go("NewScenarioForm");
+            //Meteor._reload.reload();
+        });
+      }
+    }
+    ,"click #submitScenarioButton" : function(){ 
+      collectScenarioInfo(); // Collects data from the form into an object
+       //Validations
+       //1. Title can't be empty
+       //2. Description can't be empty
+      
+       if(currentScenarioDTO.title.trim()=='')
+         window.alert("To submit a scenario for revision and approval, the scenario TITLE can not be empty");
+         // throw new Meteor.Error("'Title' can NOT be empty"); //TO-DO do something with this error
+       else if (currentScenarioDTO.description.trim()==''){
+         window.alert("To submit a scenario for revision and approval, the scenario DESCRIPTION can not be empty");
+         //  throw new Meteor.Error("'Description' can NOT be empty");//TO-DO do something with this error
+       }else{
           Meteor.call("saveScenario", currentScenarioDTO, function(err, callbackScenarioDTO) {
           //callback function
-             if (err)
-                { console.log(err);}
+            if (err)
+               { console.log(err);}
 
-              //currentScenarioDTO._id = callbackScenarioDTO._id;
-              currentScenarioDTO = callbackScenarioDTO;
-              Session.set('currentScenarioDTO', currentScenarioDTO);
-              Router.go("NewScenarioForm");
-              //Meteor._reload.reload();
+             //currentScenarioDTO._id = callbackScenarioDTO._id;
+             currentScenarioDTO = callbackScenarioDTO;
+             Session.set('currentScenarioDTO', currentScenarioDTO);
+             Router.go('scenarioFormSubmitConfirmation');//submit
+             //Meteor._reload.reload();
           });
-      } else if (event.target.id == "submitScenarioButton") {
-          //Validations
-          //1. Title can't be empty
-          //2. Description can't be empty
-         
-          if(currentScenarioDTO.title.trim()=='')
-            window.alert("To submit a scenario for revision and approval, the scenario TITLE can not be empty");
-            // throw new Meteor.Error("'Title' can NOT be empty"); //TO-DO do something with this error
-          else if (currentScenarioDTO.description.trim()==''){
-            window.alert("To submit a scenario for revision and approval, the scenario DESCRIPTION can not be empty");
-            //  throw new Meteor.Error("'Description' can NOT be empty");//TO-DO do something with this error
-          }else{
-             Meteor.call("saveScenario", currentScenarioDTO, function(err, callbackScenarioDTO) {
-             //callback function
-               if (err)
-                  { console.log(err);}
-
-                //currentScenarioDTO._id = callbackScenarioDTO._id;
-                currentScenarioDTO = callbackScenarioDTO;
-                Session.set('currentScenarioDTO', currentScenarioDTO);
-                Router.go('scenarioFormSubmitConfirmation');//submit
-                //Meteor._reload.reload();
-             });
-          }
-      }
-
+       }
     }
     //onClick button change template
     , "click #goToStep1": function(){
@@ -701,6 +698,9 @@ Template.scenarioFormAdvancedInfo.events({
       Session.set(_ADVANCEDDETAILS_TAB, _ADT_PLACES_templateName);
      // hideScenarioFormButtons();
     }  
+    , "click #thisbutton" : function(){
+      console.log("one clicl here");
+    }
 
 });
 
@@ -980,23 +980,32 @@ var hideScenarioFormButtons = function(){
 
 //1. Navigation buttons
 //remove the hiddenButton class from all three buttons
+//btn btn-small btn-blue
   $("#goToStep1").removeClass("hiddenButton");
   $("#goToStep2").removeClass("hiddenButton");
   $("#goToStep3").removeClass("hiddenButton");
+  $("#goToStep1").addClass("btn btn-small btn-blue");
+  $("#goToStep2").addClass("btn btn-small btn-blue");
+  $("#goToStep3").addClass("btn btn-small btn-blue");
 
 //figure out in which panel we are and add the hiddenButton class to just that button
   var newScenarioStep = Session.get(_SCENARIO_FORM_STEP);
 
   if(newScenarioStep === _SCENARIO_FORM_STEP_BASIC_INFO){
+    $("#goToStep1").removeClass("btn btn-small btn-blue");
     $("#goToStep1").addClass("hiddenButton");
   }
   else if(newScenarioStep === _SCENARIO_FORM_STEP_ADVANCED_INFO){
+    $("#goToStep2").removeClass("btn btn-small btn-blue");
     $("#goToStep2").addClass("hiddenButton");
   }
   else if(newScenarioStep === _SCENARIO_FORM_STEP_SOLUTION){
+    $("#goToStep3").removeClass("btn btn-small btn-blue");
     $("#goToStep3").addClass("hiddenButton");
-  }else //default
+  }else {//default
+    $("#goToStep1").removeClass("btn btn-small btn-blue");
     $("#goToStep1").addClass("hiddenButton");
+  }
  
  //   //2. Save and Submit buttons
  //   if(Session.get('currentScenarioDTO')==undefined ||

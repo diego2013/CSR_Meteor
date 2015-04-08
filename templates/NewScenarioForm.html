@@ -3,17 +3,26 @@
   <form id="newScenarioForm" class="new-scenario">
     
     <!--div here for control buttons -->
-    <div id="controlButtons">
+    <div id="controlButtons" style="text-align:center;">
     	<!-- 
         <button type="submit" id="saveScenarioButton" name="saveButton" title="Save Scenario" value="Save">Save</button>
     	<button type="submit" id="submitScenarioButton" name="submitButton" title="Submit for approval" value="Submit" >Submit</button> 
         -->
+
+        <a href="#"  id="saveScenarioButton" class="btn btn-small btn-mint" title="Save the chages in this scenario" >Save</a>
+        <a href="#"  id="goToStep1"  class="hiddenButton" title="Go to the Basic Information panel" >Go back to basic information</a>
+        <a href="#"  id="goToStep2"  class="btn btn-small btn-blue" title="Go to the Advanced Information panel" >Add further details</a>
+        <a href="#"  id="goToStep3"  class="btn btn-small btn-blue" title="Propose a solution for this scenario" >Propose a solution</a>
+        <a href="#"  id="submitScenarioButton" class="btn btn-small btn-mint" title="Submit for approval" >Finish and Submit</a>
         
-        <input type="submit" id="saveScenarioButton" name="saveButton" title="Save the chages in this scenario" value="Save" />
-        <button type="button" id="goToStep1" class="hiddenButton" name="none1" title="Go to the Basic Information panel" >Go back to basic information</button>
+        <!--
+        <input type="submit" id="saveScenarioButton" name="saveButton" title="Save the chages in this scenario" value="Save" />-->
+        <!--<button type="button" id="showGuidelines"  title="show/hide guidelines" >Show guidelines</button>-->
+        <!--<button type="button" id="goToStep1" class="hiddenButton" name="none1" title="Go to the Basic Information panel" >Go back to basic information</button>
         <button type="button" id="goToStep2" name="none2" title="Go to the Advanced Information panel" >Add further details</button> 
         <button type="button" id="goToStep3" name="none3" title="Propose a solution for this scenario" >Propose a solution</button>
         <input type="submit" id="submitScenarioButton" name="submitButton" title="Submit for approval" value="Finish and Submit" />
+        -->
 
     </div>
 
@@ -31,13 +40,15 @@
 <!-- Template for the first step of the New Scenario submission: Basic info -->
 <template name="scenarioFormBasicInfo">
         
+    <div id="guidelinesDiv" >    
     <span style="font-size:12pt;"><b>Guidelines</b></span>
     <ul>
-        <li>A brief explanation of an event is enough to describe a scenario. Try to keep information relevant, short and simple. Click o"example" to see an illustrative example on how an actual scenario would complete each field.</li>
+        <li>A brief explanation of an event is enough to describe a scenario. Try to keep information relevant, short and simple. Click "example" to see an illustrative example on how an actual scenario would complete each field.</li>
         <li>Do not include protected health information. Omit actual names of individuals or institutions.</li>
         <li>Try avoid submitting scenarios redundant to the ones already in the repository.</li>
         <li>Once you have described the risk to patient safety you are welcome, but not required, to enter some additional information by clicking the "Add Further Details" button.</li>
     </ul>  
+    </div>
 
 
     {{#if printScenarioMetainfo}}
@@ -57,6 +68,8 @@
 
 <!-- Template for the second step of the New Scenario submission: Advanced info -->
 <template name="scenarioFormAdvancedInfo">
+    
+    <div id="guidelinesDiv" >  
     <span style="font-size:12pt;"><b>Additional Information</b></span>
     <p>Step 2 of 3 (optional): Add additional information about the scenario.</p>
     <ul>
@@ -64,13 +77,25 @@
         <li>This step is completely optional. No fields are mandatory. Complete the information in the tabs that you think are relevant to describe the event and ignore those for which you do not have relevant information to add.</li>
         <li>Tabs can be visited in any order. Visting all of them may not be necessary to accuratelly describe the scenario. </li>
     </ul>
+    </div>
 
     {{#if printScenarioMetainfo}}
         <b>Scenario UID:</b> {{_id}} <b>Saved last:</b> {{formatDateTime createdAt}}<br/>
     {{/if}}
 
     <div>
-        <table>
+
+    <div>
+          <a href="#"  id="hazardsButton" class="btn btn-small btn-dark-blue" title="check the Hazards tab">Hazards</a>
+          <a href="#"  id="equipmentButton"  class="btn btn-small btn-dark-blue" title="check the Equipment tab">Equipment</a>
+          <a href="#"  id="lessonsLearnedButton" class="btn btn-small btn-dark-blue" title="check the Lessons Learned tab">Lessons Learned</a>
+          <a href="#"  id="rolesButton" class="btn btn-small btn-dark-blue" title="check the Roles Involved tab">Roles Involved</a>
+          <a href="#"  id="environmentsButton" class="btn btn-small btn-dark-blue" title="check the Environments Involved tab">Environments Involved</a>
+          <a href="#"  id="referencesButton" class="btn btn-small btn-dark-blue" title="check the References tab">Relevant references</a>
+    </div>
+
+
+       <!-- <table>
             <tr>
                 <td><button type="button" id="hazardsButton" title="check the Hazards tab">Hazards</button></td>
                 <td><button type="button" id="equipmentButton" title="check the Equipment tab">Equipment</button></td>
@@ -80,7 +105,7 @@
                 <td><button type="button" id="referencesButton" title="check the References tab">Relevant references</button></td>
 
             </tr>
-        </table>
+        </table> -->
         <!--<div style="color:#0000FF;display:flex;border: 1px solid red;width:80%;align:center;position:relative; margin: 0 auto;">
                 <div class="click-nav">
                     <ul class="no-js">
@@ -106,6 +131,8 @@
 
 <!-- Template for the Third step of the New Scenario submission: Solution -->
 <template name="scenarioFormSolution">
+
+    <div id="guidelinesDiv"  >  
     <span style="font-size:12pt;"><b>Share a Good Idea</b></span>
     <p>Step 3 of 3 (optional): Propose a solution for a barrier in patient safety or share a <em>good idea</em>.</p>
     <ul>
@@ -114,6 +141,7 @@
         <li>Feel welcome to address early any potential new risks in the workflow or systems introduced by the solution.</li>
         <li>Discuss or highlight the benefits of your proposed solution or idea.</li>
     </ul>
+    </div>
 
     <label><b>Title: </b></label>
     <label>{{title}}</label>
