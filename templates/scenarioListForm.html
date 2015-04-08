@@ -16,8 +16,8 @@
   	<td><button id="gothere" class="other" name={{_id}}>Visit Scenario</button> </td>
   	<td><b>UID:</b> {{_id}} </td>
   	<td><b>Saved last: </b> {{formatDate modifiedAt}}  </td>
-  	<td><b>Title:</b> {{title}} </td>
-  	<td><b>Descrp: </b>   {{showDescrioption description}} </td>
+  	<td><b>Title:</b> {{trimLength title 45}} </td>
+  	<td><b>Descrp: </b>   {{trimLength description 50}} </td>
   	<td><b>Status: </b> {{status}} </td>
 
 </template>

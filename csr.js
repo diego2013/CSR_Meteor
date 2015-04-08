@@ -470,14 +470,14 @@ if (Meteor.isClient) {
     },
  });
 
- Template.scenarioRow.helpers({
-    showDescrioption: function(description){
-      if(description.length> 50)
-        return description.substring(0, 50)+"...";
-      else
-        return description;
-    }
-});
+// Template.scenarioRow.helpers({
+//    showDescrioption: function(description){
+//      if(description.length> 50)
+//        return description.substring(0, 50)+"...";
+//      else
+//        return description;
+//    }
+//});
 
 
  Template.findByIDErrorTemplate.helpers({
@@ -522,6 +522,20 @@ UI.registerHelper('isScenarioReadOnly', function(){
 //https://atmospherejs.com/momentjs/moment
 // $ meteor add momentjs:moment
 */
+
+/* Trims the length of a string of charaters to the desired length*/
+UI.registerHelper('trimLength', function(string, length){
+      if (string!= undefined && string.trim()!=''){
+        if(length>0){
+          if(string.length> length)
+            return string.substring(0, length)+"...";
+          else
+            return string;
+        }else
+          return '';
+      }else
+        return '';
+});
 
 //Formats a date time using the mask MM-DD-YYYY, hh:mm:ss
 UI.registerHelper('formatDateTime', function(date) {
