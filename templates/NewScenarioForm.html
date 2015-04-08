@@ -4,10 +4,6 @@
     
     <!--div here for control buttons -->
     <div id="controlButtons" style="text-align:center;">
-    	<!-- 
-        <button type="submit" id="saveScenarioButton" name="saveButton" title="Save Scenario" value="Save">Save</button>
-    	<button type="submit" id="submitScenarioButton" name="submitButton" title="Submit for approval" value="Submit" >Submit</button> 
-        -->
 
         <a href="#"  id="saveScenarioButton" class="btn btn-small btn-mint" title="Save the chages in this scenario" >Save</a>
         <a href="#"  id="goToStep1"  class="hiddenButton" title="Go to the Basic Information panel" >Go back to basic information</a>
@@ -83,7 +79,6 @@
         <b>Scenario UID:</b> {{_id}} <b>Saved last:</b> {{formatDateTime createdAt}}<br/>
     {{/if}}
 
-    <div>
 
     <div>
           <a href="#"  id="hazardsButton" class="btn btn-small btn-dark-blue" title="check the Hazards tab">Hazards</a>
@@ -94,35 +89,6 @@
           <a href="#"  id="referencesButton" class="btn btn-small btn-dark-blue" title="check the References tab">Relevant references</a>
     </div>
 
-
-       <!-- <table>
-            <tr>
-                <td><button type="button" id="hazardsButton" title="check the Hazards tab">Hazards</button></td>
-                <td><button type="button" id="equipmentButton" title="check the Equipment tab">Equipment</button></td>
-                <td><button type="button" id="lessonsLearnedButton" title="check the Lessons Learned tab">Lessons Learned</button></td>
-                <td><button type="button" id="rolesButton" title="check the Roles Involved tab">Roles Involved</button></td>
-                <td><button type="button" id="environmentsButton" title="check the Environments Involved tab">Environments Involved</button></td>
-                <td><button type="button" id="referencesButton" title="check the References tab">Relevant references</button></td>
-
-            </tr>
-        </table> -->
-        <!--<div style="color:#0000FF;display:flex;border: 1px solid red;width:80%;align:center;position:relative; margin: 0 auto;">
-                <div class="click-nav">
-                    <ul class="no-js">
-                    <li>
-                        <a href="#" class="clicker">Hazards</a>
-                    </li>
-                    </ul>
-                </div>
-                <div class="click-nav">
-                    <ul class="no-js">
-                    <li>
-                        <a href="#" class="clicker">Equipment</a>
-                    </li>
-                    </ul>
-                </div>
-        </div>-->
-    </div>
     
     <div class="main">
         {{> Template.dynamic template=advancedDetailsTemplateName}}
@@ -193,8 +159,8 @@ I understand that I, the scenario submitter, am the ultimate resposible for the 
 
 
 <div>
-    <button type="button" id="declineSubmit" title="Go to the scenario panel panel" >Decline</button> 
-    <button type="button" id="acceptSubmit" title="Accept and submit" >Submit</button>
+    <button type="button" id="declineSubmit" class="btn btn-small btn-mint" title="Go to the scenario panel panel" >Decline</button> 
+    <button type="button" id="acceptSubmit"  class="btn btn-small btn-mint" title="Accept and submit" >Submit</button>
 </div>
 
 </template>
@@ -249,7 +215,7 @@ I understand that I, the scenario submitter, am the ultimate resposible for the 
         </tr>
     </table>
 
-    <button type="button" id="addNewHazard" >Add Another Hazard Description</button>
+    <button type="button" id="addNewHazard" class="btn btn-small btn-mint">Add Another Hazard Description</button>
 
     <table border="1">
         <tr>
@@ -306,7 +272,7 @@ I understand that I, the scenario submitter, am the ultimate resposible for the 
         
     </table>
 
-    <button type="button" id="addNewEquipment" >Add Another Equipment Description</button>
+    <button type="button" id="addNewEquipment" class="btn btn-small btn-mint">Add Another Equipment Description</button>
 
     <table border="1">
         <tr>
@@ -379,7 +345,7 @@ I understand that I, the scenario submitter, am the ultimate resposible for the 
 
  </table>
 
- <button type="button" id="addNewReference" >Add Another Reference</button>
+ <button type="button" id="addNewReference" class="btn btn-small btn-mint">Add Another Reference</button>
 
  <table border="1">
      <tr>
@@ -456,7 +422,7 @@ I understand that I, the scenario submitter, am the ultimate resposible for the 
         <option value='X-Ray Technician'>X-Ray Technician</option>
     </select>
 
-    <button type="button" id="addActor">Add Actor</button>
+    <button type="button" id="addActor" class="btn btn-small btn-mint">Add Actor</button>
 
     <table>
         <tr>
@@ -522,7 +488,7 @@ I understand that I, the scenario submitter, am the ultimate resposible for the 
         <option value='Wound Care Unit'>Wound Care Unit</option>
     </select>
 
-    <button type="button" id="addPlace">Add Environment</button>
+    <button type="button" id="addPlace" class="btn btn-small btn-mint">Add Environment</button>
 
     <table>
         <tr>
