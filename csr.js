@@ -129,21 +129,29 @@ if (Meteor.isClient) {
      this.render('FooterTemplate', {to: 'footer'});
      //Router.go('home');
    });
-    this.route('home');
+   this.route('home');
+   
+   this.route('createNewScenario', function(){
+      Session.set(_SCENARIO_FORM_STEP, _SCENARIO_FORM_STEP_BASIC_INFO);
+      cleanNewScenarioForm();
+      currentScenarioDTO = Session.get("currentScenarioDTO"); 
+      hideScenarioFormButtons();
+      Router.go('/newScenarioForm');
 
+   });
 
-    this.route('NewScenarioForm' , 
-      function ()  {
-        currentScenarioDTO = Session.get("currentScenarioDTO"); 
-        this.render('NewScenarioForm', {
-          data : currentScenarioDTO,
-          yieldTemplates: {
-            'scenarioFormBasicInfo': {to: 'newScenarioStep'}
-          }          
-        });
-        hideScenarioFormButtons();
-      }
-    );
+   this.route('NewScenarioForm' , 
+     function ()  {
+       currentScenarioDTO = Session.get("currentScenarioDTO"); 
+       this.render('NewScenarioForm', {
+         data : currentScenarioDTO,
+         yieldTemplates: {
+           'scenarioFormBasicInfo': {to: 'newScenarioStep'}
+         }          
+       });
+       hideScenarioFormButtons();
+     }
+   );
 
     //Find scenarios using the URL
     this.route('/NewScenarioForm/:_id', function () {
@@ -326,7 +334,21 @@ if (Meteor.isClient) {
     isScenarioStep: function(step) {
       var newScenarioStep = Session.get(_SCENARIO_FORM_STEP);
       return step==newScenarioStep;
-    }/*, 
+    }
+   //,getGuidelinesButtonClass : function(){
+   //  var buttonName = $('#showGuidelines').html();
+   //  console.log($('#guidelinesDiv').attr("class"));
+   //  if(buttonName=='Show guidelines'){
+   //    console.log('class="guidelinesHidden"');
+   //    return 'class="guidelinesHidden"';
+   //  }
+   //  else{
+   //    console.log("nada");
+   //    return '';
+   //  }
+   //}
+
+    /*, 
     currentScenarioDTO : function(){
       return Session.get('currentScenarioDTO');
     }*/
@@ -547,6 +569,15 @@ UI.registerHelper('formatDate', function(date) {
   return moment(date).format('MM-DD-YYYY');
 });
 
+//UI.registerHelper('getGuidelinesButtonClass' , function(val){
+//      var buttonName = $('#showGuidelines').html();
+//      //console.log($('#guidelinesDiv').attr("class"));
+//      if(buttonName=='Show guidelines')
+//        return 'class="guidelinesHidden"';
+//      else
+//        return '';
+//});
+
 
 
   //EVENTS Template events
@@ -618,6 +649,23 @@ UI.registerHelper('formatDate', function(date) {
       Session.set(_SCENARIO_FORM_STEP, _SCENARIO_FORM_STEP_SOLUTION);
       hideScenarioFormButtons();
     }
+    , "click #showGuidelines" : function(){
+     //var guidelinesClass = $('#guidelinesDiv').attr("class");
+     //console.log(guidelinesClass);
+      var buttonName = $('#showGuidelines').html();
+      if(buttonName=='Show guidelines')
+        $('#showGuidelines').html('Hide guidelines');
+      else
+        $('#showGuidelines').html('Show guidelines');
+      //$('#guidelinesDiv').toggleClass("guidelinesShown guidelinesHidden");
+     //if(guidelinesClass=="guidelinesShown"){
+     //  $('#guidelinesDiv').toggleClass("guidelinesHidden");
+     //}else{
+     //  $('#guidelinesDiv').toggleClass("guidelinesShown");
+     //}
+
+    }
+
 
 });
 
