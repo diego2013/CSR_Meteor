@@ -11,9 +11,11 @@
   <!--<h1>Clinical Scenario Repository Prototype</h1> -->
 
  <!-- TODO: move to the left. Make sure the popup box displays ok -->
-  <span class="allToLeft"> {{> loginButtons}} </span>
-  <div>
-  <!-- {{> NavBar}} -->
+ <!-- <span class="allToLeft"> {{> loginButtons}} </span> -->
+  <div style="text-align:center;">
+
+  {{> NavBar}}
+
     <table   style="margin-left:auto;margin-right:auto;">
 	    <tr>
 		    <td><img id="mdpnpLogo" alt="MD PnP Logo" style="float:left;" src="/images/mdpnp-small.png" width="150" height="45"/></td>
@@ -24,9 +26,8 @@
 	    </tr>
     </table>
 
-    {{> NavBar}}
+    <!--{{> NavBar}}-->
   </div>
-
 
 </header>
 
@@ -37,54 +38,31 @@
 <!-- Template for the navigation buttons -->
 <template name="NavBar">
 
- <div>
-    <table  style="margin-left:auto;margin-right:auto; margin-top:5px">
-	    <tr>
-	    
-	    	<td><button type="button"  id="create-new-scn" class="create-new-scn" name="createNewScnButton" title="Create a new Clinical Scenario or Good Idea">Create New Scenario</button></td>
-	    	<!--<td>
-	    		<div class="click-nav">
-	    			<ul class="no-js">
-	    			<li>
-			      		<a href="{{ pathFor 'NewScenarioForm' }}" class="clicker">Create New</a>
-			      	</li>
-	    			</ul>
-	    		</div>
-	    	</td>
-	    	<td>
-	    		<div class="click-nav">
-	    			<ul class="no-js">
-	    			<li>
-			      		<a href="#" class="clicker">Create New 2</a>
-			      	</li>
-	    			</ul>
-	    		</div>
-	    	</td> -->
-	    	<td><button type="button" id="list-scn" name="listScnButton" title="Search and list scenarios">Search Scenarios</button></td>
-	    	<td><button type="button" id="list-approved-scn" name="listApprovedScnButton" title="Search and list Approved scenarios">Search Approved Scenarios</button></td>
-	    	<td><button type="button" id="findByID" name="findByIDButton" title="Find a scenario by ID">Find by ID</button></td>
-	    	<!-- <td><button type="button" id="disclaimerPage" name="disclaimerButton" title="See Disclaimer">See disclaimer</button></td>  -->
-	    	<td><button type="button" id="feedbackPage" name="feedbackPage" title="Contribute to improve this website">Feedback</button></td>
-	    	<td><button type="button" id="goToHomePage" name="goToHomePageButton" title="Go to Homepage">Go to Homepage</button></td>
-	    	<td><button type="button" id="goToMyProfile" title="go to my user Profile">User Profile</button></td>
-	    	<!-- Issue #5 <td><button type="button" id="listUsers" title="list all users">List Users </button></td> -->
-	    	<!-- <td><button type="button" id="testPost" name="post" title="Test purposes">Post (Test)</button></td>-->
-			<!-- <td>
-			 <div class="click-nav">
-			   <ul class="no-js">
-			     <li>
-			       <a href="#" class="clicker">Scenarios<span class="arrow">&#9660;</span></a>
-			       <ul>
-			         <li><a href="{{ pathFor 'scenarioList2' }}">My scenarios</a></li>
-			         <li><a href="#">Approved scenarios</a></li>
-			       </ul>
-			     </li>
-			   </ul>
-			 </div>
-			</td> -->
-	    	
-	    </tr>
-	</table>
+<div>
+
+	<div style="background:#A9D0F5;">
+	<!-- For a detached to left login button-->
+	 <span class="loginButtonsStyle"> {{> loginButtons}} </span>
+	 <nav class="nav">
+		<ul class="nav-list">
+		  <!-- <li class="nav-item">{{> loginButtons}}</li> -->
+		  <li class="nav-item"><a href="#" id="create-new-scn">Create New Scenario</a></li>
+		  <li class="nav-item"><a href="#">Search Scenarios</a>
+		  	<ul class="fallback">
+		  		<li><a href="{{ pathFor 'scenarioList'}}">My Scenarios</a></li>
+		  		<li><a href="{{ pathFor 'approvedScenarioList'}}">Approved Scenarios</a></li>
+		  	</ul>
+		  </li>
+		  <li class="nav-item"><a href="{{ pathFor 'findByIDTemplate' }}">Find by ID</a></li>
+		  <li class="nav-item"><a href="{{ pathFor 'FeedbackForm'}}">Feedback</a></li>
+		  <li class="nav-item"><a href="{{ pathFor 'home' }}">Go to Homepage</a></li>
+		  <li class="nav-item"><a href="{{ pathFor 'userProfile'}}">User Profile</a></li>
+		</ul>
+	 </nav>
+	 <!--<span style="float:right;"><img id="mdpnpLogo" alt="MD PnP Logo" style="float:left;" src="/images/mdpnp-small.png" width="150" height="45"/></span>-->
+	</div>
+
+
 </div>	
 </template>
 
@@ -135,6 +113,28 @@
 
 <template name="postOne">
 	This is the Post One template.	
+	<div style="display:inline-block;">
+		<div class="menu-wrap">
+    <nav class="menu">
+        <ul class="clearfix">
+            <li><a href="#">Home</a></li>
+            <li>
+                <a href="#">Movies <span class="arrow">&#9660;</span></a>
+ 
+                <ul class="sub-menu">
+                    <li><a href="#">In Cinemas Now</a></li>
+                    <li><a href="#">Coming Soon</a></li>
+                    <li><a href="#">On DVD/Blu-ray</a></li>
+                    <li><a href="#">Showtimes &amp; Tickets</a></li>
+                </ul>
+            </li>
+            <li><a href="#">T.V. Shows</a></li>
+            <li class="current-item"><a href="#">Photos</a></li>
+            <li><a href="#">Site Help</a></li>
+        </ul>
+    </nav>
+</div>
+	</div>
 </template>
 
 <template name="postTwo">

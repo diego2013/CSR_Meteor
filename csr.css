@@ -36,12 +36,21 @@ header {
   background: #d2edf4;
   
   background-image: linear-gradient(to bottom, #A9D0F5, #CEE3F6 100%);
-  padding: 5px 15px 5px 15px;
+  /*padding: 5px 15px 5px 15px;*/
   position: relative;
 }
 
 #login-buttons {
   display: block;
+}
+
+.loginButtonsStyle {
+  float: left;
+  position: relative;
+  padding: 15px;
+  font-size:14px;
+  font-weight:900;
+  color:#FFF;
 }
 
 .hiddenButton {
@@ -79,7 +88,7 @@ form {
 
 ul {
   margin: 0;
-  padding: 5px;
+ /* padding: 5px;*/
 
   /*list-style: square outside none ; */
   /* background: white; */
@@ -142,34 +151,105 @@ header .hide-completed {
   }
 }
 
-.allToLeft {
-  float: left;
-  position: relative;
-}
 
 .red-asterisk {
 	color:red;
 }
 
-/*Navigation bar*/
 
-.click-nav {/*width:100px;*/}
-.click-nav ul {position:relative;/*font-weight:900;*/ padding: 0px;margin:0px;}
-.click-nav ul li {position:relative;list-style:none;cursor:pointer;margin:0em;padding:0px;margin: 0px;}
-.click-nav ul li ul {position:absolute;left:0;right:0;width:200px; z-index: 1;}
-.click-nav ul .clicker {position:relative;background:#2284B5;/*background:transparent;*/color:#000;}
-.click-nav ul .clicker:hover,.click-nav ul .active {background:#196F9A;}
-/*.click-nav img {position:absolute;top:9px;left:12px;}*/
-.click-nav ul li a {transition:background-color 0.2s ease-in-out;-webkit-transition:background-color 0.2s ease-in-out;
--moz-transition:background-color 0.2s ease-in-out;display:block;padding: 5px; /*8px 10px 8px 40px;*/background:#FFF;color:#333;text-decoration:none;}
-.click-nav ul li a:hover {background:#F2F2F2;}
+/**/
+.nav {
+  margin-left: auto;
+  margin-right: auto;
+  position:relative;
+  display:inline-block;
+  font-size:14px;
+  font-weight:900;
 
-.menu .arrow {
-    font-size:11px;
-    line-height:0%;
+}
+.nav-list {
+  
 }
 
-/* Fallbacks */
-.click-nav .no-js ul {display:none;}
-.click-nav .no-js:hover ul {display:block;}
+.nav-list >ul>li{
+
+}
+
+
+.nav-item {
+  margin: 0px;
+  float:left;
+  display:inline;
+  zoom:1;
+}
+.nav-item a {
+  display:block;
+  padding:15px 20px;
+ /*padding: 10px;*/
+  color:#FFF;
+  text-decoration: none;
+  /*background:#34495E;*/
+}
+.nav-item:first-child a {
+  border-radius:5px 0 0 5px;
+}
+.nav-item:last-child a {
+  border-radius:0 5px 5px 0;
+}
+.nav-item a:hover {
+  /*background:#2C3E50;*/
+  background: #8AB8E6;
+  border-radius:5px ;
+}
+
+
+nav>ul>li>ul>li{
+	list-style:none; 
+	margin-left: 0px;
+}
+
+nav ul li ul {
+	position: absolute;
+	padding:0px;
+}
+
+nav ul li ul.fallback {display:none;}
+
+nav ul li ul li:hover a {background:#F7F7F7;}
+
+nav ul li:hover ul.fallback {
+	width: 100%;
+	background:#A9D0F5;
+	display:block;    
+	/*z-index:1;
+    opacity:1;*/}
+
+ul.fallback{
+	z-index:1;
+    opacity:1;
+    position: absolute;
+    background: #8AB8E6;
+    margin-left: 15px;
+    border-radius:5px ;
+}
+
+/*nav ul li ul {position:absolute;width:110px;background:#FFF;}
+nav ul li ul li {width:110px;}
+nav ul li ul li a {display:block;padding:15px 10px;color:#444;}
+nav ul li ul li:hover a {background:#F7F7F7;}*/
+
+/*
+
+nav {background:#FFF;float:left;}
+nav ul {text-align:center;}
+nav ul li {float:left;display:inline;}
+nav ul li:hover {background:#E6E6E6;}
+nav ul li a {display:block;padding:15px 25px;color:#444;}
+nav ul li ul {position:absolute;width:110px;background:#FFF;}
+nav ul li ul li {width:110px;}
+nav ul li ul li a {display:block;padding:15px 10px;color:#444;}
+nav ul li ul li:hover a {background:#F7F7F7;}
+nav ul li ul.fallback {display:none;}
+nav ul li:hover ul.fallback {display:block;}*/
+
 
