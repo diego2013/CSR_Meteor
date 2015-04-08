@@ -52,9 +52,14 @@ header {
   float: left;
   position: relative;
   padding: 15px;
+  color:#FFF;
+
   font-size:14px;
   font-weight:900;
-  color:#FFF;
+  font-family:'Helvetica Neue', Helvetica, Arial, sans-serif;
+  /*text-shadow:0 1px 1px rgba(0,0,0,0.5);*/
+  text-decoration:none;
+
 }
 
 .hiddenButton {
