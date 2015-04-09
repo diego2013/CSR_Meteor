@@ -341,6 +341,7 @@ if (Meteor.isClient) {
   });
 
   Template.scenarioFormBasicInfo.helpers({
+    /*
     //Indicates if the header with the scenario metainfo (UID, Dates) shall be displayed
     // It will in case the currentScenarioDTO in session has a valid _id
       printScenarioMetainfo : function(){
@@ -348,7 +349,7 @@ if (Meteor.isClient) {
           return false;
         else
           return Session.get('currentScenarioDTO')._id!=undefined;
-      },
+      }, */
       editableScn : function(){
         if(Session.get('currentScenarioDTO')==undefined)
           return true;
@@ -358,6 +359,19 @@ if (Meteor.isClient) {
   });
 
   Template.scenarioFormSolution.helpers({
+    /*
+    //Indicates if the header with the scenario metainfo (UID, Dates) shall be displayed
+    // It will in case the currentScenarioDTO in session has a valid _id
+     printScenarioMetainfo : function(){
+       if(Session.get('currentScenarioDTO')==undefined)
+         return false;
+       else
+         return Session.get('currentScenarioDTO')._id!=undefined;
+     }*/
+  });
+
+  Template.scenarioFormAdvancedInfo.helpers({
+    /*
     //Indicates if the header with the scenario metainfo (UID, Dates) shall be displayed
     // It will in case the currentScenarioDTO in session has a valid _id
       printScenarioMetainfo : function(){
@@ -365,18 +379,7 @@ if (Meteor.isClient) {
           return false;
         else
           return Session.get('currentScenarioDTO')._id!=undefined;
-      }
-  });
-
-  Template.scenarioFormAdvancedInfo.helpers({
-        //Indicates if the header with the scenario metainfo (UID, Dates) shall be displayed
-    // It will in case the currentScenarioDTO in session has a valid _id
-      printScenarioMetainfo : function(){
-        if(Session.get('currentScenarioDTO')==undefined)
-          return false;
-        else
-          return Session.get('currentScenarioDTO')._id!=undefined;
-      },
+      },*/
       advancedDetailsTemplateName : function(){
         var _advancedDetailsTemplateName = Session.get(_ADVANCEDDETAILS_TAB);
         if(_advancedDetailsTemplateName==undefined)
@@ -554,6 +557,15 @@ UI.registerHelper('formatDate', function(date) {
   return moment(date).format('MM-DD-YYYY');
 });
 
+/* Indicates if the header with the scenario metainfo (UID, Dates) shall be displayed.
+   It will be in case the currentScenarioDTO in session has a valid _id
+*/
+UI.registerHelper('printScenarioMetainfo' , function(){
+   if(Session.get('currentScenarioDTO')==undefined)
+     return false;
+   else
+     return Session.get('currentScenarioDTO')._id!=undefined;
+});
 
 /* Shows or hides the guidelines div according to the value of the button
 */
