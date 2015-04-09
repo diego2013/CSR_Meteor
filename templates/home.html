@@ -1,5 +1,5 @@
 <template name="home">
-  <h2>Welcome to the Clinical Scenario Repository</h2>  
+  <h2>Welcome to the Clinical Scenario Repository</h2> 
 
   <p>A <em>clinical scenario</em> is a brief description of a clinical situation or event.</p>
   
@@ -48,8 +48,8 @@
 	<div>
      <table  cellpadding="15" style="margin-left:auto;margin-right:auto;">
 	     <tr>
-	     <td><a href="{{ pathFor 'new' }}">Click here to enter a new clinical scenario</a></td>
-	     <td><a href="{{ pathFor 'home' }}">Click here to examine the clinical scenario collection</a></td>
+	     <td><a href="{{ pathFor 'new' }}" class="btn btn-small btn-dark-blue">Enter a new clinical scenario</a></td>
+	     <td><a href="{{ pathFor 'approvedScenarioList' }}" class="btn btn-small btn-dark-blue">Examine the clinical scenario collection</a></td>
 	     </tr>
 	 </table>  
 	</div>  
