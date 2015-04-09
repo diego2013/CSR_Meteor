@@ -338,24 +338,6 @@ if (Meteor.isClient) {
       var newScenarioStep = Session.get(_SCENARIO_FORM_STEP);
       return step==newScenarioStep;
     }
-   //,getGuidelinesButtonClass : function(){
-   //  var buttonName = $('#showGuidelines').html();
-   //  console.log($('#guidelinesDiv').attr("class"));
-   //  if(buttonName=='Show guidelines'){
-   //    console.log('class="guidelinesHidden"');
-   //    return 'class="guidelinesHidden"';
-   //  }
-   //  else{
-   //    console.log("nada");
-   //    return '';
-   //  }
-   //}
-
-    /*, 
-    currentScenarioDTO : function(){
-      return Session.get('currentScenarioDTO');
-    }*/
-
   });
 
   Template.scenarioFormBasicInfo.helpers({
@@ -572,14 +554,16 @@ UI.registerHelper('formatDate', function(date) {
   return moment(date).format('MM-DD-YYYY');
 });
 
-//UI.registerHelper('getGuidelinesButtonClass' , function(val){
-//      var buttonName = $('#showGuidelines').html();
-//      //console.log($('#guidelinesDiv').attr("class"));
-//      if(buttonName=='Show guidelines')
-//        return 'class="guidelinesHidden"';
-//      else
-//        return '';
-//});
+
+/* Shows or hides the guidelines div according to the value of the button
+*/
+UI.registerHelper('getGuidelinesButtonClass' , function(){
+  if(!Session.get('showGuidelines')){
+    return 'guidelinesHidden';
+  }else{
+    return '';
+  }
+});
 
 
 
@@ -650,19 +634,15 @@ UI.registerHelper('formatDate', function(date) {
       hideScenarioFormButtons();
     }
     , "click #showGuidelines" : function(){
-     //var guidelinesClass = $('#guidelinesDiv').attr("class");
-     //console.log(guidelinesClass);
+     //toggle value of the button and update reactive variable
       var buttonName = $('#showGuidelines').html();
-      if(buttonName=='Show guidelines')
-        $('#showGuidelines').html('Hide guidelines');
-      else
-        $('#showGuidelines').html('Show guidelines');
-      //$('#guidelinesDiv').toggleClass("guidelinesShown guidelinesHidden");
-     //if(guidelinesClass=="guidelinesShown"){
-     //  $('#guidelinesDiv').toggleClass("guidelinesHidden");
-     //}else{
-     //  $('#guidelinesDiv').toggleClass("guidelinesShown");
-     //}
+      if(buttonName=='Show Guidelines'){
+        $('#showGuidelines').html('Hide Guidelines');
+         Session.set('showGuidelines', true);
+      }else{
+        $('#showGuidelines').html('Show Guidelines');
+        Session.set('showGuidelines', false);
+      }
     }
   //  , "click #exampleTitle" : function(){
   //    window.alert("Mark that you have understood the Clinical Scenario Repository policies to submit you scenario");
