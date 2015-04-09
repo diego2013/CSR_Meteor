@@ -149,6 +149,7 @@ if (Meteor.isClient) {
            'scenarioFormBasicInfo': {to: 'newScenarioStep'}
          }          
        });
+       this.render('FooterTemplate', {to: 'footer'});
        hideScenarioFormButtons();
      }
    );
@@ -179,11 +180,14 @@ if (Meteor.isClient) {
         this.render('/findByIDErrorTemplate');
       }else{
         this.render('NewScenarioForm', {data: currentScenarioDTO});
+        this.render('FooterTemplate', {to: 'footer'});
         Session.set("currentScenarioDTO", currentScenarioDTO); //Issue #3
       }     
     });
+
     this.route('new', function(){
       this.render('NewScenarioForm');
+      this.render('FooterTemplate', {to: 'footer'});
     });
 
 //Template for when we are about to submit a scenario for approval
@@ -286,7 +290,6 @@ if (Meteor.isClient) {
     );
 
   });
-
 
 
   //HELPERS Template helpers
@@ -660,8 +663,11 @@ UI.registerHelper('formatDate', function(date) {
      //}else{
      //  $('#guidelinesDiv').toggleClass("guidelinesShown");
      //}
-
     }
+  //  , "click #exampleTitle" : function(){
+  //    window.alert("Mark that you have understood the Clinical Scenario Repository policies to submit you scenario");
+  //    //showDialog("Mark");
+  //  }
 
 
 });
@@ -792,7 +798,7 @@ Template.scenarioFormSubmitConfirmation.events({
 
   "click #declineSubmit": function(){
     Session.set(_SCENARIO_FORM_STEP, _SCENARIO_FORM_STEP_BASIC_INFO);
-    Router.go("NewScenarioForm");//redirect to the Scenario Form
+    Router.go("newScenarioForm");//redirect to the Scenario Form
   },
   "click #acceptSubmit": function(event, template){
     var acceptChecked = $("#acceptanceCheck").prop("checked");
@@ -812,7 +818,7 @@ Template.scenarioFormSubmitConfirmation.events({
             Router.go("scenarioFormThankYou");//2. redirect to thank you page (on callback)
           });  
     }else{
-      window.alert("Mark that you have understood the Clinical Scenario Repository policies to submit you scenario");
+      window.alert("Mark that you have understood the Clinical Scenario Repository policies to submit your scenario");
     }
   }
 });
@@ -979,32 +985,32 @@ var trimInput = function(val) {
 var hideScenarioFormButtons = function(){
 
 //1. Navigation buttons
-//remove the hiddenButton class from all three buttons
+//remove the btn-salmon class from all three buttons. Add blue button class for the three of them
 //btn btn-small btn-blue
-  $("#goToStep1").removeClass("hiddenButton");
-  $("#goToStep2").removeClass("hiddenButton");
-  $("#goToStep3").removeClass("hiddenButton");
-  $("#goToStep1").addClass("btn btn-small btn-blue");
-  $("#goToStep2").addClass("btn btn-small btn-blue");
-  $("#goToStep3").addClass("btn btn-small btn-blue");
+  $("#goToStep1").removeClass("btn-salmon");
+  $("#goToStep2").removeClass("btn-salmon");
+  $("#goToStep3").removeClass("btn-salmon");
+  $("#goToStep1").addClass("btn-blue");
+  $("#goToStep2").addClass("btn-blue");
+  $("#goToStep3").addClass("btn-blue");
 
-//figure out in which panel we are and add the hiddenButton class to just that button
+//figure out in which panel we are and add the slamon button class to just that button
   var newScenarioStep = Session.get(_SCENARIO_FORM_STEP);
 
   if(newScenarioStep === _SCENARIO_FORM_STEP_BASIC_INFO){
-    $("#goToStep1").removeClass("btn btn-small btn-blue");
-    $("#goToStep1").addClass("hiddenButton");
+    $("#goToStep1").removeClass("btn-blue");
+    $("#goToStep1").addClass("btn-salmon");
   }
   else if(newScenarioStep === _SCENARIO_FORM_STEP_ADVANCED_INFO){
-    $("#goToStep2").removeClass("btn btn-small btn-blue");
-    $("#goToStep2").addClass("hiddenButton");
+    $("#goToStep2").removeClass("btn-blue");
+    $("#goToStep2").addClass("btn-salmon");
   }
   else if(newScenarioStep === _SCENARIO_FORM_STEP_SOLUTION){
-    $("#goToStep3").removeClass("btn btn-small btn-blue");
-    $("#goToStep3").addClass("hiddenButton");
+    $("#goToStep3").removeClass("btn-blue");
+    $("#goToStep3").addClass("btn-salmon");
   }else {//default
-    $("#goToStep1").removeClass("btn btn-small btn-blue");
-    $("#goToStep1").addClass("hiddenButton");
+    $("#goToStep1").removeClass("btn-blue");
+    $("#goToStep1").addClass("btn-salmon");
   }
  
  //   //2. Save and Submit buttons
@@ -1311,10 +1317,12 @@ Meteor.methods({
 
   //delete a scenario
   deleteScenario: function(scnID){
+    //console.log(scnID);
     var scenario = Scenarios.findOne(scnID);    //fetch
+    //var scenario = Scenarios.findOne({_id : scnID});
     //console.log("ID "+scnID);
     //console.log(JSON.stringify(scenario));
-    if (scenario.owner !== Meteor.userId()) {
+    if (scenario== undefined || scenario.owner != Meteor.userId()) {
     // If the current user is not thescenario owner
       throw new Meteor.Error("not-authorized");
     }

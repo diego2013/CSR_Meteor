@@ -6,7 +6,7 @@
     <div id="controlButtons" style="text-align:center;">
 
         <a href="#"  id="saveScenarioButton" class="btn btn-small btn-mint" title="Save the chages in this scenario" >Save</a>
-        <a href="#"  id="goToStep1"  class="hiddenButton" title="Go to the Basic Information panel" >Go back to basic information</a>
+        <a href="#"  id="goToStep1"  class="btn btn-small btn-salmon" title="Go to the Basic Information panel" >Go back to basic information</a>
         <a href="#"  id="goToStep2"  class="btn btn-small btn-blue" title="Go to the Advanced Information panel" >Add further details</a>
         <a href="#"  id="goToStep3"  class="btn btn-small btn-blue" title="Propose a solution for this scenario" >Propose a solution</a>
         <a href="#"  id="submitScenarioButton" class="btn btn-small btn-mint" title="Submit for approval" >Finish and Submit</a>
@@ -23,7 +23,7 @@
     </div>
 
     <!-- Div here for main content-->
-    <div class="main">
+    <div>
         {{> Template.dynamic template=newScenarioStep}}
     </div>
 
@@ -52,10 +52,12 @@
     {{/if}}
 
     <label>Title</label>
+    <!-- <a href="#"  id="exampleTitle" style="float:right;">example of a title</a> -->
+    <br/>
     {{#if editableScn}} 
-        <textarea type="text" id="title" name="title" rows="1" cols="75" placeholder="Type to add a title" >{{title}}</textarea><br/>
+        <textarea type="text" id="title" name="title" rows="1" cols="100" placeholder="Type to add a title" >{{title}}</textarea><br/>
     {{else}}
-        <textarea type="text" id="title" name="title" rows="1" cols="75" placeholder="Type to add a title" readonly>{{title}}</textarea><br/>
+        <textarea type="text" id="title" name="title" rows="1" cols="100" placeholder="Type to add a title" readonly>{{title}}</textarea><br/>
     {{/if}} 
     <label>Description</label><br/>
     <textarea type="text" id="description" name="description" rows="4" cols="175" placeholder="Type to add a description" >{{description}}</textarea><br/>
@@ -79,17 +81,15 @@
         <b>Scenario UID:</b> {{_id}} <b>Saved last:</b> {{formatDateTime createdAt}}<br/>
     {{/if}}
 
-
     <div>
           <a href="#"  id="hazardsButton" class="btn btn-small btn-dark-blue" title="check the Hazards tab">Hazards</a>
           <a href="#"  id="equipmentButton"  class="btn btn-small btn-dark-blue" title="check the Equipment tab">Equipment</a>
           <a href="#"  id="lessonsLearnedButton" class="btn btn-small btn-dark-blue" title="check the Lessons Learned tab">Lessons Learned</a>
           <a href="#"  id="rolesButton" class="btn btn-small btn-dark-blue" title="check the Roles Involved tab">Roles Involved</a>
           <a href="#"  id="environmentsButton" class="btn btn-small btn-dark-blue" title="check the Environments Involved tab">Environments Involved</a>
-          <a href="#"  id="referencesButton" class="btn btn-small btn-dark-blue" title="check the References tab">Relevant references</a>
+          <a href="#"  id="referencesButton" class="btn btn-small btn-dark-blue" title="check the References tab">Relevant References</a>
     </div>
 
-    
     <div>
         {{> Template.dynamic template=advancedDetailsTemplateName}}
     </div>
