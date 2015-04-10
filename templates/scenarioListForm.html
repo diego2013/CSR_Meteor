@@ -1,7 +1,17 @@
 <!-- Template to list all scenarios -->
 <template name="scenarioListTabel">
 	<p>Content of the database: {{scenarios.count}} scenarios</p>
-	<table>
+	<table >
+  <tr>
+    <th></th>
+    <th>created by</th>
+    <th></th>
+    <th>Scenario UID</th>
+    <th>Title</th>
+    <th>Description</th>
+    <th>Status</th>
+    <th>Saved last</th>
+  </tr>
   		{{#each scenarios}}
    	    	 <tr> {{ > scenarioRow }} </tr>
    	    {{/each}}
@@ -12,12 +22,12 @@
 <template name="scenarioRow">
   
   	<td><button class="delete">DELETE</button></td>
-  	<td> <b>created by:</b> {{username}}. </td>
+  	<td>{{username}}</td>
   	<td><button id="gothere" class="other" name={{_id}}>Visit Scenario</button> </td>
-  	<td><b>UID:</b> {{_id}} </td>
-  	<td><b>Saved last: </b> {{formatDate modifiedAt}}  </td>
-  	<td><b>Title:</b> {{trimLength title 45}} </td>
-  	<td><b>Descrp: </b>   {{trimLength description 50}} </td>
-  	<td><b>Status: </b> {{status}} </td>
+  	<td>{{_id}} </td>
+  	<td>{{trimLength title 45}} </td>
+  	<td>{{trimLength description 50}} </td>
+  	<td>{{status}} </td>
+    <td>{{formatDate modifiedAt}}  </td>
 
 </template>
