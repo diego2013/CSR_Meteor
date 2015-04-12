@@ -585,22 +585,29 @@ UI.registerHelper('getGuidelinesButtonClass' , function(){
     "click #saveScenarioButton" : function(){ 
       //event.preventDefault();  
       collectScenarioInfo(); // Collects data from the form into an object
+      if(currentScenarioDTO.title.trim()==''){
+        window.alert("The sceanrio needs at least a TITLE in order to be persisted. \n\nTitles are a human-friendly way of summarizing the content of the scenario and will make easier to identify your scenario later.");
 
-      if (event.target.id == "saveScenarioButton") {
+        //set focus on the title text area
+        var step = console.log(Session.get(_SCENARIO_FORM_STEP));
+        if(step==undefined || step === _SCENARIO_FORM_STEP_BASIC_INFO){
+          $("#title").focus();
+        }
+      } else {
         // Save the scenario
         //Meteor.call("saveScenario", currentScenarioDTO); //working code
         Meteor.call("saveScenario", currentScenarioDTO, function(err, callbackScenarioDTO) {
-        //callback function
-           if (err)
-              { console.log(err);}
+          //callback function
+             if (err)
+                { console.log(err);}
 
-            //currentScenarioDTO._id = callbackScenarioDTO._id;
-            currentScenarioDTO = callbackScenarioDTO;
-            Session.set('currentScenarioDTO', currentScenarioDTO);
-            Router.go("NewScenarioForm");
-            //Meteor._reload.reload();
-        });
-      }
+              //currentScenarioDTO._id = callbackScenarioDTO._id;
+              currentScenarioDTO = callbackScenarioDTO;
+              Session.set('currentScenarioDTO', currentScenarioDTO);
+              Router.go("NewScenarioForm");
+              //Meteor._reload.reload();
+          });
+        }
     }
     ,"click #submitScenarioButton" : function(){ 
       collectScenarioInfo(); // Collects data from the form into an object
