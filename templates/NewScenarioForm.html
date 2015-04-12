@@ -5,6 +5,10 @@
     <!--div here for control buttons -->
     <div id="controlButtons" style="text-align:center;">
 
+    <!--{{#if isScenarioEditable}}
+    <a href="#"  id="saveScenarioButton" class="btn btn-small btn-mint" title="Save the chages in this scenario" >Save Scenario</a>
+    {{/if}}-->
+
         <a href="#"  id="saveScenarioButton" class="btn btn-small btn-mint" title="Save the chages in this scenario" >Save Scenario</a>
         <a href="#"  id="showGuidelines"  class="btn btn-small btn-dark-grey" >Show Guidelines</a>
         <a href="#"  id="goToStep1"  class="btn btn-small btn-salmon" title="Go to the Basic Information panel" >Step 1: Basic Information</a>
@@ -218,6 +222,7 @@ I understand that I, the scenario submitter, am the ultimate resposible for the 
 
     <button type="button" id="addNewHazard" class="btn btn-small btn-mint">Add Another Hazard Description</button>
 
+    <br/><span>Current hazards of the scenario</span>
     <table border="1">
         <tr>
             <th>Description</th>
@@ -274,6 +279,7 @@ I understand that I, the scenario submitter, am the ultimate resposible for the 
     </table>
 
     <button type="button" id="addNewEquipment" class="btn btn-small btn-mint">Add Another Equipment Description</button>
+    <br/><span>List of hazardrous equipment included in the scenario</span>
 
     <table border="1">
         <tr>
@@ -348,6 +354,7 @@ I understand that I, the scenario submitter, am the ultimate resposible for the 
 
  <button type="button" id="addNewReference" class="btn btn-small btn-mint">Add Another Reference</button>
 
+ <br/><span>Current references added to the scenario</span>
  <table border="1">
      <tr>
          <th>URL of the reference</th>
@@ -427,7 +434,7 @@ I understand that I, the scenario submitter, am the ultimate resposible for the 
 
     <table>
         <tr>
-         <th>Clinical Roles</th>
+         <th>Clinical Roles of the scenario</th>
         </tr>
         {{#each roleEntryList}}
             {{> roleEntry}}
@@ -493,7 +500,7 @@ I understand that I, the scenario submitter, am the ultimate resposible for the 
 
     <table>
         <tr>
-         <th>Clinical Environments</th>
+         <th>Clinical Environments of the Scenario</th>
         </tr>
         {{#each environmentEntryList}}
             {{> environmentEntry}}
