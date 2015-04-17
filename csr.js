@@ -107,6 +107,17 @@ if (Meteor.isClient) {
 //    });
 //});
 
+Deps.autorun(function(){
+  if(Router.current()!= null){
+    //      console.log("Current path "+ Router.current().route.path());
+  var routeName = Router.current().route.getName();
+  //var routeNameOld = Router.previousPage().getName(); //this.location.path; //Location.back;
+  //console.log("from "+ routeNameOld+" to " +routeName);
+  highLightNavBatItem(routeName);
+  }
+
+});
+
 
   //ROUTES
   //====================================================================
@@ -136,6 +147,7 @@ if (Meteor.isClient) {
       cleanNewScenarioForm();
       currentScenarioDTO = Session.get("currentScenarioDTO"); 
       hideScenarioFormButtons();
+      //$("#cnsNavBarItem").addClass("selectedNavItem");
       Router.go('/newScenarioForm');
 
    });
@@ -1039,6 +1051,37 @@ var hideScenarioFormButtons = function(){
   //}
 
  };
+
+
+//Highlights the element of the navigation bar that idenfifies the route where we are on
+ var highLightNavBatItem = function(routeName){
+  //clean. Remove the class from all main nav bar items
+  $("#cnsNavBarItem").removeClass("selectedNavItem");
+  $("#ssNavBarItem").removeClass("selectedNavItem");  
+  $("#fbiNavBarItem").removeClass("selectedNavItem");
+  $("#feedNavBarItem").removeClass("selectedNavItem");  
+  $("#homeNavBarItem").removeClass("selectedNavItem");
+  $("#upNavBarItem").removeClass("selectedNavItem");
+
+  //ID the route we are on
+  var navItemID;
+  if(routeName=='/' || routeName=='home')
+    navItemID = 'homeNavBarItem';
+  else   if(routeName=='createNewScenario' || routeName=='newScenarioForm' ||
+      routeName=='new' || routeName=='scenarioFormSubmitConfirmation' || routeName=='scenarioFormThankYou')
+    navItemID = 'cnsNavBarItem';
+  else   if(routeName=='scenarioList' || routeName=='approvedScenarioList')
+    navItemID = 'ssNavBarItem';
+  else   if(routeName=='findByIDTemplate')
+    navItemID = 'fbiNavBarItem';
+  else   if(routeName=='userProfile')
+    navItemID = 'upNavBarItem';
+    else   if(routeName=='FeedbackForm' || routeName=='FeedbackFormThakYou')
+    navItemID = 'feedNavBarItem';
+
+  //add the "shaded" class to that nav bar item
+  $("#"+navItemID).addClass("selectedNavItem");
+ }
 
  //sets the variable currentScenarioDTO with the information from the templates
  var collectScenarioInfo = function(){

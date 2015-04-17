@@ -46,17 +46,17 @@
 	 <nav class="nav">
 		<ul class="nav-list">
 		  <!-- <li class="nav-item">{{> loginButtons}}</li> -->
-		  <li class="nav-item"><a href="{{ pathFor 'createNewScenario'}} " >Create New Scenario</a></li>
-		  <li class="nav-item"><a href="#">Search Scenarios</a>
+		  <li class="nav-item" id="cnsNavBarItem"><a href="{{ pathFor 'createNewScenario'}} " >Create New Scenario</a></li>
+		  <li class="nav-item" id="ssNavBarItem"><a href="#">Search Scenarios</a>
 		  	<ul class="fallback">
 		  		<li><a href="{{ pathFor 'scenarioList'}}">My Scenarios</a></li>
 		  		<li><a href="{{ pathFor 'approvedScenarioList'}}">Approved Scenarios</a></li>
 		  	</ul>
 		  </li>
-		  <li class="nav-item"><a href="{{ pathFor 'findByIDTemplate' }}">Find by ID</a></li>
-		  <li class="nav-item"><a href="{{ pathFor 'FeedbackForm'}}">Feedback</a></li>
-		  <li class="nav-item"><a href="{{ pathFor 'home' }}">Go to Homepage</a></li>
-		  <li class="nav-item"><a href="{{ pathFor 'userProfile'}}">User Profile</a></li>
+		  <li class="nav-item" id="fbiNavBarItem"><a href="{{ pathFor 'findByIDTemplate' }}">Find by ID</a></li>
+		  <li class="nav-item" id="feedNavBarItem"><a href="{{ pathFor 'FeedbackForm'}}">Feedback</a></li>
+		  <li class="nav-item" id="homeNavBarItem"><a href="{{ pathFor 'home' }}">Go to Homepage</a></li>
+		  <li class="nav-item" id="upNavBarItem"><a href="{{ pathFor 'userProfile'}}">User Profile</a></li>
 		</ul>
 	 </nav>
 	 <!--<span style="float:right;"><img id="mdpnpLogo" alt="MD PnP Logo" style="float:left;" src="/images/mdpnp-small.png" width="150" height="45"/></span>-->

@@ -220,6 +220,11 @@ Navigation bar
   border-radius:5px ;
 }
 
+.selectedNavItem{
+  background: #8AB8E6;
+  border-radius:5px ;
+}
+
 
 nav>ul>li>ul>li{
 	list-style:none; 
