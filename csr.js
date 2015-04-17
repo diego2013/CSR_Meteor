@@ -609,7 +609,7 @@ UI.registerHelper('getGuidelinesButtonClass' , function(){
       //event.preventDefault();  
       collectScenarioInfo(); // Collects data from the form into an object
       if(currentScenarioDTO.title.trim()==''){
-        window.alert("The sceanrio needs at least a TITLE in order to be persisted. \n\nTitles are a human-friendly way of summarizing the content of the scenario and will make easier to identify your scenario later.");
+        window.alert("The scenario needs at least a TITLE in order to be persisted. \n\nTitles are a human-friendly way of summarizing the content of the scenario and will make easier to identify your scenario later.");
 
         //set focus on the title text area
         var step = console.log(Session.get(_SCENARIO_FORM_STEP));
