@@ -338,6 +338,13 @@ if (Meteor.isClient) {
       var newScenarioStep = Session.get(_SCENARIO_FORM_STEP);
       return step==newScenarioStep;
     }
+    , isScenarioEditable : function(){
+      var currentScenarioDto = Session.get('currentScenarioDTO')
+      if(Session.get('currentScenarioDTO')==undefined)
+          return true;
+      else
+          return Session.get('currentScenarioDTO').status==scenarioStatusEnum.UNSUBMITTED;
+    }
   });
 
   Template.scenarioFormBasicInfo.helpers({
@@ -528,10 +535,14 @@ UI.registerHelper('isScenarioReadOnly', function(){
   return "readonly";
 });
 
+//Returns if a scenario is editable or not
+//UI.RegisterHelper('isScenarioEditable', );
+
 /* Formats a Date using moment.js
 //https://atmospherejs.com/momentjs/moment
 // $ meteor add momentjs:moment
 */
+/********* UTILITY FUNCTIONS *********/
 
 /* Trims the length of a string of charaters to the desired length*/
 UI.registerHelper('trimLength', function(string, length){
@@ -923,8 +934,10 @@ Template.NavBar.events({
 });
 
 Template.scenarioRow.events({
-  "click .delete": function () {
-    Meteor.call("deleteScenario", this._id);
+  "click #deleteButton": function () {
+    confirm = window.confirm("Are you sure you want to delete scenario with UID "+this._id+ " \ntitled \""+ this.title+"\"");
+    if(confirm);
+      Meteor.call("deleteScenario", this._id);
   },
   "click #gothere" : function(event){
     //find by ID, with the scn ID being in the text of the button just clicked
@@ -1012,13 +1025,18 @@ var hideScenarioFormButtons = function(){
     $("#goToStep1").addClass("btn-salmon");
   }
  
- //   //2. Save and Submit buttons
- //   if(Session.get('currentScenarioDTO')==undefined ||
- //        Session.get('currentScenarioDTO').status==scenarioStatusEnum.UNSUBMITTED){
- //      $("#saveScenarioButton").removeClass("hiddenButton");
- //   }else{
- //    $("#saveScenarioButton").addClass("hiddenButton");
- //   }
+  //2. Save and Submit buttons
+  //if(Session.get('currentScenarioDTO')==undefined ||
+  //     Session.get('currentScenarioDTO').status==scenarioStatusEnum.UNSUBMITTED){
+  //   //$("#saveScenarioButton").removeClass("hiddenButton");
+  //    console.log("el boton deberia ser visible");
+  //    $("#saveScenarioButton").addClass("btn-mint");
+  //}else{
+  //   //$("#saveScenarioButton").addClass("hiddenButton");
+  //   $("#saveScenarioButton").removeClass("btn-mint");
+  //   $("#saveScenarioButton").addClass("btn-salmon");
+  //   console.log('boton deberia ser invisible');
+  //}
 
  };
 
