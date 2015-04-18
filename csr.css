@@ -167,6 +167,19 @@ header .hide-completed {
 	color:red;
 }
 
+/* divs for choose clinical role or environment*/
+.div-chooseClinical{
+	display: table-cell; 
+	align-items: center;  
+	background-color: #EAF2FB;
+	/*line-height: 50px;  */
+	/* div>selectbox-wrapper is helping with this trick instead of setting a fixed line-height*/
+}
+
+.selectbox-wrapper{
+	margin:10px;
+}
+
 
 /*******************
 Navigation bar

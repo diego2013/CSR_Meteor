@@ -381,8 +381,9 @@ I understand that I, the scenario submitter, am the ultimate resposible for the 
 <template name="advancedDetailsRoles">
     <p>Add further details about actors involved in the scenario and their roles.</p>
 
-    Choose a clinical role from this list 
-    <select id="clinicalRole">
+<div class="div-chooseClinical"> 
+    Choose a clinical role from this list
+    <select id="clinicalRole" class="selectbox-wrapper">
         <option value='Allergist'>Allergist</option>
         <option value='Anesthesiologist'>Anesthesiologist</option>
         <option value='Cardiologist'>Cardiologist</option>
@@ -431,6 +432,7 @@ I understand that I, the scenario submitter, am the ultimate resposible for the 
     </select>
 
     <button type="button" id="addActor" class="btn btn-small btn-mint">Add Actor</button>
+</div>
 
     <table>
         <tr>
@@ -457,8 +459,9 @@ I understand that I, the scenario submitter, am the ultimate resposible for the 
 
     <p>Add further details about the places where this scenario can take place.</p>
 
+<div class="div-chooseClinical"> 
     Choose a clinical environment from this list
-    <select id="clinicalEnvironment">
+    <select id="clinicalEnvironment" class="selectbox-wrapper">
         <option value='Acute assessment unit'>Acute assessment unit</option>
         <option value='Ambulatory wing'>Ambulatory wing</option>
         <option value='Birthing Room/LDR Room/LDRP Room'>Birthing Room/LDR Room/LDRP Room</option>
@@ -497,6 +500,7 @@ I understand that I, the scenario submitter, am the ultimate resposible for the 
     </select>
 
     <button type="button" id="addPlace" class="btn btn-small btn-mint">Add Environment</button>
+</div>
 
     <table>
         <tr>
