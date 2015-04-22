@@ -249,11 +249,11 @@ Deps.autorun(function(){
     })
 
    this.route('scenarioList' , function(){
-     this.render('scenarioListTabel', {data : { scenarios : MyScenarios.find({}, {sort: {createdAt: -1}}) }} );
+     this.render('scenarioListTable', {data : { scenarios : MyScenarios.find({}, {sort: {createdAt: -1}}) }} );
      this.render('FooterTemplate', {to: 'footer'});
    });
    this.route('approvedScenarioList' , function(){
-     this.render('scenarioListTabel', {data : { scenarios : scenariosAllApproved.find({}) }} );
+     this.render('scenarioListTable', {data : { scenarios : scenariosAllApproved.find({}) }} );
      //this.render('FooterTemplate', {to: 'footer'});
    });
 
