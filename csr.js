@@ -566,21 +566,6 @@ Deps.autorun(function(){
     }
  });
 
- Template.userProf.helpers({
-  getEmail : function(emailsObject){
-    if (emailsObject && emailsObject[0])
-      return emailsObject[0].address;
-    else
-      return "not provided";
-  },
-  isVerifiedEmail : function(emailsObject){
-    if (emailsObject && emailsObject[0])
-      return (emailsObject[0].verified).toString();
-    else
-      return "not applicable";
-  }
-
- });
 
  //OTHER HELPERS
  //============================================================================================
@@ -648,6 +633,27 @@ UI.registerHelper('getGuidelinesButtonClass' , function(){
   }else{
     return '';
   }
+});
+
+
+/** Returns the main email of a user based on the provided email collection
+*/
+UI.registerHelper('getEmail' , function(emailsObject){
+    if (emailsObject && emailsObject[0])
+      return emailsObject[0].address;
+    else
+      return "not provided";
+});
+
+/** Returns if the main email of a user based on the provided email collection is verified
+*/
+UI.registerHelper('isVerifiedEmail' , function(emailsObject){
+    if (emailsObject && emailsObject[0]){
+      //console.log(emailsObject[0].verified).toString());
+      return  (emailsObject[0].verified).toString();
+    }
+    else
+      return "not applicable";
 });
 
 
@@ -1119,10 +1125,13 @@ var hideScenarioFormButtons = function(){
   $("#feedNavBarItem").removeClass("selectedNavItem");  
   $("#homeNavBarItem").removeClass("selectedNavItem");
   $("#upNavBarItem").removeClass("selectedNavItem");
-   $("#listUsersNavBarItem").removeClass("selectedNavItem");
+  $("#listUsersNavBarItem").removeClass("selectedNavItem");
 
   //ID the route we are on
   var navItemID;
+
+  if(routeName==undefined)
+    return;
 
   if(routeName=='/' || routeName=='home')
     navItemID = 'homeNavBarItem';

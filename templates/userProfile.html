@@ -22,7 +22,7 @@
 
 		<p><strong>Member since </strong>{{formatDate createdAt}}</p>
 
-		<p><strong>Email: </strong>{{useremail}} <strong>verified: </strong>{{verifiedUseremail}}</p>
+		<p><strong>Email: </strong>{{getEmail emails}} <strong>verified: </strong>{{isVerifiedEmail emails}}</p>
 
 		<p><strong>Roles: </strong>{{roles}}</p>
 	{{/if}}
@@ -44,7 +44,7 @@
 			<th>username</th>
 			<th>email</th>
 			<th>verified</th>
-			<th>roles</th>
+			<th>current roles</th>
 			<th>UID</th>
 			<th>creation date</th>
 		</tr>
