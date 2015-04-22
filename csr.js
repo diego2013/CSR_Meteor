@@ -11,7 +11,7 @@ Clinical Scenrio Repository protoype using JavaScript and the Meteor Framework.
 Scenarios = new Mongo.Collection("scenarios");
 //AllScenarios = new Mongo.Collection("scenariosAll");
 FeedbackCollection = new Mongo.Collection("FeedbackCollection");
-AllTheUsers = Meteor.users; //new Mongo.Collection(Meteor.users);
+//AllTheUsers = Meteor.users; //new Mongo.Collection(Meteor.users);
 
 
 //Aux variables
@@ -57,14 +57,19 @@ if (Meteor.isClient) {
   Meteor.subscribe('myScenarios');  //scenarios of the current user
   Meteor.subscribe('scenariosAll'); //all available scenarios
   Meteor.subscribe('scenariosAllApproved'); //all approved scenarios
+  
+  Meteor.subscribe('allUsersList');
+  //Meteor.subscribe('userdata');
 
   // partial collections (Minimongo collections)
   MyScenarios = new Mongo.Collection('myScenarios');
   ScenariosAll = new Mongo.Collection('scenariosAll');
   scenariosAllApproved = new Mongo.Collection('scenariosAllApproved');
+  AllTheUsers = new Mongo.Collection('allUsersList');
+  //currentUser = new Mongo.Collection('userdata');
+
  
-  Meteor.subscribe("allUsersList");
-  Meteor.subscribe('userdata');
+  
   //we may also need 
   /* Deps.autorun or 
   Tracker.autorun(function () {
@@ -147,7 +152,6 @@ Deps.autorun(function(){
       cleanNewScenarioForm();
       currentScenarioDTO = Session.get("currentScenarioDTO"); 
       hideScenarioFormButtons();
-      //$("#cnsNavBarItem").addClass("selectedNavItem");
       Router.go('/newScenarioForm');
 
    });
@@ -252,6 +256,23 @@ Deps.autorun(function(){
      this.render('scenarioListTabel', {data : { scenarios : scenariosAllApproved.find({}) }} );
      //this.render('FooterTemplate', {to: 'footer'});
    });
+
+   this.route('usersList', {
+    template : 'userList' ,//'userListTemplate',
+    onBeforeAction : function(){
+      if(Meteor.loggingIn()){//if login method is currently in progress
+        this.render(this.loadingTemplate);
+      }else if(!Roles.userIsInRole(Meteor.user(), ['admin'])){
+        this.redirect('/');
+      }else{
+        //this.render('userListTemplate');
+        this.next();
+      }
+      
+    }
+   });
+
+
    //this.route('scenarioList2' , function(){
    //  this.render('scenarioList', {
    //   data : { scenarios : MyScenarios.find({}, {sort: {createdAt: +1}}) },
@@ -276,12 +297,25 @@ Deps.autorun(function(){
     this.route('findByIDErrorTemplate');
 
     this.route('userList');
+
     this.route('userProfile' //, {data :function () { return userDTO.findOne({_id: this.userId} ) }}
        //,{data :function () { return Meteor.user()}} //working code
        // , { data: function(){return Meteor.users.findOne()} } //working code 
-       ,{data : function(){ return AllTheUsers.findOne() }}
+       ,{data : function(){ return AllTheUsers.findOne({_id: Meteor.userId()}) }}
       //,{data : function(){ return Meteor.users.findOne() }}//working code
-      );
+    );
+    this.route('/userProfile/:_id', function(){
+      targetUser = AllTheUsers.findOne({_id: this.params._id.trim()});
+      if(targetUser==undefined || !Roles.userIsInRole(Meteor.user(), ['admin'])){
+        this.redirect('/');
+      }else{
+        this.render('userProfile', {data: targetUser});
+      }
+    });
+    //test
+    this.route("testUserList", function(){
+      this.render('userList');
+    });
     
     //footer
     this.route('disclaimer');
@@ -519,9 +553,9 @@ Deps.autorun(function(){
   //XXX these two functions will eventually need to take care of 
   // Meteor.user().services.google.email
     useremail : function(){
-      if(Meteor.userId() && Meteor.user().emails!=undefined)
+      if(Meteor.userId() && Meteor.user().emails){
         return Meteor.user().emails[0].address;
-      else
+      }else
         return 'not specified';
     },
     verifiedUseremail : function(){
@@ -530,6 +564,22 @@ Deps.autorun(function(){
       else
         return 'not applicable';
     }
+ });
+
+ Template.userProf.helpers({
+  getEmail : function(emailsObject){
+    if (emailsObject && emailsObject[0])
+      return emailsObject[0].address;
+    else
+      return "not provided";
+  },
+  isVerifiedEmail : function(emailsObject){
+    if (emailsObject && emailsObject[0])
+      return (emailsObject[0].verified).toString();
+    else
+      return "not applicable";
+  }
+
  });
 
  //OTHER HELPERS
@@ -983,6 +1033,13 @@ Template.findByIDErrorTemplate.events({
   }
 });
 
+Template.userProf.events({
+  "click #seeUser" : function(event){
+    Router.go('/userProfile/'+event.target.name);
+  }
+
+});
+
 
 //OTHER CLINET FUNCTIONS
 //========================================================================
@@ -1062,22 +1119,26 @@ var hideScenarioFormButtons = function(){
   $("#feedNavBarItem").removeClass("selectedNavItem");  
   $("#homeNavBarItem").removeClass("selectedNavItem");
   $("#upNavBarItem").removeClass("selectedNavItem");
+   $("#listUsersNavBarItem").removeClass("selectedNavItem");
 
   //ID the route we are on
   var navItemID;
+
   if(routeName=='/' || routeName=='home')
     navItemID = 'homeNavBarItem';
-  else   if(routeName=='createNewScenario' || routeName=='newScenarioForm' ||
+  else   if(routeName=='createNewScenario' || routeName=='newScenarioForm' || (routeName.lastIndexOf('NewScenarioForm', 0) === 0) ||
       routeName=='new' || routeName=='scenarioFormSubmitConfirmation' || routeName=='scenarioFormThankYou')
     navItemID = 'cnsNavBarItem';
   else   if(routeName=='scenarioList' || routeName=='approvedScenarioList')
     navItemID = 'ssNavBarItem';
   else   if(routeName=='findByIDTemplate')
     navItemID = 'fbiNavBarItem';
-  else   if(routeName=='userProfile')
+  else   if(routeName=='userProfile' || (routeName.substring(0,'userProfile'.length)==='userProfile'))
     navItemID = 'upNavBarItem';
-    else   if(routeName=='FeedbackForm' || routeName=='FeedbackFormThakYou')
+  else   if(routeName=='FeedbackForm' || routeName=='FeedbackFormThakYou')
     navItemID = 'feedNavBarItem';
+  else if(routeName=='usersList')
+    navItemID = 'listUsersNavBarItem';
 
   //add the "shaded" class to that nav bar item
   $("#"+navItemID).addClass("selectedNavItem");
@@ -1468,16 +1529,30 @@ Meteor.publish('scenariosAllApproved', function(){
 
 //Publish info about users
 Meteor.publish('userdata', function() {
-    this.ready();
+    //this.ready();
     //return Meteor.users.findOne({_id: this.userId});
     //XXX This may be causing Exception from sub blablabla Error: Publish function can only return a Cursor or an array of Cursors
  
-    return Meteor.users.find(); 
+    //return Meteor.users.findOne({_id : this.userId}); 
+    Mongo.Collection._publishCursor( Meteor.users.findOne({_id : this.userId}), this, 'userdata');
+    this.ready();
 });
  
+ /*
 Meteor.publish("allUsersList", function(){ 
   return Meteor.users.find(); 
-})
+})*/
+
+/** Publishes a list of all the users the current user is allowed to see, based on the user's role
+*/
+Meteor.publish('allUsersList', function(){
+  if(Roles.userIsInRole(this.userId, 'admin')){
+    Mongo.Collection._publishCursor( Meteor.users.find(), this, 'allUsersList');
+  }else{
+    Mongo.Collection._publishCursor( Meteor.users.find({_id : this.userId}), this, 'allUsersList'); 
+  } 
+  this.ready();
+});
 
   
 }

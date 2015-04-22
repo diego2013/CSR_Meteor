@@ -60,7 +60,7 @@
 		  <li class="nav-item" id="feedNavBarItem"><a href="{{ pathFor 'FeedbackForm'}}">Feedback</a></li>
 		  <li class="nav-item" id="homeNavBarItem"><a href="{{ pathFor 'home' }}">Go to Homepage</a></li>
       {{#if isInRole 'admin'}}
-        <li class="nav-item" id="listUsersNavBarItem"><a href="#">List Users</a></li>
+        <li class="nav-item" id="listUsersNavBarItem"><a href="{{ pathFor 'usersList' }}">List Users</a></li>
       {{/if}}
 		  <li class="nav-item" id="upNavBarItem"><a href="{{ pathFor 'userProfile'}}">User Profile</a></li>
 		</ul>

@@ -16,12 +16,15 @@
 <!-- Template with the data associated to this user's profile -->
 <template name="userDataTemplate"> 
 	<strong>User Profile</strong> <br/>
+	
 	{{#if currentUser}}
-		<p>Hello {{username}} </p>
+		<p><strong>Username</strong> {{username}} <strong>UID</strong> {{_id}}</p>
 
 		<p><strong>Member since </strong>{{formatDate createdAt}}</p>
 
-		<p><strong>email: </strong>{{useremail}} <strong>verified: </strong>{{verifiedUseremail}}</p>
+		<p><strong>Email: </strong>{{useremail}} <strong>verified: </strong>{{verifiedUseremail}}</p>
+
+		<p><strong>Roles: </strong>{{roles}}</p>
 	{{/if}}
 
 </template>
@@ -33,18 +36,33 @@
 	<p>Maybe you need to be logged in?</p> 
 </template>
 
-<!-- Template to list all users-->
+<!-- Template to list all users -->
 <template name="userList">
-	<p>Content of the database: Users</p>
-    <ul>
-  	  {{#each usuarios}}
+	<p>Content of the database: {{usuarios.count}} Users</p>
+	<table>
+		<tr>
+			<th>username</th>
+			<th>email</th>
+			<th>verified</th>
+			<th>roles</th>
+			<th>UID</th>
+			<th>creation date</th>
+		</tr>
+	  {{#each usuarios}}
         {{ > userProf }}
       {{/each}}
-    </ul>
+	</table>
+
 </template>
 
+<!-- Template-row to display the info of a single user -->
 <template name="userProf">
-  <li>
-  	<span>username: {{username}}. ID: {{_id}}. Created at: {{createdAt}} </span>
-  </li>
+  <tr style="border: 1px solid black">
+  <td><button id="seeUser" class="btn btn-small btn-orange" name={{_id}}>{{username}}</button></td>
+  <td>{{getEmail emails}}</td>
+  <td>{{isVerifiedEmail emails}}</td>
+  <td>{{roles}}</td>
+  <td>{{_id}}</td>
+  <td>{{formatDate createdAt}} </td>
+  </tr>
 </template>
