@@ -49,11 +49,13 @@
 		  <li class="nav-item" id="cnsNavBarItem"><a href="{{ pathFor 'createNewScenario'}} " >Create New Scenario</a></li>
 		  <li class="nav-item" id="ssNavBarItem"><a href="#">Search Scenarios</a>
 		  	<ul class="fallback">
+        {{#if currentUser}}
 		  		<li><a href="{{ pathFor 'scenarioList'}}">My Scenarios</a></li>
+        {{/if}}  
 		  		<li><a href="{{ pathFor 'approvedScenarioList'}}">Approved Scenarios</a></li>
-          {{#if isInRole 'admin'}}
-            <li><a href="#">Recent Submissions</a></li>
-          {{/if}}
+        {{#if isInRole 'admin'}}
+          <li><a href="#">Recent Submissions</a></li>
+        {{/if}}
 		  	</ul>
 		  </li>
 		  <li class="nav-item" id="fbiNavBarItem"><a href="{{ pathFor 'findByIDTemplate' }}">Find by ID</a></li>
