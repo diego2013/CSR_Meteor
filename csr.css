@@ -180,6 +180,17 @@ header .hide-completed {
 	margin:10px;
 }
 
+/* class for EVEN rows on tables with pijamas */
+.tablePijamaEvenRow{
+	background: #FFFFFF;
+}
+
+
+/* class for ODD rows on tables with pijamas */
+.tablePijamaOddRow{
+	background: #99CCFF;
+}
+
 
 /*******************
 Navigation bar

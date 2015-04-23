@@ -527,11 +527,24 @@ Deps.autorun(function(){
  Template.userList.helpers({
     usuarios: function () { //return Meteor.users.find(
       //return AllUsersList.find(
-      return AllTheUsers.find(
-      //  {_id: /*'GDpyG7Ytu8urGhAcT'*/ Meteor.userId()}
-        );
+     //// return AllTheUsers.find(
+     //// //  {_id: /*'GDpyG7Ytu8urGhAcT'*/ Meteor.userId()}
+     ////   );
+
+//added maping function so there is an idex associated with each document
+      return AllTheUsers.find().map(function(document, index){
+            document.index = index;
+            return document;
+          });
     },
  });
+
+//Adds an index to each document
+var addIndexToDocument = function(document, index){
+  document.index = index;
+  return document;
+}
+
 
 // Template.scenarioRow.helpers({
 //    showDescrioption: function(description){
@@ -582,6 +595,21 @@ UI.registerHelper('isScenarioReadOnly', function(){
   return "readonly";
 });
 
+
+UI.registerHelper('getTablePijamaClass', function(index){
+  if(index%2==0)
+    return "tablePijamaEvenRow";
+  else 
+    return "tablePijamaOddRow";
+
+});
+
+/** Return the length of an arrayObject
+*/
+UI.registerHelper('count', function(arrayObject){
+  return arrayObject.length;
+});
+
 //Returns if a scenario is editable or not
 //UI.RegisterHelper('isScenarioEditable', );
 
@@ -624,6 +652,7 @@ UI.registerHelper('printScenarioMetainfo' , function(){
    else
      return Session.get('currentScenarioDTO')._id!=undefined;
 });
+
 
 /* Shows or hides the guidelines div according to the value of the button
 */
@@ -1041,6 +1070,7 @@ Template.findByIDErrorTemplate.events({
 
 Template.userProf.events({
   "click #seeUser" : function(event){
+    event.preventDefault();
     Router.go('/userProfile/'+event.target.name);
   }
 

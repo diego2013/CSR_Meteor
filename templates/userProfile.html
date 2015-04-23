@@ -38,7 +38,7 @@
 
 <!-- Template to list all users -->
 <template name="userList">
-	<p>Content of the database: {{usuarios.count}} Users</p>
+	<p>Content of the database: {{count usuarios}} Users</p>
 	<table>
 		<tr>
 			<th>username</th>
@@ -57,12 +57,12 @@
 
 <!-- Template-row to display the info of a single user -->
 <template name="userProf">
-  <tr style="border: 1px solid black">
-  <td><button id="seeUser" class="btn btn-small btn-orange" name={{_id}}>{{username}}</button></td>
-  <td>{{getEmail emails}}</td>
+  <tr class="{{getTablePijamaClass index}}">
+  <td><button id="seeUser" style="width:100%" class="btn-orange" name={{_id}}>{{username}}</button></td>
+  <td >{{getEmail emails}}</td>
   <td>{{isVerifiedEmail emails}}</td>
-  <td>{{roles}}</td>
+  <td align='center' >{{roles}}</td>
   <td>{{_id}}</td>
-  <td>{{formatDate createdAt}} </td>
+  <td align='center'>{{formatDate createdAt}} </td>
   </tr>
 </template>
