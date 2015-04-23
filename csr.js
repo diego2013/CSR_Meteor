@@ -312,10 +312,6 @@ Deps.autorun(function(){
         this.render('userProfile', {data: targetUser});
       }
     });
-    //test
-    this.route("testUserList", function(){
-      this.render('userList');
-    });
     
     //footer
     this.route('disclaimer');
