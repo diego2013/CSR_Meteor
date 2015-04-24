@@ -497,6 +497,12 @@ Deps.autorun(function(){
     scenarioEditable : function(){
       return false;
     },
+    editableScn : function(){
+        if(Session.get('currentScenarioDTO')==undefined)
+          return '';
+        else
+          return 'readonly';
+    },
     hazardEntryListCount : function(){
       currentScenarioDTO = Session.get('currentScenarioDTO');
       hazardEntryList = currentScenarioDTO==undefined?[]:currentScenarioDTO.hazardEntryList;

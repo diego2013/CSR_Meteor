@@ -1,0 +1,30 @@
+<!-- Template to list all users -->
+<template name="userList">
+	<p>Content of the database: {{count usuarios}} Users</p>
+	<table>
+		<tr>
+			<th>username</th>
+			<th>email</th>
+			<th>verified</th>
+			<th>current roles</th>
+			<th>UID</th>
+			<th>creation date</th>
+		</tr>
+	  {{#each usuarios}}
+        {{ > userProf }}
+      {{/each}}
+	</table>
+
+</template>
+
+<!-- Template-row to display the info of a single user -->
+<template name="userProf">
+  <tr class="{{getTablePijamaClass index}}">
+  <td><button id="seeUser" style="width:100%" class="btn-orange" name={{_id}}>{{username}}</button></td>
+  <td >{{getEmail emails}}</td>
+  <td>{{isVerifiedEmail emails}}</td>
+  <td align='center' >{{roles}}</td>
+  <td>{{_id}}</td>
+  <td align='center'>{{formatDate createdAt}} </td>
+  </tr>
+</template>

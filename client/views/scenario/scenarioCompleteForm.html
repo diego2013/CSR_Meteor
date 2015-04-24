@@ -1,0 +1,100 @@
+<!-- Template containing all the scenario info in one single form -->
+<template name="scenarioCompleteForm">
+<div class="centered">
+
+<div style="text-align : center;">
+    <a href="#"  id="b1"  class="btn btn-small btn-blue" title="Enable modification" >Enable modification</a>
+    <a href="#"  id="b2"  class="btn btn-small btn-blue" title="Approve Scenario" >Approve Scenario</a>
+</div>
+
+    <b>Scenario UID:</b> {{_id}} <b>Saved last:</b> {{formatDateTime createdAt}}<br/>
+
+<!-- Scenario basic info -->
+    <label>Title</label>
+    {{#if scenarioEditable}} 
+        <textarea type="text" id="title" name="title" rows="1" cols="75" placeholder="Type to add a title" >{{title}}</textarea><br/>
+    {{else}}
+        <textarea type="text" id="title" name="title" rows="1" cols="75" placeholder="Type to add a title" readonly>{{title}}</textarea><br/>
+    {{/if}} 
+    <label>Description</label><br/>
+    <textarea type="text" id="description" name="description" rows="4" cols="175" placeholder="Type to add a description" {{editableScn}}>{{description}}</textarea><br/>
+
+<!-- Scenario Advanced Information-->
+<br/>
+    <p>HAZARDS (Count {{hazardEntryListCount}} entries)</p>
+    <table border="1">
+        <tr>
+            <th>Description</th>
+            <th>Expected risks</th>
+            <th>Severity</th>
+        </tr>
+        {{#each hazardEntryList}}
+            {{> hazardEntry}}
+        {{/each}}
+    </table>
+
+    <p>EQUIPMENT (Count {{equipmentEntryListCount}} entries)</p>
+        <table border="1">
+        <tr>
+            <th><label>Device Type</label></th>
+            <th><label>Manufacturer</label></th>
+            <th><label>Model</label></th>
+            <th><label>Rosetta - Unique ID</label></th>
+            <th><label>Training related problem</label></th>
+            <th><label>Instructions related problem</label></th>
+            <th><label>Confusing device usage</label></th>
+            <th><label>Software related problem</label></th>
+            <th><label>Hardware related problem</label></th>
+        </tr>
+        {{#each equipmentEntryList}}
+            {{> equipmentEntry}}
+        {{/each}}
+    </table>  
+
+    <p>LESSONS LEARNED</p>
+        <textarea type="text" id="lesson" rows="4" cols="175" placeholder="Describe what can be learned from this scenario" >{{lessonsLearned}}</textarea><br/>
+    Do you think this incident could have been prevented or mitigated through better technology?
+    <select id="preventable" value="yes">
+        <option value ="notSure" {{selectedLessonLearned "notSure"}}>I am not sure</option>   
+        <option value ="yes" {{selectedLessonLearned "yes"}}>Yes</option>   
+        <option value ="no" {{selectedLessonLearned "no"}}>No</option>      
+    </select>
+
+    <p>CLINICAL ROLES</p>
+
+    <table>
+        {{#each roleEntryList}}
+            {{> roleEntry}}
+        {{/each}}
+    </table>
+
+    <p>CLINICAL ENVIRONMENTS</p>
+    <table>
+        {{#each environmentEntryList}}
+            {{> environmentEntry}}
+        {{/each}}
+        <tr></tr>
+    </table>
+
+    <p>REFERENCES</p>
+     <table border="1">
+     <tr>
+         <th>URL of the reference</th>
+         <th>Relevance</th>
+     </tr>
+     {{#each referenceEntryList}}
+         {{> referenceEntry}}
+     {{/each}}
+ </table>
+
+<!-- Scenario solution-->
+<br/>
+    <label>Description of the Good Idea / Solution</label><br/>
+    <textarea type="text" id="solutionDescription" rows="4" cols="175" {{isScenarioReadOnly}}>{{solutionDescription}}</textarea><br/>
+    <label>Benefits of the New System</label><br/>
+    <textarea type="text" id="benefitsDescription"  rows="4" cols="175" {{isScenarioReadOnly}}>{{benefitsDescription}}</textarea><br/>
+    <label>Foreseen Risks of the New System</label><br/>
+    <textarea type="text" id="risksDescription"  rows="4" cols="175" {{isScenarioReadOnly}}>{{risksDescription}}</textarea><br/>
+
+</div>
+</template>
