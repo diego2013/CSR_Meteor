@@ -15,9 +15,7 @@ FeedbackCollection = new Mongo.Collection("FeedbackCollection");
 
 
 //Var
-//content of the ScenarioForm
-//var currentScenarioDTO = { /*_id: undefined,*/ title:'', description:''};
-//var hazardEntryList;
+
 
 //Constants
 var _SCENARIO_FORM_STEP = 'SCENARIO_FORM_STEP'; //Step of the scenario submission process
@@ -318,23 +316,13 @@ Deps.autorun(function(){
       }
     });
     
-    //footer
+    //***** Footer *****
     this.route('disclaimer');
     this.route('privacyStatement');
     this.route('contactInfo');
     this.route('FeedbackForm'); //feedback form
     this.route('FeedbackFormThakYou'); //"thank you" page after submitting feedback
 
-
-    //test
-    this.route('post'
-     , 
-      function ()  {
-        console.log("routing post")
-        Session.set("step", 'one');//initialize
-        this.render("Post");
-      }
-    );
 
   });
 
@@ -354,18 +342,6 @@ Deps.autorun(function(){
   //  }
   //});
 
-//This tempalte exists only for experimenting purposes
-  Template.Post.helpers({
-    whichOne: function () {
-      //return Session.get('step') ? 'postOne' : 'postTwo'
-      var newScenarioStep = Session.get('step');
-      if(newScenarioStep=='one')
-        return 'postOne';
-      else
-        return 'postTwo';
-      // note that we return a string - per http://docs.meteor.com/#template_dynamic
-    }
-  });
 
   Template.NewScenarioForm.helpers({
     //returns the template name of the dynamic template in the NewScenarioForm template  
@@ -518,7 +494,13 @@ Deps.autorun(function(){
         return 0;
       else
         return equipmentEntryList.length;
-    }   
+    }
+        ////comes here through the use of {{giveTitle . }} in the template
+    //,giveTitle : function(dataContext){
+    //  console.log(JSON.stringify(dataContext));
+    //  if(dataContext!=undefined) //should check typeof too?
+    //    return dataContext.title;
+    //}
   });
 
 
@@ -982,59 +964,39 @@ Template.FeedbackForm.events({
 });
 
 
-//only for test purposes 
-Template.Post.events({
-
-  "click #toPostOne": function(event){
-    event.preventDefault(); // Prevent default form submit
-    whichOne = 'one';
-    Session.set("step", whichOne);
-
-  }, 
-  "click #toPostTwo": function(event){
-    event.preventDefault(); // Prevent default form submit
-    whichOne = 'two'; 
-    Session.set("step", whichOne);
-  }
-  
-});
-
 //Events on the navigation bar
 Template.NavBar.events({
-    "click #create-new-scn": function () {
-      Session.set(_SCENARIO_FORM_STEP, _SCENARIO_FORM_STEP_BASIC_INFO);
-      cleanNewScenarioForm();
-      hideScenarioFormButtons();
-      Router.go('NewScenarioForm');
-    },
-    "click #list-scn": function () {
-      Router.go('scenarioList');
-    },
-    "click #list-approved-scn": function () {
-      Router.go('approvedScenarioList');
-    },
-    "click #goToHomePage": function () {
-      Router.go('/');
-    },
-    "click #disclaimerPage": function () {
-      Router.go('disclaimer');
-    },
-    "click #feedbackPage": function () {
-      Router.go('FeedbackForm');
-    },
-    "click #testPost": function () {
-      Session.set("step", 'one'); 
-      Router.go('post');
-    },
-    "click #goToMyProfile": function(){
-      Router.go("userProfile");
-    }, 
-    "click #listUsers" : function(){
-      Router.go("userList");
-    }, 
-    "click #findByID" : function(){
-      Router.go("findByIDTemplate");
-    }
+//  //Currently {{pathFor is used to resolve these routes, so there is no need to track events}}
+//  "click #create-new-scn": function () {
+//    Session.set(_SCENARIO_FORM_STEP, _SCENARIO_FORM_STEP_BASIC_INFO);
+//    cleanNewScenarioForm();
+//    hideScenarioFormButtons();
+//    Router.go('NewScenarioForm');
+//  },
+//  "click #list-scn": function () {
+//    Router.go('scenarioList');
+//  },
+//  "click #list-approved-scn": function () {
+//    Router.go('approvedScenarioList');
+//  },
+//  "click #goToHomePage": function () {
+//    Router.go('/');
+//  },
+//  "click #disclaimerPage": function () {
+//    Router.go('disclaimer');
+//  },
+//  "click #feedbackPage": function () {
+//    Router.go('FeedbackForm');
+//  },
+//  "click #goToMyProfile": function(){
+//    Router.go("userProfile");
+//  }, 
+//  "click #listUsers" : function(){
+//    Router.go("userList");
+//  }, 
+//  "click #findByID" : function(){
+//    Router.go("findByIDTemplate");
+//  }
 });
 
 Template.scenarioRow.events({
@@ -1093,7 +1055,7 @@ Template.userProf.events({
 });
 
 
-//OTHER CLINET FUNCTIONS
+//OTHER CLIENT FUNCTIONS
 //========================================================================
 
 //To configure the accounts UI
