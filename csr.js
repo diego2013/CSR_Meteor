@@ -14,9 +14,6 @@ FeedbackCollection = new Mongo.Collection("FeedbackCollection");
 //AllTheUsers = Meteor.users; //new Mongo.Collection(Meteor.users);
 
 
-//Aux variables
-var whichOne = 'one';
-
 //Var
 //content of the ScenarioForm
 //var currentScenarioDTO = { /*_id: undefined,*/ title:'', description:''};
@@ -254,7 +251,15 @@ Deps.autorun(function(){
    });
    this.route('approvedScenarioList' , function(){
      this.render('scenarioListTable', {data : { scenarios : scenariosAllApproved.find({}) }} );
-     //this.render('FooterTemplate', {to: 'footer'});
+     this.render('FooterTemplate', {to: 'footer'});
+   });
+   this.route('recentSubmissionsScenarioList' , function(){
+     if(!Roles.userIsInRole(Meteor.user(), ['admin'])){
+        this.redirect('/');
+     }else{
+        this.render('scenarioListTable', {data : { scenarios : ScenariosAll.find({status : scenarioStatusEnum.SUBMITTED}) }} );
+        this.render('FooterTemplate', {to: 'footer'});
+     }
    });
 
    this.route('usersList', {
@@ -1033,8 +1038,17 @@ Template.scenarioRow.events({
       Meteor.call("deleteScenario", this._id);
   },
   "click #gothere" : function(event){
-    //find by ID, with the scn ID being in the text of the button just clicked
-    findByID(event.target.name);
+    var currentPath = Router.current().route.getName()
+    //do an action or another based on the route
+    if(currentPath=='scenarioList'){
+      //find by ID, with the scn ID being in the text of the button just clicked
+      findByID(event.target.name);
+    }else if(currentPath=='recentSubmissionsScenarioList'){
+      Router.go("/scenarioComplete/"+event.target.name)
+    }else if(currentPath=='approvedScenarioList'){
+      findByID(event.target.name);
+    }
+
   }
 });
 
