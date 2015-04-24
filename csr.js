@@ -154,6 +154,9 @@ Deps.autorun(function(){
    this.route('newScenarioForm' , 
      function ()  {
        currentScenarioDTO = Session.get("currentScenarioDTO"); 
+       if(Session.get(_SCENARIO_FORM_STEP)==undefined){//could happen with reload
+          Session.set(_SCENARIO_FORM_STEP, _SCENARIO_FORM_STEP_BASIC_INFO);
+       }
        this.render('NewScenarioForm', {
          data : currentScenarioDTO,
          yieldTemplates: {
@@ -682,11 +685,13 @@ UI.registerHelper('isVerifiedEmail' , function(emailsObject){
     "click #saveScenarioButton" : function(){ 
       //event.preventDefault();  
       collectScenarioInfo(); // Collects data from the form into an object
+      currentScenarioDTO = Session.get('currentScenarioDTO');
+     // console.log("save "+JSON.stringify(currentScenarioDTO));
       if(currentScenarioDTO.title.trim()==''){
         window.alert("The scenario needs at least a TITLE in order to be persisted. \n\nTitles are a human-friendly way of summarizing the content of the scenario and will make easier to identify your scenario later.");
 
         //set focus on the title text area
-        var step = console.log(Session.get(_SCENARIO_FORM_STEP));
+        var step = Session.get(_SCENARIO_FORM_STEP);
         if(step==undefined || step === _SCENARIO_FORM_STEP_BASIC_INFO){
           $("#title").focus();
         }
@@ -695,14 +700,17 @@ UI.registerHelper('isVerifiedEmail' , function(emailsObject){
         //Meteor.call("saveScenario", currentScenarioDTO); //working code
         Meteor.call("saveScenario", currentScenarioDTO, function(err, callbackScenarioDTO) {
           //callback function
-             if (err)
-                { console.log(err);}
-
+             if (err){  
+              console.log(err);
+              window.alert("The scenario could NOT be persisted. \n\n"+err.error);
+            }else{
               //currentScenarioDTO._id = callbackScenarioDTO._id;
               currentScenarioDTO = callbackScenarioDTO;
               Session.set('currentScenarioDTO', currentScenarioDTO);
-              Router.go("NewScenarioForm");
+              Router.go("/NewScenarioForm");
               //Meteor._reload.reload();
+            }
+
           });
         }
     }
@@ -1165,6 +1173,7 @@ var hideScenarioFormButtons = function(){
  var collectScenarioInfo = function(){
   // Collects data from the form into an object
   currentScenarioDTO =  Session.get("currentScenarioDTO");
+  //console.log("collect1 "+JSON.stringify(currentScenarioDTO));
   //if there is no scenario, we create a new one.
   if(currentScenarioDTO==undefined){
     cleanNewScenarioForm();
