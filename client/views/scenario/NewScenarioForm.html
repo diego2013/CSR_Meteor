@@ -59,13 +59,15 @@
     <label>Title</label>
     <!-- <a href="#"  id="exampleTitle" style="float:right;">example of a title</a> -->
     <br/>
-    {{#if editableScn}} 
+    <!-- {{#if editableScn}} 
         <textarea type="text" id="title" name="title" rows="1" cols="100" placeholder="Type to add a title" >{{title}}</textarea><br/>
     {{else}}
         <textarea type="text" id="title" name="title" rows="1" cols="100" placeholder="Type to add a title" readonly>{{title}}</textarea><br/>
-    {{/if}} 
+    {{/if}} -->
+
+    <textarea type="text" id="title" name="title" rows="1" cols="100" placeholder="Type to add a title" {{isScenarioReadOnly}}>{{title}}</textarea><br/>
     <label>Description</label><br/>
-    <textarea type="text" id="description" name="description" rows="4" cols="175" placeholder="Type to add a description" >{{description}}</textarea><br/>
+    <textarea type="text" id="description" name="description" rows="4" cols="175" placeholder="Type to add a description" {{isScenarioReadOnly}}>{{description}}</textarea><br/>
 
 </template>
 
@@ -122,11 +124,11 @@
     <br/>
 
     <label>Describe Your Good Idea or Solution</label><br/>
-    <textarea type="text" id="solutionDescription" rows="4" cols="175" >{{solutionDescription}}</textarea><br/>
+    <textarea type="text" id="solutionDescription" rows="4" cols="175" {{isScenarioReadOnly}}>{{solutionDescription}}</textarea><br/>
     <label>Benefits of the New System</label><br/>
-    <textarea type="text" id="benefitsDescription"  rows="4" cols="175" >{{benefitsDescription}}</textarea><br/>
+    <textarea type="text" id="benefitsDescription"  rows="4" cols="175" {{isScenarioReadOnly}}>{{benefitsDescription}}</textarea><br/>
     <label>Foreseen Risks of the New System</label><br/>
-    <textarea type="text" id="risksDescription"  rows="4" cols="175" >{{risksDescription}}</textarea><br/>
+    <textarea type="text" id="risksDescription"  rows="4" cols="175" {{isScenarioReadOnly}}>{{risksDescription}}</textarea><br/>
 </template>
 
 
@@ -135,6 +137,7 @@
 
 <!-- Template for step 2: advanced details: Hazards-->
 <template name="advancedDetailsHazards" >
+{{#if isScenarioEditable}}
     <p>Describe current or possible risks to patient safety</p>
 
     <table border="1">
@@ -168,17 +171,19 @@
         </tr>
     </table>
 
-    <button type="button" id="addNewHazard" class="btn btn-small btn-mint">Add Another Hazard Description</button>
 
-    <br/><span>Current hazards of the scenario</span>
-    <table border="1">
-        <tr>
+    <button type="button" id="addNewHazard" class="btn btn-small btn-mint">Add Another Hazard Description</button> <br/>
+{{/if}}
+
+    <span>Current hazards of the scenario</span>
+    <table >
+        <tr class ="btn-turquesa">
             <th>Description</th>
             <th>Expected risks</th>
             <th>Severity</th>
         </tr>
         {{#each hazardEntryList}}
-            {{> hazardEntry}}
+            {{> hazardEntry}} 
         {{/each}}
     </table>
 
@@ -186,20 +191,23 @@
 
 <!-- Template ot display the info of a single hazard-->
 <template name="hazardEntry">
-    <tr>
-    <td><label>{{hazardDescription}}</label></td>
+  <tr class="tablePijamaEvenRow">
+    <td style="width:60%"><label>{{hazardDescription}}</label></td>
     <td><label>{{hazardRisk}}</label></td>
     <td><label>{{hazardSeverity}}</label></td>
     <!--<td><label>{{id}}</label></td>-->
-    <td> <button id="deleteHazard">Delete</button></td>
-    </tr>   
+    {{#if isScenarioEditable}}
+    <td> <button style="width:100%;" class="btn-red" id="deleteHazard">Delete</button></td>
+    {{/if}}
+   </tr>
 </template>
 
 <!-- Template for step 2: advanced details: Equipment-->
 <template name="advancedDetailsEquipment" >
+{{#if isScenarioEditable}}
     <p>Add further details about related/involved hardware</p>
 
-    <table>
+    <table class="div-chooseClinical">
         <tr>
             <th><label>Device Type</label></th>
             <th><label>Manufacturer</label></th>
@@ -227,13 +235,15 @@
     </table>
 
     <button type="button" id="addNewEquipment" class="btn btn-small btn-mint">Add Another Equipment Description</button>
+ {{/if}}   
+
     <br/><span>List of hazardrous equipment included in the scenario</span>
 
-    <table border="1">
-        <tr>
+    <table >
+        <tr class ="btn-turquesa">
             <th><label>Device Type</label></th>
-            <th><label>Manufacturer</label></th>
-            <th><label>Model</label></th>
+            <th ><label>Manufacturer</label></th>
+            <th ><label>Model</label></th>
             <th><label>Rosetta - Unique ID</label></th>
             <th><label>Training related problem</label></th>
             <th><label>Instructions related problem</label></th>
@@ -242,34 +252,35 @@
             <th><label>Hardware related problem</label></th>
         </tr>
         {{#each equipmentEntryList}}
-            {{> equipmentEntry}}
+            {{> equipmentEntry}} 
         {{/each}}
     </table>  
 
 </template>
 
 <template name="equipmentEntry">
-
-    <tr>
+  <tr class="tablePijamaEvenRow">
     <td><label>{{deviceType}}</label></td>
     <td><label>{{manufacturer}}</label></td>
     <td><label>{{model}}</label></td>
     <td><label>{{rosetta}}</label></td>
-    <td>{{#if trainingRelated}} <label>yes</label> {{else}} <label>no</label> {{/if}}</td>
-    <td>{{#if instructionsRelated}} <label>yes</label> {{else}} <label>no</label> {{/if}}</td>
-    <td>{{#if confusingRelated}} <label>yes</label> {{else}} <label>no</label> {{/if}}</td>
-    <td>{{#if softwareRelated}} <label>yes</label> {{else}} <label>no</label> {{/if}}</td>
-    <td>{{#if hardwareRelated}} <label>yes</label> {{else}} <label>no</label> {{/if}}</td>
+    <td class="narrowColumn">{{#if trainingRelated}} <label>yes</label> {{else}} <label>no</label> {{/if}}</td>
+    <td class="narrowColumn">{{#if instructionsRelated}} <label>yes</label> {{else}} <label>no</label> {{/if}}</td>
+    <td class="narrowColumn">{{#if confusingRelated}} <label>yes</label> {{else}} <label>no</label> {{/if}}</td>
+    <td class="narrowColumn"> {{#if softwareRelated}} <label>yes</label> {{else}} <label>no</label> {{/if}}</td>
+    <td class="narrowColumn">{{#if hardwareRelated}} <label>yes</label> {{else}} <label>no</label> {{/if}}</td>
     <!--<td><label>{{id}}</label></td>-->
-    <td> <button type="button" id="deleteEquipment">Delete</button></td>
-    </tr>  
+    {{#if isScenarioEditable}}
+    <td style="width:5%"> <button type="button" class="btn-red" style="width:100%" id="deleteEquipment">Delete</button></td>
+    {{/if}}
+  </tr>
   
 </template>
 
 <!-- Template for step : advanced details: Lessons Learned-->
 <template name="advancedDetailsLessonsLearned" >
     <p>What can be learned from this scenario?</p>
-    <textarea type="text" id="lesson" rows="4" cols="75" placeholder="Describe what can be learned from this scenario" >{{lessonsLearned}}</textarea><br/>
+    <textarea type="text" id="lesson" rows="4" cols="175" placeholder="Describe what can be learned from this scenario" {{isScenarioReadOnly}}>{{lessonsLearned}}</textarea><br/>
     Do you think this incident could have been prevented or mitigated through better technology?
     <select id="preventable" value="yes">
         <option value ="notSure" {{selectedLessonLearned "notSure"}}>I am not sure</option>   
@@ -281,9 +292,10 @@
 
 <!-- Template for step : advanced details: Relevant References-->
 <template name="advancedDetailsReferences">
+{{#if isScenarioEditable}}
  <p>Add any relevant online references to this scenario (FDA or Maude reports, articles or white papers, pieces of software and/or other documentation) </p>
 
- <table>
+ <table class="div-chooseClinical">
      <tr>
         <th></th>
         <th>URL of the reference</th>
@@ -294,19 +306,21 @@
              <option value ="http://">http</option>
              <option value ="https://">https</option>
          </select></td>
-         <td><textarea type="text" id="referenceUrl" rows="1" cols="35" placeholder="Type the reference's url" ></textarea></td>
-         <textarea type="text" id="referenceRelevance" rows="3" cols="40" placeholder="Briefly describe why is important or relevant" ></textarea>
+         <td><textarea type="text" id="referenceUrl" rows="1" cols="80" placeholder="Type the reference's url" ></textarea></td>
+         <textarea type="text" id="referenceRelevance" rows="3" cols="100" placeholder="Briefly describe why is important or relevant" ></textarea>
      </tr>
 
  </table>
 
- <button type="button" id="addNewReference" class="btn btn-small btn-mint">Add Another Reference</button>
+ <button type="button" id="addNewReference" class="btn btn-small btn-mint">Add Another Reference</button><br/>
+{{/if}}
 
- <br/><span>Current references added to the scenario</span>
- <table border="1">
-     <tr>
+ <span>Current references added to the scenario</span>
+ <table>
+     <tr class="btn-turquesa">
          <th>URL of the reference</th>
          <th>Relevance</th>
+         <th></th>
      </tr>
      {{#each referenceEntryList}}
          {{> referenceEntry}}
@@ -317,74 +331,79 @@
 
 <!-- Template to display the info of a single reference-->
 <template name="referenceEntry">
-    <tr>
-    <td><a href="{{referenceUrl}}" target="_blank">{{referenceUrl}}</a></td>
-    <td><label>{{referenceRelevance}}</label></td>
-    <td> <button id="deleteReference">Delete</button></td>
+    <tr class="tablePijamaEvenRow">
+    <td style="width:30%"><a href="{{referenceUrl}}" target="_blank">{{referenceUrl}}</a></td>
+    <td style="width:70%"><label>{{referenceRelevance}}</label></td>
+    {{#if isScenarioEditable}}
+    <td> <button id="deleteReference" class="btn-red" style="width:100%" >Delete</button></td>
+    {{/if}}
     </tr>   
 </template>
 
 
 <!-- Template for step : advanced details: Actors -->
 <template name="advancedDetailsRoles">
+ {{#if isScenarioEditable}}
     <p>Add further details about actors involved in the scenario and their roles.</p>
+    <div class="div-chooseClinical"> 
 
-<div class="div-chooseClinical"> 
-    Choose a clinical role from this list
-    <select id="clinicalRole" class="selectbox-wrapper">
-        <option value='Allergist'>Allergist</option>
-        <option value='Anesthesiologist'>Anesthesiologist</option>
-        <option value='Cardiologist'>Cardiologist</option>
-        <option value='Chief Nurse'>Chief Nurse</option>
-        <option value='Clinical Staff'>Clinical Staff</option>
-        <option value='CNA - Certified Nurse Assistant'>CNA - Certified Nurse Assistant</option>
-        <option value='Cosmetic Surgeon'>Cosmetic Surgeon</option>
-        <option value='Critical Care Nurse'>Critical Care Nurse</option>
-        <option value='CRNA - Certified Registered Nurse Asst'>CRNA - Certified Registered Nurse Asst</option>
-        <option value='Dentist'>Dentist</option>
-        <option value='Dermatologist'>Dermatologist</option>
-        <option value='Emergency Medicine Doctor'>Emergency Medicine Doctor</option>
-        <option value='Endocrinologist'>Endocrinologist</option>
-        <option value='Epidemiologist'>Epidemiologist</option>
-        <option value='Gastrologist'>Gastrologist</option>
-        <option value='General Practitioner'>General Practitioner</option>
-        <option value='Geriatrics Specialist'>Geriatrics Specialist</option>
-        <option value='Gynecologist'>Gynecologist</option>
-        <option value='Hematologist'>Hematologist</option>
-        <option value='HHN - Home Health Nurse'>HHN - Home Health Nurse</option>
-        <option value='Hospitalist'>Hospitalist</option>
-        <option value='Infectious Disease Nurse'>Infectious Disease Nurse</option>
-        <option value='Labor-Delivery Nurse'>Labor-Delivery Nurse</option>
-        <option value='LPN - Licensed Practical Nurse'>LPN - Licensed Practical Nurse</option>
-        <option value='LVN - Licensed Vocational Nurse'>LVN - Licensed Vocational Nurse</option>
-        <option value='Medical Assistant'>Medical Assistant</option>
-        <option value='Medical Emergency Team'>Medical Emergency Team</option>
-        <option value='Neonatologist'>Neonatologist</option>
-        <option value='Neurologist'>Neurologist</option>
-        <option value='Nurse'>Nurse</option>
-        <option value='Nurse Assistant'>Nurse Assistant</option>
-        <option value='Occupational Health Nurse'>Occupational Health Nurse</option>
-        <option value='Oncologist'>Oncologist</option>
-        <option value='ORRN - Operating Room Registered Nurse'>ORRN - Operating Room Registered Nurse</option>
-        <option value='Pathologist'>Pathologist</option>
-        <option value='Physician'>Physician</option>
-        <option value='Radiologist'>Radiologist</option>
-        <option value='Respiratory Therapist'>Respiratory Therapist</option>
-        <option value='Rheumatologist'>Rheumatologist</option>
-        <option value='RN - Registered Nurse'>RN - Registered Nurse</option>
-        <option value='RRT'>RRT</option>
-        <option value='Surgeon'>Surgeon</option>
-        <option value='Toxicologist'>Toxicologist</option>
-        <option value='Urologist'>Urologist</option>
-        <option value='X-Ray Technician'>X-Ray Technician</option>
-    </select>
+        Choose a clinical role from this list
+        <select id="clinicalRole" class="selectbox-wrapper">
+            <option value='Allergist'>Allergist</option>
+            <option value='Anesthesiologist'>Anesthesiologist</option>
+            <option value='Cardiologist'>Cardiologist</option>
+            <option value='Chief Nurse'>Chief Nurse</option>
+            <option value='Clinical Staff'>Clinical Staff</option>
+            <option value='CNA - Certified Nurse Assistant'>CNA - Certified Nurse Assistant</option>
+            <option value='Cosmetic Surgeon'>Cosmetic Surgeon</option>
+            <option value='Critical Care Nurse'>Critical Care Nurse</option>
+            <option value='CRNA - Certified Registered Nurse Asst'>CRNA - Certified Registered Nurse Asst</option>
+            <option value='Dentist'>Dentist</option>
+            <option value='Dermatologist'>Dermatologist</option>
+            <option value='Emergency Medicine Doctor'>Emergency Medicine Doctor</option>
+            <option value='Endocrinologist'>Endocrinologist</option>
+            <option value='Epidemiologist'>Epidemiologist</option>
+            <option value='Gastrologist'>Gastrologist</option>
+            <option value='General Practitioner'>General Practitioner</option>
+            <option value='Geriatrics Specialist'>Geriatrics Specialist</option>
+            <option value='Gynecologist'>Gynecologist</option>
+            <option value='Hematologist'>Hematologist</option>
+            <option value='HHN - Home Health Nurse'>HHN - Home Health Nurse</option>
+            <option value='Hospitalist'>Hospitalist</option>
+            <option value='Infectious Disease Nurse'>Infectious Disease Nurse</option>
+            <option value='Labor-Delivery Nurse'>Labor-Delivery Nurse</option>
+            <option value='LPN - Licensed Practical Nurse'>LPN - Licensed Practical Nurse</option>
+            <option value='LVN - Licensed Vocational Nurse'>LVN - Licensed Vocational Nurse</option>
+            <option value='Medical Assistant'>Medical Assistant</option>
+            <option value='Medical Emergency Team'>Medical Emergency Team</option>
+            <option value='Neonatologist'>Neonatologist</option>
+            <option value='Neurologist'>Neurologist</option>
+            <option value='Nurse'>Nurse</option>
+            <option value='Nurse Assistant'>Nurse Assistant</option>
+            <option value='Occupational Health Nurse'>Occupational Health Nurse</option>
+            <option value='Oncologist'>Oncologist</option>
+            <option value='ORRN - Operating Room Registered Nurse'>ORRN - Operating Room Registered Nurse</option>
+            <option value='Pathologist'>Pathologist</option>
+            <option value='Physician'>Physician</option>
+            <option value='Radiologist'>Radiologist</option>
+            <option value='Respiratory Therapist'>Respiratory Therapist</option>
+            <option value='Rheumatologist'>Rheumatologist</option>
+            <option value='RN - Registered Nurse'>RN - Registered Nurse</option>
+            <option value='RRT'>RRT</option>
+            <option value='Surgeon'>Surgeon</option>
+            <option value='Toxicologist'>Toxicologist</option>
+            <option value='Urologist'>Urologist</option>
+            <option value='X-Ray Technician'>X-Ray Technician</option>
+        </select>
 
-    <button type="button" id="addActor" class="btn btn-small btn-mint">Add Actor</button>
-</div>
+        <button type="button" id="addActor" class="btn btn-small btn-mint">Add Actor</button>
+    </div>
+{{/if}}
 
     <table>
         <tr>
-         <th>Clinical Roles of the scenario</th>
+        {{#if isScenarioEditable}}<th></th>{{/if}}
+         <th >Clinical Roles of the scenario</th>
         </tr>
         {{#each roleEntryList}}
             {{> roleEntry}}
@@ -396,62 +415,66 @@
 
 <!-- Template to display the info of a single reference-->
 <template name="roleEntry">
-    <tr>
+    <tr> 
+        {{#if isScenarioEditable}}
+        <td> <button type="button" id="deleteRole" class="btn-red">Delete</button></td>
+        {{/if}}
         <td>{{role}}</td>
-        <td> <button type="button" id="deleteRole">Delete</button></td>
     </tr>
 </template>
 
 <!-- Template for step : advanced details: Environments -->
 <template name="advancedDetailsEnvironments">
 
+{{#if isScenarioEditable}}
     <p>Add further details about the places where this scenario can take place.</p>
+    <div class="div-chooseClinical"> 
+        Choose a clinical environment from this list
+        <select id="clinicalEnvironment" class="selectbox-wrapper">
+            <option value='Acute assessment unit'>Acute assessment unit</option>
+            <option value='Ambulatory wing'>Ambulatory wing</option>
+            <option value='Birthing Room/LDR Room/LDRP Room'>Birthing Room/LDR Room/LDRP Room</option>
+            <option value='Breast screening unit'>Breast screening unit</option>
+            <option value='Burn Care Unit'>Burn Care Unit</option>
+            <option value='Cafeteria'>Cafeteria</option>
+            <option value='CCU-cardiac care unit'>CCU-cardiac care unit</option>
+            <option value='Delivery room'>Delivery room</option>
+            <option value='Discharge lounge'>Discharge lounge</option>
+            <option value='Discharge unit'>Discharge unit</option>
+            <option value='ENT-Ear nose and throat'>ENT-Ear nose and throat</option>
+            <option value='ER-emergency room'>ER-emergency room</option>
+            <option value='Geriatrics'>Geriatrics</option>
+            <option value='Hospital room'>Hospital room</option>
+            <option value='ICU-intensive care unit'>ICU-intensive care unit</option>
+            <option value='Lab/pathology'>Lab/pathology</option>
+            <option value='Maternity wards'>Maternity wards</option>
+            <option value='Neonatal unit'>Neonatal unit</option>
+            <option value='Nurse station'>Nurse station</option>
+            <option value='On-call room'>On-call room</option>
+            <option value='OR-operating room'>OR-operating room</option>
+            <option value='Patient bay'>Patient bay</option>
+            <option value='Pediatrics'>Pediatrics</option>
+            <option value='Physical therapy/rehab dept'>Physical therapy/rehab dept</option>
+            <option value='Post surgical care unit'>Post surgical care unit</option>
+            <option value='Psychiatric ward'>Psychiatric ward</option>
+            <option value='Radiology/imaging'>Radiology/imaging</option>
+            <option value='Renal unit'>Renal unit</option>
+            <option value='Telemetry'>Telemetry</option>
+            <option value='Transport'>Transport</option>
+            <option value='Trauma center'>Trauma center</option>
+            <option value='Ultrasound Unit'>Ultrasound Unit</option>
+            <option value='Volunteers room'>Volunteers room</option>
+            <option value='Waiting room'>Waiting room</option>
+            <option value='Wound Care Unit'>Wound Care Unit</option>
+        </select>
 
-<div class="div-chooseClinical"> 
-    Choose a clinical environment from this list
-    <select id="clinicalEnvironment" class="selectbox-wrapper">
-        <option value='Acute assessment unit'>Acute assessment unit</option>
-        <option value='Ambulatory wing'>Ambulatory wing</option>
-        <option value='Birthing Room/LDR Room/LDRP Room'>Birthing Room/LDR Room/LDRP Room</option>
-        <option value='Breast screening unit'>Breast screening unit</option>
-        <option value='Burn Care Unit'>Burn Care Unit</option>
-        <option value='Cafeteria'>Cafeteria</option>
-        <option value='CCU-cardiac care unit'>CCU-cardiac care unit</option>
-        <option value='Delivery room'>Delivery room</option>
-        <option value='Discharge lounge'>Discharge lounge</option>
-        <option value='Discharge unit'>Discharge unit</option>
-        <option value='ENT-Ear nose and throat'>ENT-Ear nose and throat</option>
-        <option value='ER-emergency room'>ER-emergency room</option>
-        <option value='Geriatrics'>Geriatrics</option>
-        <option value='Hospital room'>Hospital room</option>
-        <option value='ICU-intensive care unit'>ICU-intensive care unit</option>
-        <option value='Lab/pathology'>Lab/pathology</option>
-        <option value='Maternity wards'>Maternity wards</option>
-        <option value='Neonatal unit'>Neonatal unit</option>
-        <option value='Nurse station'>Nurse station</option>
-        <option value='On-call room'>On-call room</option>
-        <option value='OR-operating room'>OR-operating room</option>
-        <option value='Patient bay'>Patient bay</option>
-        <option value='Pediatrics'>Pediatrics</option>
-        <option value='Physical therapy/rehab dept'>Physical therapy/rehab dept</option>
-        <option value='Post surgical care unit'>Post surgical care unit</option>
-        <option value='Psychiatric ward'>Psychiatric ward</option>
-        <option value='Radiology/imaging'>Radiology/imaging</option>
-        <option value='Renal unit'>Renal unit</option>
-        <option value='Telemetry'>Telemetry</option>
-        <option value='Transport'>Transport</option>
-        <option value='Trauma center'>Trauma center</option>
-        <option value='Ultrasound Unit'>Ultrasound Unit</option>
-        <option value='Volunteers room'>Volunteers room</option>
-        <option value='Waiting room'>Waiting room</option>
-        <option value='Wound Care Unit'>Wound Care Unit</option>
-    </select>
-
-    <button type="button" id="addPlace" class="btn btn-small btn-mint">Add Environment</button>
-</div>
+        <button type="button" id="addPlace" class="btn btn-small btn-mint">Add Environment</button>
+    </div>
+{{/if}}
 
     <table>
         <tr>
+        {{#if isScenarioEditable}}<th></th>{{/if}}
          <th>Clinical Environments of the Scenario</th>
         </tr>
         {{#each environmentEntryList}}
@@ -464,7 +487,9 @@
 <!-- Template to display the info of a single reference-->
 <template name="environmentEntry">
     <tr>
+        {{#if isScenarioEditable}}
+            <td> <button type="button" class="btn-red" style="width:100%" id="deletePlace">Delete</button></td>
+        {{/if}}
         <td>{{place}}</td>
-        <td> <button type="button" id="deletePlace">Delete</button></td>
     </tr>
 </template>

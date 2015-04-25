@@ -364,13 +364,13 @@ Deps.autorun(function(){
       var newScenarioStep = Session.get(_SCENARIO_FORM_STEP);
       return step==newScenarioStep;
     }
-    , isScenarioEditable : function(){
-      var currentScenarioDto = Session.get('currentScenarioDTO')
-      if(Session.get('currentScenarioDTO')==undefined)
-          return true;
-      else
-          return Session.get('currentScenarioDTO').status==scenarioStatusEnum.UNSUBMITTED;
-    }
+  //  , isScenarioEditable : function(){
+  //    var currentScenarioDto = Session.get('currentScenarioDTO')
+  //    if(Session.get('currentScenarioDTO')==undefined)
+  //        return true;
+  //    else
+  //        return Session.get('currentScenarioDTO').status==scenarioStatusEnum.UNSUBMITTED;
+  //  }
   });
 
   Template.scenarioFormBasicInfo.helpers({
@@ -473,15 +473,15 @@ Deps.autorun(function(){
   });
 
   Template.scenarioCompleteForm.helpers({
-    scenarioEditable : function(){
-      return false;
-    },
-    editableScn : function(){
-        if(Session.get('currentScenarioDTO')==undefined)
-          return '';
-        else
-          return 'readonly';
-    },
+  //  scenarioEditable : function(){
+  //    return false;
+  //  },
+  //  editableScn : function(){
+  //      if(Session.get('currentScenarioDTO')==undefined)
+  //        return '';
+  //      else
+  //        return 'readonly';
+  //  },
     hazardEntryListCount : function(){
       currentScenarioDTO = Session.get('currentScenarioDTO');
       hazardEntryList = currentScenarioDTO==undefined?[]:currentScenarioDTO.hazardEntryList;
@@ -589,6 +589,10 @@ UI.registerHelper('isScenarioReadOnly', function(){
 
 
 UI.registerHelper('getTablePijamaClass', function(index){
+
+//  if(typeof index != 'number')
+//    index2 = parseInt(index);
+
   if(index%2==0)
     return "tablePijamaEvenRow";
   else 
@@ -643,6 +647,25 @@ UI.registerHelper('printScenarioMetainfo' , function(){
      return false;
    else
      return Session.get('currentScenarioDTO')._id!=undefined;
+});
+
+
+/** Returns a boolean that indicates if the current scenario is editable or not
+*/
+UI.registerHelper('isScenarioEditable', function(){
+  currentScenarioDTO = Session.get('currentScenarioDTO');
+  return isScenarioEditable(currentScenarioDTO);
+});
+
+/** Returns an HTML attribute that indicates if the current scenario is editable or not
+*/
+UI.registerHelper('isScenarioReadOnly', function(){
+  currentScenarioDTO = Session.get('currentScenarioDTO');
+  if(isScenarioEditable(currentScenarioDTO))
+    return ''
+  else
+    return 'readonly';
+
 });
 
 
@@ -1082,6 +1105,27 @@ var trimInput = function(val) {
   return val.replace(/^\s*|\s*$/g, "");
 }
 
+/** Returns a boolean to indicare if the provided scenario is editable or not.
+1. If the scenario is UNSUBMITTED it should only be editable by the the owner (current user is owner)
+2. If the scenario is SUBMITTED or APPROVED is editable if the current user is the scenario lock's owner
+NOTE: tis simple approach does not have in consideration the anonymous scenarios
+*/
+var isScenarioEditable = function(currentScenarioDTO){
+  //console.log(JSON.stringify(currentScenarioDTO));
+  if(currentScenarioDTO == undefined ){
+    return true;
+  }
+  if(currentScenarioDTO.status == scenarioStatusEnum.UNSUBMITTED){
+    //console.log("userID "+Meteor.userId()+ " scenario Owner "+currentScenarioDTO.owner);
+    return (Meteor.userId()== currentScenarioDTO.owner) || (currentScenarioDTO.owner==undefined);
+  }
+
+//if(currentScenarioDTO.status == scenarioStatusEnum.SUBMITTED)
+//if(currentScenarioDTO.status == scenarioStatusEnum.APPROVED)
+
+//otherwise
+  return false;
+}
 
 //Hides the button corresponding to the panel of the Scenario Form
 // in which we are by changing the button class.
