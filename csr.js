@@ -225,7 +225,7 @@ Deps.autorun(function(){
        if(currentScenarioDTO==undefined || !Meteor.userId()){
           this.render('NotFound');
           this.render('FooterTemplate', {to: 'footer'});
-       } else if(currentScenarioDTO.owner == Meteor.userID() && currentScenarioDTO.status == scenarioStatusEnum.SUBMITTED)
+       } else if(currentScenarioDTO.owner == Meteor.userId() && currentScenarioDTO.status == scenarioStatusEnum.SUBMITTED)
           this.render('scenarioFormThankYou', { data : currentScenarioDTO } );
       else{
           this.render('NotFound');
@@ -1120,7 +1120,8 @@ var isScenarioEditable = function(currentScenarioDTO){
     return (Meteor.userId()== currentScenarioDTO.owner) || (currentScenarioDTO.owner==undefined);
   }
 
-//if(currentScenarioDTO.status == scenarioStatusEnum.SUBMITTED)
+if(currentScenarioDTO.status == scenarioStatusEnum.SUBMITTED)
+  return false;
 //if(currentScenarioDTO.status == scenarioStatusEnum.APPROVED)
 
 //otherwise

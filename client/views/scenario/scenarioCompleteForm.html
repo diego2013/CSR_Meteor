@@ -11,21 +11,15 @@
 
 <!-- Scenario basic info -->
     <label>Title</label>
-    {{#if scenarioEditable}} 
-        <textarea type="text" id="title" name="title" rows="1" cols="75" placeholder="Type to add a title" >{{title}}</textarea><br/>
-    {{else}}
-        <textarea type="text" id="title" name="title" rows="1" cols="75" placeholder="Type to add a title" readonly>{{title}}</textarea><br/>
-    {{/if}} 
-
-    
+    <textarea type="text" id="title" name="title" rows="1" cols="75" placeholder="Type to add a title" {{isScenarioReadOnly}}>{{title}}</textarea><br/>
     <label>Description</label><br/>
-    <textarea type="text" id="description" name="description" rows="4" cols="175" placeholder="Type to add a description" {{editableScn}}>{{description}}</textarea><br/>
+    <textarea type="text" id="description" name="description" rows="4" cols="175" placeholder="Type to add a description" {{isScenarioReadOnly}}>{{description}}</textarea><br/>
 
 <!-- Scenario Advanced Information-->
 <br/>
     <p>HAZARDS (Count {{hazardEntryListCount}} entries)</p>
-    <table border="1">
-        <tr>
+    <table>
+        <tr class="btn-turquesa">
             <th>Description</th>
             <th>Expected risks</th>
             <th>Severity</th>
@@ -36,8 +30,8 @@
     </table>
 
     <p>EQUIPMENT (Count {{equipmentEntryListCount}} entries)</p>
-        <table border="1">
-        <tr>
+        <table>
+        <tr class="btn-turquesa">
             <th><label>Device Type</label></th>
             <th><label>Manufacturer</label></th>
             <th><label>Model</label></th>
@@ -54,7 +48,7 @@
     </table>  
 
     <p>LESSONS LEARNED</p>
-        <textarea type="text" id="lesson" rows="4" cols="175" placeholder="Describe what can be learned from this scenario" >{{lessonsLearned}}</textarea><br/>
+        <textarea type="text" id="lesson" rows="4" cols="175" placeholder="Describe what can be learned from this scenario" {{isScenarioReadOnly}}>{{lessonsLearned}}</textarea><br/>
     Do you think this incident could have been prevented or mitigated through better technology?
     <select id="preventable" value="yes">
         <option value ="notSure" {{selectedLessonLearned "notSure"}}>I am not sure</option>   
@@ -79,10 +73,11 @@
     </table>
 
     <p>REFERENCES</p>
-     <table border="1">
-     <tr>
+     <table>
+     <tr class="btn-turquesa">
          <th>URL of the reference</th>
          <th>Relevance</th>
+         <th></th>
      </tr>
      {{#each referenceEntryList}}
          {{> referenceEntry}}
