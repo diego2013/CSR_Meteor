@@ -180,6 +180,15 @@ header .hide-completed {
 	margin:10px;
 }
 
+/***************
+ TABLES
+ ***************/
+
+ .narrowColumn{
+ 	text-align : center;
+ 	width : 5%;
+ }
+
 /* class for EVEN rows on tables with pijamas */
 .tablePijamaEvenRow{
 	background: #FFFFFF;
@@ -429,6 +438,30 @@ ul.fallback{
 	background-image:-moz-linear-gradient(bottom, rgb(250,250,250) 1%, rgb(255,255,255) 51%);
 	background-image:-webkit-linear-gradient(bottom, rgb(250,250,250) 1%, rgb(255,255,255) 51%);
 	background-image:-ms-linear-gradient(bottom, rgb(250,250,250) 1%, rgb(255,255,255) 51%);
+}
+
+.btn-turquesa {
+	color:#FFF;
+	text-shadow:none;
+	border:1px solid #0066FF;
+	background:#0099CC;
+	background-image:linear-gradient(bottom, rgb(0, 153, 204)1%, rgb(51, 204, 204) 51%);
+	background-image:-o-linear-gradient(bottom, rgb(0, 153, 204) 1%, rgb(51, 204, 204) 51%);
+	background-image:-moz-linear-gradient(bottom, rgb(0, 153, 204) 1%, rgb(51, 204, 204) 51%);
+	background-image:-webkit-linear-gradient(bottom, rgb(0, 153, 204) 1%, rgb(51, 204, 204) 51%);
+	background-image:-ms-linear-gradient(bottom, rgb(0, 153, 204) 1%, rgb(51, 204, 204) 51%);
+}
+
+.btn-red {
+	color:#FFF;
+	text-shadow:none;
+	border:1px solid #B71700;
+	background:#CC0000;
+	background-image:linear-gradient(bottom, rgb(204, 0, 0)1%, rgb(255, 0, 0) 51%);
+	background-image:-o-linear-gradient(bottom, rgb(204, 0, 0) 1%, rgb(255, 0, 0) 51%);
+	background-image:-moz-linear-gradient(bottom, rgb(204, 0, 0) 1%, rgb(255, 0, 0) 51%);
+	background-image:-webkit-linear-gradient(bottom, rgb(204, 0, 0) 1%, rgb(255, 0, 0) 51%);
+	background-image:-ms-linear-gradient(bottom, rgb(204, 0, 0) 1%, rgb(255, 0, 0) 51%);
 }
 
 
