@@ -34,6 +34,10 @@ var _ADT_ROLES_templateName = "advancedDetailsRoles";
 var _ADT_PLACES_templateName = "advancedDetailsEnvironments"; 
 var _ADT_LESSONSLEARNED_templateName = "advancedDetailsLessonsLearned"; 
 var _ADT_REFERENCES_templateName = "advancedDetailsReferences"; 
+
+
+var _LOCKBUTTON_NAME_LOCK = "Lock Modification";
+var _LOCKBUTTON_NAME_UNLOCK = "Unlock Modification";
                                         
 
 //Scenario states for governance
@@ -108,6 +112,8 @@ if (Meteor.isClient) {
 //});
 
 Deps.autorun(function(){
+  //Meteor.subscribe('scenariosAll'); //all available scenarios
+  //http://stackoverflow.com/questions/15680461/meteor-collection-not-updating-subscription-on-client
   if(Router.current()!= null){
     //      console.log("Current path "+ Router.current().route.path());
   var routeName = Router.current().route.getName();
@@ -236,15 +242,37 @@ Deps.autorun(function(){
     //Template displaying all the info of a scenario
     this.route('/scenarioComplete/:_id', function(){
       currentScenarioDTO = ScenariosAll.findOne({_id: this.params._id.trim()});
-      if(currentScenarioDTO===undefined || currentScenarioDTO.owner != Meteor.userId()){
+      if(currentScenarioDTO===undefined || !Roles.userIsInRole(Meteor.user(), 'admin')
+        /*currentScenarioDTO.owner != Meteor.userId()*/){
         Session.set('auxScenarioID', this.params._id);
         this.render('/findByIDErrorTemplate');
       }else{
         this.render('scenarioCompleteForm', {data: currentScenarioDTO});
         Session.set("currentScenarioDTO", currentScenarioDTO); //Issue #3
+        
+      }
+    });
+
+/*    this.route('/scenarioComplete/:_id',{
+      template : '/scenarioComplete/:_id',
+      onBeforeAction : function(){
+         currentScenarioDTO = ScenariosAll.findOne({_id: this.params._id.trim()});
+         if(currentScenarioDTO===undefined || !Roles.userIsInRole(Meteor.user(), 'admin')
+           ){
+           Session.set('auxScenarioID', this.params._id);
+           this.render('/findByIDErrorTemplate');
+         }else{
+           //console.log(JSON.stringify(currentScenarioDTO));
+           this.render('scenarioCompleteForm', {data: currentScenarioDTO});
+           Session.set("currentScenarioDTO", currentScenarioDTO); //Issue #3
+          }
+      },
+      onAfterAction : function(){
+        //initializeScenarioCompleteFormElements();
       }
 
-    })
+    }
+    ); */
 
    this.route('scenarioList' , function(){
      this.render('scenarioListTable', {data : { scenarios : MyScenarios.find({}, {sort: {createdAt: -1}}) }} );
@@ -325,7 +353,6 @@ Deps.autorun(function(){
     this.route('contactInfo');
     this.route('FeedbackForm'); //feedback form
     this.route('FeedbackFormThakYou'); //"thank you" page after submitting feedback
-
 
   });
 
@@ -504,6 +531,22 @@ Deps.autorun(function(){
     //  if(dataContext!=undefined) //should check typeof too?
     //    return dataContext.title;
     //}
+    ,getScenarioLockOwner : function(){
+      currentScenarioDTO = Session.get('currentScenarioDTO');
+      if(currentScenarioDTO && currentScenarioDTO.lockOwnerID)
+        return ("Scenario is unlocked to user "+currentScenarioDTO.lockOwnerID);
+      else
+        return "Scenario is locked for modification";
+    }
+    //retruns true if current user can approve the scenario
+    ,canApproveScenario : function(){
+      currentScenarioDTO = Session.get('currentScenarioDTO');
+      if(isScenarioLocked(currentScenarioDTO)){
+        return Meteor.userId()==currentScenarioDTO.lockOwnerID;
+      }else
+        return true;
+
+    }
   });
 
 
@@ -579,12 +622,11 @@ var addIndexToDocument = function(document, index){
 Returns if the provided option selected in the template is the one that the DTO currently holds
 */
 UI.registerHelper('selectedLessonLearned', function( value){
-  return currentScenarioDTO.preventable == value? {selected:'selected'}: '';
-});
-
-//Returns if a scenario is editable or not
-UI.registerHelper('isScenarioReadOnly', function(){
-  return "readonly";
+  currentScenarioDTO = Session.get('currentScenarioDTO');
+  if(currentScenarioDTO && currentScenarioDTO.preventable)
+    return currentScenarioDTO.preventable == value? {selected:'selected'}: '';
+  else
+    return '';
 });
 
 
@@ -667,6 +709,14 @@ UI.registerHelper('isScenarioReadOnly', function(){
     return 'readonly';
 
 });
+
+/** Returns a boolean that indicates if the current scenario is locked for modification or not
+*/
+UI.registerHelper('isScenarioLocked', function(){
+  currentScenarioDTO = Session.get('currentScenarioDTO');
+  return isScenarioLocked(currentScenarioDTO);
+});
+
 
 
 /* Shows or hides the guidelines div according to the value of the button
@@ -950,6 +1000,47 @@ Template.scenarioFormSubmitConfirmation.events({
   }
 });
 
+Template.scenarioCompleteForm.events({
+  "click #lockButton" : function(){
+
+     //toggle value of the button and update reactive variable
+      var buttonName = $('#lockButton').html();
+      //console.log(buttonName);
+      if(buttonName==_LOCKBUTTON_NAME_LOCK){
+        Meteor.call('lockScenario', Session.get('currentScenarioDTO'), function(err, callbackScenarioDTO){
+          //callback function
+             if (err){  
+              console.log(err);
+              window.alert("The scenario could NOT be locked. \n\n"+err.error);
+            }else{
+              Session.set('currentScenarioDTO', callbackScenarioDTO);
+            }
+        });
+      }else{//unlock
+        Meteor.call('unlockScenario', Session.get('currentScenarioDTO'), function(err, callbackScenarioDTO){
+          //callback function
+             if (err){  
+              console.log(err);
+              window.alert("The scenario could NOT be unlocked. \n\n"+err.error);
+
+            }else{
+              Session.set('currentScenarioDTO', callbackScenarioDTO);
+            }
+        });
+      }
+  }
+  ,"click #saveChanges" : function(){
+  }
+  ,"click #discardChanges" : function(){
+  }
+  ,"click #approveScenario" : function(){
+    var confirm = window.confirm("Are you sure you want to approve the current scenario \n\n"+Session.get('currentScenarioDTO').title);
+    console.log(confirm);
+
+  }
+
+});
+
 Template.FeedbackForm.events({
 
   //detect a submit event in the form FeedbackForm
@@ -1120,12 +1211,27 @@ var isScenarioEditable = function(currentScenarioDTO){
     return (Meteor.userId()== currentScenarioDTO.owner) || (currentScenarioDTO.owner==undefined);
   }
 
-if(currentScenarioDTO.status == scenarioStatusEnum.SUBMITTED)
-  return false;
+if(currentScenarioDTO.status == scenarioStatusEnum.SUBMITTED){
+  if(currentScenarioDTO.lockOwnerID && Meteor.userId()){
+    return (Meteor.userId()==currentScenarioDTO.lockOwnerID);
+  }else{
+    return false;
+  }
+  
+}
 //if(currentScenarioDTO.status == scenarioStatusEnum.APPROVED)
 
 //otherwise
   return false;
+}
+
+/** Returns a boolean to indicare if the provided scenario is locked for modification or not.
+*/ 
+var isScenarioLocked = function(currentScenarioDTO){
+  if(currentScenarioDTO && currentScenarioDTO.lockOwnerID)
+    return true;
+  else
+    return false;  
 }
 
 //Hides the button corresponding to the panel of the Scenario Form
@@ -1176,6 +1282,42 @@ var hideScenarioFormButtons = function(){
 
  };
 
+///** Initializes the components of the ScenarioCompleteForm
+//*/
+// var initializeScenarioCompleteFormElements = function(){
+//  console.log("initializeScenarioCompleteFormElements");
+//
+//  currentScenarioDTO = Session.get('currentScenarioDTO');
+// // var imgPadlockOpen = '<input type="image" src="/images/padlock_open.png" alt="padlock open" width="20" height="20">';
+// // var imgPadlockClosed = '<input type="image" src="/images/padlock_closed.png" alt="padlock open" width="20" height="20">';
+//
+//
+//  //lockButton:
+//  // 1. Scenario is UNLOCKED
+//  //  1.a is unlocked to current user
+//  //  1.b is unlocked to another user
+//  // 2. Scenario is LOCKED(not lock-owned)
+//////  if(currentScenarioDTO && currentScenarioDTO.lockOwnerID){
+//////    if(Meteor.userId()==currentScenarioDTO.lockOwnerID){
+//////      console.log("option 1a");
+//////      //$("#lockButton").html(_LOCKBUTTON_NAME_LOCK);
+//////      $("#lockButton").removeClass("btn-blue").addClass("btn-red");
+//////      //$("#lockButton").addClass("btn-red");
+//////    }
+//////    else{
+//////      console.log("option 1b");
+//////      //$("#lockButton").html(_LOCKBUTTON_NAME_UNLOCK);
+//////      $("#lockButton").removeClass("btn-red btn-blue").addClass("btn-pink");;
+//////      //$("#lockButton").addClass("btn-blue");
+//////    }
+//////  }else{
+//////      console.log("option 2");
+//////     // $("#lockButton").html(_LOCKBUTTON_NAME_UNLOCK);
+//////      $("#lockButton").removeClass("btn-red").addClass("btn-blue");;
+//////      //$("#lockButton").addClass("btn-blue");
+//////  }
+//
+// }
 
 //Highlights the element of the navigation bar that idenfifies the route where we are on
  var highLightNavBatItem = function(routeName){
@@ -1541,7 +1683,41 @@ Meteor.methods({
           userID : userID
     });
 
-  },
+  }
+
+/** Unlocks a scenario for modification, granting the lock ownership to the current (logged in) user
+*/
+  ,unlockScenario : function(currentScenarioDTO){
+    // Make sure the user is logged in before allowing manipulating a scenario
+    if (! Meteor.userId()) {
+      throw new Meteor.Error("not-authorized");
+    }
+
+    if(currentScenarioDTO.lockOwnerID && currentScenarioDTO.lockOwnerID!=Meteor.userId()){
+      throw new Meteor.Error("Not authorized. Scenario currently unlocked for user "+currentScenarioDTO.lockOwnerID);
+    }
+
+    currentScenarioDTO.lockOwnerID = Meteor.userId();             // _id of logged in user
+    currentScenarioDTO.lockOwnerName = Meteor.user().username;   // username of logged in user
+
+    Scenarios.update(currentScenarioDTO._id, currentScenarioDTO);
+    return currentScenarioDTO;
+  }
+
+/** Locks a scenario for modification, deleting lock ownership
+*/
+  ,lockScenario : function(currentScenarioDTO){
+    // Make sure the user is logged in before allowing manipulating a scenario
+    if (! Meteor.userId()) {
+      throw new Meteor.Error("not-authorized");
+    }
+
+    currentScenarioDTO.lockOwnerID = undefined;             // _id of logged in user
+    currentScenarioDTO.lockOwnerName = undefined;   // username of logged in user
+
+    Scenarios.update(currentScenarioDTO._id, currentScenarioDTO);
+    return currentScenarioDTO;
+  }
 
 /*  findByID: function(scnID){
     var scenario = Scenarios.findOne(scnID);    //fetch

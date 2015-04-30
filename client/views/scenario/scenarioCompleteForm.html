@@ -3,11 +3,28 @@
 <div class="centered">
 
 <div style="text-align : center;">
-    <a href="#"  id="b1"  class="btn btn-small btn-blue" title="Enable modification" >Enable modification</a>
-    <a href="#"  id="b2"  class="btn btn-small btn-blue" title="Approve Scenario" >Approve Scenario</a>
+<!--<input type="image" src="/images/padlock_open.png" alt="padlock open" width="20" height="20">-->
+{{#if isScenarioEditable}}
+    <a href="#"  id="lockButton"  class="btn btn-small btn-red" title="Enable modification" >Lock Modification</a>
+    <a href="#"  id="saveChanges"  class="btn btn-small btn-blue" title="Save the chages in this scenario" >Save Changes</a>
+    <a href="#"  id="discardChanges"  class="btn btn-small btn-blue" title="Discard modifications on this scenario" >Discard Changes</a>
+{{else}}
+    <a href="#"  id="lockButton"  class="btn btn-small btn-blue" title="Enable modification" >Unlock Modification</a>
+{{/if}}
+
+{{#if canApproveScenario}}
+    <a href="#"  id="approveScenario"  class="btn btn-small btn-blue" title="Approve Scenario">Approve Scenario</a>
+{{/if}}
 </div>
 
-    <b>Scenario UID:</b> {{_id}} <b>Saved last:</b> {{formatDateTime createdAt}}<br/>
+<div style="text-align:center; background:#FF9900"  >
+    {{getScenarioLockOwner}}
+    {{#if isScenarioEditable}}<br/>
+        <label>IMPORTANT! Rember to <b>save</b> or discard your changes before locking the scenario or approving it</label>
+    {{/if}}
+</div> 
+    <b>Scenario UID:</b> {{_id}} <b>Saved last:</b> {{formatDateTime createdAt}} <br/>
+
 
 <!-- Scenario basic info -->
     <label>Title</label>
