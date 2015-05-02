@@ -538,9 +538,17 @@ Deps.autorun(function(){
       else
         return "Scenario is locked for modification";
     }
-    //retruns true if current user can approve the scenario
+    /** retruns true if current user can approve the scenario
+    The current user could perform the action to approve a scenario if
+    - The scenario is in SUBMITED state AND
+    - If scenario is locked, the current user (an admin) is the owner of that lock 
+    - OR if nobody has the lock (and user is an admin)
+    */
     ,canApproveScenario : function(){
       currentScenarioDTO = Session.get('currentScenarioDTO');
+      if(currentScenarioDTO.status!=scenarioStatusEnum.SUBMITTED)
+        return false;
+
       if(isScenarioLocked(currentScenarioDTO)){
         return Meteor.userId()==currentScenarioDTO.lockOwnerID;
       }else
@@ -1034,8 +1042,31 @@ Template.scenarioCompleteForm.events({
   ,"click #discardChanges" : function(){
   }
   ,"click #approveScenario" : function(){
-    var confirm = window.confirm("Are you sure you want to approve the current scenario \n\n"+Session.get('currentScenarioDTO').title);
-    console.log(confirm);
+    var confirm = window.confirm("Are you sure you want to approve the current scenario: \n\n"+Session.get('currentScenarioDTO').title);
+    //console.log(confirm);
+    if(confirm){
+      //Meteor.call "approveScenario"
+      //collectScenarioInfo2();
+      currentScenarioDTO = Session.get('currentScenarioDTO');
+
+      currentScenarioDTO.status = scenarioStatusEnum.APPROVED;
+      currentScenarioDTO.lockOwnerID = undefined;
+      currentScenarioDTO.lockOwnerName = undefined;
+      currentScenarioDTO.approverID = Meteor.userId();
+      currentScenarioDTO.approverName = Meteor.user().username;  
+      currentScenarioDTO.approvedAt = new Date();  
+
+      Meteor.call("saveScenario", currentScenarioDTO, function(err, callbackScenarioDTO) {
+          //callback function
+            if (err){
+                console.log(err);
+                //redirect to "Sorry the wasa problem - retry page"
+            }else{
+                Session.set('currentScenarioDTO', callbackScenarioDTO);
+            }
+
+          }); 
+    }
 
   }
 
@@ -1211,7 +1242,7 @@ var isScenarioEditable = function(currentScenarioDTO){
     return (Meteor.userId()== currentScenarioDTO.owner) || (currentScenarioDTO.owner==undefined);
   }
 
-if(currentScenarioDTO.status == scenarioStatusEnum.SUBMITTED){
+if(currentScenarioDTO.status == scenarioStatusEnum.SUBMITTED || currentScenarioDTO.status == scenarioStatusEnum.APPROVED){
   if(currentScenarioDTO.lockOwnerID && Meteor.userId()){
     return (Meteor.userId()==currentScenarioDTO.lockOwnerID);
   }else{
@@ -1282,42 +1313,6 @@ var hideScenarioFormButtons = function(){
 
  };
 
-///** Initializes the components of the ScenarioCompleteForm
-//*/
-// var initializeScenarioCompleteFormElements = function(){
-//  console.log("initializeScenarioCompleteFormElements");
-//
-//  currentScenarioDTO = Session.get('currentScenarioDTO');
-// // var imgPadlockOpen = '<input type="image" src="/images/padlock_open.png" alt="padlock open" width="20" height="20">';
-// // var imgPadlockClosed = '<input type="image" src="/images/padlock_closed.png" alt="padlock open" width="20" height="20">';
-//
-//
-//  //lockButton:
-//  // 1. Scenario is UNLOCKED
-//  //  1.a is unlocked to current user
-//  //  1.b is unlocked to another user
-//  // 2. Scenario is LOCKED(not lock-owned)
-//////  if(currentScenarioDTO && currentScenarioDTO.lockOwnerID){
-//////    if(Meteor.userId()==currentScenarioDTO.lockOwnerID){
-//////      console.log("option 1a");
-//////      //$("#lockButton").html(_LOCKBUTTON_NAME_LOCK);
-//////      $("#lockButton").removeClass("btn-blue").addClass("btn-red");
-//////      //$("#lockButton").addClass("btn-red");
-//////    }
-//////    else{
-//////      console.log("option 1b");
-//////      //$("#lockButton").html(_LOCKBUTTON_NAME_UNLOCK);
-//////      $("#lockButton").removeClass("btn-red btn-blue").addClass("btn-pink");;
-//////      //$("#lockButton").addClass("btn-blue");
-//////    }
-//////  }else{
-//////      console.log("option 2");
-//////     // $("#lockButton").html(_LOCKBUTTON_NAME_UNLOCK);
-//////      $("#lockButton").removeClass("btn-red").addClass("btn-blue");;
-//////      //$("#lockButton").addClass("btn-blue");
-//////  }
-//
-// }
 
 //Highlights the element of the navigation bar that idenfifies the route where we are on
  var highLightNavBatItem = function(routeName){
