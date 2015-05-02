@@ -1038,6 +1038,19 @@ Template.scenarioCompleteForm.events({
       }
   }
   ,"click #saveChanges" : function(){
+      collectScenarioCompleteFormInfo();
+      Meteor.call("saveScenario", Session.get('currentScenarioDTO'), function(err, callbackScenarioDTO) {
+          //callback function
+            if (err){
+                console.log(err);
+                //redirect to "Sorry the wasa problem - retry page"
+            }else{
+                Session.set('currentScenarioDTO', callbackScenarioDTO);
+            }
+
+      }); 
+
+
   }
   ,"click #discardChanges" : function(){
   }
@@ -1045,8 +1058,9 @@ Template.scenarioCompleteForm.events({
     var confirm = window.confirm("Are you sure you want to approve the current scenario: \n\n"+Session.get('currentScenarioDTO').title);
     //console.log(confirm);
     if(confirm){
-      //Meteor.call "approveScenario"
-      //collectScenarioInfo2();
+      //collect new info (if any) from the scenario
+      collectScenarioCompleteFormInfo();
+
       currentScenarioDTO = Session.get('currentScenarioDTO');
 
       currentScenarioDTO.status = scenarioStatusEnum.APPROVED;
@@ -1390,11 +1404,29 @@ var hideScenarioFormButtons = function(){
    // currentScenarioDTO.environmentEntryList = updateEnvironmentList();
 
   }
+}
 
- //console.log(JSON.stringify(currentScenarioDTO));
+  var collectScenarioCompleteFormInfo = function(){
+  // Collects data from the form into an object
+  currentScenarioDTO =  Session.get("currentScenarioDTO");
+  //console.log("collect1 "+JSON.stringify(currentScenarioDTO));
+  //if there is no scenario, we create a new one.
+  if(currentScenarioDTO==undefined){
+    cleanNewScenarioForm();
+    currentScenarioDTO =  Session.get("currentScenarioDTO");
+  }
+
+  currentScenarioDTO.title = $('#title').val();
+  currentScenarioDTO.description = $("#description").val();
+
+  currentScenarioDTO.solutionDescription = $('#solutionDescription').val();
+  currentScenarioDTO.benefitsDescription = $("#benefitsDescription").val();
+  currentScenarioDTO.risksDescription = $("#risksDescription").val();
+
+  currentScenarioDTO.lessonsLearned = $('#lesson').val();
+  currentScenarioDTO.preventable = $('#preventable').val();
+
   Session.set("currentScenarioDTO", currentScenarioDTO);
-
-  //return currentScenarioDTO;
  };
 
  //Cleans the input fields of the new scenario form as well as the currentScenarioDTO session variable
