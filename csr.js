@@ -1,6 +1,6 @@
 /**
 This csr.js file is part of the implementetion of the MD PnP's (www.mdpnp.org)
-Clinical Scenrio Repository protoype using JavaScript and the Meteor Framework.
+Clinical Scenario Repository protoype using JavaScript and the Meteor Platform.
 
 @author diego@mdpnp.org
 @version 1.0
@@ -449,7 +449,19 @@ Deps.autorun(function(){
       }
   });
 
+//TODO: Should these duplicate methods become a UI.helper???
+
   Template.advancedDetailsHazards.helpers({
+    hazardEntryList : function(){
+      currentScenarioDTO = Session.get('currentScenarioDTO')
+      if(currentScenarioDTO===undefined)
+        return [];
+      else
+        return currentScenarioDTO.hazardEntryList;
+    } 
+  });
+
+  Template.scenarioCompleteForm.helpers({
     hazardEntryList : function(){
       currentScenarioDTO = Session.get('currentScenarioDTO')
       if(currentScenarioDTO===undefined)
@@ -469,6 +481,16 @@ Deps.autorun(function(){
     } 
   });
 
+  Template.scenarioCompleteForm.helpers({
+    equipmentEntryList : function(){
+      currentScenarioDTO = Session.get('currentScenarioDTO')
+      if(currentScenarioDTO===undefined)
+        return [];
+      else
+        return currentScenarioDTO.equipmentEntryList;
+    } 
+  });
+
   Template.advancedDetailsReferences.helpers({
     referenceEntryList : function(){
       currentScenarioDTO = Session.get('currentScenarioDTO')
@@ -478,6 +500,17 @@ Deps.autorun(function(){
         return currentScenarioDTO.referenceEntryList;
     } 
   });
+
+  Template.scenarioCompleteForm.helpers({
+    referenceEntryList : function(){
+      currentScenarioDTO = Session.get('currentScenarioDTO')
+      if(currentScenarioDTO===undefined)
+        return [];
+      else
+        return currentScenarioDTO.referenceEntryList;
+    } 
+  });
+
 
   Template.advancedDetailsEnvironments.helpers({
     environmentEntryList : function(){
@@ -489,7 +522,27 @@ Deps.autorun(function(){
     } 
   });
 
+  Template.scenarioCompleteForm.helpers({
+    environmentEntryList : function(){
+      currentScenarioDTO = Session.get('currentScenarioDTO')
+      if(currentScenarioDTO===undefined)
+        return [];
+      else
+        return currentScenarioDTO.environmentEntryList;
+    } 
+  });
+
   Template.advancedDetailsRoles.helpers({
+    roleEntryList : function(){
+      currentScenarioDTO = Session.get('currentScenarioDTO')
+      if(currentScenarioDTO===undefined)
+        return [];
+      else
+        return currentScenarioDTO.roleEntryList;
+    } 
+  });
+
+  Template.scenarioCompleteForm.helpers({
     roleEntryList : function(){
       currentScenarioDTO = Session.get('currentScenarioDTO')
       if(currentScenarioDTO===undefined)
@@ -659,10 +712,6 @@ UI.registerHelper('count', function(arrayObject){
 //Returns if a scenario is editable or not
 //UI.RegisterHelper('isScenarioEditable', );
 
-/* Formats a Date using moment.js
-//https://atmospherejs.com/momentjs/moment
-// $ meteor add momentjs:moment
-*/
 /********* UTILITY FUNCTIONS *********/
 
 /* Trims the length of a string of charaters to the desired length*/
@@ -679,6 +728,10 @@ UI.registerHelper('trimLength', function(string, length){
         return '';
 });
 
+/* Formats a Date using moment.js
+//https://atmospherejs.com/momentjs/moment
+// $ meteor add momentjs:moment
+*/
 //Formats a date time using the mask MM-DD-YYYY, hh:mm:ss
 UI.registerHelper('formatDateTime', function(date) {
   return moment(date).format('MM-DD-YYYY, hh:mm:ss');
@@ -707,7 +760,7 @@ UI.registerHelper('isScenarioEditable', function(){
   return isScenarioEditable(currentScenarioDTO);
 });
 
-/** Returns an HTML attribute that indicates if the current scenario is editable or not
+/** Returns an HTML "readonly" attribute that indicates if the current scenario is editable or not
 */
 UI.registerHelper('isScenarioReadOnly', function(){
   currentScenarioDTO = Session.get('currentScenarioDTO');
@@ -810,14 +863,15 @@ UI.registerHelper('isVerifiedEmail' , function(emailsObject){
        }else{
           Meteor.call("saveScenario", currentScenarioDTO, function(err, callbackScenarioDTO) {
           //callback function
-            if (err)
-               { console.log(err);}
-
+            if (err) { 
+              console.log(err);
+            }else{
              //currentScenarioDTO._id = callbackScenarioDTO._id;
              currentScenarioDTO = callbackScenarioDTO;
              Session.set('currentScenarioDTO', currentScenarioDTO);
              Router.go('scenarioFormSubmitConfirmation');//submit
              //Meteor._reload.reload();
+            }
           });
        }
     }
@@ -896,13 +950,36 @@ Template.scenarioFormAdvancedInfo.events({
 });
 
 //hazardEntryList
-Template.advancedDetailsHazards.events({
+///Template.advancedDetailsHazards.events({
+///  "click #addNewHazard": function(){
+///    hazardEntryList = updateHarzardList();
+///    currentScenarioDTO.hazardEntryList = hazardEntryList;
+///    Session.set("currentScenarioDTO", currentScenarioDTO);
+///  },
+///  "click #deleteHazard" : function(event){
+///    event.preventDefault();
+///    currentScenarioDTO =  Session.get("currentScenarioDTO");
+///    hazardEntryList = currentScenarioDTO.hazardEntryList;
+///    //find and delete by index
+///    hazardEntryList = deleteFromArrayByID(this.id, hazardEntryList)
+///    currentScenarioDTO.hazardEntryList = currentScenarioDTO.hazardEntryList;
+///    Session.set("currentScenarioDTO", currentScenarioDTO);
+///  }
+///});
+
+/***** HAZARDS *****/
+
+Template.hazardInput.events({
   "click #addNewHazard": function(){
     hazardEntryList = updateHarzardList();
     currentScenarioDTO.hazardEntryList = hazardEntryList;
+    //console.log(JSON.stringify(currentScenarioDTO.hazardEntryList));
     Session.set("currentScenarioDTO", currentScenarioDTO);
-  },
-  "click #deleteHazard" : function(event){
+  }
+  });
+
+Template.hazardEntry.events({
+    "click #deleteHazard" : function(event){
     event.preventDefault();
     currentScenarioDTO =  Session.get("currentScenarioDTO");
     hazardEntryList = currentScenarioDTO.hazardEntryList;
@@ -913,12 +990,16 @@ Template.advancedDetailsHazards.events({
   }
 });
 
-//equipmentEntryList
-Template.advancedDetailsEquipment.events({
+/***** EQUIPMENT *****/
+
+Template.equipmentInput.events({
   "click #addNewEquipment": function(){
     currentScenarioDTO.equipmentEntryList = updateEquipmentList();
     Session.set("currentScenarioDTO", currentScenarioDTO);
-  },
+  }
+});
+
+Template.equipmentEntry.events({
   "click #deleteEquipment" : function(event){
     event.preventDefault();
     currentScenarioDTO =  Session.get("currentScenarioDTO");
@@ -929,13 +1010,53 @@ Template.advancedDetailsEquipment.events({
   }
 });
 
+//equipmentEntryList
+///Template.advancedDetailsEquipment.events({
+///  "click #addNewEquipment": function(){
+///    currentScenarioDTO.equipmentEntryList = updateEquipmentList();
+///    Session.set("currentScenarioDTO", currentScenarioDTO);
+///  },
+///  "click #deleteEquipment" : function(event){
+///    event.preventDefault();
+///    currentScenarioDTO =  Session.get("currentScenarioDTO");
+///    equipmentEntryList = currentScenarioDTO.equipmentEntryList;
+///    //find and delete by index
+///    currentScenarioDTO.equipmentEntryList = deleteFromArrayByID(this.id, equipmentEntryList)
+///    Session.set("currentScenarioDTO", currentScenarioDTO);
+///  }
+///});
+
+
+
 //referencesEntryList
-Template.advancedDetailsReferences.events({
+//Template.advancedDetailsReferences.events({
+//  "click #addNewReference": function(){
+//    referenceEntryList = updateReferenceList();
+//    currentScenarioDTO.referenceEntryList = referenceEntryList;
+//    Session.set("currentScenarioDTO", currentScenarioDTO);
+//  },
+//  "click #deleteReference" : function(event){
+//    event.preventDefault();
+//    currentScenarioDTO =  Session.get("currentScenarioDTO");
+//    referenceEntryList = currentScenarioDTO.referenceEntryList;
+//    //find and delete by index
+//    referenceEntryList = deleteFromArrayByID(this.id, referenceEntryList)
+//    currentScenarioDTO.referenceEntryList = currentScenarioDTO.referenceEntryList;
+//    Session.set("currentScenarioDTO", currentScenarioDTO);
+//  }
+//});
+
+/***** REFERENCES *****/
+
+Template.referenceInput.events({
   "click #addNewReference": function(){
     referenceEntryList = updateReferenceList();
     currentScenarioDTO.referenceEntryList = referenceEntryList;
     Session.set("currentScenarioDTO", currentScenarioDTO);
-  },
+  }
+});
+
+Template.referenceEntry.events({
   "click #deleteReference" : function(event){
     event.preventDefault();
     currentScenarioDTO =  Session.get("currentScenarioDTO");
@@ -947,12 +1068,35 @@ Template.advancedDetailsReferences.events({
   }
 });
 
-Template.advancedDetailsRoles.events({
-  "click #addActor": function(){
+
+///Template.advancedDetailsRoles.events({
+///  "click #addActor": function(){
+///    roleEntryList = updateRoleList();
+///    currentScenarioDTO.roleEntryList = roleEntryList;
+///    Session.set("currentScenarioDTO", currentScenarioDTO);
+///  },
+///  "click #deleteRole" : function(event){
+///    //event.preventDefault();
+///    currentScenarioDTO =  Session.get("currentScenarioDTO");
+///    roleEntryList = currentScenarioDTO.roleEntryList;
+///    //find and delete by index
+///    roleEntryList = deleteFromArrayByID(this.id, roleEntryList)
+///    currentScenarioDTO.roleEntryList = roleEntryList;
+///    Session.set("currentScenarioDTO", currentScenarioDTO);
+///  }
+///});
+
+/***** CLINICAL ROLES *****/
+
+Template.roleInput.events({
+    "click #addActor": function(){
     roleEntryList = updateRoleList();
     currentScenarioDTO.roleEntryList = roleEntryList;
     Session.set("currentScenarioDTO", currentScenarioDTO);
-  },
+  }
+});
+
+Template.roleEntry.events({
   "click #deleteRole" : function(event){
     //event.preventDefault();
     currentScenarioDTO =  Session.get("currentScenarioDTO");
@@ -964,11 +1108,31 @@ Template.advancedDetailsRoles.events({
   }
 });
 
-Template.advancedDetailsEnvironments.events({
+///Template.advancedDetailsEnvironments.events({
+///  "click #addPlace": function(){
+///    currentScenarioDTO.environmentEntryList = updateEnvironmentList();
+///    Session.set("currentScenarioDTO", currentScenarioDTO);
+///  },
+///  "click #deletePlace" : function(event){
+///    //event.preventDefault();
+///    currentScenarioDTO =  Session.get("currentScenarioDTO");
+///    environmentEntryList = currentScenarioDTO.environmentEntryList;
+///    //find and delete by index
+///    currentScenarioDTO.environmentEntryList = deleteFromArrayByID(this.id, environmentEntryList);
+///    Session.set("currentScenarioDTO", currentScenarioDTO);
+///  }
+///});
+
+/***** CLINICAL ENVIRONMENTS *****/
+
+Template.environmentInput.events({
   "click #addPlace": function(){
     currentScenarioDTO.environmentEntryList = updateEnvironmentList();
     Session.set("currentScenarioDTO", currentScenarioDTO);
-  },
+  }
+});
+
+Template.environmentEntry.events({
   "click #deletePlace" : function(event){
     //event.preventDefault();
     currentScenarioDTO =  Session.get("currentScenarioDTO");
@@ -979,6 +1143,8 @@ Template.advancedDetailsEnvironments.events({
   }
 });
 
+/** Template used to display the info and form to allow user submitting their scenario for approval
+*/
 Template.scenarioFormSubmitConfirmation.events({
 
   "click #declineSubmit": function(){
@@ -1008,6 +1174,9 @@ Template.scenarioFormSubmitConfirmation.events({
   }
 });
 
+
+/** Events on the form used to display the complete scenario information in one single place
+*/
 Template.scenarioCompleteForm.events({
   "click #lockButton" : function(){
 
@@ -1047,7 +1216,6 @@ Template.scenarioCompleteForm.events({
             }else{
                 Session.set('currentScenarioDTO', callbackScenarioDTO);
             }
-
       }); 
 
 
@@ -1181,7 +1349,8 @@ Template.scenarioRow.events({
     }else if(currentPath=='recentSubmissionsScenarioList'){
       Router.go("/scenarioComplete/"+event.target.name)
     }else if(currentPath=='approvedScenarioList'){
-      findByID(event.target.name);
+      //findByID(event.target.name);
+      Router.go("/scenarioComplete/"+event.target.name);
     }
 
   }
@@ -1213,6 +1382,9 @@ Template.findByIDErrorTemplate.events({
   }
 });
 
+
+/** User profile template
+*/ 
 Template.userProf.events({
   "click #seeUser" : function(event){
     event.preventDefault();
@@ -1256,15 +1428,14 @@ var isScenarioEditable = function(currentScenarioDTO){
     return (Meteor.userId()== currentScenarioDTO.owner) || (currentScenarioDTO.owner==undefined);
   }
 
-if(currentScenarioDTO.status == scenarioStatusEnum.SUBMITTED || currentScenarioDTO.status == scenarioStatusEnum.APPROVED){
-  if(currentScenarioDTO.lockOwnerID && Meteor.userId()){
-    return (Meteor.userId()==currentScenarioDTO.lockOwnerID);
-  }else{
-    return false;
+  if(currentScenarioDTO.status == scenarioStatusEnum.SUBMITTED || currentScenarioDTO.status == scenarioStatusEnum.APPROVED){
+    if(currentScenarioDTO.lockOwnerID && Meteor.userId()){
+      return (Meteor.userId()==currentScenarioDTO.lockOwnerID);
+    }else{
+      return false;
   }
   
 }
-//if(currentScenarioDTO.status == scenarioStatusEnum.APPROVED)
 
 //otherwise
   return false;
@@ -1365,12 +1536,12 @@ var hideScenarioFormButtons = function(){
   $("#"+navItemID).addClass("selectedNavItem");
  }
 
- //sets the variable currentScenarioDTO with the information from the templates
+ /** Collects data from the New Scenario form into an object and
+ sets the variable currentScenarioDTO with the information from the templates
+ */
  var collectScenarioInfo = function(){
-  // Collects data from the form into an object
-  currentScenarioDTO =  Session.get("currentScenarioDTO");
-  //console.log("collect1 "+JSON.stringify(currentScenarioDTO));
-  //if there is no scenario, we create a new one.
+  // 
+  //if there is no scenario in session, we create a new one.
   if(currentScenarioDTO==undefined){
     cleanNewScenarioForm();
     currentScenarioDTO =  Session.get("currentScenarioDTO");
@@ -1406,14 +1577,18 @@ var hideScenarioFormButtons = function(){
   }
 }
 
+/** Collects the information from the components of the form scenarioCompleteForm
+  and puts the object in session
+*/
   var collectScenarioCompleteFormInfo = function(){
   // Collects data from the form into an object
   currentScenarioDTO =  Session.get("currentScenarioDTO");
-  //console.log("collect1 "+JSON.stringify(currentScenarioDTO));
-  //if there is no scenario, we create a new one.
+
+  //if there is no scenario in session (really unlikely for this template), we create a new one.
   if(currentScenarioDTO==undefined){
     cleanNewScenarioForm();
     currentScenarioDTO =  Session.get("currentScenarioDTO");
+    //NOTE: the sceanrio status is going to be "UNSUBMITTED"
   }
 
   currentScenarioDTO.title = $('#title').val();
@@ -1469,7 +1644,7 @@ var hideScenarioFormButtons = function(){
   Session.set("currentScenarioDTO", currentScenarioDTO);
  };
 
-//Finds a scennrio from the current collection by ID
+//Finds a scenario from the current collection by ID
 var findByID = function(scenarioID){
    //1. validation that the input is valid
    if(scenarioID==='')
@@ -1712,8 +1887,8 @@ Meteor.methods({
 
   }
 
-/** Unlocks a scenario for modification, granting the lock ownership to the current (logged in) user
-*/
+  /** Unlocks a scenario for modification, granting the lock ownership to the current (logged in) user
+  */
   ,unlockScenario : function(currentScenarioDTO){
     // Make sure the user is logged in before allowing manipulating a scenario
     if (! Meteor.userId()) {
@@ -1724,22 +1899,22 @@ Meteor.methods({
       throw new Meteor.Error("Not authorized. Scenario currently unlocked for user "+currentScenarioDTO.lockOwnerID);
     }
 
-    currentScenarioDTO.lockOwnerID = Meteor.userId();             // _id of logged in user
+    currentScenarioDTO.lockOwnerID = Meteor.userId();            // _id of logged in user
     currentScenarioDTO.lockOwnerName = Meteor.user().username;   // username of logged in user
 
     Scenarios.update(currentScenarioDTO._id, currentScenarioDTO);
     return currentScenarioDTO;
   }
 
-/** Locks a scenario for modification, deleting lock ownership
-*/
+  /** Locks a scenario for modification, deleting lock ownership
+  */
   ,lockScenario : function(currentScenarioDTO){
     // Make sure the user is logged in before allowing manipulating a scenario
     if (! Meteor.userId()) {
       throw new Meteor.Error("not-authorized");
     }
 
-    currentScenarioDTO.lockOwnerID = undefined;             // _id of logged in user
+    currentScenarioDTO.lockOwnerID = undefined;     // _id of logged in user
     currentScenarioDTO.lockOwnerName = undefined;   // username of logged in user
 
     Scenarios.update(currentScenarioDTO._id, currentScenarioDTO);

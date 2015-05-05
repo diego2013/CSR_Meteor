@@ -38,6 +38,11 @@
 <!-- Scenario Advanced Information-->
 <br/>
     <p>HAZARDS (Count {{hazardEntryListCount}} entries)</p>
+
+    {{#if isScenarioEditable}}
+        {{> hazardInput}}
+         <span>Current hazards of the scenario</span>
+    {{/if}}
     <table>
         <tr class="btn-turquesa">
             <th>Description</th>
@@ -50,6 +55,10 @@
     </table>
 
     <p>EQUIPMENT (Count {{equipmentEntryListCount}} entries)</p>
+     {{#if isScenarioEditable}}
+        {{ > equipmentInput}} 
+        <span>List of hazardrous equipment included in the scenario</span>
+     {{/if}}  
         <table>
         <tr class="btn-turquesa">
             <th><label>Device Type</label></th>
@@ -78,6 +87,9 @@
 
     <p>CLINICAL ROLES</p>
 
+     {{#if isScenarioEditable}}
+        {{ > roleInput}}
+     {{/if}}
     <table>
         {{#each roleEntryList}}
             {{> roleEntry}}
@@ -85,6 +97,9 @@
     </table>
 
     <p>CLINICAL ENVIRONMENTS</p>
+    {{#if isScenarioEditable}}
+        {{ > environmentInput}}
+    {{/if}}
     <table>
         {{#each environmentEntryList}}
             {{> environmentEntry}}
@@ -93,6 +108,11 @@
     </table>
 
     <p>REFERENCES</p>
+    {{#if isScenarioEditable}}
+        {{> referenceInput}}
+        <span>Current references added to the scenario</span>
+    {{/if}}
+
      <table>
      <tr class="btn-turquesa">
          <th>URL of the reference</th>

@@ -138,7 +138,26 @@
 <!-- Template for step 2: advanced details: Hazards-->
 <template name="advancedDetailsHazards" >
 {{#if isScenarioEditable}}
-    <p>Describe current or possible risks to patient safety</p>
+   {{> hazardInput}}
+{{/if}}
+
+    <span>Current hazards of the scenario</span>
+    <table >
+        <tr class ="btn-turquesa">
+            <th>Description</th>
+            <th>Expected risks</th>
+            <th>Severity</th>
+        </tr>
+        {{#each hazardEntryList}}
+            {{> hazardEntry}} 
+        {{/each}}
+    </table>
+
+</template>
+
+<!-- Template ot display the input form  to create a new hazard -->
+<template name="hazardInput">
+     <p>Describe current or possible risks to patient safety</p>
 
     <table border="1">
         <tr>
@@ -173,19 +192,6 @@
 
 
     <button type="button" id="addNewHazard" class="btn btn-small btn-mint">Add Another Hazard Description</button> <br/>
-{{/if}}
-
-    <span>Current hazards of the scenario</span>
-    <table >
-        <tr class ="btn-turquesa">
-            <th>Description</th>
-            <th>Expected risks</th>
-            <th>Severity</th>
-        </tr>
-        {{#each hazardEntryList}}
-            {{> hazardEntry}} 
-        {{/each}}
-    </table>
 
 </template>
 
@@ -204,7 +210,34 @@
 
 <!-- Template for step 2: advanced details: Equipment-->
 <template name="advancedDetailsEquipment" >
-{{#if isScenarioEditable}}
+ {{#if isScenarioEditable}}
+    {{ > equipmentInput}} 
+ {{/if}}   
+
+    <br/><span>List of hazardrous equipment included in the scenario</span>
+
+    <table >
+        <tr class ="btn-turquesa">
+            <th><label>Device Type</label></th>
+            <th ><label>Manufacturer</label></th>
+            <th ><label>Model</label></th>
+            <th><label>Rosetta - Unique ID</label></th>
+            <th><label>Training related problem</label></th>
+            <th><label>Instructions related problem</label></th>
+            <th><label>Confusing device usage</label></th>
+            <th><label>Software related problem</label></th>
+            <th><label>Hardware related problem</label></th>
+        </tr>
+        {{#each equipmentEntryList}}
+            {{> equipmentEntry}} 
+        {{/each}}
+    </table>  
+
+</template>
+
+
+<!-- Template ot display the input form  to create a new equipment -->
+<template name="equipmentInput">
     <p>Add further details about related/involved hardware</p>
 
     <table class="div-chooseClinical">
@@ -235,29 +268,10 @@
     </table>
 
     <button type="button" id="addNewEquipment" class="btn btn-small btn-mint">Add Another Equipment Description</button>
- {{/if}}   
-
-    <br/><span>List of hazardrous equipment included in the scenario</span>
-
-    <table >
-        <tr class ="btn-turquesa">
-            <th><label>Device Type</label></th>
-            <th ><label>Manufacturer</label></th>
-            <th ><label>Model</label></th>
-            <th><label>Rosetta - Unique ID</label></th>
-            <th><label>Training related problem</label></th>
-            <th><label>Instructions related problem</label></th>
-            <th><label>Confusing device usage</label></th>
-            <th><label>Software related problem</label></th>
-            <th><label>Hardware related problem</label></th>
-        </tr>
-        {{#each equipmentEntryList}}
-            {{> equipmentEntry}} 
-        {{/each}}
-    </table>  
 
 </template>
 
+<!-- Template to display the info of a single equipment entry-->
 <template name="equipmentEntry">
   <tr class="tablePijamaEvenRow">
     <td><label>{{deviceType}}</label></td>
@@ -293,7 +307,27 @@
 <!-- Template for step : advanced details: Relevant References-->
 <template name="advancedDetailsReferences">
 {{#if isScenarioEditable}}
- <p>Add any relevant online references to this scenario (FDA or Maude reports, articles or white papers, pieces of software and/or other documentation) </p>
+    {{> referenceInput}}
+{{/if}}
+
+ <span>Current references added to the scenario</span>
+ <table>
+     <tr class="btn-turquesa">
+         <th>URL of the reference</th>
+         <th>Relevance</th>
+         <th></th>
+     </tr>
+     {{#each referenceEntryList}}
+         {{> referenceEntry}}
+     {{/each}}
+ </table>
+
+</template>
+
+<!-- Template ot display the input form  to create a new reference -->
+
+<template name="referenceInput">
+<p>Add any relevant online references to this scenario (FDA or Maude reports, articles or white papers, pieces of software and/or other documentation) </p>
 
  <table class="div-chooseClinical">
      <tr>
@@ -313,20 +347,6 @@
  </table>
 
  <button type="button" id="addNewReference" class="btn btn-small btn-mint">Add Another Reference</button><br/>
-{{/if}}
-
- <span>Current references added to the scenario</span>
- <table>
-     <tr class="btn-turquesa">
-         <th>URL of the reference</th>
-         <th>Relevance</th>
-         <th></th>
-     </tr>
-     {{#each referenceEntryList}}
-         {{> referenceEntry}}
-     {{/each}}
- </table>
-
 </template>
 
 <!-- Template to display the info of a single reference-->
@@ -344,7 +364,25 @@
 <!-- Template for step : advanced details: Actors -->
 <template name="advancedDetailsRoles">
  {{#if isScenarioEditable}}
-    <p>Add further details about actors involved in the scenario and their roles.</p>
+    {{ > roleInput}}
+ {{/if}}
+
+    <table>
+        <tr>
+        {{#if isScenarioEditable}}<th></th>{{/if}}
+         <th >Clinical Roles of the scenario</th>
+        </tr>
+        {{#each roleEntryList}}
+            {{> roleEntry}}
+        {{/each}}
+
+    </table>
+    
+</template>
+
+<!-- Template ot display the input form to create a new clinical role -->
+<template name="roleInput">
+<p>Add further details about actors involved in the scenario and their roles.</p>
     <div class="div-chooseClinical"> 
 
         Choose a clinical role from this list
@@ -398,19 +436,6 @@
 
         <button type="button" id="addActor" class="btn btn-small btn-mint">Add Actor</button>
     </div>
-{{/if}}
-
-    <table>
-        <tr>
-        {{#if isScenarioEditable}}<th></th>{{/if}}
-         <th >Clinical Roles of the scenario</th>
-        </tr>
-        {{#each roleEntryList}}
-            {{> roleEntry}}
-        {{/each}}
-
-    </table>
-    
 </template>
 
 <!-- Template to display the info of a single reference-->
@@ -427,7 +452,24 @@
 <template name="advancedDetailsEnvironments">
 
 {{#if isScenarioEditable}}
-    <p>Add further details about the places where this scenario can take place.</p>
+    {{ > environmentInput}}
+{{/if}}
+
+    <table>
+        <tr>
+        {{#if isScenarioEditable}}<th></th>{{/if}}
+         <th>Clinical Environments of the Scenario</th>
+        </tr>
+        {{#each environmentEntryList}}
+            {{> environmentEntry}}
+        {{/each}}
+        <tr></tr>
+    </table>
+</template>
+
+<!-- Template ot display the input form to create a new clinical role -->
+<template name="environmentInput">
+<p>Add further details about the places where this scenario can take place.</p>
     <div class="div-chooseClinical"> 
         Choose a clinical environment from this list
         <select id="clinicalEnvironment" class="selectbox-wrapper">
@@ -470,18 +512,6 @@
 
         <button type="button" id="addPlace" class="btn btn-small btn-mint">Add Environment</button>
     </div>
-{{/if}}
-
-    <table>
-        <tr>
-        {{#if isScenarioEditable}}<th></th>{{/if}}
-         <th>Clinical Environments of the Scenario</th>
-        </tr>
-        {{#each environmentEntryList}}
-            {{> environmentEntry}}
-        {{/each}}
-        <tr></tr>
-    </table>
 </template>
 
 <!-- Template to display the info of a single reference-->
