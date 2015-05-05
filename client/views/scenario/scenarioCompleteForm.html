@@ -37,7 +37,7 @@
 
 <!-- Scenario Advanced Information-->
 <br/>
-    <p>HAZARDS (Count {{hazardEntryListCount}} entries)</p>
+    <p>HAZARDS ({{hazardEntryListCount}} entries)</p>
 
     {{#if isScenarioEditable}}
         {{> hazardInput}}
@@ -54,7 +54,7 @@
         {{/each}}
     </table>
 
-    <p>EQUIPMENT (Count {{equipmentEntryListCount}} entries)</p>
+    <p>EQUIPMENT ({{equipmentEntryListCount}} entries)</p>
      {{#if isScenarioEditable}}
         {{ > equipmentInput}} 
         <span>List of hazardrous equipment included in the scenario</span>
@@ -107,7 +107,7 @@
         <tr></tr>
     </table>
 
-    <p>REFERENCES</p>
+    <p>REFERENCES ({{referenceEntryListCount}} entries)</p>
     {{#if isScenarioEditable}}
         {{> referenceInput}}
         <span>Current references added to the scenario</span>

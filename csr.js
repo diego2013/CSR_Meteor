@@ -578,6 +578,14 @@ Deps.autorun(function(){
       else
         return equipmentEntryList.length;
     }
+    ,referenceEntryListCount: function(){
+      currentScenarioDTO = Session.get('currentScenarioDTO');
+      referenceEntryList = currentScenarioDTO==undefined?[]:currentScenarioDTO.referenceEntryList;
+      if(referenceEntryList==undefined)
+        return 0;
+      else
+        return referenceEntryList.length;
+    }
         ////comes here through the use of {{giveTitle . }} in the template
     //,giveTitle : function(dataContext){
     //  console.log(JSON.stringify(dataContext));

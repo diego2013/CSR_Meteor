@@ -8,13 +8,16 @@
     <!--{{#if isScenarioEditable}}
     <a href="#"  id="saveScenarioButton" class="btn btn-small btn-mint" title="Save the chages in this scenario" >Save Scenario</a>
     {{/if}}-->
-
+        {{#if isScenarioEditable}}
         <a href="#"  id="saveScenarioButton" class="btn btn-small btn-mint" title="Save the chages in this scenario" >Save Scenario</a>
+        {{/if}}
         <a href="#"  id="showGuidelines"  class="btn btn-small btn-dark-grey" >Show Guidelines</a>
         <a href="#"  id="goToStep1"  class="btn btn-small btn-salmon" title="Go to the Basic Information panel" >Step 1: Basic Information</a>
         <a href="#"  id="goToStep2"  class="btn btn-small btn-blue" title="Go to the Advanced Information panel" >Step 2: Add Further Details</a>
         <a href="#"  id="goToStep3"  class="btn btn-small btn-blue" title="Propose a solution for this scenario" >Step 3: Propose a Solution</a>
+        {{#if isScenarioEditable}}
         <a href="#"  id="submitScenarioButton" class="btn btn-small btn-mint" title="Submit for approval" >Finish and Submit</a>
+        {{/if}}
         
         <!--
         <input type="submit" id="saveScenarioButton" name="saveButton" title="Save the chages in this scenario" value="Save" />-->
