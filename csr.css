@@ -463,3 +463,7 @@ ul.fallback{
 	background-image:-webkit-linear-gradient(bottom, rgb(204, 0, 0) 1%, rgb(255, 0, 0) 51%);
 	background-image:-ms-linear-gradient(bottom, rgb(204, 0, 0) 1%, rgb(255, 0, 0) 51%);
 }
+
+.btn-disabled{
+    text-decoration: line-through !important;
+}
