@@ -76,40 +76,6 @@ if (Meteor.isClient) {
     Meteor.subscribe("allUserData");
 });*/
 
-//Deps.autorun(function(){
-//  //useful to know if the user just logged in or out
-//  if(Meteor.userId()){
-//   // if currentScenario is unsubmitted and has no owner --> change to this owner
-//    console.log("User Logged in "+ Meteor.userId());
-//    if(Router.current()!= null)
-//      console.log("Current path "+ Router.current().route.path());
-//  }else{
-//    console.log("user logged out"); //Meteor.user().username
-//    Router.go("/");
-//  }
-//});
-
-//var lastUser=null;
-//
-//Meteor.startup(function(){
-//    Deps.autorun(function(){
-//        var userId=Meteor.userId();
-//        if(userId){
-//            console.log(userId+" connected");
-//            if(Router.current()!= null)
-//                console.log("Current path "+ Router.current().route.path());
-//            // do something with Meteor.user()
-//        }
-//        else if(lastUser){
-//            console.log(lastUser._id+" disconnected");
-//            Router.go("/"); // or destry the currentScenarioDto in session by calling cleanNewScenarioForm()
-//            // can't use Meteor.user() anymore
-//            // do something with lastUser (read-only !)
-//           // Meteor.call("userDisconnected",lastUser._id);
-//        }
-//        lastUser=Meteor.user();
-//    });
-//});
 
 Deps.autorun(function(){
   //Meteor.subscribe('scenariosAll'); //all available scenarios
@@ -178,7 +144,7 @@ Deps.autorun(function(){
     this.route('/NewScenarioForm/:_id', function () {
       currentScenarioDTO = ScenariosAll.findOne({_id: this.params._id.trim()});
       //check if is a valid scenario or user has permission to see it
-/* IMPROVEMENT. Allows to show scenarios tht have been approved
+/* IMPROVEMENT. Allows to show scenarios that have been approved
       if(currentScenarioDTO===undefined){
         Session.set('auxScenarioID', this.params._id);
         this.render('/findByIDErrorTemplate');
@@ -307,13 +273,6 @@ Deps.autorun(function(){
    });
 
 
-   //this.route('scenarioList2' , function(){
-   //  this.render('scenarioList', {
-   //   data : { scenarios : MyScenarios.find({}, {sort: {createdAt: +1}}) },
-   //   template : 'scenarioList'
-   // } )
-   //}
-   //);
 ////This is working code and is the version that should fly.
 //    this.route('scenarioList', {
 //       //path: 'scenarioList',
@@ -360,19 +319,6 @@ Deps.autorun(function(){
   //HELPERS Template helpers
   //======================================================================
 
-  //Template.scenarioList.helpers({
-  ////  scenarios: function () {
-  ////    //return Scenarios.find({}, {sort: {createdAt: -1}});
-  ////    return MyScenarios.find({}, {sort: {createdAt: -1}});
-  ////    //return ScenariosAll.find({}, {sort: {createdAt: -1}});
-  ////  },
-//
-  //  isOwner: function () {
-  //    return this.owner === Meteor.userId();
-  //  }
-  //});
-
-
   Template.NewScenarioForm.helpers({
     //returns the template name of the dynamic template in the NewScenarioForm template  
     newScenarioStep : function(){
@@ -391,25 +337,9 @@ Deps.autorun(function(){
       var newScenarioStep = Session.get(_SCENARIO_FORM_STEP);
       return step==newScenarioStep;
     }
-  //  , isScenarioEditable : function(){
-  //    var currentScenarioDto = Session.get('currentScenarioDTO')
-  //    if(Session.get('currentScenarioDTO')==undefined)
-  //        return true;
-  //    else
-  //        return Session.get('currentScenarioDTO').status==scenarioStatusEnum.UNSUBMITTED;
-  //  }
   });
 
   Template.scenarioFormBasicInfo.helpers({
-    /*
-    //Indicates if the header with the scenario metainfo (UID, Dates) shall be displayed
-    // It will in case the currentScenarioDTO in session has a valid _id
-      printScenarioMetainfo : function(){
-        if(Session.get('currentScenarioDTO')==undefined)
-          return false;
-        else
-          return Session.get('currentScenarioDTO')._id!=undefined;
-      }, */
       editableScn : function(){
         if(Session.get('currentScenarioDTO')==undefined)
           return true;
@@ -419,27 +349,9 @@ Deps.autorun(function(){
   });
 
   Template.scenarioFormSolution.helpers({
-    /*
-    //Indicates if the header with the scenario metainfo (UID, Dates) shall be displayed
-    // It will in case the currentScenarioDTO in session has a valid _id
-     printScenarioMetainfo : function(){
-       if(Session.get('currentScenarioDTO')==undefined)
-         return false;
-       else
-         return Session.get('currentScenarioDTO')._id!=undefined;
-     }*/
   });
 
   Template.scenarioFormAdvancedInfo.helpers({
-    /*
-    //Indicates if the header with the scenario metainfo (UID, Dates) shall be displayed
-    // It will in case the currentScenarioDTO in session has a valid _id
-      printScenarioMetainfo : function(){
-        if(Session.get('currentScenarioDTO')==undefined)
-          return false;
-        else
-          return Session.get('currentScenarioDTO')._id!=undefined;
-      },*/
       advancedDetailsTemplateName : function(){
         var _advancedDetailsTemplateName = Session.get(_ADVANCEDDETAILS_TAB);
         if(_advancedDetailsTemplateName==undefined)
@@ -553,15 +465,6 @@ Deps.autorun(function(){
   });
 
   Template.scenarioCompleteForm.helpers({
-  //  scenarioEditable : function(){
-  //    return false;
-  //  },
-  //  editableScn : function(){
-  //      if(Session.get('currentScenarioDTO')==undefined)
-  //        return '';
-  //      else
-  //        return 'readonly';
-  //  },
     hazardEntryListCount : function(){
       currentScenarioDTO = Session.get('currentScenarioDTO');
       hazardEntryList = currentScenarioDTO==undefined?[]:currentScenarioDTO.hazardEntryList;
@@ -586,12 +489,6 @@ Deps.autorun(function(){
       else
         return referenceEntryList.length;
     }
-        ////comes here through the use of {{giveTitle . }} in the template
-    //,giveTitle : function(dataContext){
-    //  console.log(JSON.stringify(dataContext));
-    //  if(dataContext!=undefined) //should check typeof too?
-    //    return dataContext.title;
-    //}
     ,getScenarioLockOwner : function(){
       currentScenarioDTO = Session.get('currentScenarioDTO');
       if(currentScenarioDTO && currentScenarioDTO.lockOwnerID)
@@ -629,13 +526,8 @@ Deps.autorun(function(){
  });
 
  Template.userList.helpers({
-    usuarios: function () { //return Meteor.users.find(
-      //return AllUsersList.find(
-     //// return AllTheUsers.find(
-     //// //  {_id: /*'GDpyG7Ytu8urGhAcT'*/ Meteor.userId()}
-     ////   );
-
-//added maping function so there is an idex associated with each document
+    usuarios: function () {
+      //added maping function so there is an index associated with each document
       return AllTheUsers.find().map(function(document, index){
             document.index = index;
             return document;
@@ -649,15 +541,6 @@ var addIndexToDocument = function(document, index){
   return document;
 }
 
-
-// Template.scenarioRow.helpers({
-//    showDescrioption: function(description){
-//      if(description.length> 50)
-//        return description.substring(0, 50)+"...";
-//      else
-//        return description;
-//    }
-//});
 
 
  Template.findByIDErrorTemplate.helpers({
@@ -922,12 +805,6 @@ UI.registerHelper('isVerifiedEmail' , function(emailsObject){
         Session.set('showGuidelines', false);
       }
     }
-  //  , "click #exampleTitle" : function(){
-  //    window.alert("Mark that you have understood the Clinical Scenario Repository policies to submit you scenario");
-  //    //showDialog("Mark");
-  //  }
-
-
 });
 
 Template.scenarioFormAdvancedInfo.events({
@@ -967,24 +844,6 @@ Template.scenarioFormAdvancedInfo.events({
     }
 
 });
-
-//hazardEntryList
-///Template.advancedDetailsHazards.events({
-///  "click #addNewHazard": function(){
-///    hazardEntryList = updateHarzardList();
-///    currentScenarioDTO.hazardEntryList = hazardEntryList;
-///    Session.set("currentScenarioDTO", currentScenarioDTO);
-///  },
-///  "click #deleteHazard" : function(event){
-///    event.preventDefault();
-///    currentScenarioDTO =  Session.get("currentScenarioDTO");
-///    hazardEntryList = currentScenarioDTO.hazardEntryList;
-///    //find and delete by index
-///    hazardEntryList = deleteFromArrayByID(this.id, hazardEntryList)
-///    currentScenarioDTO.hazardEntryList = currentScenarioDTO.hazardEntryList;
-///    Session.set("currentScenarioDTO", currentScenarioDTO);
-///  }
-///});
 
 /***** HAZARDS *****/
 
@@ -1029,41 +888,6 @@ Template.equipmentEntry.events({
   }
 });
 
-//equipmentEntryList
-///Template.advancedDetailsEquipment.events({
-///  "click #addNewEquipment": function(){
-///    currentScenarioDTO.equipmentEntryList = updateEquipmentList();
-///    Session.set("currentScenarioDTO", currentScenarioDTO);
-///  },
-///  "click #deleteEquipment" : function(event){
-///    event.preventDefault();
-///    currentScenarioDTO =  Session.get("currentScenarioDTO");
-///    equipmentEntryList = currentScenarioDTO.equipmentEntryList;
-///    //find and delete by index
-///    currentScenarioDTO.equipmentEntryList = deleteFromArrayByID(this.id, equipmentEntryList)
-///    Session.set("currentScenarioDTO", currentScenarioDTO);
-///  }
-///});
-
-
-
-//referencesEntryList
-//Template.advancedDetailsReferences.events({
-//  "click #addNewReference": function(){
-//    referenceEntryList = updateReferenceList();
-//    currentScenarioDTO.referenceEntryList = referenceEntryList;
-//    Session.set("currentScenarioDTO", currentScenarioDTO);
-//  },
-//  "click #deleteReference" : function(event){
-//    event.preventDefault();
-//    currentScenarioDTO =  Session.get("currentScenarioDTO");
-//    referenceEntryList = currentScenarioDTO.referenceEntryList;
-//    //find and delete by index
-//    referenceEntryList = deleteFromArrayByID(this.id, referenceEntryList)
-//    currentScenarioDTO.referenceEntryList = currentScenarioDTO.referenceEntryList;
-//    Session.set("currentScenarioDTO", currentScenarioDTO);
-//  }
-//});
 
 /***** REFERENCES *****/
 
@@ -1088,23 +912,6 @@ Template.referenceEntry.events({
 });
 
 
-///Template.advancedDetailsRoles.events({
-///  "click #addActor": function(){
-///    roleEntryList = updateRoleList();
-///    currentScenarioDTO.roleEntryList = roleEntryList;
-///    Session.set("currentScenarioDTO", currentScenarioDTO);
-///  },
-///  "click #deleteRole" : function(event){
-///    //event.preventDefault();
-///    currentScenarioDTO =  Session.get("currentScenarioDTO");
-///    roleEntryList = currentScenarioDTO.roleEntryList;
-///    //find and delete by index
-///    roleEntryList = deleteFromArrayByID(this.id, roleEntryList)
-///    currentScenarioDTO.roleEntryList = roleEntryList;
-///    Session.set("currentScenarioDTO", currentScenarioDTO);
-///  }
-///});
-
 /***** CLINICAL ROLES *****/
 
 Template.roleInput.events({
@@ -1127,20 +934,6 @@ Template.roleEntry.events({
   }
 });
 
-///Template.advancedDetailsEnvironments.events({
-///  "click #addPlace": function(){
-///    currentScenarioDTO.environmentEntryList = updateEnvironmentList();
-///    Session.set("currentScenarioDTO", currentScenarioDTO);
-///  },
-///  "click #deletePlace" : function(event){
-///    //event.preventDefault();
-///    currentScenarioDTO =  Session.get("currentScenarioDTO");
-///    environmentEntryList = currentScenarioDTO.environmentEntryList;
-///    //find and delete by index
-///    currentScenarioDTO.environmentEntryList = deleteFromArrayByID(this.id, environmentEntryList);
-///    Session.set("currentScenarioDTO", currentScenarioDTO);
-///  }
-///});
 
 /***** CLINICAL ENVIRONMENTS *****/
 
@@ -1320,37 +1113,6 @@ Template.FeedbackForm.events({
 
 //Events on the navigation bar
 Template.NavBar.events({
-//  //Currently {{pathFor is used to resolve these routes, so there is no need to track events}}
-//  "click #create-new-scn": function () {
-//    Session.set(_SCENARIO_FORM_STEP, _SCENARIO_FORM_STEP_BASIC_INFO);
-//    cleanNewScenarioForm();
-//    hideScenarioFormButtons();
-//    Router.go('NewScenarioForm');
-//  },
-//  "click #list-scn": function () {
-//    Router.go('scenarioList');
-//  },
-//  "click #list-approved-scn": function () {
-//    Router.go('approvedScenarioList');
-//  },
-//  "click #goToHomePage": function () {
-//    Router.go('/');
-//  },
-//  "click #disclaimerPage": function () {
-//    Router.go('disclaimer');
-//  },
-//  "click #feedbackPage": function () {
-//    Router.go('FeedbackForm');
-//  },
-//  "click #goToMyProfile": function(){
-//    Router.go("userProfile");
-//  }, 
-//  "click #listUsers" : function(){
-//    Router.go("userList");
-//  }, 
-//  "click #findByID" : function(){
-//    Router.go("findByIDTemplate");
-//  }
 });
 
 Template.scenarioRow.events({
@@ -1501,19 +1263,6 @@ var hideScenarioFormButtons = function(){
     $("#goToStep1").removeClass("btn-blue");
     $("#goToStep1").addClass("btn-salmon");
   }
- 
-  //2. Save and Submit buttons
-  //if(Session.get('currentScenarioDTO')==undefined ||
-  //     Session.get('currentScenarioDTO').status==scenarioStatusEnum.UNSUBMITTED){
-  //   //$("#saveScenarioButton").removeClass("hiddenButton");
-  //    console.log("el boton deberia ser visible");
-  //    $("#saveScenarioButton").addClass("btn-mint");
-  //}else{
-  //   //$("#saveScenarioButton").addClass("hiddenButton");
-  //   $("#saveScenarioButton").removeClass("btn-mint");
-  //   $("#saveScenarioButton").addClass("btn-salmon");
-  //   console.log('boton deberia ser invisible');
-  //}
 
  };
 
@@ -1939,17 +1688,6 @@ Meteor.methods({
     Scenarios.update(currentScenarioDTO._id, currentScenarioDTO);
     return currentScenarioDTO;
   }
-
-/*  findByID: function(scnID){
-    var scenario = Scenarios.findOne(scnID);    //fetch
-    if (scenario.owner !== Meteor.userId()) {
-    // If the current user is not thescenario owner
-      throw new Meteor.Error("not-authorized");
-    }
-    return scenario;*/
-
-
-
 });
 
 
@@ -1970,12 +1708,6 @@ if (Meteor.isServer) {
   //  ]*/
   //});
 
-
-
-/*
-  Meteor.publish("scenariosAll", function () {
-    return Scenarios.find({});
-  });*/
 
 //Publish all scenarios from the current user
 Meteor.publish('myScenarios', function(){
