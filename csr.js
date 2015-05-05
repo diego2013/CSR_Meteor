@@ -99,9 +99,9 @@ Deps.autorun(function(){
     layoutTemplate: 'complexLayout',
     loadingTemplate: "Loading",
     notFoundTemplate: "NotFound",
-    yieldTemplates: {
-        'FooterTemplate': {to: 'footer'}
-      }
+  //  yieldTemplates: {
+  //      'FooterTemplate': {to: 'footer'}
+  //    }
   });
 
   //map routes with templates
@@ -109,7 +109,7 @@ Deps.autorun(function(){
     //this.route('home', {path: '/'});
    this.route('/', function(){ //This approach seems to be working better that this.route('home', {path: '/'});
      this.render('home');
-     this.render('FooterTemplate', {to: 'footer'});
+     //this.render('FooterTemplate', {to: 'footer'});
      //Router.go('home');
    });
    this.route('home');
@@ -135,7 +135,7 @@ Deps.autorun(function(){
            'scenarioFormBasicInfo': {to: 'newScenarioStep'}
          }          
        });
-       this.render('FooterTemplate', {to: 'footer'});
+       //this.render('FooterTemplate', {to: 'footer'});
        hideScenarioFormButtons();
      }
    );
@@ -166,14 +166,14 @@ Deps.autorun(function(){
         this.render('/findByIDErrorTemplate');
       }else{
         this.render('NewScenarioForm', {data: currentScenarioDTO});
-        this.render('FooterTemplate', {to: 'footer'});
+        //this.render('FooterTemplate', {to: 'footer'});
         Session.set("currentScenarioDTO", currentScenarioDTO); //Issue #3
       }     
     });
 
     this.route('new', function(){
       this.render('NewScenarioForm');
-      this.render('FooterTemplate', {to: 'footer'});
+      //this.render('FooterTemplate', {to: 'footer'});
     });
 
 //Template for when we are about to submit a scenario for approval
@@ -182,12 +182,10 @@ Deps.autorun(function(){
         if(currentScenarioDTO == undefined || ! Meteor.userId()){
           //Router.go('/NotFound');
           this.render('NotFound');
-          this.render('FooterTemplate', {to: 'footer'});
         }else if (currentScenarioDTO.owner == Meteor.userId() && currentScenarioDTO.status == scenarioStatusEnum.UNSUBMITTED){
           this.render('scenarioFormSubmitConfirmation', { data : currentScenarioDTO } );
         }else{
           this.render('NotFound');
-          this.render('FooterTemplate', {to: 'footer'});
         }
       });
 
@@ -196,12 +194,10 @@ Deps.autorun(function(){
        currentScenarioDTO = Session.get("currentScenarioDTO"); 
        if(currentScenarioDTO==undefined || !Meteor.userId()){
           this.render('NotFound');
-          this.render('FooterTemplate', {to: 'footer'});
        } else if(currentScenarioDTO.owner == Meteor.userId() && currentScenarioDTO.status == scenarioStatusEnum.SUBMITTED)
           this.render('scenarioFormThankYou', { data : currentScenarioDTO } );
       else{
           this.render('NotFound');
-          this.render('FooterTemplate', {to: 'footer'});
       }
     });
 
@@ -211,7 +207,6 @@ Deps.autorun(function(){
       if(currentScenarioDTO===undefined || !Roles.userIsInRole(Meteor.user(), 'admin')
         /*currentScenarioDTO.owner != Meteor.userId()*/){
         Session.set('auxScenarioID', this.params._id);
-        this.render('/findByIDErrorTemplate');
       }else{
         this.render('scenarioCompleteForm', {data: currentScenarioDTO});
         Session.set("currentScenarioDTO", currentScenarioDTO); //Issue #3
@@ -242,18 +237,15 @@ Deps.autorun(function(){
 
    this.route('scenarioList' , function(){
      this.render('scenarioListTable', {data : { scenarios : MyScenarios.find({}, {sort: {createdAt: -1}}) }} );
-     this.render('FooterTemplate', {to: 'footer'});
    });
    this.route('approvedScenarioList' , function(){
      this.render('scenarioListTable', {data : { scenarios : scenariosAllApproved.find({}) }} );
-     this.render('FooterTemplate', {to: 'footer'});
    });
    this.route('recentSubmissionsScenarioList' , function(){
      if(!Roles.userIsInRole(Meteor.user(), ['admin'])){
         this.redirect('/');
      }else{
-        this.render('scenarioListTable', {data : { scenarios : ScenariosAll.find({status : scenarioStatusEnum.SUBMITTED}) }} );
-        this.render('FooterTemplate', {to: 'footer'});
+        this.render('scenarioListTable', {data : { scenarios : ScenariosAll.find({status : scenarioStatusEnum.SUBMITTED}) }} );xxxxxxxxx
      }
    });
 
