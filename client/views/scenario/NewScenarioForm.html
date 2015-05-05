@@ -53,7 +53,7 @@
 
 
     {{#if printScenarioMetainfo}}
-        <b>Scenario UID:</b> {{_id}} <b>Saved last:</b> {{formatDateTime modifiedAt}}<br/>
+       {{ > scenarioAuditInfo }} <br/>
     {{/if}}
 
     <label>Title</label>
@@ -85,7 +85,7 @@
     </div>
 
     {{#if printScenarioMetainfo}}
-        <b>Scenario UID:</b> {{_id}} <b>Saved last:</b> {{formatDateTime modifiedAt}}<br/>
+        {{ > scenarioAuditInfo }} <br/>
     {{/if}}
 
     <div>
@@ -119,7 +119,7 @@
     <label><b>Scenario Title: </b></label>
     <label>{{title}}</label>
     {{#if printScenarioMetainfo}}
-        <b>Scenario UID:</b> {{_id}} <b>Saved last:</b> {{formatDateTime modifiedAt}}
+        {{ > scenarioAuditInfo }}
     {{/if}}
     <br/>
 
@@ -129,6 +129,11 @@
     <textarea type="text" id="benefitsDescription"  rows="4" cols="175" {{isScenarioReadOnly}}>{{benefitsDescription}}</textarea><br/>
     <label>Foreseen Risks of the New System</label><br/>
     <textarea type="text" id="risksDescription"  rows="4" cols="175" {{isScenarioReadOnly}}>{{risksDescription}}</textarea><br/>
+</template>
+
+<!-- template to display some auditing information about the scenario -->
+<template name="scenarioAuditInfo">
+        <b>Scenario UID:</b> {{_id}} <b>Saved last:</b> {{formatDateTime modifiedAt}} <b>Status</b> {{showScenarioStatus}}
 </template>
 
 

@@ -790,6 +790,17 @@ UI.registerHelper('getGuidelinesButtonClass' , function(){
   }
 });
 
+/** returns a HTML string with the status of the scenario
+*/
+UI.registerHelper('showScenarioStatus', function(){
+  scenario = Session.get('currentScenarioDTO');
+  if(scenario)
+    return scenario.status;
+  else
+    return '-';
+
+});
+
 
 /** Returns the main email of a user based on the provided email collection
 */
