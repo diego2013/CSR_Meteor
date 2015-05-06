@@ -806,7 +806,7 @@ UI.registerHelper('isVerifiedEmail' , function(emailsObject){
     if(confirm){
 
       if(this._id)
-        Meteor.call("deleteScenario", this._id, function(err, dto) {
+        Meteor.call("deleteScenario", this._id, function(err, result) {
             //callback function
                if (err){
                   console.log(err);
@@ -1723,7 +1723,7 @@ Meteor.publish('scenariosAll', function(){
         Mongo.Collection._publishCursor( Scenarios.find({}), this, 'scenariosAll'); //For admins, all scenarios
    else 
       // approved scenarios + those of this user OR condition
-      Mongo.Collection._publishCursor( Scenarios.find($or [ {status : scenarioStatusEnum.APPROVED}, {_id : this.userId} ]), this, 'scenariosAll'); 
+      Mongo.Collection._publishCursor( Scenarios.find({$or: [ {status : scenarioStatusEnum.APPROVED}, {_id : this.userId} ]}), this, 'scenariosAll'); 
     
   this.ready();
 });
