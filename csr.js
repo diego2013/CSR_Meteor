@@ -298,6 +298,8 @@ Deps.autorun(function(){
       }
     });
     
+    this.route('exampleScenario');
+
     //***** Footer *****
     this.route('disclaimer');
     this.route('privacyStatement');
@@ -306,6 +308,8 @@ Deps.autorun(function(){
     this.route('FeedbackFormThakYou'); //"thank you" page after submitting feedback
 
   });
+
+
 
 
   //HELPERS Template helpers
@@ -800,40 +804,37 @@ UI.registerHelper('isVerifiedEmail' , function(emailsObject){
 });
 
 Template.scenarioFormAdvancedInfo.events({
-      //onClick button dinamically change template
+      //onClick buttons from Advanded Info nav bar dinamically change (sub)template
       "click #hazardsButton": function(){
-     // collectScenarioInfo();
+      collectScenarioInfo();
       Session.set(_ADVANCEDDETAILS_TAB, _ADT_HAZARDS_templateName);
      // hideScenarioFormButtons();
     }
     , "click #equipmentButton": function(){
-     // collectScenarioInfo();
+     collectScenarioInfo();
       Session.set(_ADVANCEDDETAILS_TAB, _ADT_EQUIPMENT_templateName);
      // hideScenarioFormButtons();
     }
     , "click #lessonsLearnedButton": function(){
-     // collectScenarioInfo();
+     collectScenarioInfo();
       Session.set(_ADVANCEDDETAILS_TAB, _ADT_LESSONSLEARNED_templateName);
      // hideScenarioFormButtons();
     }    
     , "click #referencesButton": function(){
-     // collectScenarioInfo();
+     collectScenarioInfo();
       Session.set(_ADVANCEDDETAILS_TAB, _ADT_REFERENCES_templateName);
      // hideScenarioFormButtons();
     }  
     , "click #rolesButton": function(){
-     // collectScenarioInfo();
+     collectScenarioInfo();
       Session.set(_ADVANCEDDETAILS_TAB, _ADT_ROLES_templateName);
      // hideScenarioFormButtons();
     }  
     , "click #environmentsButton": function(){
-     // collectScenarioInfo();
+     collectScenarioInfo();
       Session.set(_ADVANCEDDETAILS_TAB, _ADT_PLACES_templateName);
      // hideScenarioFormButtons();
     }  
-    , "click #thisbutton" : function(){
-      console.log("one clicl here");
-    }
 
 });
 
@@ -1300,13 +1301,16 @@ var hideScenarioFormButtons = function(){
  sets the variable currentScenarioDTO with the information from the templates
  */
  var collectScenarioInfo = function(){
-  // 
+ 
   //if there is no scenario in session, we create a new one.
   if(currentScenarioDTO==undefined){
     cleanNewScenarioForm();
     currentScenarioDTO =  Session.get("currentScenarioDTO");
   }
 
+
+//We need to determin which (sub)template is rendered, becuse otherwise the components won't exits and 
+// trying to get their value (which woulb be 'undefined') would persist 'undefined' for those attributes.
   if(Session.get(_SCENARIO_FORM_STEP) === _SCENARIO_FORM_STEP_BASIC_INFO){
     currentScenarioDTO.title = $('#title').val();
     currentScenarioDTO.description = $("#description").val();
@@ -1315,26 +1319,14 @@ var hideScenarioFormButtons = function(){
     currentScenarioDTO.benefitsDescription = $("#benefitsDescription").val();
     currentScenarioDTO.risksDescription = $("#risksDescription").val();
   } else if(Session.get(_SCENARIO_FORM_STEP) === _SCENARIO_FORM_STEP_ADVANCED_INFO){
-    //determine in which subpanel we are
-
-    //if(Session.get(_ADVANCEDDETAILS_TAB) === _ADT_HAZARDS_templateName){
-    //  currentScenarioDTO.hazardEntryList = updateHarzardList();
-    //}
-//
-    //if(Session.get(_ADVANCEDDETAILS_TAB) == _ADT_REFERENCES_templateName){
-    //  currentScenarioDTO.referenceEntryList = updateReferenceList();
-    //}
-
-    ////if we are in this panel?
-    //currentScenarioDTO.referenceEntryList = updateReferenceList();
-
-    currentScenarioDTO.lessonsLearned = $('#lesson').val();
-    currentScenarioDTO.preventable = $('#preventable').val();
-
-   // currentScenarioDTO.roleEntryList = updateRoleList();
-   // currentScenarioDTO.environmentEntryList = updateEnvironmentList();
+    
+    if(Session.get(_ADVANCEDDETAILS_TAB) === _ADT_LESSONSLEARNED_templateName){
+      currentScenarioDTO.lessonsLearned = $('#lesson').val();
+      currentScenarioDTO.preventable    = $('#preventable').val();
+    }
 
   }
+  Session.set("currentScenarioDTO", currentScenarioDTO);
 }
 
 /** Collects the information from the components of the form scenarioCompleteForm
