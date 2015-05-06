@@ -38,6 +38,12 @@ body {
   background: white;
 }
 
+.scrollable-subpanel{
+	height : 300px; 
+	overflow-y : scroll;
+	background : #CCE6FF;
+}
+
 header {
   background: #d2edf4;
   

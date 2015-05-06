@@ -1084,39 +1084,33 @@ Template.FeedbackForm.events({
   "submit #feedbackPanel": function(event) {
 
     event.preventDefault(); // Prevent default form submit
-    //harvest values from the form
-    //template.find("#title").value;
-    var rateSite = trimInput(event.target.rateSite.value);
-    var rateNavigation = trimInput(event.target.rateNavigation.value);
-    var rateOrganization = trimInput(event.target.rateOrganization.value);
-    var rateLogin = trimInput(event.target.rateLogin.value);
-    var rateClarity = trimInput(event.target.rateClarity.value); 
-
-    var rateSections = trimInput(event.target.rateSections.value);
-    var rateUsefulness = trimInput(event.target.rateUsefulness.value);
-    var rateAppearance = trimInput(event.target.rateAppearance.value);
-    var rateGeneral = trimInput(event.target.rateGeneral.value);
-
     //validation
-    if(rateSite===""){
+    if(trimInput(event.target.rateSite.value)===""){
       window.alert("Fields marked with an asterisk are mandatory");
         throw new Meteor.Error("'rateSite' can NOT be empty"); //TO-DO do something with this error
     }
 
+    var submitAnonymously = event.target.submitAnonymously.checked;
     var feedbackDto = {
-      rateSite : rateSite,
-      rateNavigation : rateNavigation,
-      rateOrganization :rateOrganization,
-      rateLogin : rateLogin,
-      rateClarity : rateClarity,
-      rateSections :rateSections,
-      rateUsefulness : rateUsefulness,
-      rateAppearance : rateAppearance,
-      rateGeneral : rateGeneral
+      rateSite :         trimInput(event.target.rateSite.value),
+      rateNavigation :   trimInput(event.target.rateNavigation.value),
+      rateOrganization : trimInput(event.target.rateOrganization.value),
+      rateLogin :        trimInput(event.target.rateLogin.value),
+      rateClarity :      trimInput(event.target.rateClarity.value),
+
+      rateSections :     trimInput(event.target.rateSections.value),
+      rateUsefulness :   trimInput(event.target.rateUsefulness.value),
+      rateAppearance :   trimInput(event.target.rateAppearance.value),
+      rateGeneral :      trimInput(event.target.rateGeneral.value),
+      visualDesign :     event.target.visualDesign.value,
+
+      username : Meteor.userId() && !submitAnonymously ? Meteor.user().username : "anonymous",
+      userID :   Meteor.userId() && !submitAnonymously ? Meteor.userId() : "anonymous",
+
+      createdAt : new Date()
     }
 
     Meteor.call("saveFeedback", feedbackDto);
-    //TODO? clean from
     Router.go("/FeedbackFormThakYou") //redirect user to "Thank you page"
 
   }
@@ -1636,22 +1630,8 @@ Meteor.methods({
   //save Feedback entry
   saveFeedback : function (feedbackDto){
 
-    var username =Meteor.userId()?Meteor.user().username :"anonymous";
-    var userID = Meteor.userId()? Meteor.userId():"anonymous";
-
-    FeedbackCollection.insert({
-          rateSite : feedbackDto.rateSite,
-          rateNavigation : feedbackDto.rateNavigation,
-          rateOrganization : feedbackDto.rateOrganization,
-          rateLogin : feedbackDto.rateLogin,
-          rateClarity : feedbackDto.rateClarity,
-          rateSections : feedbackDto.rateSections,
-          rateUsefulness : feedbackDto.rateUsefulness,
-          rateAppearance : feedbackDto.rateAppearance,
-          rateGeneral : feedbackDto.rateGeneral,
-          username : username,
-          userID : userID
-    });
+   if(feedbackDto) 
+    FeedbackCollection.insert(feedbackDto);
 
   }
 
