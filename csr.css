@@ -44,6 +44,11 @@ body {
 	background : #CCE6FF;
 }
 
+.textAreaStyle{
+	width : 98%;
+	font-size : 10pt;
+}
+
 header {
   background: #d2edf4;
   
