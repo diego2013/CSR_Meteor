@@ -801,6 +801,24 @@ UI.registerHelper('isVerifiedEmail' , function(emailsObject){
         Session.set('showGuidelines', false);
       }
     }
+    ,  "click #deleteButton": function () {
+    var confirm = window.confirm("Are you sure you want to delete scenario with UID "+this._id+ " \ntitled \""+ this.title+"\"");
+    if(confirm){
+
+      if(this._id)
+        Meteor.call("deleteScenario", this._id, function(err, dto) {
+            //callback function
+               if (err){
+                  console.log(err);
+               }else{
+                  Session.set('currentScenarioDTO', undefined);
+               }
+            });
+      else
+        Session.set('currentScenarioDTO', undefined);
+    }
+
+    }
 });
 
 Template.scenarioFormAdvancedInfo.events({
@@ -1109,12 +1127,7 @@ Template.NavBar.events({
 });
 
 Template.scenarioRow.events({
-  "click #deleteButton": function () {
-    confirm = window.confirm("Are you sure you want to delete scenario with UID "+this._id+ " \ntitled \""+ this.title+"\"");
-    if(confirm);
-      Meteor.call("deleteScenario", this._id);
-  },
-  "click #gothere" : function(event){
+  "click #visitScenario" : function(event){
     var currentPath = Router.current().route.getName()
     //do an action or another based on the route
     if(currentPath=='scenarioList'){
@@ -1597,7 +1610,7 @@ Meteor.methods({
     }else{
       //update
        currentScenarioDTO.modifiedAt = new Date();
-       Scenarios.update(currentScenarioDTO._id, currentScenarioDTO)
+       Scenarios.update(currentScenarioDTO._id, currentScenarioDTO);
     }
 
     return currentScenarioDTO;
@@ -1610,11 +1623,13 @@ Meteor.methods({
     //var scenario = Scenarios.findOne({_id : scnID});
     //console.log("ID "+scnID);
     //console.log(JSON.stringify(scenario));
-    if (scenario== undefined || scenario.owner != Meteor.userId()) {
+    if ( scenario== undefined || (scenario.owner != Meteor.userId()) ) {
     // If the current user is not thescenario owner
-      throw new Meteor.Error("not-authorized");
+      throw  new Meteor.Error("not-authorized");
+    }else{
+      Scenarios.remove(scnID);
     }
-    Scenarios.remove(scnID);
+    return '';
   },
 
   //save Feedback entry

@@ -3,7 +3,6 @@
 	<p>Content of the database: {{scenarios.count}} scenarios</p>
 	<table >
   <tr>
-    <th></th>
     <th>created by</th>
     <th></th>
     <th>Scenario UID</th>
@@ -21,9 +20,8 @@
 <!-- template with the informatio of a single scenario -->
 <template name="scenarioRow">
   
-  	<td><button class="delete" id="deleteButton">DELETE</button></td>
   	<td>{{username}}</td>
-  	<td><button id="gothere" class="other" name={{_id}}>Visit Scenario</button> </td>
+  	<td><button id="visitScenario" class="other" name={{_id}}>Visit Scenario</button> </td>
   	<td>{{_id}} </td>
   	<td>{{trimLength title 45}} </td>
   	<td>{{trimLength description 50}} </td>
