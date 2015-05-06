@@ -207,6 +207,7 @@ Deps.autorun(function(){
       if(currentScenarioDTO===undefined || !Roles.userIsInRole(Meteor.user(), 'admin')
         /*currentScenarioDTO.owner != Meteor.userId()*/){
         Session.set('auxScenarioID', this.params._id);
+        this.render('/findByIDErrorTemplate');
       }else{
         this.render('scenarioCompleteForm', {data: currentScenarioDTO});
         Session.set("currentScenarioDTO", currentScenarioDTO); //Issue #3
