@@ -245,7 +245,7 @@ Deps.autorun(function(){
      if(!Roles.userIsInRole(Meteor.user(), ['admin'])){
         this.redirect('/');
      }else{
-        this.render('scenarioListTable', {data : { scenarios : ScenariosAll.find({status : scenarioStatusEnum.SUBMITTED}) }} );xxxxxxxxx
+        this.render('scenarioListTable', {data : { scenarios : ScenariosAll.find({status : scenarioStatusEnum.SUBMITTED}) }} );
      }
    });
 
@@ -1701,8 +1701,16 @@ Meteor.publish('myScenarios', function(){
 
 //Publish all scenarios in the database 
 Meteor.publish('scenariosAll', function(){
-    Mongo.Collection._publishCursor( Scenarios.find({}), this, 'scenariosAll'); 
-    this.ready();
+   // Old version
+   // Mongo.Collection._publishCursor( Scenarios.find({}), this, 'scenariosAll'); 
+   //
+   if(Roles.userIsInRole(this.userId, 'admin'))
+        Mongo.Collection._publishCursor( Scenarios.find({}), this, 'scenariosAll'); //For admins, all scenarios
+   else 
+      // approved scenarios + those of this user OR condition
+      Mongo.Collection._publishCursor( Scenarios.find($or [ {status : scenarioStatusEnum.APPROVED}, {_id : this.userId} ]), this, 'scenariosAll'); 
+    
+  this.ready();
 });
 
 //Publish all APPROVED scenarios in the database 
