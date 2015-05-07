@@ -58,6 +58,7 @@ if (Meteor.isClient) {
   Meteor.subscribe('scenariosAllApproved'); //all approved scenarios
   
   Meteor.subscribe('allUsersList');
+  Meteor.subscribe('feedbackDocuments');
   //Meteor.subscribe('userdata');
 
   // partial collections (Minimongo collections)
@@ -65,6 +66,7 @@ if (Meteor.isClient) {
   ScenariosAll = new Mongo.Collection('scenariosAll');
   scenariosAllApproved = new Mongo.Collection('scenariosAllApproved');
   AllTheUsers = new Mongo.Collection('allUsersList');
+  feedbackCol = new Mongo.Collection('feedbackDocuments')
   //currentUser = new Mongo.Collection('userdata');
 
  
@@ -299,14 +301,30 @@ Deps.autorun(function(){
       }
     });
     
-    this.route('exampleScenario');
+    //this.route('exampleScenario');
 
     //***** Footer *****
     this.route('disclaimer');
     this.route('privacyStatement');
     this.route('contactInfo');
+
     this.route('FeedbackForm'); //feedback form
     this.route('FeedbackFormThakYou'); //"thank you" page after submitting feedback
+    this.route('feedbackReviewList' , function(){
+      this.render('feedbackListTable', {data : {  feedbackCol : feedbackCol.find({}, {sort: {createdAt: -1}}) }} );
+    });
+    this.route('/feedbackReview/:_id', function(){
+      if(!Roles.userIsInRole(Meteor.user(), ['admin'])){
+        this.redirect('/');
+      }else{
+        //var fback =  feedbackCol.find({_id: this.params._id});
+        var fback = feedbackCol.findOne({_id: this.params._id});
+        if(fback)
+          this.render('feedbackReview', {data : fback /*feedbackCol.findOne({_id: this.params._id})*/ });
+        else
+          this.redirect('/');
+      }
+    });
 
   });
 
@@ -532,6 +550,16 @@ Deps.autorun(function(){
     },
  });
 
+ Template.feedbackReview.helpers({
+  isReviewed : function(feedbackReport){
+    if(feedbackReport && feedbackReport.reviewer)
+      return true;
+    else
+      return false;
+  }
+
+ });
+
 //Adds an index to each document
 var addIndexToDocument = function(document, index){
   document.index = index;
@@ -622,12 +650,18 @@ UI.registerHelper('trimLength', function(string, length){
 */
 //Formats a date time using the mask MM-DD-YYYY, hh:mm:ss
 UI.registerHelper('formatDateTime', function(date) {
-  return moment(date).format('MM-DD-YYYY, hh:mm:ss');
+  if(date)
+    return moment(date).format('MM-DD-YYYY, hh:mm:ss');
+  else
+    return ''
 });
 
 //Formats a Date using mask MM-DD-YYYY
 UI.registerHelper('formatDate', function(date) {
-  return moment(date).format('MM-DD-YYYY');
+  if(date)
+    return moment(date).format('MM-DD-YYYY');
+  else
+    return ''
 });
 
 /* Indicates if the header with the scenario metainfo (UID, Dates) shall be displayed.
@@ -1090,7 +1124,7 @@ Template.FeedbackForm.events({
         throw new Meteor.Error("'rateSite' can NOT be empty"); //TO-DO do something with this error
     }
 
-    var submitAnonymously = event.target.submitAnonymously.checked;
+    var submitAnonymously = (event.target.submitAnonymously) ? event.target.submitAnonymously.checked : true;
     var feedbackDto = {
       rateSite :         trimInput(event.target.rateSite.value),
       rateNavigation :   trimInput(event.target.rateNavigation.value),
@@ -1107,12 +1141,45 @@ Template.FeedbackForm.events({
       username : Meteor.userId() && !submitAnonymously ? Meteor.user().username : "anonymous",
       userID :   Meteor.userId() && !submitAnonymously ? Meteor.userId() : "anonymous",
 
-      createdAt : new Date()
+      //auditing fields
+      createdAt : new Date(),
+      reviewed  : 'Pending',
+      reviewer  : undefined,
+      reviewedAt: undefined
     }
 
     Meteor.call("saveFeedback", feedbackDto);
     Router.go("/FeedbackFormThakYou") //redirect user to "Thank you page"
 
+  }
+});
+
+Template.feedbackReport.events({
+  "click #seeFeedbackReport" : function(){
+    Router.go("/feedbackReview/"+this._id);
+  }
+});
+
+Template.feedbackReview.events({
+  "click #markAsPending" : function(){
+    var feedbackDto = feedbackCol.findOne({_id: this._id});
+    if(feedbackDto){
+      feedbackDto.reviewer = undefined;
+      feedbackDto.reviewed = "Pending";
+      feedbackDto.reviewedAt = undefined;
+      Meteor.call('saveFeedback', feedbackDto);
+      Router.go("/feedbackReview/"+this._id);
+    }    
+  }
+  , "click #markAsReviewed" : function(){
+    var feedbackDto = feedbackCol.findOne({_id: this._id});
+    if(feedbackDto){
+      feedbackDto.reviewer = Meteor.user().username;
+      feedbackDto.reviewed = "Reviewed";
+      feedbackDto.reviewedAt = new Date();
+      Meteor.call('saveFeedback', feedbackDto);
+      Router.go("/feedbackReview/"+this._id);
+    }
   }
 });
 
@@ -1631,8 +1698,18 @@ Meteor.methods({
   saveFeedback : function (feedbackDto){
 
    if(feedbackDto) 
-    FeedbackCollection.insert(feedbackDto);
+    if(feedbackDto._id)
+      FeedbackCollection.update(feedbackDto._id, feedbackDto);
+    else
+      FeedbackCollection.insert(feedbackDto);
 
+  }
+
+  //update Feedback entry
+  ,updateFeedback : function (feedbackDto){
+
+   if(feedbackDto) 
+    FeedbackCollection.update(feedbackDto);
   }
 
   /** Unlocks a scenario for modification, granting the lock ownership to the current (logged in) user
@@ -1739,6 +1816,15 @@ Meteor.publish('allUsersList', function(){
   }else{
     Mongo.Collection._publishCursor( Meteor.users.find({_id : this.userId}), this, 'allUsersList'); 
   } 
+  this.ready();
+});
+
+/** Publishes cursor for the feedback documents
+*/
+Meteor.publish('feedbackDocuments', function(){
+  if(Roles.userIsInRole(this.userId, 'admin')){
+    Mongo.Collection._publishCursor( FeedbackCollection.find(), this, 'feedbackDocuments');
+  }
   this.ready();
 });
 

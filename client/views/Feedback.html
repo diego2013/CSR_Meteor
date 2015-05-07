@@ -23,7 +23,7 @@
   <form id="feedbackPanel" class="feedbackPanel" >
   	<div class="scrollable-subpanel">
   		 How would you rate this website? <span class="red-asterisk">*</span> <br/>
-		<textarea type="text" name="rateSite" rows="3" class="textAreaStyle" placeholder="What was you overall experience using this site?"></textarea>
+		<textarea type="text" name="rateSite" rows="3" class="textAreaStyle" placeholder="What was your overall experience using this site?"></textarea>
 
 		<br/> Is the repository easy to navigate and use? <br/>
 		<textarea type="text" name="rateNavigation" rows="3" class="textAreaStyle" placeholder="Which problems did you encounter to navigate and find content?"></textarea>
@@ -61,7 +61,9 @@
 	</div>
 
 	<div>
+	{{#if currentUser}}
 		<p><input type="checkbox" name="submitAnonymously" value="anonymous">Submit feedback anonymously, without revealing my username or identity.</p>
+	{{/if}}	
 		<button  type="submit" id="submitFeedback" class="btn btn-small btn-mint"  name="submitButton" title="Submit feedback">Submit Feedback</button>
 	</div>
 
@@ -80,9 +82,95 @@
 	<div>
      <table  cellpadding="15" style="margin-left:auto;margin-right:auto;">
 	     <tr>
-	     <td><a href="{{ pathFor 'new' }}">Click here to enter a new clinical scenario</a></td>
-	     <td><a href="{{ pathFor 'home' }}">Click here to examine the clinical scenario collection</a></td>
+	     <td><a href="{{ pathFor 'new' }}" class="btn btn-small btn-dark-blue">Click here to enter a new clinical scenario</a></td>
+	     <td><a href="{{ pathFor 'home' }}" class="btn btn-small btn-dark-blue">Click here to examine the clinical scenario collection</a></td>
 	     </tr>
 	 </table>  
 	</div>  
 </template>
+
+<!-- Template to display the feedback documents -->
+<template name="feedbackListTable">
+
+	<p>Content of the database: {{feedbackCol.count}} entries</p>
+
+	<table>
+		<tr class="btn-turquesa">
+			<th>Submitter</th>
+			<th>Link</th>
+			<th>UID</th>
+			<th>Submission Date</th>
+			<th title="pending of revision">Revision</th>
+			<th>Reviewer</th>
+			<th>Review Date</th>
+		</tr>
+
+		{{#each feedbackCol}}
+	   	   <tr style="text-align: center"> {{ > feedbackReport }} </tr>
+	   	{{/each}}
+
+	</table>
+
+
+</template>
+
+<!-- Template to display a single feedback report -->
+<template name="feedbackReport">
+    <td>{{username}}</td>
+  	<td><button id="seeFeedbackReport" style="width:100%" class="btn-orange"  name={{_id}}>See Report</button> </td>
+  	<td>{{_id}} </td>
+  	<td>{{formatDate createdAt}}  </td>
+  	<td>{{reviewed}}</td>
+  	<td>{{reviewer}}</td>
+  	<td>{{formatDate reviewedAt}}</td>
+</template>
+
+<!-- Template to review feedback entries -->
+<template name='feedbackReview'>
+	<p>Revision of feedback</p>
+	<p>Contribution with UID <b>{{_id}}</b> Submitted by <em>{{username}}</em> on {{formatDate createdAt}}. <b>Status of revision: </b>{{reviewed}}</p>
+	{{#if isReviewed .}}
+	Reviewed by <em>{{reviewer}} on {{formatDate reviewedAt}}</em>
+	{{/if}}
+	
+	<div class="scrollable-subpanel">
+	<b>How would you rate this website?</b><br/>
+	<p>{{rateSite}}</p>
+
+	<b>Is the repository easy to navigate and use?</b> <br/>
+	<p>{{rateNavigation}}</p>
+
+	<b>Is the information and functionality logically organized?</b> <br/>
+	<p>{{rateOrganization}}</p>
+
+	<b>Did you have trouble logging in?</b> <br/>
+	<p>{{rateLogin}}</p>
+
+	<b>Are there any unclear questions or fields? </b><br/>
+	<p>{{rateClarity}}</p>
+
+	<b>Are the any missing fields, sections or elements?</b> <br/>
+	<p>{{rateSections}}</p>
+
+	<b>Would you find this useful if it was available to your department? Who would find it useful?</b> <br/>
+	<p>{{rateUsefulness}}</p>
+
+	<b>Does the website appear professional and trustworthy?</b> <br/>
+	<p>{{rateAppearance}}</p>
+
+	<b>Do you like the visual design of the website? </b> {{visualDesign}} <br/>
+
+	<b>Do you have any other suggestions, requests or complaints?</b><br/>
+	<p>{{rateGeneral}}</p>
+	
+	</div>
+	
+	{{#if isReviewed .}}
+	<button id="markAsPending" name={{_id}} class="btn btn-small btn-red">Mark as Pending of Revison</button>
+	{{else}}
+	<button id="markAsReviewed" name={{_id}} class="btn btn-small btn-mint">Mark as Reviewed</button>
+	{{/if}}
+	
+	
+</template>
+
