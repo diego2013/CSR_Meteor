@@ -92,9 +92,10 @@
 <!-- Template to display the feedback documents -->
 <template name="feedbackListTable">
 
-	<p>Content of the database: {{feedbackCol.count}} entries</p>
+	<!--<p>Content of the database: {{totalCount}} entries {{paginationCaption}}</p>-->
+	
 
-	<table>
+	<table style="width:100%;">
 		<tr class="btn-turquesa">
 			<th>Submitter</th>
 			<th>Link</th>
@@ -103,6 +104,7 @@
 			<th title="pending of revision">Revision</th>
 			<th>Reviewer</th>
 			<th>Review Date</th>
+			<th>Completion</th>
 		</tr>
 
 		{{#each feedbackCol}}
@@ -111,6 +113,14 @@
 
 	</table>
 
+	<div>
+		<ul class="pager">
+  			<li class="previous"> <a href="#">&larr; {{prevText}}</a> </li>
+  			<li class="next"> <a href="#">{{nextText}} &rarr;</a> </li>
+    	</ul>
+	</div> 
+
+	
 
 </template>
 
@@ -123,6 +133,7 @@
   	<td>{{reviewed}}</td>
   	<td>{{reviewer}}</td>
   	<td>{{formatDate reviewedAt}}</td>
+  	<td>{{completion .}}</td>
 </template>
 
 <!-- Template to review feedback entries -->

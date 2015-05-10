@@ -13,7 +13,6 @@ Scenarios = new Mongo.Collection("scenarios");
 FeedbackCollection = new Mongo.Collection("FeedbackCollection");
 //AllTheUsers = Meteor.users; //new Mongo.Collection(Meteor.users);
 
-
 //Var
 
 
@@ -52,13 +51,15 @@ var scenarioStatusEnum = {
 
 //CLIENT SIDE
 if (Meteor.isClient) {
+  Session.setDefault('feedbackCursorStart', 0);
+
   //Meteor.subscribe("scenarios");
   Meteor.subscribe('myScenarios');  //scenarios of the current user
   Meteor.subscribe('scenariosAll'); //all available scenarios
   Meteor.subscribe('scenariosAllApproved'); //all approved scenarios
   
   Meteor.subscribe('allUsersList');
-  Meteor.subscribe('feedbackDocuments');
+  //Meteor.subscribe('feedbackDocuments', Session.get('feedbackCursorStart'), 10 /*limit*/);
   //Meteor.subscribe('userdata');
 
   // partial collections (Minimongo collections)
@@ -68,6 +69,7 @@ if (Meteor.isClient) {
   AllTheUsers = new Mongo.Collection('allUsersList');
   feedbackCol = new Mongo.Collection('feedbackDocuments')
   //currentUser = new Mongo.Collection('userdata');
+
 
  
   
@@ -90,6 +92,9 @@ Deps.autorun(function(){
   highLightNavBatItem(routeName);
   }
 
+  //subscriptions
+  Meteor.subscribe('feedbackDocuments', Session.get('feedbackCursorStart'), 10 /*limit*/);
+  //Meteor.subscribe('feedbackDocuments');
 });
 
 
@@ -329,8 +334,6 @@ Deps.autorun(function(){
   });
 
 
-
-
   //HELPERS Template helpers
   //======================================================================
 
@@ -550,6 +553,27 @@ Deps.autorun(function(){
     },
  });
 
+ Template.feedbackListTable.helpers({
+    paginationCaption : function(){
+      return 'Results '+Number(Session.get('feedbackCursorStart')+1) + " to "+Number(Session.get('feedbackCursorStart')+10);
+    }
+    ,totalCount : function(){
+      return feedbackCol.find().count();
+    }
+    ,nextText : function(){
+      maxVal = Math.min(20, feedbackCol.find().count());
+      return Number(Session.get('feedbackCursorStart')+11) + " - " +Number(Session.get('feedbackCursorStart')+20);  
+    }
+    ,prevText : function(){
+      if(Number(Session.get('feedbackCursorStart') < 10))
+        return '';
+      else {
+        return Number(Session.get('feedbackCursorStart')-9) + " - " +Number(Session.get('feedbackCursorStart'));
+      } 
+         
+    }
+ });
+
  Template.feedbackReview.helpers({
   isReviewed : function(feedbackReport){
     if(feedbackReport && feedbackReport.reviewer)
@@ -557,7 +581,25 @@ Deps.autorun(function(){
     else
       return false;
   }
+ });
 
+ Template.feedbackReport.helpers({
+  completion : function(feedbackReport){
+      count = 0;
+      if(feedbackReport.rateSite!='') count++;
+      if(feedbackReport.rateNavigation!='') count++;
+      if(feedbackReport.rateOrganization!='') count++;
+      if(feedbackReport.rateLogin!='') count++;
+
+      if(feedbackReport.rateClarity!='') count++;
+      if(feedbackReport.rateSections!='') count++;
+      if(feedbackReport.rateUsefulness!='') count++;
+      if(feedbackReport.rateAppearance!='') count++;
+
+      if(feedbackReport.rateGeneral!='') count++;
+
+      return count + " of 9 fields completed";
+  }
  });
 
 //Adds an index to each document
@@ -1181,6 +1223,19 @@ Template.feedbackReview.events({
       Router.go("/feedbackReview/"+this._id);
     }
   }
+});
+
+Template.feedbackListTable.events({
+"click .previous" : function(){
+  //make sure we have a minimum
+  if(Number(Session.get('feedbackCursorStart'))  > 9){
+    Session.set('feedbackCursorStart', Number(Session.get('feedbackCursorStart'))-10);
+  }
+}
+,"click .next" : function(){
+  //XXX check that this is not going "out of range"
+  Session.set('feedbackCursorStart', Number(Session.get('feedbackCursorStart'))+10);
+}
 });
 
 
@@ -1821,12 +1876,18 @@ Meteor.publish('allUsersList', function(){
 
 /** Publishes cursor for the feedback documents
 */
-Meteor.publish('feedbackDocuments', function(){
+Meteor.publish('feedbackDocuments', function(cursorStart, recordLimit){
   if(Roles.userIsInRole(this.userId, 'admin')){
-    Mongo.Collection._publishCursor( FeedbackCollection.find(), this, 'feedbackDocuments');
+    Mongo.Collection._publishCursor( FeedbackCollection.find({}, {limit :recordLimit, skip : cursorStart}), this, 'feedbackDocuments');
   }
   this.ready();
 });
+//Meteor.publish('feedbackDocuments', function(){
+//  if(Roles.userIsInRole(this.userId, 'admin')){
+//    Mongo.Collection._publishCursor( FeedbackCollection.find(), this, 'feedbackDocuments');
+//  }
+//  this.ready();
+//});
 
   
 }
