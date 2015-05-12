@@ -12,3 +12,4 @@ iron:router
 blaze
 momentjs:moment
 alanning:roles
+tmeasday:publish-counts

@@ -92,7 +92,15 @@
 <!-- Template to display the feedback documents -->
 <template name="feedbackListTable">
 
-	<!--<p>Content of the database: {{totalCount}} entries {{paginationCaption}}</p>-->
+	<p>Content of the database: {{totalCount}} entries. {{paginationCaption}}
+	<!-- <p>There are {{getPublishedCount 'feedbackCounter'}} database entries</p> -->
+	<label style="float:right;"> Show 
+	<select id="resultsPerPage" value="10">
+        <option value ="10" {{selectResultPerPage "10"}} >10</option>   
+        <option value ="25" {{selectResultPerPage "25"}} >25</option>   
+    </select>
+    results per page </label>
+    </p>
 	
 
 	<table style="width:100%;">

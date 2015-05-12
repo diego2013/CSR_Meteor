@@ -52,6 +52,7 @@ var scenarioStatusEnum = {
 //CLIENT SIDE
 if (Meteor.isClient) {
   Session.setDefault('feedbackCursorStart', 0);
+  Session.setDefault('feedbackResultsPerPage', 10);
 
   //Meteor.subscribe("scenarios");
   Meteor.subscribe('myScenarios');  //scenarios of the current user
@@ -61,6 +62,7 @@ if (Meteor.isClient) {
   Meteor.subscribe('allUsersList');
   //Meteor.subscribe('feedbackDocuments', Session.get('feedbackCursorStart'), 10 /*limit*/);
   //Meteor.subscribe('userdata');
+  Meteor.subscribe('publication');
 
   // partial collections (Minimongo collections)
   MyScenarios = new Mongo.Collection('myScenarios');
@@ -93,8 +95,7 @@ Deps.autorun(function(){
   }
 
   //subscriptions
-  Meteor.subscribe('feedbackDocuments', Session.get('feedbackCursorStart'), 10 /*limit*/);
-  //Meteor.subscribe('feedbackDocuments');
+  Meteor.subscribe('feedbackDocuments', Session.get('feedbackCursorStart'), Number(Session.get('feedbackResultsPerPage')) /*limit*/);
 });
 
 
@@ -555,23 +556,39 @@ Deps.autorun(function(){
 
  Template.feedbackListTable.helpers({
     paginationCaption : function(){
-      return 'Results '+Number(Session.get('feedbackCursorStart')+1) + " to "+Number(Session.get('feedbackCursorStart')+10);
+      total = Counts.get('feedbackCounter');
+      minVal = Math.min(Number(Session.get('feedbackCursorStart'))+Number(Session.get('feedbackResultsPerPage')), total);
+      return 'Showing results '+Number(Session.get('feedbackCursorStart')+1) + " to "+minVal+".";
     }
     ,totalCount : function(){
-      return feedbackCol.find().count();
+      return Counts.get('feedbackCounter');
     }
     ,nextText : function(){
-      maxVal = Math.min(20, feedbackCol.find().count());
-      return Number(Session.get('feedbackCursorStart')+11) + " - " +Number(Session.get('feedbackCursorStart')+20);  
+      total = Counts.get('feedbackCounter');
+      minVal = Math.min(Number(Session.get('feedbackCursorStart')+ 2*Session.get('feedbackResultsPerPage')), total);
+      if(Number(Session.get('feedbackCursorStart'))+ Number(Session.get('feedbackResultsPerPage')) > Number(total))
+        return ''
+      else {
+        return (Number(Session.get('feedbackCursorStart'))+Number(Session.get('feedbackResultsPerPage'))+1) + " - " + minVal;  
+      }
+      //return Number(Session.get('feedbackCursorStart')+Session.get('feedbackResultsPerPage')+1) + " - " + Number(Session.get('feedbackCursorStart')+(2*Session.get('feedbackResultsPerPage')));  
+        
     }
     ,prevText : function(){
-      if(Number(Session.get('feedbackCursorStart') < 10))
+      if(Number(Session.get('feedbackCursorStart')) < Number(Session.get('feedbackResultsPerPage')))
         return '';
       else {
-        return Number(Session.get('feedbackCursorStart')-9) + " - " +Number(Session.get('feedbackCursorStart'));
-      } 
-         
+        return (Number(Session.get('feedbackCursorStart'))-Number(Session.get('feedbackResultsPerPage'))+1) + " - " +Number(Session.get('feedbackCursorStart'));
+      }        
     }
+    ,selectResultPerPage : function(value){
+      current = Session.get('feedbackResultsPerPage');
+      if(current)
+        return current == value? {selected:'selected'}: '';
+      else
+        return '';
+    }
+
  });
 
  Template.feedbackReview.helpers({
@@ -1228,13 +1245,20 @@ Template.feedbackReview.events({
 Template.feedbackListTable.events({
 "click .previous" : function(){
   //make sure we have a minimum
-  if(Number(Session.get('feedbackCursorStart'))  > 9){
-    Session.set('feedbackCursorStart', Number(Session.get('feedbackCursorStart'))-10);
+  //if ((x - y)>0) x = x-y;
+  if(Number(Session.get('feedbackCursorStart'))  > Number(Session.get('feedbackResultsPerPage')-1)){
+    Session.set('feedbackCursorStart', Number(Session.get('feedbackCursorStart'))-Number(Session.get('feedbackResultsPerPage')));
   }
 }
 ,"click .next" : function(){
   //XXX check that this is not going "out of range"
-  Session.set('feedbackCursorStart', Number(Session.get('feedbackCursorStart'))+10);
+  if(Number(Session.get('feedbackCursorStart')) + Number(Session.get('feedbackResultsPerPage')) < Counts.get('feedbackCounter'))
+   Session.set('feedbackCursorStart', Number(Session.get('feedbackCursorStart'))+Number(Session.get('feedbackResultsPerPage')));
+}
+, "change #resultsPerPage" : function(event){
+  var newValue = $(event.target).val();
+  Session.set('feedbackCursorStart', 0);
+  Session.set('feedbackResultsPerPage', newValue);
 }
 });
 
@@ -1882,6 +1906,19 @@ Meteor.publish('feedbackDocuments', function(cursorStart, recordLimit){
   }
   this.ready();
 });
+
+//https://bulletproofmeteor.com/database-modeling/better-way-to-count-documents
+//  Meteor.publish('getMyCounters', function () {
+//    new Counter('total-feedback', FeedbackCollection.find());
+//  });
+
+
+//https://github.com/percolatestudio/publish-counts
+Meteor.publish('publication', function() {
+  Counts.publish(this, 'feedbackCounter', FeedbackCollection.find());
+});
+
+
 //Meteor.publish('feedbackDocuments', function(){
 //  if(Roles.userIsInRole(this.userId, 'admin')){
 //    Mongo.Collection._publishCursor( FeedbackCollection.find(), this, 'feedbackDocuments');
