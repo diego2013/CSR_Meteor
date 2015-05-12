@@ -317,6 +317,7 @@ Deps.autorun(function(){
     this.route('FeedbackForm'); //feedback form
     this.route('FeedbackFormThakYou'); //"thank you" page after submitting feedback
     this.route('feedbackReviewList' , function(){
+      Session.set('feedbackCursorStart', 0)
       this.render('feedbackListTable', {data : {  feedbackCol : feedbackCol.find({}, {sort: {createdAt: -1}}) }} );
     });
     this.route('/feedbackReview/:_id', function(){
@@ -566,18 +567,24 @@ Deps.autorun(function(){
     ,nextText : function(){
       total = Counts.get('feedbackCounter');
       minVal = Math.min(Number(Session.get('feedbackCursorStart')+ 2*Session.get('feedbackResultsPerPage')), total);
-      if(Number(Session.get('feedbackCursorStart'))+ Number(Session.get('feedbackResultsPerPage')) > Number(total))
+      if(Number(Session.get('feedbackCursorStart'))+ Number(Session.get('feedbackResultsPerPage')) > Number(total)){
+        $(".next").addClass('disabled');
         return ''
+      }
       else {
+        $(".next").removeClass('disabled');
         return (Number(Session.get('feedbackCursorStart'))+Number(Session.get('feedbackResultsPerPage'))+1) + " - " + minVal;  
       }
       //return Number(Session.get('feedbackCursorStart')+Session.get('feedbackResultsPerPage')+1) + " - " + Number(Session.get('feedbackCursorStart')+(2*Session.get('feedbackResultsPerPage')));  
         
     }
     ,prevText : function(){
-      if(Number(Session.get('feedbackCursorStart')) < Number(Session.get('feedbackResultsPerPage')))
+      if(Number(Session.get('feedbackCursorStart')) < Number(Session.get('feedbackResultsPerPage'))){
+        $(".previous").addClass('disabled');
         return '';
+      }
       else {
+        $(".previous").removeClass('disabled');
         return (Number(Session.get('feedbackCursorStart'))-Number(Session.get('feedbackResultsPerPage'))+1) + " - " +Number(Session.get('feedbackCursorStart'));
       }        
     }

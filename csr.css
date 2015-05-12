@@ -522,6 +522,6 @@ ul.fallback{
 .pager .disabled a,
 .pager .disabled a:hover {
   color: #999999;
-  background-color: #fff;
-  cursor: default;
+  background-color: #fff; /*#FF8080;*/
+  cursor: no-drop;
 }
