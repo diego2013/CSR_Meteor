@@ -71,7 +71,7 @@
 
     <textarea type="text" id="title" name="title" rows="1" cols="100" placeholder="Type to add a title" {{isScenarioReadOnly}}>{{title}}</textarea><br/>
     <label>Description</label><br/>
-    <textarea type="text" id="description" name="description" rows="4" cols="175" placeholder="Type to add a description" {{isScenarioReadOnly}}>{{description}}</textarea><br/>
+    <textarea type="text" id="description" name="description" rows="4" class="textAreaStyle" placeholder="Type to add a description" {{isScenarioReadOnly}}>{{description}}</textarea><br/>
 
 </template>
 
@@ -128,11 +128,11 @@
     <br/>
 
     <label>Describe Your Good Idea or Solution</label><br/>
-    <textarea type="text" id="solutionDescription" rows="4" cols="175" {{isScenarioReadOnly}}>{{solutionDescription}}</textarea><br/>
+    <textarea type="text" id="solutionDescription" rows="6" class="textAreaStyle" {{isScenarioReadOnly}}>{{solutionDescription}}</textarea><br/>
     <label>Benefits of the New System</label><br/>
-    <textarea type="text" id="benefitsDescription"  rows="4" cols="175" {{isScenarioReadOnly}}>{{benefitsDescription}}</textarea><br/>
+    <textarea type="text" id="benefitsDescription"  rows="5" class="textAreaStyle" {{isScenarioReadOnly}}>{{benefitsDescription}}</textarea><br/>
     <label>Foreseen Risks of the New System</label><br/>
-    <textarea type="text" id="risksDescription"  rows="4" cols="175" {{isScenarioReadOnly}}>{{risksDescription}}</textarea><br/>
+    <textarea type="text" id="risksDescription"  rows="5" class="textAreaStyle" {{isScenarioReadOnly}}>{{risksDescription}}</textarea><br/>
 </template>
 
 <!-- template to display some auditing information about the scenario -->
@@ -168,7 +168,7 @@
 <template name="hazardInput">
      <p>Describe current or possible risks to patient safety</p>
 
-    <table border="1">
+    <table class="div-chooseClinical" border="1">
         <tr>
             <th>Description</th>
             <th title="Likeness to Predict this Hazard">Predictability</th>
@@ -176,7 +176,7 @@
         </tr>
         <tr>
         
-            <td><textarea type="text" id="hazardDescription" rows="3" cols="40" placeholder="Type to add a Description" ></textarea></td>
+            <td><textarea type="text" id="hazardDescription" rows="3" cols="100" placeholder="Type to add a Description" ></textarea></td>
             <td><select id="hazardRisk">
                 <option value="Unknown" autofocus>Unknown</option>
                 <option value="Expected">Expected</option>
@@ -303,7 +303,7 @@
 <!-- Template for step : advanced details: Lessons Learned-->
 <template name="advancedDetailsLessonsLearned" >
     <p>What can be learned from this scenario?</p>
-    <textarea type="text" id="lesson" rows="4" cols="175" placeholder="Describe what can be learned from this scenario" {{isScenarioReadOnly}}>{{lessonsLearned}}</textarea><br/>
+    <textarea type="text" id="lesson" rows="4" class="textAreaStyle" placeholder="Describe what can be learned from this scenario" {{isScenarioReadOnly}}>{{lessonsLearned}}</textarea><br/>
     Do you think this incident could have been prevented or mitigated through better technology?
     <select id="preventable" value="yes">
         <option value ="notSure" {{selectedLessonLearned "notSure"}}>I am not sure</option>   
