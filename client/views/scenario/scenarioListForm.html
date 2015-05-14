@@ -1,27 +1,43 @@
 <!-- Template to list all scenarios -->
 <template name="scenarioListTable">
-	<p>Content of the database: {{scenarios.count}} scenarios</p>
-	<table >
-  <tr>
-    <th>created by</th>
-    <th></th>
-    <th>Scenario UID</th>
-    <th>Title</th>
-    <th>Description</th>
-    <th>Status</th>
-    <th>Saved last</th>
-  </tr>
-  		{{#each scenarios}}
-   	    	 <tr> {{ > scenarioRow }} </tr>
-   	    {{/each}}
-    </table>
+	<p>Content of the database: {{totalCount}} scenarios. {{paginationCaption}}
+    <label style="float:right;"> Show 
+      <select id="resultsPerPage" value="10">
+        <option value ="10" {{selectResultPerPage "10"}} >10</option>   
+        <option value ="25" {{selectResultPerPage "25"}} >25</option>   
+      </select>
+      results per page </label>
+  </p>
+
+	<table style="width:100%;">
+    <tr class="btn-turquesa">
+      <th>Created by</th>
+      <th >Link</th>
+      <th>Scenario UID</th>
+      <th>Title</th>
+      <th>Description</th>
+      <th>Status</th>
+      <th>Saved last</th>
+    </tr>
+    		{{#each scenarios}}
+     	    	 <tr style="text-align: center"> {{ > scenarioRow }} </tr>
+     	  {{/each}}
+  </table>
+
+  <div>
+    <ul class="pager">
+        <li class="previous disabled" id="previousButton"> <a href="#">&larr; {{prevText}}</a> </li>
+        <li id="nextButton"> <a href="#">{{nextText}} &rarr;</a> </li>
+    </ul>
+  </div> 
+
 </template>
 
 <!-- template with the informatio of a single scenario -->
 <template name="scenarioRow">
   
   	<td>{{username}}</td>
-  	<td><button id="visitScenario" style="width:100%" class="btn-orange" name={{_id}}>Visit Scenario</button> </td>
+  	<td class="thin-column"><button id="visitScenario" style="width:100%" class="btn-orange" name={{_id}}>Visit Scenario</button> </td>
   	<td>{{_id}} </td>
   	<td>{{trimLength title 45}} </td>
   	<td>{{trimLength description 50}} </td>

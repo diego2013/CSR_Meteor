@@ -123,7 +123,7 @@
 
 	<div>
 		<ul class="pager">
-  			<li class="previous"> <a href="#">&larr; {{prevText}}</a> </li>
+  			<li class="previous disabled" id="previousButton"> <a href="#">&larr; {{prevText}}</a> </li>
   			<li class="next"> <a href="#">{{nextText}} &rarr;</a> </li>
     	</ul>
 	</div> 
@@ -135,7 +135,7 @@
 <!-- Template to display a single feedback report -->
 <template name="feedbackReport">
     <td>{{username}}</td>
-  	<td><button id="seeFeedbackReport" style="width:100%" class="btn-orange"  name={{_id}}>See Report</button> </td>
+  	<td class="thin-column"><button id="seeFeedbackReport" style="width:100%" class="btn-orange"  name={{_id}}>See Report</button> </td>
   	<td>{{_id}} </td>
   	<td>{{formatDate createdAt}}  </td>
   	<td>{{reviewed}}</td>

@@ -211,6 +211,11 @@ header .hide-completed {
 	background: #99CCFF;
 }
 
+.thin-column{
+	width:1%; 
+	white-space:nowrap;
+}
+
 
 /*******************
 Navigation bar
@@ -523,5 +528,5 @@ ul.fallback{
 .pager .disabled a:hover {
   color: #999999;
   background-color: #fff; /*#FF8080;*/
-  cursor: no-drop;
+  cursor: no-drop !important;
 }

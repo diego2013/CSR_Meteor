@@ -54,10 +54,13 @@ if (Meteor.isClient) {
   Session.setDefault('feedbackCursorStart', 0);
   Session.setDefault('feedbackResultsPerPage', 10);
 
+  Session.setDefault('scenarioCursorStart', 0);
+  Session.setDefault('scenarioResultsPerPage', 10 /*25*/);
+
   //Meteor.subscribe("scenarios");
-  Meteor.subscribe('myScenarios');  //scenarios of the current user
-  Meteor.subscribe('scenariosAll'); //all available scenarios
-  Meteor.subscribe('scenariosAllApproved'); //all approved scenarios
+//  Meteor.subscribe('myScenarios');  //scenarios of the current user
+//  Meteor.subscribe('scenariosAll'); //all available scenarios
+//  Meteor.subscribe('scenariosAllApproved'); //all approved scenarios
   
   Meteor.subscribe('allUsersList');
   //Meteor.subscribe('feedbackDocuments', Session.get('feedbackCursorStart'), 10 /*limit*/);
@@ -68,6 +71,7 @@ if (Meteor.isClient) {
   MyScenarios = new Mongo.Collection('myScenarios');
   ScenariosAll = new Mongo.Collection('scenariosAll');
   scenariosAllApproved = new Mongo.Collection('scenariosAllApproved');
+  scenariosAllSubmitted = new Mongo.Collection('scenariosAllSubmitted');
   AllTheUsers = new Mongo.Collection('allUsersList');
   feedbackCol = new Mongo.Collection('feedbackDocuments')
   //currentUser = new Mongo.Collection('userdata');
@@ -95,7 +99,10 @@ Deps.autorun(function(){
   }
 
   //subscriptions
-  Meteor.subscribe('feedbackDocuments', Session.get('feedbackCursorStart'), Number(Session.get('feedbackResultsPerPage')) /*limit*/);
+  Meteor.subscribe('feedbackDocuments', Session.get('feedbackCursorStart'), Number(Session.get('feedbackResultsPerPage')));
+  Meteor.subscribe('myScenarios', Session.get('scenarioCursorStart'), Number(Session.get('scenarioResultsPerPage')));  //scenarios of the current user
+  Meteor.subscribe('scenariosAllSubmitted', Session.get('scenarioCursorStart'), Number(Session.get('scenarioResultsPerPage'))); //all available scenarios
+  Meteor.subscribe('scenariosAllApproved', Session.get('scenarioCursorStart'), Number(Session.get('scenarioResultsPerPage'))); //all approved scenarios
 });
 
 
@@ -245,16 +252,19 @@ Deps.autorun(function(){
     ); */
 
    this.route('scenarioList' , function(){
+     Session.set('scenarioCursorStart', 0);
      this.render('scenarioListTable', {data : { scenarios : MyScenarios.find({}, {sort: {createdAt: -1}}) }} );
    });
    this.route('approvedScenarioList' , function(){
+     Session.set('scenarioCursorStart', 0);
      this.render('scenarioListTable', {data : { scenarios : scenariosAllApproved.find({}) }} );
    });
    this.route('recentSubmissionsScenarioList' , function(){
+     Session.set('scenarioCursorStart', 0);
      if(!Roles.userIsInRole(Meteor.user(), ['admin'])){
         this.redirect('/');
      }else{
-        this.render('scenarioListTable', {data : { scenarios : ScenariosAll.find({status : scenarioStatusEnum.SUBMITTED}) }} );
+        this.render('scenarioListTable', {data : { scenarios : scenariosAllSubmitted.find({}) }} );
      }
    });
 
@@ -536,6 +546,67 @@ Deps.autorun(function(){
   });
 
 
+ Template.scenarioListTable.helpers({
+  //XXX this should take into account the current path route and use one counter or another
+    totalCount : function(){
+      var routeName = Router.current().route.getName();
+      return total = scenarioTotalCount(routeName);
+    }
+    ,paginationCaption : function(event, template){
+      total = scenarioTotalCount(Router.current().route.getName());
+      minVal = Math.min(Number(Session.get('scenarioCursorStart'))+Number(Session.get('scenarioResultsPerPage')), total);
+      return 'Showing results '+Number(Session.get('scenarioCursorStart')+1) + " to "+minVal+".";
+    }
+    ,nextText : function(){
+      var routeName = Router.current().route.getName();
+      total = scenarioTotalCount(routeName);
+      minVal = Math.min(Number(Session.get('scenarioCursorStart')+ 2*Session.get('scenarioResultsPerPage')), total);
+      if(Number(Session.get('scenarioCursorStart'))+ Number(Session.get('scenarioResultsPerPage')) > Number(total)){
+        $("#nextButton").addClass('disabled');
+        return ''
+      }
+      else {
+        $("#nextButton").removeClass('disabled');
+        return (Number(Session.get('scenarioCursorStart'))+Number(Session.get('scenarioResultsPerPage'))+1) + " - " + minVal;  
+      }
+    }
+    ,prevText : function(){
+      if(Number(Session.get('scenarioCursorStart')) < Number(Session.get('scenarioResultsPerPage'))){
+        $("#previousButton").addClass('disabled');
+        return '';
+      }
+      else {
+        $("#previousButton").removeClass('disabled');
+        return (Number(Session.get('scenarioCursorStart'))-Number(Session.get('scenarioResultsPerPage'))+1) + " - " +Number(Session.get('scenarioCursorStart'));
+      }        
+    }
+    ,selectResultPerPage : function(value){
+      current = Session.get('sceanrioResultsPerPage');
+      if(current)
+        return current == value? {selected:'selected'}: '';
+      else
+        return '';
+    }
+ });
+
+Template.scenarioListTable.rendered = function(){
+  //https://github.com/diego2013/CSR_Meteor/issues/47
+  //console.log('scenarioListTable has been rendered');
+  if(Number(Session.get('scenarioCursorStart')) < Number(Session.get('scenarioResultsPerPage'))){
+    $("#previousButton").addClass('previous disabled');
+  }else {
+    $("#previousButton").removeClass('disabled');
+  } 
+
+  var routeName = Router.current().route.getName();
+  total = scenarioTotalCount(routeName);
+  if(Number(Session.get('scenarioCursorStart'))+ Number(Session.get('scenarioResultsPerPage')) > Number(total)){
+    $("#nextButton").addClass('next disabled');
+  }else {
+    $("#nextButton").removeClass('disabled');
+  }
+}
+
  Template.userProfile.helpers({
    userLoggedIn : function(){
      return Meteor.userId();
@@ -580,11 +651,11 @@ Deps.autorun(function(){
     }
     ,prevText : function(){
       if(Number(Session.get('feedbackCursorStart')) < Number(Session.get('feedbackResultsPerPage'))){
-        $(".previous").addClass('disabled');
+        $("#previousButton").addClass('disabled');
         return '';
       }
       else {
-        $(".previous").removeClass('disabled');
+        $("#previousButton").removeClass('disabled');
         return (Number(Session.get('feedbackCursorStart'))-Number(Session.get('feedbackResultsPerPage'))+1) + " - " +Number(Session.get('feedbackCursorStart'));
       }        
     }
@@ -777,6 +848,11 @@ UI.registerHelper('getGuidelinesButtonClass' , function(){
     return '';
   }
 });
+
+//UI.registerHelper('getNextButtonClass' , function(){
+//  //console.log(JSON.stringify(obj));
+//  return 'next';
+//});
 
 /** returns a HTML string with the status of the scenario
 */
@@ -1274,6 +1350,27 @@ Template.feedbackListTable.events({
 Template.NavBar.events({
 });
 
+Template.scenarioListTable.events({
+"click .previous" : function(){
+  //make sure we have a minimum
+  //if ((x - y)>0) x = x-y;
+  if(Number(Session.get('scenarioCursorStart'))  > Number(Session.get('scenarioResultsPerPage')-1)){
+    Session.set('scenarioCursorStart', Number(Session.get('scenarioCursorStart'))-Number(Session.get('scenarioResultsPerPage')));
+  }
+}
+,"click .next" : function(){
+  var routeName = Router.current().route.getName();
+  scenarioCount = scenarioTotalCount(routeName);
+  if(Number(Session.get('scenarioCursorStart')) + Number(Session.get('scenarioResultsPerPage')) < scenarioCount)
+   Session.set('scenarioCursorStart', Number(Session.get('scenarioCursorStart'))+Number(Session.get('scenarioResultsPerPage')));
+}
+, "change #resultsPerPage" : function(event){
+  var newValue = $(event.target).val();
+  Session.set('scenarioCursorStart', 0);
+  Session.set('scenarioResultsPerPage', newValue);
+}
+});
+
 Template.scenarioRow.events({
   "click #visitScenario" : function(event){
     var currentPath = Router.current().route.getName()
@@ -1725,6 +1822,17 @@ var updateEnvironmentList = function(){
    return environmentEntryList;
 }
 
+var scenarioTotalCount = function(routeName){
+  if(routeName == 'scenarioList')
+    return Counts.get('myScenariosCounter');
+  else if(routeName == 'approvedScenarioList')
+    return Counts.get('approvedScenariosCounter');
+  else if(routeName == 'recentSubmissionsScenarioList')
+    return Counts.get('submittedScenariosCounter');
+  else
+    return '-'
+}
+
 
 }//meteor.isClient
 
@@ -1853,28 +1961,37 @@ if (Meteor.isServer) {
 
 
 //Publish all scenarios from the current user
-Meteor.publish('myScenarios', function(){
-    Mongo.Collection._publishCursor( Scenarios.find({owner: this.userId }), this, 'myScenarios'); 
+Meteor.publish('myScenarios', function(cursorStart, recordLimit){
+    Mongo.Collection._publishCursor( Scenarios.find({owner: this.userId }, {limit :recordLimit, skip : cursorStart}), this, 'myScenarios'); 
     this.ready();
 });
 
 //Publish all scenarios in the database 
-Meteor.publish('scenariosAll', function(){
+Meteor.publish('scenariosAll', function(cursorStart, recordLimit){
    // Old version
    // Mongo.Collection._publishCursor( Scenarios.find({}), this, 'scenariosAll'); 
    //
    if(Roles.userIsInRole(this.userId, 'admin'))
-        Mongo.Collection._publishCursor( Scenarios.find({}), this, 'scenariosAll'); //For admins, all scenarios
+        Mongo.Collection._publishCursor( Scenarios.find({}, {limit :recordLimit, skip : cursorStart}), this, 'scenariosAll'); //For admins, all scenarios
    else 
       // approved scenarios + those of this user OR condition
-      Mongo.Collection._publishCursor( Scenarios.find({$or: [ {status : scenarioStatusEnum.APPROVED}, {_id : this.userId} ]}), this, 'scenariosAll'); 
+      Mongo.Collection._publishCursor( Scenarios.find({$or: [ {status : scenarioStatusEnum.APPROVED}, {_id : this.userId} ]},
+        {limit :recordLimit, skip : cursorStart}), this, 'scenariosAll'); 
     
   this.ready();
 });
 
+//Publish all SUBMITTED scenarios in the database 
+Meteor.publish('scenariosAllSubmitted', function(cursorStart, recordLimit){
+  if(Roles.userIsInRole(this.userId, 'admin'))
+    Mongo.Collection._publishCursor( Scenarios.find({status : scenarioStatusEnum.SUBMITTED}, {limit :recordLimit, skip : cursorStart}), this, 'scenariosAllSubmitted'); 
+
+  this.ready();
+});
+
 //Publish all APPROVED scenarios in the database 
-Meteor.publish('scenariosAllApproved', function(){
-    Mongo.Collection._publishCursor( Scenarios.find({status : scenarioStatusEnum.APPROVED}), this, 'scenariosAllApproved'); 
+Meteor.publish('scenariosAllApproved', function(cursorStart, recordLimit){
+    Mongo.Collection._publishCursor( Scenarios.find({status : scenarioStatusEnum.APPROVED}, {limit :recordLimit, skip : cursorStart}), this, 'scenariosAllApproved'); 
     this.ready();
 });
 
@@ -1923,15 +2040,9 @@ Meteor.publish('feedbackDocuments', function(cursorStart, recordLimit){
 //https://github.com/percolatestudio/publish-counts
 Meteor.publish('publication', function() {
   Counts.publish(this, 'feedbackCounter', FeedbackCollection.find());
+  Counts.publish(this, 'myScenariosCounter', Scenarios.find({owner: this.userId }));
+  Counts.publish(this, 'approvedScenariosCounter', Scenarios.find({status : scenarioStatusEnum.APPROVED}));
+  Counts.publish(this, 'submittedScenariosCounter', Scenarios.find({status : scenarioStatusEnum.SUBMITTED}));
 });
-
-
-//Meteor.publish('feedbackDocuments', function(){
-//  if(Roles.userIsInRole(this.userId, 'admin')){
-//    Mongo.Collection._publishCursor( FeedbackCollection.find(), this, 'feedbackDocuments');
-//  }
-//  this.ready();
-//});
-
   
 }
