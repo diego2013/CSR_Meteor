@@ -52,7 +52,7 @@ var scenarioStatusEnum = {
 //CLIENT SIDE
 if (Meteor.isClient) {
   Session.setDefault('feedbackCursorStart', 0);
-  Session.setDefault('feedbackResultsPerPage', 10);
+  Session.setDefault('feedbackResultsPerPage', 10 /*25*/);
 
   Session.setDefault('scenarioCursorStart', 0);
   Session.setDefault('scenarioResultsPerPage', 10 /*25*/);
@@ -581,7 +581,7 @@ Deps.autorun(function(){
       }        
     }
     ,selectResultPerPage : function(value){
-      current = Session.get('sceanrioResultsPerPage');
+      current = Session.get('scenarioResultsPerPage');
       if(current)
         return current == value? {selected:'selected'}: '';
       else
@@ -601,6 +601,22 @@ Template.scenarioListTable.rendered = function(){
   var routeName = Router.current().route.getName();
   total = scenarioTotalCount(routeName);
   if(Number(Session.get('scenarioCursorStart'))+ Number(Session.get('scenarioResultsPerPage')) > Number(total)){
+    $("#nextButton").addClass('next disabled');
+  }else {
+    $("#nextButton").removeClass('disabled');
+  }
+}
+
+Template.feedbackListTable.rendered = function(){
+  //console.log("rendered feedbackListTable")
+  if(Number(Session.get('feedbackCursorStart')) < Number(Session.get('feedbackResultsPerPage'))){
+    $("#previousButton").addClass('previous disabled');
+  }else {
+    $("#previousButton").removeClass('disabled');
+  } 
+
+  total = Counts.get('feedbackCounter');
+  if(Number(Session.get('feedbackCursorStart'))+ Number(Session.get('feedbackResultsPerPage')) > Number(total)){
     $("#nextButton").addClass('next disabled');
   }else {
     $("#nextButton").removeClass('disabled');
