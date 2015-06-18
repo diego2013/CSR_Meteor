@@ -59,7 +59,7 @@ if (Meteor.isClient) {
 
   //Meteor.subscribe("scenarios");
 //  Meteor.subscribe('myScenarios');  //scenarios of the current user
-//  Meteor.subscribe('scenariosAll'); //all available scenarios
+  Meteor.subscribe('scenariosAll'); //all available scenarios
 //  Meteor.subscribe('scenariosAllApproved'); //all approved scenarios
   
   Meteor.subscribe('allUsersList');
@@ -219,14 +219,12 @@ Deps.autorun(function(){
     //Template displaying all the info of a scenario
     this.route('/scenarioComplete/:_id', function(){
       currentScenarioDTO = ScenariosAll.findOne({_id: this.params._id.trim()});
-      if(currentScenarioDTO===undefined || !Roles.userIsInRole(Meteor.user(), 'admin')
-        /*currentScenarioDTO.owner != Meteor.userId()*/){
+      if(currentScenarioDTO===undefined || !Roles.userIsInRole(Meteor.user(), ['admin']) /*currentScenarioDTO.owner != Meteor.userId()*/){
         Session.set('auxScenarioID', this.params._id);
         this.render('/findByIDErrorTemplate');
       }else{
         this.render('scenarioCompleteForm', {data: currentScenarioDTO});
-        Session.set("currentScenarioDTO", currentScenarioDTO); //Issue #3
-        
+        Session.set("currentScenarioDTO", currentScenarioDTO); //Issue #3 
       }
     });
 
@@ -264,8 +262,7 @@ Deps.autorun(function(){
      if(!Roles.userIsInRole(Meteor.user(), ['admin'])){
         this.redirect('/');
      }else{
-        this.render('scenarioListTable', {data : { scenarios : scenariosAllSubmitted.find({}) }} );
-        this.next();
+        this.render('scenarioListTable', {data : { scenarios : scenariosAllSubmitted.find({}) }});
      }
    });
 
@@ -1988,12 +1985,13 @@ Meteor.publish('scenariosAll', function(cursorStart, recordLimit){
    // Old version
    // Mongo.Collection._publishCursor( Scenarios.find({}), this, 'scenariosAll'); 
    //
-   if(Roles.userIsInRole(this.userId, 'admin'))
+   if(Roles.userIsInRole(this.userId, 'admin')){
         Mongo.Collection._publishCursor( Scenarios.find({}, {limit :recordLimit, skip : cursorStart}), this, 'scenariosAll'); //For admins, all scenarios
-   else 
+   }else{ 
       // approved scenarios + those of this user OR condition
       Mongo.Collection._publishCursor( Scenarios.find({$or: [ {status : scenarioStatusEnum.APPROVED}, {_id : this.userId} ]},
         {limit :recordLimit, skip : cursorStart}), this, 'scenariosAll'); 
+   }
     
   this.ready();
 });

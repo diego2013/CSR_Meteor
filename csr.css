@@ -46,7 +46,12 @@ body {
 
 .textAreaStyle{
 	width : 98%;
+	height: 30vh;
 	font-size : 10pt;
+}
+
+.solutionTextAreaStyle{
+	height: 20vh;
 }
 
 header {
