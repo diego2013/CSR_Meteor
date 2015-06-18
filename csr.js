@@ -265,6 +265,7 @@ Deps.autorun(function(){
         this.redirect('/');
      }else{
         this.render('scenarioListTable', {data : { scenarios : scenariosAllSubmitted.find({}) }} );
+        this.next();
      }
    });
 
