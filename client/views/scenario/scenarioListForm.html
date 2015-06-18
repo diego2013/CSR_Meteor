@@ -10,7 +10,8 @@
       results per page </label>
   </p>
 
-	<table style="width:100%;">
+
+	<table class="tablePijama">
     <tr class="btn-turquesa">
       <th>Created by</th>
       <th >Link</th>
@@ -20,9 +21,11 @@
       <th>Status</th>
       <th>Saved last</th>
     </tr>
-    		{{#each scenarios}}
-     	    	 <tr style="text-align: center"> {{ > scenarioRow }} </tr>
-     	  {{/each}}
+
+        {{#each scenarios}}
+             <tr style="text-align: center"> {{ > scenarioRow }} </tr>
+        {{/each}}
+
   </table>
 
   <div>
@@ -37,6 +40,7 @@
 <!-- template with the informatio of a single scenario -->
 <template name="scenarioRow">
   
+
   	<td>{{username}}</td>
   	<td class="thin-column"><button id="visitScenario" style="width:100%" class="btn-orange" name={{_id}}>Visit Scenario</button> </td>
   	<td>{{_id}} </td>
@@ -44,5 +48,6 @@
   	<td>{{trimLength description 50}} </td>
   	<td>{{status}} </td>
     <td>{{formatDate modifiedAt}}  </td>
+
 
 </template>

@@ -1,8 +1,8 @@
 <!-- Template to list all users -->
 <template name="userList">
-	<p>Content of the database: {{count usuarios}} Users</p>
-	<table>
-		<tr>
+	<p>Content of the database: {{totalCount}}  Users</p>
+	<table  class="tablePijama">
+		<tr class="btn-turquesa">
 			<th>username</th>
 			<th>email</th>
 			<th>verified</th>
@@ -19,7 +19,7 @@
 
 <!-- Template-row to display the info of a single user -->
 <template name="userProf">
-  <tr class="{{getTablePijamaClass index}}">
+  <tr style="text-align: center">
   <td><button id="seeUser" style="width:100%" class="btn-orange" name={{_id}}>{{username}}</button></td>
   <td >{{getEmail emails}}</td>
   <td>{{isVerifiedEmail emails}}</td>

@@ -266,20 +266,36 @@ Deps.autorun(function(){
      }
    });
 
-   this.route('usersList', {
-    template : 'userList' ,//'userListTemplate',
-    onBeforeAction : function(){
+
+   this.route('usersList', function(){
+
+        //this.render('userList', {data: {usuarios : AllTheUsers.find()}});
+        //this.next();
       if(Meteor.loggingIn()){//if login method is currently in progress
         this.render(this.loadingTemplate);
       }else if(!Roles.userIsInRole(Meteor.user(), ['admin'])){
         this.redirect('/');
       }else{
-        //this.render('userListTemplate');
-        this.next();
+        this.render('userList', {data: {usuarios : AllTheUsers.find()}});
+        //this.next();
       }
-      
-    }
    });
+
+   // this.route('usersList', {
+   //  template : 'userList' ,//'userListTemplate',
+   //  data : AllTheUsers.find(),
+   //  onBeforeAction : function(){
+   //    if(Meteor.loggingIn()){//if login method is currently in progress
+   //      this.render(this.loadingTemplate, {data: AllTheUsers.find()});
+   //    }else if(!Roles.userIsInRole(Meteor.user(), ['admin'])){
+   //      this.redirect('/');
+   //    }else{
+   //      //this.render('userListTemplate');
+   //      this.next();
+   //    }
+      
+   //  }
+   // });
 
 
 ////This is working code and is the version that should fly.
@@ -631,13 +647,16 @@ Template.feedbackListTable.rendered = function(){
  });
 
  Template.userList.helpers({
-    usuarios: function () {
-      //added maping function so there is an index associated with each document
-      return AllTheUsers.find().map(function(document, index){
-            document.index = index;
-            return document;
-          });
-    },
+    // usuarios: function () {
+    //   //added maping function so there is an index associated with each document
+    //   return AllTheUsers.find().map(function(document, index){
+    //         document.index = index;
+    //         return document;
+    //       });
+    // },
+    totalCount : function(){
+      return Counts.get('usersListCounter');
+    }
  });
 
  Template.feedbackListTable.helpers({
@@ -758,17 +777,17 @@ UI.registerHelper('selectedLessonLearned', function( value){
 });
 
 
-UI.registerHelper('getTablePijamaClass', function(index){
+// UI.registerHelper('getTablePijamaClass', function(index){
 
-//  if(typeof index != 'number')
-//    index2 = parseInt(index);
+// //  if(typeof index != 'number')
+// //    index2 = parseInt(index);
 
-  if(index%2==0)
-    return "tablePijamaEvenRow";
-  else 
-    return "tablePijamaOddRow";
+//   if(index%2==0)
+//     return "tablePijamaEvenRow";
+//   else 
+//     return "tablePijamaOddRow";
 
-});
+// });
 
 /** Return the length of an arrayObject
 */
@@ -2058,6 +2077,7 @@ Meteor.publish('publication', function() {
   Counts.publish(this, 'myScenariosCounter', Scenarios.find({owner: this.userId }));
   Counts.publish(this, 'approvedScenariosCounter', Scenarios.find({status : scenarioStatusEnum.APPROVED}));
   Counts.publish(this, 'submittedScenariosCounter', Scenarios.find({status : scenarioStatusEnum.SUBMITTED}));
+  Counts.publish(this, 'usersListCounter', Meteor.users.find());
 });
   
 }

@@ -216,6 +216,15 @@ header .hide-completed {
 	background: #99CCFF;
 }
 
+.tablePijama{
+	width: 100%;
+}
+
+.tablePijama tr:nth-child(2n+3){
+	background: #F5FAFF;
+
+}
+
 .thin-column{
 	width:1%; 
 	white-space:nowrap;
