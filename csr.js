@@ -217,12 +217,22 @@ Deps.autorun(function(){
     });
 
     //Template displaying all the info of a scenario
+    // Issue #49. We do this to review scenarios -> need admin priviledges
+    // or to see approved scenarios
+    // We also need to protect the scenario from being displayed directly with the url
     this.route('/scenarioComplete/:_id', function(){
       currentScenarioDTO = ScenariosAll.findOne({_id: this.params._id.trim()});
-      if(currentScenarioDTO===undefined || !Roles.userIsInRole(Meteor.user(), ['admin']) /*currentScenarioDTO.owner != Meteor.userId()*/){
+      if(currentScenarioDTO==undefined ){
         Session.set('auxScenarioID', this.params._id);
         this.render('/findByIDErrorTemplate');
-      }else{
+      }else if(currentScenarioDTO.owner == Meteor.userId()){//scenario belongs to user
+        this.render('scenarioCompleteForm', {data: currentScenarioDTO});
+        Session.set("currentScenarioDTO", currentScenarioDTO);
+      }else if(!Roles.userIsInRole(Meteor.user(), ['admin']) && currentScenarioDTO.status != scenarioStatusEnum.APPROVED){
+        // a non-admin trying to reach a non-approved scenario
+        Session.set('auxScenarioID', this.params._id);
+        this.render('/findByIDErrorTemplate');
+      }else{//rest of cases
         this.render('scenarioCompleteForm', {data: currentScenarioDTO});
         Session.set("currentScenarioDTO", currentScenarioDTO); //Issue #3 
       }
@@ -268,9 +278,6 @@ Deps.autorun(function(){
 
 
    this.route('usersList', function(){
-
-        //this.render('userList', {data: {usuarios : AllTheUsers.find()}});
-        //this.next();
       if(Meteor.loggingIn()){//if login method is currently in progress
         this.render(this.loadingTemplate);
       }else if(!Roles.userIsInRole(Meteor.user(), ['admin'])){
@@ -1992,6 +1999,8 @@ if (Meteor.isServer) {
   //  ]*/
   //});
 
+//PUBLICATIONS
+//http://www.meteorpedia.com/read/Understanding_Meteor_Publish_and_Subscribe
 
 //Publish all scenarios from the current user
 Meteor.publish('myScenarios', function(cursorStart, recordLimit){
@@ -2001,6 +2010,7 @@ Meteor.publish('myScenarios', function(cursorStart, recordLimit){
 
 //Publish all scenarios in the database 
 Meteor.publish('scenariosAll', function(cursorStart, recordLimit){
+  //XXX parameter s cursorStart and recordLimit should actually be ignored for this publication
    // Old version
    // Mongo.Collection._publishCursor( Scenarios.find({}), this, 'scenariosAll'); 
    //
@@ -2008,7 +2018,7 @@ Meteor.publish('scenariosAll', function(cursorStart, recordLimit){
         Mongo.Collection._publishCursor( Scenarios.find({}, {limit :recordLimit, skip : cursorStart}), this, 'scenariosAll'); //For admins, all scenarios
    }else{ 
       // approved scenarios + those of this user OR condition
-      Mongo.Collection._publishCursor( Scenarios.find({$or: [ {status : scenarioStatusEnum.APPROVED}, {_id : this.userId} ]},
+      Mongo.Collection._publishCursor( Scenarios.find({$or: [ {status : scenarioStatusEnum.APPROVED}, {owner : this.userId} ]},
         {limit :recordLimit, skip : cursorStart}), this, 'scenariosAll'); 
    }
     
