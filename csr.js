@@ -204,6 +204,7 @@ Deps.autorun(function(){
         }
       });
 
+
 //Template to confirm submission of scenario
     this.route('scenarioFormThankYou',  function () {
        currentScenarioDTO = Session.get("currentScenarioDTO"); 

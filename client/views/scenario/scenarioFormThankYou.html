@@ -1,11 +1,23 @@
 <!-- Template to thank the user for his/her contribution and suggest the Feedback survey-->
 <template name="scenarioFormThankYou">
-    Thank you for you contribution. <br/>
 
-    <p>Your scenario was persited in the <em>Clinical Scenario Repository </em> with the unique identifier: <br/></p>
 
-    <b>{{_id}}</b>
+    <h2>Thank you for you contribution. </h2>
 
-    <p>Please, consider <a href="{{ pathFor 'FeedbackForm' }}">taking a brief survey </a> about your experience using this tool to help imporving this Clinical Scenario Repository.</p>
+	<div style="text-align: justify;">
+    <p>Your scenario was persisted in the <em>Clinical Scenario Repository </em> with the unique identifier: <strong>{{_id}}</strong>.
+    Remember that you can always review your contributions from the <a href="{{ pathFor 'scenarioList' }}"><em>My Scenarios</em></a> option under the <em>Search Scenarios</em> menu on the navigation bar.
+    </p>
+
+    <p>Please, consider <a href="{{ pathFor 'FeedbackForm' }}">taking a brief survey </a> about your experience using this tool to help improving this Clinical Scenario Repository. Your valuable opinion will help us to build a better tool, that will in turn improve the quality of the information contained in this repository.</p>
+
+    <p>
+    	Your scenario "<em>{{title}}</em>" will be evaluated by a group of trusted reviewers, which will assess the relevance of its content, potentially modifying your original submission just for information de-identification purposes, prior to publicly publishing the scenario on this site (making it available to all the site's visitors, whether they are registered users or anonymous visitors).
+    </p>
+
+    <p>
+    	Different kind of professionals will benefit of the content that you provided by gaining awareness or more knowledge of potentially dangerous situations. 
+    </p>
+    </div>
 
 </template>
