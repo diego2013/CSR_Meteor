@@ -44,16 +44,21 @@ body {
 	background : #CCE6FF;
 }
 
+/* regular text areas (scenario panel) */
 .textAreaStyle{
 	width : 98%;
 	height: 30vh;
 	font-size : 10pt;
 }
 
+/* text areas for solution tab or reduced panels */
 .solutionTextAreaStyle{
+	width : 98%;
 	height: 20vh;
+	font-size : 10pt;
 }
 
+/* text areas for the feedback panel */
 .feedbackTextAreaStyle{
 	width : 98%;
 	height: 10vh;
