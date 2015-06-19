@@ -54,6 +54,12 @@ body {
 	height: 20vh;
 }
 
+.feedbackTextAreaStyle{
+	width : 98%;
+	height: 10vh;
+	font-size : 10pt;
+}
+
 header {
   background: #d2edf4;
   
