@@ -1,6 +1,15 @@
 <!-- Template to list all users -->
 <template name="userList">
-	<p>Content of the database: {{totalCount}}  Users</p>
+	<p>Content of the database: {{totalCount}}  Users. {{PaginationCaption}}
+	    <label style="float:right;"> Show 
+      <select id="resultsPerPage" value="10">
+        <option value ="10" {{selectResultPerPage "10"}} >10</option>
+        <option value ="25" {{selectResultPerPage "25"}} >25</option>   
+        <option value ="50" {{selectResultPerPage "50"}} >50</option>   
+      </select>
+      results per page </label>
+    </p>
+
 	<table  class="tablePijama">
 		<tr class="btn-turquesa">
 			<th>username</th>
@@ -14,6 +23,13 @@
         {{ > userProf }}
       {{/each}}
 	</table>
+
+  <div style="margin-top:10px;">
+    <ul class="pager">
+        <li class="previous disabled" id="previousButton"> <a href="#">&larr; {{prevText}}</a> </li>
+        <li class="next" id="nextButton"> <a href="#">{{nextText}} &rarr;</a> </li>
+    </ul>
+  </div> 
 
 </template>
 

@@ -57,12 +57,15 @@ if (Meteor.isClient) {
   Session.setDefault('scenarioCursorStart', 0);
   Session.setDefault('scenarioResultsPerPage', 10 /*25*/);
 
+  Session.setDefault('userListCursorStart', 0);
+  Session.setDefault('userListResultsPerPage', 10 /*25*/);
+
   //Meteor.subscribe("scenarios");
 //  Meteor.subscribe('myScenarios');  //scenarios of the current user
   Meteor.subscribe('scenariosAll'); //all available scenarios
 //  Meteor.subscribe('scenariosAllApproved'); //all approved scenarios
   
-  Meteor.subscribe('allUsersList');
+  // Meteor.subscribe('allUsersList');
   //Meteor.subscribe('feedbackDocuments', Session.get('feedbackCursorStart'), 10 /*limit*/);
   //Meteor.subscribe('userdata');
   Meteor.subscribe('publication');
@@ -103,6 +106,8 @@ Deps.autorun(function(){
   Meteor.subscribe('myScenarios', Session.get('scenarioCursorStart'), Number(Session.get('scenarioResultsPerPage')));  //scenarios of the current user
   Meteor.subscribe('scenariosAllSubmitted', Session.get('scenarioCursorStart'), Number(Session.get('scenarioResultsPerPage'))); //all available scenarios
   Meteor.subscribe('scenariosAllApproved', Session.get('scenarioCursorStart'), Number(Session.get('scenarioResultsPerPage'))); //all approved scenarios
+  Meteor.subscribe('allUsersList', Session.get('userListCursorStart'), Number(Session.get('userListResultsPerPage')));//all available users
+
 });
 
 
@@ -645,6 +650,21 @@ Template.feedbackListTable.rendered = function(){
   }
 }
 
+Template.userList.rendered = function(){
+  if(Number(Session.get('userListCursorStart')) < Number(Session.get('userListResultsPerPage'))){
+    $("#previousButton").addClass('previous disabled');
+  }else {
+    $("#previousButton").removeClass('disabled');
+  } 
+
+  total = Counts.get('usersListCounter');
+  if(Number(Session.get('userListCursorStart'))+ Number(Session.get('userListResultsPerPage')) > Number(total)){
+    $("#nextButton").addClass('next disabled');
+  }else {
+    $("#nextButton").removeClass('disabled');
+  }
+}
+
  Template.userProfile.helpers({
    userLoggedIn : function(){
      return Meteor.userId();
@@ -655,15 +675,42 @@ Template.feedbackListTable.rendered = function(){
  });
 
  Template.userList.helpers({
-    // usuarios: function () {
-    //   //added maping function so there is an index associated with each document
-    //   return AllTheUsers.find().map(function(document, index){
-    //         document.index = index;
-    //         return document;
-    //       });
-    // },
     totalCount : function(){
       return Counts.get('usersListCounter');
+    }
+    ,paginationCaption : function(){
+      total = Counts.get('usersListCounter');
+      minVal = Math.min(Number(Session.get('userListCursorStart'))+Number(Session.get('userListResultsPerPage')), total);
+      return 'Showing results '+Number(Session.get('userListCursorStart')+1) + " to "+minVal+".";
+    }
+    ,nextText : function(){
+      total = Counts.get('usersListCounter');
+      minVal = Math.min(Number(Session.get('userListCursorStart')+ 2*Session.get('userListResultsPerPage')), total);
+      if(Number(Session.get('userListCursorStart'))+ Number(Session.get('userListResultsPerPage')) > Number(total)){
+        $(".next").addClass('disabled');
+        return ''
+      }
+      else {
+        $(".next").removeClass('disabled');
+        return (Number(Session.get('userListCursorStart'))+Number(Session.get('userListResultsPerPage'))+1) + " - " + minVal;  
+      }
+    }
+    ,prevText : function(){
+      if(Number(Session.get('userListCursorStart')) < Number(Session.get('userListResultsPerPage'))){
+        $("#previousButton").addClass('disabled');
+        return '';
+      }
+      else {
+        $("#previousButton").removeClass('disabled');
+        return (Number(Session.get('userListCursorStart'))-Number(Session.get('userListResultsPerPage'))+1) + " - " +Number(Session.get('userListCursorStart'));
+      }        
+    }
+    ,selectResultPerPage : function(value){
+      current = Session.get('userListResultsPerPage');
+      if(current)
+        return current == value? {selected:'selected'}: '';
+      else
+        return '';
     }
  });
 
@@ -1366,6 +1413,26 @@ Template.feedbackReview.events({
   }
 });
 
+Template.userList.events({
+"click .previous" : function(){
+  //make sure we have a minimum
+  //if ((x - y)>0) x = x-y;
+  if(Number(Session.get('userListCursorStart'))  > Number(Session.get('userListResultsPerPage')-1)){
+    Session.set('userListCursorStart', Number(Session.get('userListCursorStart'))-Number(Session.get('userListResultsPerPage')));
+  }
+}
+,"click .next" : function(){
+  //XXX check that this is not going "out of range"
+  if(Number(Session.get('userListCursorStart')) + Number(Session.get('userListResultsPerPage')) < Counts.get('usersListCounter'))
+   Session.set('userListCursorStart', Number(Session.get('userListCursorStart'))+Number(Session.get('userListResultsPerPage')));
+}
+, "change #resultsPerPage" : function(event){
+  var newValue = $(event.target).val();
+  Session.set('userListCursorStart', 0);
+  Session.set('userListResultsPerPage', newValue);
+}
+});
+
 Template.feedbackListTable.events({
 "click .previous" : function(){
   //make sure we have a minimum
@@ -2058,9 +2125,17 @@ Meteor.publish("allUsersList", function(){
 
 /** Publishes a list of all the users the current user is allowed to see, based on the user's role
 */
-Meteor.publish('allUsersList', function(){
+// Meteor.publish('allUsersList', function(){
+//   if(Roles.userIsInRole(this.userId, 'admin')){
+//     Mongo.Collection._publishCursor( Meteor.users.find(), this, 'allUsersList');
+//   }else{
+//     Mongo.Collection._publishCursor( Meteor.users.find({_id : this.userId}), this, 'allUsersList'); 
+//   } 
+//   this.ready();
+// });
+Meteor.publish('allUsersList', function(cursorStart, recordLimit){
   if(Roles.userIsInRole(this.userId, 'admin')){
-    Mongo.Collection._publishCursor( Meteor.users.find(), this, 'allUsersList');
+    Mongo.Collection._publishCursor( Meteor.users.find({}, {limit :recordLimit, skip : cursorStart}), this, 'allUsersList');
   }else{
     Mongo.Collection._publishCursor( Meteor.users.find({_id : this.userId}), this, 'allUsersList'); 
   } 
