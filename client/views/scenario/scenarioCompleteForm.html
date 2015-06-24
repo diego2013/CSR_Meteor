@@ -12,7 +12,9 @@
     <a href="#"  id="returnScenario"  class="btn btn-small btn-blue" title="Return this scenario to its submitter for clarification" >Return Scenario</a>
      -->
 {{else}}
-    <a href="#"  id="lockButton"  class="btn btn-small btn-blue" title="Enable modification" >Unlock Modification</a>
+    {{#if userHasRole 'admin'}}
+     <a href="#"  id="lockButton"  class="btn btn-small btn-blue" title="Enable modification" >Unlock Modification</a>
+    {{/if}}
 {{/if}}
 
 {{#if canApproveScenario}}

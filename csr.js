@@ -568,7 +568,6 @@ Deps.autorun(function(){
         return Meteor.userId()==currentScenarioDTO.lockOwnerID;
       }else
         return true;
-
     }
   });
 
@@ -923,6 +922,12 @@ UI.registerHelper('isScenarioReadOnly', function(){
 UI.registerHelper('isScenarioLocked', function(){
   currentScenarioDTO = Session.get('currentScenarioDTO');
   return isScenarioLocked(currentScenarioDTO);
+});
+
+/** Returns a boolean that indicates if the user has a certain role
+*/
+UI.registerHelper('userHasRole', function(role){
+  return Roles.userIsInRole(Meteor.user(), [role]) ;
 });
 
 
