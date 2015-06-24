@@ -443,7 +443,6 @@ Deps.autorun(function(){
     } 
     //returns if the current scenario is approved
     ,isApproved : function(){
-      console.log(this.status == scenarioStatusEnum.APPROVED)
       return this.status == scenarioStatusEnum.APPROVED;
     }
     /** Indicates if the ACK button should be displayed:
@@ -584,7 +583,7 @@ Deps.autorun(function(){
       if(currentScenarioDTO && currentScenarioDTO.lockOwnerID)
         return ("Scenario is unlocked to user "+currentScenarioDTO.lockOwnerID);
       else
-        return "Scenario is locked for modification";
+        return "Scenario is locked to modification";
     }
     /** retruns true if current user can approve the scenario
     The current user could perform the action to approve a scenario if
