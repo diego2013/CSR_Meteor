@@ -19,6 +19,13 @@ body {
   font-size: 14px;
 }
 
+#webtitle{
+	font-size : 28px; 
+	color : #606060 ; 
+	text-align : justify; 
+	text-shadow : 1px 1px black;
+}
+
 .centered{
   margin-left:5%;
   margin-right:5%;
