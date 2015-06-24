@@ -12,6 +12,7 @@ Scenarios = new Mongo.Collection("scenarios");
 //AllScenarios = new Mongo.Collection("scenariosAll");
 FeedbackCollection = new Mongo.Collection("FeedbackCollection");
 //AllTheUsers = Meteor.users; //new Mongo.Collection(Meteor.users);
+ScenarioAcks = new Mongo.Collection("ScenarioAcks");
 
 //Var
 
@@ -78,6 +79,8 @@ if (Meteor.isClient) {
   AllTheUsers = new Mongo.Collection('allUsersList');
   feedbackCol = new Mongo.Collection('feedbackDocuments')
   //currentUser = new Mongo.Collection('userdata');
+  scenarioAcks = new Mongo.Collection("scenarioAcks");
+  Meteor.subscribe('scenarioAcks')
 
 
  
@@ -438,6 +441,36 @@ Deps.autorun(function(){
       else
         return currentScenarioDTO.hazardEntryList;
     } 
+    //returns if the current scenario is approved
+    ,isApproved : function(){
+      console.log(this.status == scenarioStatusEnum.APPROVED)
+      return this.status == scenarioStatusEnum.APPROVED;
+    }
+    /** Indicates if the ACK button should be displayed:
+    1- Current user doesn't own the scenario
+    2- Current user didn't vote already for the scenario
+    3- User is logged In (not an anonymous user)
+    */
+    ,displayAckButton : function(){
+      scenarioDTO = this;
+
+      if(!Meteor.user()) //anonymous user
+        return false;
+
+      if(scenarioDTO.owner === Meteor.userId())
+        return false;
+
+      var obj = scenarioAcks.findOne({_id : scenarioDTO._id+Meteor.userId()});
+
+      if(obj)
+        return false;
+
+      return true;
+    }
+    //returns the number of users who acknowledged this scenario
+    ,acknowledgersCount : function(){
+      return scenarioAcks.find({scnID : this._id}).count();
+    }
   });
 
   Template.advancedDetailsEquipment.helpers({
@@ -1310,8 +1343,6 @@ Template.scenarioCompleteForm.events({
                 Session.set('currentScenarioDTO', callbackScenarioDTO);
             }
       }); 
-
-
   }
   ,"click #discardChanges" : function(){
   }
@@ -1343,6 +1374,21 @@ Template.scenarioCompleteForm.events({
           }); 
     }
 
+  }
+  ,"mouseover #like" : function(){
+    var mybutton = $('a#like');
+    var text = 'ACKnowledge this scenario if you have heard or experieced a similar problem,'+
+    ' or if you think this problem is important and requires attention from the community';
+    mybutton.attr('title', text);
+    //console.log(mybutton);
+  }
+  ,"click #like" : function(){
+
+    // console.log("userID: "+Meteor.userId());
+    // console.log("scenarioID: "+this._id);
+    Meteor.call("persistACK", this._id, Meteor.userId()); //add a callback function for the case insert fails?
+
+    // Meteor.Call("persistACK", scenarioID, userID, callbackfunction());
   }
 
 });
@@ -2052,6 +2098,16 @@ Meteor.methods({
     Scenarios.update(currentScenarioDTO._id, currentScenarioDTO);
     return currentScenarioDTO;
   }
+  //persist a scenario ACK
+  ,persistACK : function (scenarioID, userID){
+    var ack = {
+      _id : scenarioID + userID,
+      scnID : scenarioID,
+      userID : userID
+    }
+
+    ScenarioAcks.insert(ack);
+  }
 });
 
 
@@ -2169,6 +2225,13 @@ Meteor.publish('publication', function() {
   Counts.publish(this, 'approvedScenariosCounter', Scenarios.find({status : scenarioStatusEnum.APPROVED}));
   Counts.publish(this, 'submittedScenariosCounter', Scenarios.find({status : scenarioStatusEnum.SUBMITTED}));
   Counts.publish(this, 'usersListCounter', Meteor.users.find());
+});
+
+
+//Publish all scenario ACKs
+Meteor.publish('scenarioAcks', function(){
+    Mongo.Collection._publishCursor( ScenarioAcks.find(), this, 'scenarioAcks'); 
+    this.ready();
 });
   
 }

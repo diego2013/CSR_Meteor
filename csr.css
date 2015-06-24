@@ -201,6 +201,18 @@ header .hide-completed {
 	color:red;
 }
 
+.decentText{
+	font-size: 18px;
+	display:inline-block;
+	zoom:1;
+	vertical-align:bottom;
+	text-align:center;
+	margin: 10px 5px 15px 5px;
+	text-decoration:none;
+	font-weight:900;
+	font-family:'Helvetica Neue', Helvetica, Arial, sans-serif;
+}
+
 /* divs for choose clinical role or environment*/
 .div-chooseClinical{
 	display: table-cell; 

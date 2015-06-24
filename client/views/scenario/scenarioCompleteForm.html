@@ -17,9 +17,21 @@
     {{/if}}
 {{/if}}
 
+
+
 {{#if canApproveScenario}}
     <a href="#"  id="approveScenario"  class="btn btn-small btn-blue" title="Approve Scenario">Approve Scenario</a>
 {{/if}}
+
+{{#if isApproved}}
+    {{#if displayAckButton}}
+        <a href="#"  id="like"  class="btn btn-small btn-purple" title="Acknowledge the Scenario">ACK Scenario</a>
+    {{/if}}
+
+    <label class="decentText">{{acknowledgersCount}} users acknowledged this scenario</label>
+{{/if}}
+
+
 </div>
 
 <div style="text-align:center; background:#FF9900"  >
