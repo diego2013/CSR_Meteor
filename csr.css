@@ -256,7 +256,8 @@ header .hide-completed {
 }
 
 .thin-column{
-	width:1%; 
+	/*width:1%; */
+	/*display: inline-block;*/
 	white-space:nowrap;
 }
 
