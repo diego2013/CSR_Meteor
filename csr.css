@@ -255,6 +255,10 @@ header .hide-completed {
 
 }
 
+.clickableHeader{
+	cursor: pointer;
+}
+
 .thin-column{
 	/*width:1%; */
 	/*display: inline-block;*/

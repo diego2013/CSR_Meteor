@@ -60,6 +60,7 @@ if (Meteor.isClient) {
 
   Session.setDefault('userListCursorStart', 0);
   Session.setDefault('userListResultsPerPage', 10 /*25*/);
+  Session.setDefault('userListOrder', {param : 'createdAt', order : 1});
 
   //Meteor.subscribe("scenarios");
 //  Meteor.subscribe('myScenarios');  //scenarios of the current user
@@ -109,7 +110,7 @@ Deps.autorun(function(){
   Meteor.subscribe('myScenarios', Session.get('scenarioCursorStart'), Number(Session.get('scenarioResultsPerPage')));  //scenarios of the current user
   Meteor.subscribe('scenariosAllSubmitted', Session.get('scenarioCursorStart'), Number(Session.get('scenarioResultsPerPage'))); //all available scenarios
   Meteor.subscribe('scenariosAllApproved', Session.get('scenarioCursorStart'), Number(Session.get('scenarioResultsPerPage'))); //all approved scenarios
-  Meteor.subscribe('allUsersList', Session.get('userListCursorStart'), Number(Session.get('userListResultsPerPage')));//all available users
+  Meteor.subscribe('allUsersList', Session.get('userListCursorStart'), Number(Session.get('userListResultsPerPage')), Session.get('userListOrder'));//all available users
 
 });
 
@@ -292,26 +293,17 @@ Deps.autorun(function(){
       }else if(!Roles.userIsInRole(Meteor.user(), ['admin'])){
         this.redirect('/');
       }else{
-        this.render('userList', {data: {usuarios : AllTheUsers.find()}});
+        var obj = Session.get('userListOrder');
+        var objSort = {};//object to sort the cursor
+        objSort[obj.param]= obj.order;
+
+        this.render('userList',  
+          // {data: {usuarios : AllTheUsers.find() }});
+          {data: {usuarios : AllTheUsers.find( {}, {sort: objSort} ) }});
+         //{data: {usuarios : AllTheUsers.find( {}, {sort: {"_id" : obj.order}} ) }});
         //this.next();
       }
    });
-
-   // this.route('usersList', {
-   //  template : 'userList' ,//'userListTemplate',
-   //  data : AllTheUsers.find(),
-   //  onBeforeAction : function(){
-   //    if(Meteor.loggingIn()){//if login method is currently in progress
-   //      this.render(this.loadingTemplate, {data: AllTheUsers.find()});
-   //    }else if(!Roles.userIsInRole(Meteor.user(), ['admin'])){
-   //      this.redirect('/');
-   //    }else{
-   //      //this.render('userListTemplate');
-   //      this.next();
-   //    }
-      
-   //  }
-   // });
 
 
 ////This is working code and is the version that should fly.
@@ -1481,6 +1473,19 @@ Template.userList.events({
   Session.set('userListCursorStart', 0);
   Session.set('userListResultsPerPage', newValue);
 }
+,"click #cabecera" : function(event){
+   var obj = Session.get('userListOrder'); 
+   var name = event.target.getAttribute("name");
+   if(obj && name){
+      obj['param'] = name;
+      obj['order'] *=  -1;
+   }else{
+      obj = {};
+      obj['param'] = obj['param'] ? name : "username"; // "username" will be "default" val
+      obj['order'] =  1;
+   }
+   Session.set( 'userListOrder', obj );
+}
 });
 
 Template.feedbackListTable.events({
@@ -2193,9 +2198,17 @@ Meteor.publish("allUsersList", function(){
 //   } 
 //   this.ready();
 // });
-Meteor.publish('allUsersList', function(cursorStart, recordLimit){
+Meteor.publish('allUsersList', function(cursorStart, recordLimit, obj){
   if(Roles.userIsInRole(this.userId, 'admin')){
-    Mongo.Collection._publishCursor( Meteor.users.find({}, {limit :recordLimit, skip : cursorStart}), this, 'allUsersList');
+
+    var objSort = {};//object to sort the cursor
+    if(obj){
+      objSort[obj.param] = obj.order;
+    }else{
+      objSort['username'] = 1;
+    }
+    
+    Mongo.Collection._publishCursor( Meteor.users.find({}, {limit :recordLimit, skip : cursorStart, sort : objSort}), this, 'allUsersList');
   }else{
     Mongo.Collection._publishCursor( Meteor.users.find({_id : this.userId}), this, 'allUsersList'); 
   } 

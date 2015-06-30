@@ -11,13 +11,13 @@
     </p>
 
 	<table  class="tablePijama">
-		<tr class="btn-turquesa">
-			<th>username</th>
-			<th>email</th>
-			<th>verified</th>
-			<th>current roles</th>
-			<th>UID</th>
-			<th>creation date</th>
+		<tr class="btn-turquesa clickableHeader" id="cabecera" name="cabecera">
+			<th name="username" >username</th>
+			<th name="emails.address" >email</th>
+			<th name="emails.verified">verified</th>
+			<th name="roles.admin">current roles</th>
+			<th name="_id">UID</th>
+			<th name="createdAt">creation date</th>
 		</tr>
 	  {{#each usuarios}}
         {{ > userProf }}
