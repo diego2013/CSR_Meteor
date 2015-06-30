@@ -12,14 +12,14 @@
 
 
 	<table class="tablePijama">
-    <tr class="btn-turquesa">
-      <th>Created by</th>
-      <th >Link</th>
-      <th>Scenario UID</th>
-      <th>Title</th>
-      <th>Description</th>
-      <th>Status</th>
-      <th>Saved last</th>
+    <tr class="btn-turquesa clickableHeader" id="cabecera">
+      <th data-name="createdAt">Created by</th>
+      <th data-name="_id">Link</th>
+      <th data-name="_id">Scenario UID</th>
+      <th data-name="title">Title</th>
+      <th data-name="description">Description</th>
+      <th data-name="status">Status</th>
+      <th data-name="modifiedAt">Saved last</th>
     </tr>
 
         {{#each scenarios}}
@@ -28,7 +28,7 @@
 
   </table>
 
-  <div>
+  <div style="margin-top:10px;">
     <ul class="pager">
         <li class="previous disabled" id="previousButton"> <a href="#">&larr; {{prevText}}</a> </li>
         <li class="next" id="nextButton"> <a href="#">{{nextText}} &rarr;</a> </li>

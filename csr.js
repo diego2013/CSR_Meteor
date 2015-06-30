@@ -57,6 +57,7 @@ if (Meteor.isClient) {
 
   Session.setDefault('scenarioCursorStart', 0);
   Session.setDefault('scenarioResultsPerPage', 10 /*25*/);
+  Session.setDefault('scenarioCursorOrder', {param : 'createdAt', order : 1});
 
   Session.setDefault('userListCursorStart', 0);
   Session.setDefault('userListResultsPerPage', 10 /*25*/);
@@ -107,9 +108,9 @@ Deps.autorun(function(){
 
   //subscriptions
   Meteor.subscribe('feedbackDocuments', Session.get('feedbackCursorStart'), Number(Session.get('feedbackResultsPerPage')));
-  Meteor.subscribe('myScenarios', Session.get('scenarioCursorStart'), Number(Session.get('scenarioResultsPerPage')));  //scenarios of the current user
-  Meteor.subscribe('scenariosAllSubmitted', Session.get('scenarioCursorStart'), Number(Session.get('scenarioResultsPerPage'))); //all available scenarios
-  Meteor.subscribe('scenariosAllApproved', Session.get('scenarioCursorStart'), Number(Session.get('scenarioResultsPerPage'))); //all approved scenarios
+  Meteor.subscribe('myScenarios', Session.get('scenarioCursorStart'), Number(Session.get('scenarioResultsPerPage')), Session.get('userListOrder'));  //scenarios of the current user
+  Meteor.subscribe('scenariosAllSubmitted', Session.get('scenarioCursorStart'), Number(Session.get('scenarioResultsPerPage')), Session.get('userListOrder')); //all available scenarios
+  Meteor.subscribe('scenariosAllApproved', Session.get('scenarioCursorStart'), Number(Session.get('scenarioResultsPerPage')), Session.get('userListOrder')); //all approved scenarios
   Meteor.subscribe('allUsersList', Session.get('userListCursorStart'), Number(Session.get('userListResultsPerPage')), Session.get('userListOrder'));//all available users
 
 });
@@ -270,19 +271,28 @@ Deps.autorun(function(){
     ); */
 
    this.route('scenarioList' , function(){
+     var obj = Session.get('scenarioCursorOrder');
+     var objSort = {};//object to sort the cursor
+     objSort[obj.param]= obj.order;
      Session.set('scenarioCursorStart', 0);
-     this.render('scenarioListTable', {data : { scenarios : MyScenarios.find({}, {sort: {createdAt: -1}}) }} );
+     this.render('scenarioListTable', {data : { scenarios : MyScenarios.find({}, {sort: objSort}) }} );
    });
    this.route('approvedScenarioList' , function(){
+     var obj = Session.get('scenarioCursorOrder');
+     var objSort = {};//object to sort the cursor
+     objSort[obj.param]= obj.order;
      Session.set('scenarioCursorStart', 0);
-     this.render('scenarioListTable', {data : { scenarios : scenariosAllApproved.find({}) }} );
+     this.render('scenarioListTable', {data : { scenarios : scenariosAllApproved.find({}, {sort: objSort}) }} );
    });
    this.route('recentSubmissionsScenarioList' , function(){
+     var obj = Session.get('scenarioCursorOrder');
+     var objSort = {};//object to sort the cursor
+     objSort[obj.param]= obj.order;
      Session.set('scenarioCursorStart', 0);
      if(!Roles.userIsInRole(Meteor.user(), ['admin'])){
         this.redirect('/');
      }else{
-        this.render('scenarioListTable', {data : { scenarios : scenariosAllSubmitted.find({}) }});
+        this.render('scenarioListTable', {data : { scenarios : scenariosAllSubmitted.find({}, {sort: objSort}) }});
      }
    });
 
@@ -1532,6 +1542,19 @@ Template.scenarioListTable.events({
   Session.set('scenarioCursorStart', 0);
   Session.set('scenarioResultsPerPage', newValue);
 }
+,"click #cabecera" :function(event){
+    var name = event.target.getAttribute("data-name");
+    var obj = Session.get('scenarioCursorOrder'); 
+    if(obj && name){
+       obj['param'] = name;
+       obj['order'] *=  -1;
+    }else{
+       obj = {};
+       obj['param'] = obj['param'] ? name : "createdAt"; // "createdAt" will be "default" val
+       obj['order'] =  1;
+    }
+    Session.set( 'scenarioCursorOrder', obj );
+}
 });
 
 Template.scenarioRow.events({
@@ -2136,8 +2159,16 @@ if (Meteor.isServer) {
 //http://www.meteorpedia.com/read/Understanding_Meteor_Publish_and_Subscribe
 
 //Publish all scenarios from the current user
-Meteor.publish('myScenarios', function(cursorStart, recordLimit){
-    Mongo.Collection._publishCursor( Scenarios.find({owner: this.userId }, {limit :recordLimit, skip : cursorStart}), this, 'myScenarios'); 
+Meteor.publish('myScenarios', function(cursorStart, recordLimit, sortPreferences){
+    var objSort = {};//object to sort the cursor
+    if(sortPreferences){
+      objSort[sortPreferences.param] = sortPreferences.order;
+    }else{
+      objSort['createdAt'] = 1;
+    }
+    Mongo.Collection._publishCursor( 
+      Scenarios.find({owner: this.userId }, {limit :recordLimit, skip : cursorStart, sort : objSort}), 
+      this, 'myScenarios'); 
     this.ready();
 });
 
@@ -2159,16 +2190,33 @@ Meteor.publish('scenariosAll', function(cursorStart, recordLimit){
 });
 
 //Publish all SUBMITTED scenarios in the database 
-Meteor.publish('scenariosAllSubmitted', function(cursorStart, recordLimit){
-  if(Roles.userIsInRole(this.userId, 'admin'))
-    Mongo.Collection._publishCursor( Scenarios.find({status : scenarioStatusEnum.SUBMITTED}, {limit :recordLimit, skip : cursorStart}), this, 'scenariosAllSubmitted'); 
+Meteor.publish('scenariosAllSubmitted', function(cursorStart, recordLimit, sortPreferences){
+  if(Roles.userIsInRole(this.userId, 'admin')){
+    var objSort = {};//object to sort the cursor
+    if(sortPreferences){
+      objSort[sortPreferences.param] = sortPreferences.order;
+    }else{
+      objSort['createdAt'] = 1;
+    }
+    Mongo.Collection._publishCursor( 
+      Scenarios.find({status : scenarioStatusEnum.SUBMITTED}, {limit :recordLimit, skip : cursorStart, obj : objSort}),
+       this, 'scenariosAllSubmitted'); 
+  }
 
   this.ready();
 });
 
 //Publish all APPROVED scenarios in the database 
-Meteor.publish('scenariosAllApproved', function(cursorStart, recordLimit){
-    Mongo.Collection._publishCursor( Scenarios.find({status : scenarioStatusEnum.APPROVED}, {limit :recordLimit, skip : cursorStart}), this, 'scenariosAllApproved'); 
+Meteor.publish('scenariosAllApproved', function(cursorStart, recordLimit, sortPreferences){
+    var objSort = {};//object to sort the cursor
+    if(sortPreferences){
+      objSort[sortPreferences.param] = sortPreferences.order;
+    }else{
+      objSort['createdAt'] = 1;
+    }
+    Mongo.Collection._publishCursor( 
+        Scenarios.find({status : scenarioStatusEnum.APPROVED}, {limit :recordLimit, skip : cursorStart, sort : objSort}),
+        this, 'scenariosAllApproved'); 
     this.ready();
 });
 
