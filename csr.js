@@ -54,6 +54,7 @@ var scenarioStatusEnum = {
 if (Meteor.isClient) {
   Session.setDefault('feedbackCursorStart', 0);
   Session.setDefault('feedbackResultsPerPage', 10 /*25*/);
+  Session.setDefault('feedbackCursorOrder', {param : 'createdAt', order : 1});
 
   Session.setDefault('scenarioCursorStart', 0);
   Session.setDefault('scenarioResultsPerPage', 10 /*25*/);
@@ -107,7 +108,7 @@ Deps.autorun(function(){
   }
 
   //subscriptions
-  Meteor.subscribe('feedbackDocuments', Session.get('feedbackCursorStart'), Number(Session.get('feedbackResultsPerPage')));
+  Meteor.subscribe('feedbackDocuments', Session.get('feedbackCursorStart'), Number(Session.get('feedbackResultsPerPage')), Session.get('feeddbackCursorOrder'));
   Meteor.subscribe('myScenarios', Session.get('scenarioCursorStart'), Number(Session.get('scenarioResultsPerPage')), Session.get('userListOrder'));  //scenarios of the current user
   Meteor.subscribe('scenariosAllSubmitted', Session.get('scenarioCursorStart'), Number(Session.get('scenarioResultsPerPage')), Session.get('userListOrder')); //all available scenarios
   Meteor.subscribe('scenariosAllApproved', Session.get('scenarioCursorStart'), Number(Session.get('scenarioResultsPerPage')), Session.get('userListOrder')); //all approved scenarios
@@ -359,8 +360,11 @@ Deps.autorun(function(){
     this.route('FeedbackForm'); //feedback form
     this.route('FeedbackFormThakYou'); //"thank you" page after submitting feedback
     this.route('feedbackReviewList' , function(){
+      var obj = Session.get('feedbackCursorOrder');
+      var objSort = {};//object to sort the cursor
+      objSort[obj.param]= obj.order;
       Session.set('feedbackCursorStart', 0)
-      this.render('feedbackListTable', {data : {  feedbackCol : feedbackCol.find({}, {sort: {createdAt: -1}}) }} );
+      this.render('feedbackListTable', {data : {  feedbackCol : feedbackCol.find({}, {sort: objSort}) }} );
     });
     this.route('/feedbackReview/:_id', function(){
       if(!Roles.userIsInRole(Meteor.user(), ['admin'])){
@@ -1516,6 +1520,19 @@ Template.feedbackListTable.events({
   Session.set('feedbackCursorStart', 0);
   Session.set('feedbackResultsPerPage', newValue);
 }
+,"click #cabecera" :function(event){
+    var name = event.target.getAttribute("data-name");
+    var obj = Session.get('feedbackCursorOrder'); 
+    if(obj && name){
+       obj['param'] = name;
+       obj['order'] *=  -1;
+    }else{
+       obj = {};
+       obj['param'] = obj['param'] ? name : "createdAt"; // "createdAt" will be "default" val
+       obj['order'] =  1;
+    }
+    Session.set( 'feedbackCursorOrder', obj );
+}
 });
 
 
@@ -2265,9 +2282,15 @@ Meteor.publish('allUsersList', function(cursorStart, recordLimit, obj){
 
 /** Publishes cursor for the feedback documents
 */
-Meteor.publish('feedbackDocuments', function(cursorStart, recordLimit){
+Meteor.publish('feedbackDocuments', function(cursorStart, recordLimit, sortPreferences){
   if(Roles.userIsInRole(this.userId, 'admin')){
-    Mongo.Collection._publishCursor( FeedbackCollection.find({}, {limit :recordLimit, skip : cursorStart}), this, 'feedbackDocuments');
+    var objSort = {};//object to sort the cursor
+    if(sortPreferences){
+      objSort[sortPreferences.param] = sortPreferences.order;
+    }else{
+      objSort['createdAt'] = 1;
+    }
+    Mongo.Collection._publishCursor( FeedbackCollection.find({}, {limit :recordLimit, skip : cursorStart, sort : objSort}), this, 'feedbackDocuments');
   }
   this.ready();
 });

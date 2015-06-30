@@ -104,14 +104,14 @@
     </p>
 	
 	<table class="tablePijama">
-		<tr class="btn-turquesa">
-			<th>Submitter</th>
-			<th>Link</th>
-			<th>UID</th>
-			<th>Submission Date</th>
-			<th title="pending of revision">Revision</th>
-			<th>Reviewer</th>
-			<th>Review Date</th>
+		<tr class="btn-turquesa clickableHeader" id="cabecera">
+			<th data-name="username">Submitter</th>
+			<th data-name="_id">Link</th>
+			<th data-name="_id">UID</th>
+			<th data-name="createdAt">Submission Date</th>
+			<th data-name="reviewed" title="pending of revision">Revision</th>
+			<th data-name="reviewer">Reviewer</th>
+			<th data-name="reviewedAt">Review Date</th>
 			<th>Completion</th>
 		</tr>
 
@@ -121,15 +121,12 @@
 
 	</table>
 
-
-	<div>
+	<div style="margin-top:10px;">
 		<ul class="pager">
   			<li class="previous disabled" id="previousButton"> <a href="#">&larr; {{prevText}}</a> </li>
   			<li class="next" id="nextButton"> <a href="#">{{nextText}} &rarr;</a> </li>
     	</ul>
 	</div> 
-
-	
 
 </template>
 
