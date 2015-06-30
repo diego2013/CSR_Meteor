@@ -52,17 +52,20 @@ var scenarioStatusEnum = {
 
 //CLIENT SIDE
 if (Meteor.isClient) {
+
+  var defaultSortObject = {param : 'createdAt', order : 1};
+  
   Session.setDefault('feedbackCursorStart', 0);
   Session.setDefault('feedbackResultsPerPage', 10 /*25*/);
-  Session.setDefault('feedbackCursorOrder', {param : 'createdAt', order : 1});
+  Session.setDefault('feedbackCursorOrder', defaultSortObject);
 
   Session.setDefault('scenarioCursorStart', 0);
   Session.setDefault('scenarioResultsPerPage', 10 /*25*/);
-  Session.setDefault('scenarioCursorOrder', {param : 'createdAt', order : 1});
+  Session.setDefault('scenarioCursorOrder', defaultSortObject);
 
   Session.setDefault('userListCursorStart', 0);
   Session.setDefault('userListResultsPerPage', 10 /*25*/);
-  Session.setDefault('userListOrder', {param : 'createdAt', order : 1});
+  Session.setDefault('userListOrder', defaultSortObject);
 
   //Meteor.subscribe("scenarios");
 //  Meteor.subscribe('myScenarios');  //scenarios of the current user
