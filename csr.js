@@ -54,7 +54,7 @@ var scenarioStatusEnum = {
 if (Meteor.isClient) {
 
   var defaultSortObject = {param : 'createdAt', order : 1};
-  
+
   Session.setDefault('feedbackCursorStart', 0);
   Session.setDefault('feedbackResultsPerPage', 10 /*25*/);
   Session.setDefault('feedbackCursorOrder', defaultSortObject);
@@ -1868,11 +1868,11 @@ var findByID = function(scenarioID){
    else{
      //2. Search
      currentScenarioDTO = ScenariosAll.findOne({_id: scenarioID});
-    // console.log("recovered "+JSON.stringify(currentScenarioDTO));
+     console.log("recovered "+JSON.stringify(currentScenarioDTO));
 
      //3. Check authorization: user must be scenario owner or scenario must be "approved"
      if(currentScenarioDTO===undefined ||
-       currentScenarioDTO.owner != Meteor.userId()){
+       (currentScenarioDTO.owner != Meteor.userId())  && currentScenarioDTO.status != scenarioStatusEnum.APPROVED){
 
         Session.set('auxScenarioID', scenarioID);
          //console.log(JSON.stringify(currentScenarioDTO));
@@ -1880,6 +1880,7 @@ var findByID = function(scenarioID){
         //Router.go('findByIDErrorTemplate', {data : function() {return scenarioID}});
         
      }else{
+      console.log("hola carabola");
        Session.set(_SCENARIO_FORM_STEP, _SCENARIO_FORM_STEP_BASIC_INFO);
        Session.set("currentScenarioDTO", currentScenarioDTO);
        Router.go("/newScenarioForm", {
