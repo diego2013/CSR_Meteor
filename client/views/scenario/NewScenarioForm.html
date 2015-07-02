@@ -92,13 +92,14 @@
         {{ > scenarioAuditInfo }} <br/>
     {{/if}}
 
-    <div>
-          <a href="#"  id="hazardsButton" class="btn btn-small btn-dark-blue" title="check the Hazards tab">Hazards</a>
-          <a href="#"  id="equipmentButton"  class="btn btn-small btn-dark-blue" title="check the Equipment tab">Equipment</a>
-          <a href="#"  id="lessonsLearnedButton" class="btn btn-small btn-dark-blue" title="check the Lessons Learned tab">Lessons Learned</a>
-          <a href="#"  id="rolesButton" class="btn btn-small btn-dark-blue" title="check the Roles Involved tab">Roles Involved</a>
-          <a href="#"  id="environmentsButton" class="btn btn-small btn-dark-blue" title="check the Environments Involved tab">Environments Involved</a>
-          <a href="#"  id="referencesButton" class="btn btn-small btn-dark-blue" title="check the References tab">Relevant References</a>
+    <div id="setp2tab" class="tabbar">
+          <a href="#"  id="hazardsButton" class="tab selectedTab" title="check the Hazards tab" data-step="advancedDetailsHazards">Hazards</a>
+          <a href="#"  id="equipmentButton"  class="tab" title="check the Equipment tab" data-step="advancedDetailsEquipment">Equipment</a>
+          <a href="#"  id="lessonsLearnedButton" class="tab" title="check the Lessons Learned tab" data-step="advancedDetailsLessonsLearned">Lessons Learned</a>
+          <a href="#"  id="rolesButton" class="tab" title="check the Roles Involved tab" data-step="advancedDetailsRoles">Roles Involved</a>
+          <a href="#"  id="environmentsButton" class="tab" title="check the Environments Involved tab" data-step="advancedDetailsEnvironments">Environments Involved</a>
+          <a href="#"  id="referencesButton" class="tab" title="check the References tab" data-step="advancedDetailsReferences">Relevant References</a>
+          <!-- <label class="{{getGuidelinesButtonClass}}" style="float:right;" > &#8592; visit any of these tabs in any specific order</label> -->
     </div>
 
     <div>

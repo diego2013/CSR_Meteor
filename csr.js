@@ -1133,37 +1133,47 @@ UI.registerHelper('isVerifiedEmail' , function(emailsObject){
 });
 
 Template.scenarioFormAdvancedInfo.events({
-      //onClick buttons from Advanded Info nav bar dinamically change (sub)template
-      "click #hazardsButton": function(){
-      collectScenarioInfo();
-      Session.set(_ADVANCEDDETAILS_TAB, _ADT_HAZARDS_templateName);
-     // hideScenarioFormButtons();
-    }
-    , "click #equipmentButton": function(){
-     collectScenarioInfo();
-      Session.set(_ADVANCEDDETAILS_TAB, _ADT_EQUIPMENT_templateName);
-     // hideScenarioFormButtons();
-    }
-    , "click #lessonsLearnedButton": function(){
-     collectScenarioInfo();
-      Session.set(_ADVANCEDDETAILS_TAB, _ADT_LESSONSLEARNED_templateName);
-     // hideScenarioFormButtons();
-    }    
-    , "click #referencesButton": function(){
-     collectScenarioInfo();
-      Session.set(_ADVANCEDDETAILS_TAB, _ADT_REFERENCES_templateName);
-     // hideScenarioFormButtons();
-    }  
-    , "click #rolesButton": function(){
-     collectScenarioInfo();
-      Session.set(_ADVANCEDDETAILS_TAB, _ADT_ROLES_templateName);
-     // hideScenarioFormButtons();
-    }  
-    , "click #environmentsButton": function(){
-     collectScenarioInfo();
-      Session.set(_ADVANCEDDETAILS_TAB, _ADT_PLACES_templateName);
-     // hideScenarioFormButtons();
-    }  
+  "click #setp2tab a" : function( event ){
+       var element = $(event.target)[0] //element that triggered the event
+        $element = $(element);
+       // console.log(element);
+       $('div#setp2tab a').removeClass('selectedTab');//remove the class for all the tabs
+       $element.addClass('selectedTab'); //add the class to the appropriate tab
+       collectScenarioInfo();
+       Session.set(_ADVANCEDDETAILS_TAB, $element.data('step'));
+  }
+  //Legacy code
+    //   //onClick buttons from Advanded Info nav bar dinamically change (sub)template
+    //   ,"click #hazardsButton": function(){
+    //   collectScenarioInfo();
+    //   Session.set(_ADVANCEDDETAILS_TAB, _ADT_HAZARDS_templateName);
+    //  // hideScenarioFormButtons();
+    // }
+    // , "click #equipmentButton": function(){
+    //  collectScenarioInfo();
+    //   Session.set(_ADVANCEDDETAILS_TAB, _ADT_EQUIPMENT_templateName);
+    //  // hideScenarioFormButtons();
+    // }
+    // , "click #lessonsLearnedButton": function(){
+    //  collectScenarioInfo();
+    //   Session.set(_ADVANCEDDETAILS_TAB, _ADT_LESSONSLEARNED_templateName);
+    //  // hideScenarioFormButtons();
+    // }    
+    // , "click #referencesButton": function(){
+    //  collectScenarioInfo();
+    //   Session.set(_ADVANCEDDETAILS_TAB, _ADT_REFERENCES_templateName);
+    //  // hideScenarioFormButtons();
+    // }  
+    // , "click #rolesButton": function(){
+    //  collectScenarioInfo();
+    //   Session.set(_ADVANCEDDETAILS_TAB, _ADT_ROLES_templateName);
+    //  // hideScenarioFormButtons();
+    // }  
+    // , "click #environmentsButton": function(){
+    //  collectScenarioInfo();
+    //   Session.set(_ADVANCEDDETAILS_TAB, _ADT_PLACES_templateName);
+    //  // hideScenarioFormButtons();
+    // }  
 
 });
 

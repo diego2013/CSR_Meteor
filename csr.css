@@ -579,3 +579,45 @@ ul.fallback{
   background-color: #fff; /*#FF8080;*/
   cursor: no-drop !important;
 }
+
+
+/*******
+=Tabbar
+*******/
+
+.tabbar{
+	border-bottom: 1px solid #00A4EF; 
+	padding:15px 0px 5px;
+}
+
+.tab{
+	text-align:center;
+	margin-top: 15px;
+	padding: 5px 10px;
+	border-radius:3px;
+	text-decoration:none;
+	font-weight:900;
+	font-family:'Helvetica Neue', Helvetica, Arial, sans-serif;
+}
+
+.tab:hover{
+	text-decoration:underline;
+
+}
+
+.tab:active{
+	color: -webkit-link; /*force no color change when clicking the link*/
+}
+
+.selectedTab{
+	  /*background-color: #fff; /*#FF8080;*/
+	border-radius : 5px  5px 0px 0px;
+	color:#FFF;
+	/*border:1px solid #0082BE;*/
+	background:#00A4EF;
+}
+
+.selectedTab:hover{
+	 text-decoration:none;
+}
+
