@@ -222,7 +222,6 @@ findByID = function(scenarioID){
    else{
      //2. Search
      currentScenarioDTO = ScenariosAll.findOne({_id: scenarioID});
-     console.log("recovered "+JSON.stringify(currentScenarioDTO));
 
      //3. Check authorization: user must be scenario owner or scenario must be "approved"
      if(currentScenarioDTO===undefined ||
@@ -234,7 +233,6 @@ findByID = function(scenarioID){
         //Router.go('findByIDErrorTemplate', {data : function() {return scenarioID}});
         
      }else{
-      console.log("hola carabola");
        Session.set(_SCENARIO_FORM_STEP, _SCENARIO_FORM_STEP_BASIC_INFO);
        Session.set("currentScenarioDTO", currentScenarioDTO);
        Router.go("/newScenarioForm", {
