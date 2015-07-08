@@ -27,7 +27,7 @@ var scenarioStatusEnum = {
 /** Publish all scenarios from the current user
 @cursorStart, skip parameter
 @recordLimit, limit parameter
-@sortPreferences, object to sort the pulbished cursor
+@sortPreferences, object to sort the published cursor
 */
 Meteor.publish('myScenarios', function(cursorStart, recordLimit, sortPreferences){
     var objSort = {};//object to sort the cursor
@@ -36,6 +36,7 @@ Meteor.publish('myScenarios', function(cursorStart, recordLimit, sortPreferences
     }else{
       objSort['createdAt'] = 1;
     }
+    // var coll = Scenarios.find({owner: this.userId }, {sort : objSort});
     Mongo.Collection._publishCursor( 
       Scenarios.find({owner: this.userId }, {limit :recordLimit, skip : cursorStart, sort : objSort}), 
       this, 'myScenarios'); 

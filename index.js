@@ -83,30 +83,28 @@ if (Meteor.isClient) {
 
 Deps.autorun(function(){
   //Meteor.subscribe('scenariosAll'); //all available scenarios
+
   //http://stackoverflow.com/questions/15680461/meteor-collection-not-updating-subscription-on-client
   if(Router.current()!= null){
-    //      console.log("Current path "+ Router.current().route.path());
-  var routeName = Router.current().route.getName();
-  //var routeNameOld = Router.previousPage().getName(); //this.location.path; //Location.back;
-  //console.log("from "+ routeNameOld+" to " +routeName);
-  highLightNavBatItem(routeName);
+    var routeName = Router.current().route.getName();
+    highLightNavBatItem(routeName);
   }
 
   //subscriptions
-  Meteor.subscribe('feedbackDocuments', Session.get('feedbackCursorStart'), Number(Session.get('feedbackResultsPerPage')), Session.get('feeddbackCursorOrder'));
-  Meteor.subscribe('myScenarios', Session.get('scenarioCursorStart'), Number(Session.get('scenarioResultsPerPage')), Session.get('userListOrder'));  //scenarios of the current user
-  Meteor.subscribe('scenariosAllSubmitted', Session.get('scenarioCursorStart'), Number(Session.get('scenarioResultsPerPage')), Session.get('userListOrder')); //all available scenarios
-  Meteor.subscribe('scenariosAllApproved', Session.get('scenarioCursorStart'), Number(Session.get('scenarioResultsPerPage')), Session.get('userListOrder')); //all approved scenarios
-  Meteor.subscribe('allUsersList', Session.get('userListCursorStart'), Number(Session.get('userListResultsPerPage')), Session.get('userListOrder'));//all available users
+  Meteor.subscribe('feedbackDocuments', Number(Session.get('feedbackCursorStart')), Number(Session.get('feedbackResultsPerPage')), Session.get('feeddbackCursorOrder'));
+  Meteor.subscribe('myScenarios', Number(Session.get('scenarioCursorStart')), Number(Session.get('scenarioResultsPerPage')), Session.get('scenarioCursorOrder'));  //scenarios of the current user
+  Meteor.subscribe('scenariosAllSubmitted', Number(Session.get('scenarioCursorStart')), Number(Session.get('scenarioResultsPerPage')), Session.get('scenarioCursorOrder')); //all available scenarios
+  Meteor.subscribe('scenariosAllApproved', Number(Session.get('scenarioCursorStart')), Number(Session.get('scenarioResultsPerPage')), Session.get('scenarioCursorOrder')); //all approved scenarios
+  Meteor.subscribe('allUsersList', Number(Session.get('userListCursorStart')), Number(Session.get('userListResultsPerPage')), Session.get('userListOrder'));//all available users
 
 });
 
 
-//Adds an index to each document
-var addIndexToDocument = function(document, index){
-  document.index = index;
-  return document;
-}
+// //Adds an index to each document
+// var addIndexToDocument = function(document, index){
+//   document.index = index;
+//   return document;
+// }
 
 
  //UI HELPERS
@@ -275,15 +273,13 @@ UI.registerHelper('isVerifiedEmail' , function(emailsObject){
 
 
 //OTHER CLIENT FUNCTIONS
-//========================================================================
+//======================================================================
 
 //To configure the accounts UI
 Accounts.ui.config({
   //passwordSignupFields: "USERNAME_ONLY"
   passwordSignupFields: 'USERNAME_AND_EMAIL'
 });
-
-
 
 
 }//meteor.isClient
