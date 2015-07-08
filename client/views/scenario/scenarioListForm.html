@@ -14,14 +14,24 @@
 
 
 	<table class="tablePijama">
+    <colgroup>
+        <col data-caption="creator" style="width: 8%;">
+        <col data-caption="linkButton" style="width: 7%;">
+        <col data-caption="UID" style="width: 13%;">
+        <col data-caption="title" style="width: 20%;">
+        <col data-caption="description" style="width: 25%;">
+        <col data-caption="status" style="width: 10%;">
+        <col data-caption="modifiedAt" style="width: 10%;">
+    </colgroup>
+
     <tr class="btn-turquesa clickableHeader" id="cabecera">
-      <th data-name="createdAt">Created by</th>
-      <th data-name="_id">Link</th>
-      <th data-name="_id">Scenario UID</th>
-      <th data-name="title">Title</th>
-      <th data-name="description">Description</th>
-      <th data-name="status">Status</th>
-      <th data-name="modifiedAt">Saved last</th>
+      <th data-name="createdAt" >Created by</th>
+      <th data-name="_id" >Link</th>
+      <th data-name="_id" >Scenario UID</th>
+      <th data-name="title" >Title</th>
+      <th data-name="description" >Description</th>
+      <th data-name="status" >Status</th>
+      <th data-name="modifiedAt" >Saved last</th>
     </tr>
 
         {{#each scenarios}}

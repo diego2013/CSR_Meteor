@@ -227,7 +227,7 @@ header .hide-completed {
 }
 
 /***************
- TABLES
+ =TABLES
  ***************/
 
  .narrowColumn{
@@ -250,7 +250,7 @@ header .hide-completed {
 	width: 100%;
 }
 
-.tablePijama tr:nth-child(2n+3){
+.tablePijama tr:nth-child(2n+4){
 	background: #F5FAFF;
 
 }
