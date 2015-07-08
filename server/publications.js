@@ -36,7 +36,6 @@ Meteor.publish('myScenarios', function(cursorStart, recordLimit, sortPreferences
     }else{
       objSort['createdAt'] = 1;
     }
-    // var coll = Scenarios.find({owner: this.userId }, {sort : objSort});
     Mongo.Collection._publishCursor( 
       Scenarios.find({owner: this.userId }, {limit :recordLimit, skip : cursorStart, sort : objSort}), 
       this, 'myScenarios'); 
@@ -144,7 +143,7 @@ Meteor.publish('feedbackDocuments', function(cursorStart, recordLimit, sortPrefe
     }else{
       objSort['createdAt'] = 1;
     }
-    Mongo.Collection._publishCursor( FeedbackCollection.find({}, {limit :recordLimit, skip : cursorStart, sort : objSort}), this, 'feedbackDocuments');
+    Mongo.Collection._publishCursor( FeedbackCollection.find({}, {limit :recordLimit, skip : cursorStart, sort : objSort }), this, 'feedbackDocuments');
   }
   this.ready();
 });
