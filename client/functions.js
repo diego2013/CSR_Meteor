@@ -150,7 +150,7 @@ collectScenarioInfo = function(){
 /** Collects the information from the components of the form scenarioCompleteForm
   and puts the object in session
 */
-  var collectScenarioCompleteFormInfo = function(){
+collectScenarioCompleteFormInfo = function(){
   // Collects data from the form into an object
   currentScenarioDTO =  Session.get("currentScenarioDTO");
 
