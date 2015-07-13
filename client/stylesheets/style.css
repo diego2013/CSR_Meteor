@@ -72,6 +72,11 @@ body {
 	font-size : 10pt;
 }
 
+.regularTextAreaStyle{
+	/*width : 450px;*/
+	width : 98%;
+}
+
 header {
   background: #d2edf4;
   
