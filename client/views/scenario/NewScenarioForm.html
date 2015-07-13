@@ -151,6 +151,7 @@
 <template name="advancedDetailsHazards" >
 {{#if isScenarioEditable}}
    {{> hazardInput}}
+   <hr>
 {{/if}}
 
     <span>Current hazards of the scenario</span>
@@ -203,7 +204,7 @@
     </table>
 
 
-    <button type="button" id="addNewHazard" class="btn btn-small btn-mint">Add Another Hazard Description</button> <br/>
+    <button type="button" id="addNewHazard" class="btn btn-small btn-mint">Add This Hazard Description</button> <br/>
 
 </template>
 
@@ -224,6 +225,7 @@
 <template name="advancedDetailsEquipment" >
  {{#if isScenarioEditable}}
     {{ > equipmentInput}} 
+    <hr>
  {{/if}}   
 
     <br/><span>List of hazardrous equipment included in the scenario</span>
@@ -279,7 +281,7 @@
         
     </table>
 
-    <button type="button" id="addNewEquipment" class="btn btn-small btn-mint">Add Another Equipment Description</button>
+    <button type="button" id="addNewEquipment" class="btn btn-small btn-mint">Add This Equipment Description</button>
 
 </template>
 
@@ -320,6 +322,7 @@
 <template name="advancedDetailsReferences">
 {{#if isScenarioEditable}}
     {{> referenceInput}}
+    <hr>
 {{/if}}
 
  <span>Current references added to the scenario</span>
@@ -358,7 +361,7 @@
 
  </table>
 
- <button type="button" id="addNewReference" class="btn btn-small btn-mint">Add Another Reference</button><br/>
+ <button type="button" id="addNewReference" class="btn btn-small btn-mint">Add This Reference</button><br/>
 </template>
 
 <!-- Template to display the info of a single reference-->
@@ -377,6 +380,7 @@
 <template name="advancedDetailsRoles">
  {{#if isScenarioEditable}}
     {{ > roleInput}}
+    <hr>
  {{/if}}
 
     <table>
@@ -465,6 +469,7 @@
 
 {{#if isScenarioEditable}}
     {{ > environmentInput}}
+    <hr>
 {{/if}}
 
     <table>
