@@ -177,7 +177,8 @@ collectScenarioCompleteFormInfo = function(){
  //Cleans the input fields of the new scenario form as well as the currentScenarioDTO session variable
 cleanNewScenarioForm = function(){
 
-  var newCleanScenarioDTO = {
+  // var newCleanScenarioDTO = {
+  var currentScenarioDTO = {
     title : '',
     description : '',
     solutionDescription : '',
@@ -193,7 +194,9 @@ cleanNewScenarioForm = function(){
     equipmentEntryList : []           //new empty "list"
 
   };
-  currentScenarioDTO = newCleanScenarioDTO;
+
+
+  // currentScenarioDTO = newCleanScenarioDTO;
   //this copy of a new object is to force the creation of a new DTO that
   // does not have an _Id. This way, we won't need to overwrite the one
   // the DTO has and create a problem for Meteor Mongo inserts
@@ -210,8 +213,11 @@ cleanNewScenarioForm = function(){
   $('#risksDescription').val("");     //currentScenarioDTO.risksDescription = "";
 
   $('#lesson').val("");
+
   
-  Session.set("currentScenarioDTO", currentScenarioDTO);
+  Session.set("currentScenarioDTO", currentScenarioDTO);  
+  // Session.set(_SCENARIO_FORM_STEP, _SCENARIO_FORM_STEP_BASIC_INFO);
+  
  };
 
 //Finds a scenario from the current collection by ID

@@ -90,7 +90,13 @@ Uses Iron:router https://github.com/iron-meteor/iron-router
     });
 
     this.route('new', function(){
-      this.render('NewScenarioForm');
+      // cleanNewScenarioForm();
+      //  this.render('NewScenarioForm');
+      Session.set(_SCENARIO_FORM_STEP, _SCENARIO_FORM_STEP_BASIC_INFO);
+      cleanNewScenarioForm();
+      currentScenarioDTO = Session.get("currentScenarioDTO"); 
+      hideScenarioFormButtons();
+      Router.go('/newScenarioForm');
     });
 
     //Template for when we are about to submit a scenario for approval
