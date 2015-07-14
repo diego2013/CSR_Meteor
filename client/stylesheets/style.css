@@ -231,6 +231,18 @@ header .hide-completed {
 	margin:10px;
 }
 
+.notificationBox{
+	text-align:center; 
+	background:#FF9900;
+	padding: 3px 0px;
+	margin:5px 0px;
+}
+
+.scenarioAuditInfoTextBox{
+	background: #a9d0f5;
+	padding:0px 10px;
+}
+
 /***************
  =TABLES
  ***************/
@@ -373,7 +385,9 @@ ul.fallback{
 	display: none;
 }
 
-/****** Button Styles ******/
+/************** 
+=Button Styles 
+***************/
 
 /* Button foundation : Structure, Sizing, Style*/
 .btn {

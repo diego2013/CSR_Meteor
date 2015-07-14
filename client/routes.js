@@ -90,7 +90,6 @@ Uses Iron:router https://github.com/iron-meteor/iron-router
     });
 
     this.route('new', function(){
-      // cleanNewScenarioForm();
       //  this.render('NewScenarioForm');
       Session.set(_SCENARIO_FORM_STEP, _SCENARIO_FORM_STEP_BASIC_INFO);
       cleanNewScenarioForm();

@@ -25,6 +25,7 @@
     <a href="#"  id="approveScenario"  class="btn btn-small btn-blue" title="Approve Scenario">Approve Scenario</a>
 {{/if}}
 
+
 {{#if isApproved}}
     {{#if displayAckButton}}
         <a href="#"  id="like"  class="btn btn-small btn-purple" title="Acknowledge the Scenario">ACK Scenario</a>
@@ -34,15 +35,18 @@
 {{/if}}
 
 
-</div>
 
-<div style="text-align:center; background:#FF9900"  >
+</div>
+    
+<label class="scenarioAuditInfoTextBox">{{ > scenarioAuditInfo }}</label>
+
+<div class="notificationBox" >
     {{getScenarioLockOwner}}
     {{#if isScenarioEditable}}<br/>
         <label>IMPORTANT! Remember to <b>save</b> or discard your changes before locking the scenario or approving it</label>
     {{/if}}
 </div> 
-    {{ > scenarioAuditInfo }} <br/>
+<!--     {{ > scenarioAuditInfo }} <br/>  --> 
 
 
 <!-- Scenario basic info -->
