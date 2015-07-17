@@ -51,6 +51,7 @@ Template.NewScenarioForm.events({
           //callback function
             if (err) { 
               console.log(err);
+              window.alert("The scenario could NOT be submitted. \n\n"+err.error);
             }else{
              //currentScenarioDTO._id = callbackScenarioDTO._id;
              currentScenarioDTO = callbackScenarioDTO;
