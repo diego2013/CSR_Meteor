@@ -152,14 +152,18 @@ Uses Iron:router https://github.com/iron-meteor/iron-router
      var objSort = {};//object to sort the cursor
      objSort[obj.param]= obj.order;
      Session.set('scenarioCursorStart', 0);
-     this.render('scenarioListTable', {data : { scenarios : MyScenarios.find({}, {sort: objSort}) }} );
+     // this.render('scenarioListTable', {data : { scenarios : MyScenarios.find({}, {sort: objSort}) }} );
+     this.render('scenarioListTable', 
+      {data : { scenarios : MyScenarios.find({}, {limit: Number(Session.get('scenarioResultsPerPage')), sort: objSort}) }} ); //issue #75
    });
    this.route('approvedScenarioList' , function(){
      var obj = Session.get('scenarioCursorOrder');
      var objSort = {};//object to sort the cursor
      objSort[obj.param]= obj.order;
      Session.set('scenarioCursorStart', 0);
-     this.render('scenarioListTable', {data : { scenarios : scenariosAllApproved.find({}, {sort: objSort}) }} );
+     this.render('scenarioListTable', 
+      {data : { scenarios : scenariosAllApproved.find({}, {limit: Number(Session.get('scenarioResultsPerPage')), sort: objSort}) }} );
+     //Issue #75 add limit to this query
    });
    this.route('recentSubmissionsScenarioList' , function(){
      var obj = Session.get('scenarioCursorOrder');
@@ -169,7 +173,9 @@ Uses Iron:router https://github.com/iron-meteor/iron-router
      if(!Roles.userIsInRole(Meteor.user(), ['admin'])){
         this.redirect('/');
      }else{
-        this.render('scenarioListTable', {data : { scenarios : scenariosAllSubmitted.find({}, {sort: objSort}) }});
+        this.render('scenarioListTable', 
+          {data : { scenarios : scenariosAllSubmitted.find({}, {limit: Number(Session.get('scenarioResultsPerPage')), sort: objSort}) }});
+        //Issue #75 add limit to this query
      }
    });
 
@@ -184,7 +190,8 @@ Uses Iron:router https://github.com/iron-meteor/iron-router
         var objSort = {};//object to sort the cursor
         objSort[obj.param]= obj.order;
 
-        this.render('userList', {data: {usuarios : AllTheUsers.find( {}, {sort: objSort} ) }});
+        this.render('userList', {data: {usuarios : AllTheUsers.find( {}, {limit: Number(Session.get('userListResultsPerPage')), sort: objSort} ) }});
+        //Issue #75 add limit to this query
       }
    });
 
@@ -220,7 +227,9 @@ Uses Iron:router https://github.com/iron-meteor/iron-router
     var objSort = {};//object to sort the cursor
     objSort[obj.param]= obj.order;
     Session.set('feedbackCursorStart', 0)
-    this.render('feedbackListTable', {data : {  feedbackCol : feedbackCol.find({}, {sort: objSort}) }} );
+    this.render('feedbackListTable', 
+      {data : {  feedbackCol : feedbackCol.find({}, {limit : Number(Session.get('feedbackResultsPerPage')), sort: objSort}) }} );
+      //Issue #75 add limit to this query
   });
 
   this.route('/feedbackReview/:_id', function(){

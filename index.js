@@ -79,9 +79,8 @@ if (Meteor.isClient) {
   scenarioAcks = new Mongo.Collection("scenarioAcks");
   Meteor.subscribe('scenarioAcks')
 
-
-
-Deps.autorun(function(){
+// Tracker.autorun(function(){
+  Deps .autorun(function(){
   //Meteor.subscribe('scenariosAll'); //all available scenarios
 
   //http://stackoverflow.com/questions/15680461/meteor-collection-not-updating-subscription-on-client
