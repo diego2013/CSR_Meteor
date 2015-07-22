@@ -4,6 +4,7 @@
 */
 
 
+
 //Names for the steps on the creation of a new scenario
 _SCENARIO_FORM_STEP = 'SCENARIO_FORM_STEP'; //Step of the scenario submission process
 _SCENARIO_FORM_STEP_BASIC_INFO = 'SCENARIO_FORM_STEP_BASIC_INFO'; 
@@ -96,6 +97,41 @@ if (Meteor.isClient) {
   Meteor.subscribe('scenariosAllApproved', Number(Session.get('scenarioCursorStart')), Number(Session.get('scenarioResultsPerPage')), Session.get('scenarioCursorOrder')); //all approved scenarios
   Meteor.subscribe('allUsersList', Number(Session.get('userListCursorStart')), Number(Session.get('userListResultsPerPage')), Session.get('userListOrder'));//all available users
 
+});
+
+
+Template.NavBar.events({
+  "click #testNavBarItem" : function(event){
+    event.preventDefault();
+    // Meteor.call('exportData', function(err, data){
+    //   // console.log("hola")
+    //   if (err){  
+    //     console.log(err);
+    //     window.alert("Error exporting data. \n\n"+err.error);
+    //   }else{
+    //     // var path = process.env["PWD"] + "/public/";
+    //    //  fs.writeFile(path+Meteor.userId()+'.txt', userObject, 
+    //    //      function (err) {
+    //    //        if (err) throw err;
+    //    //        console.log('It\'s saved!');
+    //    //      }
+    //    // );
+    //   console.log(JSON.stringify(data));
+    //   //https://github.com/eligrey/FileSaver.js
+    //   var blob = new Blob(["Hello, world!"], {type: "text/plain;charset=utf-8"});
+    //   // saveAs(blob, "hello world.txt");
+    //   }
+
+    // });
+    // var data = Meteor.users.findOne({_id : Meteor.userId()});
+    //PbQwPMZ8TN9SnpaWa
+    var data = MyScenarios.find().fetch(); // MyScenarios.findOne({_id : 'PbQwPMZ8TN9SnpaWa'});
+    // console.log(JSON.stringify(data));
+    //   //https://github.com/eligrey/FileSaver.js
+    var blob = new Blob([JSON.stringify(data)], {type: "text/plain;charset=utf-8"});
+    saveAs(blob, "userInfo.txt");
+
+  }
 });
 
 
