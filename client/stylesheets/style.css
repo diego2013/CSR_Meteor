@@ -409,6 +409,12 @@ ul.fallback{
 	opacity:0.7;
 }
 /* Sizes */
+.btn-tiny {
+	font-size:12px;
+	padding: 0px 5px;
+	margin: 0px;
+}
+
 .btn-small {
 	font-size:13px;
 	padding:5px 10px;
