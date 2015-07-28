@@ -53,14 +53,15 @@ scenarioToTxt = function(scenarioDTO, acks) {
 	}
 
 	//Lessons learned
-	if(scenarioDTO.lessonsLearned){
-		result += "Lessons Learned: "+scenarioDTO.lessonsLearned;
-		result += "\n\n";
-	}
 	if(scenarioDTO.preventable){
 		result += "Could this incident have been prevented or mitigated through better technology? "+scenarioDTO.preventable;
 		result += "\n\n";
 	}
+	if(scenarioDTO.lessonsLearned){
+		result += "Lessons Learned: "+scenarioDTO.lessonsLearned;
+		result += "\n\n";
+	}
+
 
 	//ROLES
 	var roleEntryList = scenarioDTO.roleEntryList;
