@@ -35,6 +35,23 @@ Meteor.methods({
 		zip.file('user.csv', userObject);//adds a file
 		return zip.generate({type: "base64"});
 	}
+	,exportAllScenarios : function(folderName){
+	    zip = new jsZip();// create an instance of JSZip
+
+	    var apprvScenarios = Scenarios.find({'status' : scenarioStatusEnum.APPROVED}).fetch();
+	    var folder = zip.folder(folderName);
+
+	    for(var i = 0; i<apprvScenarios.length; i++){
+	    	var scenarioDTO = apprvScenarios[i];
+			var acks = ScenarioAcks.find({scnID : scenarioDTO._id}).count();
+			scnInfo = scenarioToTxt(scenarioDTO, acks);
+			folder.file('scenario_'+scenarioDTO._id+'.txt', scnInfo);//adds a file to the folder
+	    }
+		
+		zip.file(folder);//adds the folder
+		return zip.generate({type: "base64"});
+
+	}
 	,exportScnAsTxt : function(scenarioID){
 		
 		zip = new jsZip();// create an instance of JSZip

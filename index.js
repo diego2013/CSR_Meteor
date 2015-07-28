@@ -99,26 +99,28 @@ if (Meteor.isClient) {
 
 });
 
-/*
-//from navbar to print.
+
 Template.NavBar.events({
-  "click #testNavBarItem" : function(event){
+  "click #downloadAllItem" : function(event){
     event.preventDefault();
 
-    Meteor.call('exportData', function(err, data){
+    var date = moment(new Date()).format('MM-DD-YYYY');
+    var folderName = "MDPnP_CSR_Scenarios_Export_"+date
+
+    Meteor.call('exportAllScenarios', folderName, function(err, data){
       // console.log("hola")
       if (err){  
         console.log(err);
         window.alert("Error exporting data. \n\n"+err.error);
       }else{
-      var blob = base64ToBlob(data, "zip");
-      saveAs(blob, "userInfo.zip");
+        var blob = base64ToBlob(data, "zip");
+        saveAs(blob, folderName+".zip");
       }
     });
 
   }
 });
-*/
+
 
 
 // //Adds an index to each document
