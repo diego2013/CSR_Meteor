@@ -39,10 +39,9 @@ Meteor.methods({
 		
 		zip = new jsZip();// create an instance of JSZip
 		// csv = fastCsv;  //create an instance of fast-csv
-		scenarioDTO = Scenarios.findOne({_id: scenarioID});
-		// scnInfo = JSON.stringify(scenarioDTO);
-		scnInfo = scenarioToTxt(scenarioDTO);
-		console.log(scnInfo);
+		var scenarioDTO = Scenarios.findOne({_id: scenarioID});
+		var acks = ScenarioAcks.find({scnID : scenarioID}).count();
+		scnInfo = scenarioToTxt(scenarioDTO, acks);
 		zip.file('scenario_'+scenarioID+'.txt', scnInfo);//adds a file
 		return zip.generate({type: "base64"});
 
