@@ -64,7 +64,7 @@ scenarioToTxt = function(scenarioDTO, acks) {
 
 	//ROLES
 	var roleEntryList = scenarioDTO.roleEntryList;
-	if(roleEntryList != undefined){
+	if(roleEntryList != undefined && (typeof roleEntryList[0]!= undefined)){
 		result += "Clinical Roles Involved: ";
 		for(i =0; i<roleEntryList.length-1; i++){
 			result +=  roleEntryList[i].role + ", ";
@@ -75,7 +75,7 @@ scenarioToTxt = function(scenarioDTO, acks) {
 
 	//Clinical environments
 	var environmentEntryList = scenarioDTO.environmentEntryList;
-	if(environmentEntryList != undefined){
+	if(environmentEntryList != undefined && (typeof environmentEntryList[0]!= undefined)){
 		result += "Clinical Environments Involved: ";
 		for(i =0; i<environmentEntryList.length-1; i++){
 			result +=  environmentEntryList[i].place + ", ";
