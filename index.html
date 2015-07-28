@@ -21,12 +21,17 @@
 
     <table   style="margin-left:auto;margin-right:auto;">
 	    <tr>
-		    <td><img id="mdpnpLogo" alt="MD PnP Logo" style="float:left;" src="/images/mdpnp-small.png" width="150" height="45"/></td>
+		    <td><a href="http://www.mdpnp.org/" target="_blank"><img id="mdpnpLogo" alt="MD PnP Logo" style="float:left;" src="/images/mdpnp-small.png" width="150" height="45"/></a></td>
 		    <td id="webtitle">Clinical Scenario Repository Prototype</td>
-		    <td style="height:10px; text-align:justify;"> © 2013 <a href="http://www.mdpnp.org/" target="_blank">MD PnP Program</a></td>
-		    <td style="height:10px; text-align:justify; vertical-align: center; padding-left:20px"><a href="mailto:info@mdpnp.org?Subject=Clinical%20Scenario%20Repository" target="_top">info@mdpnp.org</a></td>
+		    <td style="height:10px; text-align:justify;"> © 2013 <a href="http://www.mdpnp.org/" target="_blank" style="text-decoration:none">MD PnP Program</a></td>
+<!-- 		    <td style="height:10px; text-align:justify; vertical-align: center; padding-left:20px"><a href="mailto:info@mdpnp.org?Subject=Clinical%20Scenario%20Repository" target="_top">info@mdpnp.org</a></td> -->
 		    <!--<td style="margin-left:auto; padding-left:20px; vertical-align: top;">{{> loginButtons}}</td> -->
+
 	    </tr>
+      <tr>
+
+        <td colspan="3" id="subtitle">Good ideas for patient safety</td>
+      </tr>
     </table>
 
   </div>
@@ -78,6 +83,7 @@
         <li class="nav-item" id="listUsersNavBarItem"><a href="{{ pathFor 'usersList' }}">List Users</a></li>
       {{/if}}
 		  <li class="nav-item" id="upNavBarItem"><a href="{{ pathFor 'userProfile'}}">User Profile</a></li>
+      <li class="nav-item" ><a href="{{ pathFor 'contactInfo'}}">Contact Us</a></li>
 		</ul>
 	 </nav>
 	 <!--<span style="float:right;"><img id="mdpnpLogo" alt="MD PnP Logo" style="float:left;" src="/images/mdpnp-small.png" width="150" height="45"/></span>-->

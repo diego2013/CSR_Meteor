@@ -26,6 +26,18 @@ body {
 	text-shadow : 1px 1px black;
 }
 
+#subtitle{
+  font-family:'Helvetica Neue', Helvetica, Arial, sans-serif;
+  text-shadow:0 1px 1px rgba(0,0,0,0.5);
+  text-decoration:none;
+  font-size: 20px;
+  color:#000;
+}
+
+#ffgfgf{
+	colspan : 4;
+}
+
 .centered{
   margin-left:5%;
   margin-right:5%;

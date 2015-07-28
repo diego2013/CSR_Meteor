@@ -105,7 +105,7 @@ Template.NavBar.events({
     event.preventDefault();
 
     var date = moment(new Date()).format('MM-DD-YYYY');
-    var folderName = "MDPnP_CSR_Scenarios_Export_"+date
+    var folderName = "MDPnP_CSR_Scenarios_Export_"+date;
 
     Meteor.call('exportAllScenarios', folderName, function(err, data){
       // console.log("hola")
