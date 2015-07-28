@@ -99,40 +99,26 @@ if (Meteor.isClient) {
 
 });
 
-
+/*
+//from navbar to print.
 Template.NavBar.events({
   "click #testNavBarItem" : function(event){
     event.preventDefault();
-    // Meteor.call('exportData', function(err, data){
-    //   // console.log("hola")
-    //   if (err){  
-    //     console.log(err);
-    //     window.alert("Error exporting data. \n\n"+err.error);
-    //   }else{
-    //     // var path = process.env["PWD"] + "/public/";
-    //    //  fs.writeFile(path+Meteor.userId()+'.txt', userObject, 
-    //    //      function (err) {
-    //    //        if (err) throw err;
-    //    //        console.log('It\'s saved!');
-    //    //      }
-    //    // );
-    //   console.log(JSON.stringify(data));
-    //   //https://github.com/eligrey/FileSaver.js
-    //   var blob = new Blob(["Hello, world!"], {type: "text/plain;charset=utf-8"});
-    //   // saveAs(blob, "hello world.txt");
-    //   }
 
-    // });
-    // var data = Meteor.users.findOne({_id : Meteor.userId()});
-    //PbQwPMZ8TN9SnpaWa
-    var data = MyScenarios.find().fetch(); // MyScenarios.findOne({_id : 'PbQwPMZ8TN9SnpaWa'});
-    // console.log(JSON.stringify(data));
-    //   //https://github.com/eligrey/FileSaver.js
-    var blob = new Blob([JSON.stringify(data)], {type: "text/plain;charset=utf-8"});
-    saveAs(blob, "userInfo.txt");
+    Meteor.call('exportData', function(err, data){
+      // console.log("hola")
+      if (err){  
+        console.log(err);
+        window.alert("Error exporting data. \n\n"+err.error);
+      }else{
+      var blob = base64ToBlob(data, "zip");
+      saveAs(blob, "userInfo.zip");
+      }
+    });
 
   }
 });
+*/
 
 
 // //Adds an index to each document

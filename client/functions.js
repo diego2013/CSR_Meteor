@@ -401,3 +401,23 @@ scenarioTotalCount = function(routeName){
   else
     return '-'
 };
+
+
+
+/** Convert from as a base64 string to a Blob Object
+@base64String base64 string 
+@blobType type of the blob
+*/
+base64ToBlob = function(base64String, blobType) {
+  var byteCharacters = atob(base64String);
+  var byteNumbers    = new Array(byteCharacters.length);
+  var i              = 0;
+  while (i < byteCharacters.length){
+    byteNumbers[i] = byteCharacters.charCodeAt(i)
+    i++
+  }
+
+  var byteArray = new Uint8Array(byteNumbers);
+  return blob = new Blob([byteArray], {type: blobType});
+};
+

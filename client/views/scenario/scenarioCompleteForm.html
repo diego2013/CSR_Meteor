@@ -32,13 +32,18 @@
     {{/if}}
 
     <label class="decentText">{{acknowledgersCount}} users acknowledged this scenario</label>
+
 {{/if}}
 
 
 
 </div>
     
-<label class="scenarioAuditInfoTextBox">{{ > scenarioAuditInfo }}</label>
+    <div style="border : 0px solid black">
+       <label class="scenarioAuditInfoTextBox">{{ > scenarioAuditInfo }}</label>
+       <a href="#"  id="downloadScn"  class="btn btn-tiny btn-blue" title="Download">Download</a> 
+    </div>
+
 
 <div class="notificationBox" >
     {{getScenarioLockOwner}}

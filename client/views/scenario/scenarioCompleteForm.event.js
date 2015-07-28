@@ -90,5 +90,21 @@ Template.scenarioCompleteForm.events({
 
     // Meteor.Call("persistACK", scenarioID, userID, callbackfunction());
   }
+  ,"click #downloadScn" : function(){
+    var currentScenarioDTO = Session.get('currentScenarioDTO');
+    var scenarioID = currentScenarioDTO._id;
+
+      Meteor.call('exportScnAsTxt', scenarioID,  function(err, data){
+
+        if (err){  
+          // console.log(err);
+          window.alert("Error exporting data. \n\n"+err.error);
+        }else{
+          var blob = base64ToBlob(data, "zip");
+          saveAs(blob, "scn_"+scenarioID+".zip");
+        }
+
+    });
+  }
 
 });

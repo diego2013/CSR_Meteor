@@ -15,37 +15,43 @@ Meteor.methods({
 		zip = new jsZip();
 		csv = fastCsv;
 		getUser = Meteor.users.findOne({_id : Meteor.userId()});
-		console.log(getUser._id);
+		// console.log(getUser._id);
 		userObject = JSON.stringify(getUser); //string or buffer
-		// console.log(JSON.stringify(getUser));
-		var path = process.env["PWD"] + "/public/";
-	 //    fs.writeFile(path+Meteor.userId()+'.txt', userObject, 
-	 //    	function (err) {
-		// 		if (err) throw err;
-		// 		  console.log('It\'s saved!');
+
+
+
+	 //    csv.writeToString(userObject, {headers: true}, 
+		// 	function(error, data){
+		// 	  if (error)
+		// 	   console.log(error);
+		// 	  else{
+		// 	   // zip.file('user.csv', data);//adds a file
+		// 	   console.log(data);
+		// 	  }
 		// 	}
 		// );
-		
-		csv.writeToString(JSON.stringify(getUser), {headers: true}, function(error, data){
-			  if (error)
-			   console.log(error);
-			  else{
-			   zip.file('friends.csv', data);//adds a file
-			   var myZip = zip.generate({type: "base64"});
-			   fs.writeFile(path+"prueba"+'.txt', myZip, function (err) {
-			   	if (err) throw err;
-			   	console.log('It\'s saved!');
-			   });
-			  }
-			   
-		// });
-  //       fs.writeFile(path+"prueba"+'.txt', zip, function (err) {
-		// 	if (err) throw err;
-		// 		 console.log('It\'s saved!');
-			}
-		);
+
+		// zip.file("Hello.txt", "Hello World\n");
+		zip.file('user.csv', userObject);//adds a file
 		return zip.generate({type: "base64"});
 	}
+	,exportScnAsTxt : function(scenarioID){
+		
+		zip = new jsZip();// create an instance of JSZip
+		// csv = fastCsv;  //create an instance of fast-csv
+		scenarioDTO = Scenarios.findOne({_id: scenarioID});
+		// scnInfo = JSON.stringify(scenarioDTO);
+		scnInfo = scenarioToTxt(scenarioDTO);
+		console.log(scnInfo);
+		zip.file('scenario_'+scenarioID+'.txt', scnInfo);//adds a file
+		return zip.generate({type: "base64"});
 
+	}
+	/*
+	,exportAsXML : function(){
+		profile = xmlBuilder.create('profile');
+		profileXmlString = profile.end({pretty: true})
+	}
+	*/
 
 });
