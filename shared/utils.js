@@ -64,7 +64,7 @@ scenarioToTxt = function(scenarioDTO, acks) {
 
 	//ROLES
 	var roleEntryList = scenarioDTO.roleEntryList;
-	if(roleEntryList != undefined && (typeof roleEntryList[0]!= undefined)){
+	if(roleEntryList != undefined && roleEntryList.length > 0){
 		result += "Clinical Roles Involved: ";
 		for(i =0; i<roleEntryList.length-1; i++){
 			result +=  roleEntryList[i].role + ", ";
@@ -75,7 +75,7 @@ scenarioToTxt = function(scenarioDTO, acks) {
 
 	//Clinical environments
 	var environmentEntryList = scenarioDTO.environmentEntryList;
-	if(environmentEntryList != undefined && (typeof environmentEntryList[0]!= undefined)){
+	if(environmentEntryList != undefined && environmentEntryList.length> 0){
 		result += "Clinical Environments Involved: ";
 		for(i =0; i<environmentEntryList.length-1; i++){
 			result +=  environmentEntryList[i].place + ", ";
@@ -86,7 +86,7 @@ scenarioToTxt = function(scenarioDTO, acks) {
 
 	//References
 	var referenceEntryList = scenarioDTO.referenceEntryList;
-	if(referenceEntryList != undefined){
+	if(referenceEntryList != undefined && referenceEntryList.length > 0){
 		result += "References: " + "\n" + "-----------"+"\n";
 		for(i =0; i<referenceEntryList.length; i++){
 			result +=  " Reference entry #"+(Number(i)+1)+ " ";
