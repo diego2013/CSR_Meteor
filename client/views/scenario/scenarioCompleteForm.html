@@ -27,8 +27,15 @@
 
 
 {{#if isApproved}}
-    {{#if displayAckButton}}
+<!--     {{#if displayAckButton}}
         <a href="#"  id="like"  class="btn btn-small btn-purple" title="Acknowledge the Scenario">ACK Scenario</a>
+    {{/if}} -->
+    {{#if isNotScenarioOwner}}
+        {{#if allowedToACK}}
+        <a href="#"  id="like"  class="btn btn-small btn-purple" title="Acknowledge the Scenario">ACK Scenario</a>
+        {{else}}
+        <a href="#"  id="acked"  class="btn btn-small btn-light-purple" title="You have already acknowledged the scenario">Scenario ACKed</a>
+        {{/if}}
     {{/if}}
 
     <label class="decentText">{{acknowledgersCount}} users acknowledged this scenario</label>

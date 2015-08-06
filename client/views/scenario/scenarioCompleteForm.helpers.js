@@ -14,6 +14,26 @@ Template.scenarioCompleteForm.helpers({
     ,isApproved : function(){
       return this.status == scenarioStatusEnum.APPROVED;
     }
+    ,isNotScenarioOwner : function(){
+      scenarioDTO = this;
+      return scenarioDTO.owner != Meteor.userId()
+    }
+    /** Indicates if the user can ACK the scenario
+       User is logged In (not an anonymous user)
+       Current user didn't vote already for the scenario
+    */
+    ,allowedToACK: function(){
+      if(!Meteor.user()) //anonymous user
+        return false;
+
+      scenarioDTO = this;
+      var obj = scenarioAcks.findOne({_id : scenarioDTO._id+Meteor.userId()});
+
+      if(obj)
+        return false;
+      else
+        return true;
+    }
     /** Indicates if the ACK button should be displayed:
     1- Current user doesn't own the scenario
     2- Current user didn't vote already for the scenario

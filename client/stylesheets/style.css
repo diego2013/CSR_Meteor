@@ -526,6 +526,16 @@ ul.fallback{
 	background-image:-webkit-linear-gradient(bottom, rgb(53,48,154) 1%, rgb(80,83,176) 51%);
 	background-image:-ms-linear-gradient(bottom, rgb(53,48,154) 1%, rgb(80,83,176) 51%);
 }
+.btn-light-purple {
+	color:#FFF;
+	border:1px solid #191762;
+	background:#8683C2;
+	/*background-image:linear-gradient(bottom, rgb(121, 118, 175) 1%,  rgb(134, 131, 194) 51%);
+	background-image:-o-linear-gradient(bottom, rgb(121, 118, 175) 1%, rgb(134, 131, 194) 51%);
+	background-image:-moz-linear-gradient(bottom, rgb(121, 118, 175) 1%, rgb(134, 131, 194) 51%);
+	background-image:-webkit-linear-gradient(bottom, rgb(121, 118, 175) 1%, rgb(134, 131, 194) 51%);
+	background-image:-ms-linear-gradient(bottom, rrgb(121, 118, 175) 1%, rgb(134, 131, 194) 51%);*/
+}
 .btn-yellow {
 	color:#FFF;
 	border:1px solid #AD7307;
