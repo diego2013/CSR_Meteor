@@ -63,7 +63,9 @@ body {
 	background : #CCE6FF;
 }
 
-/* regular text areas (scenario panel) */
+/* regular 
+=TEXTAREA (scenario panel) 
+*/
 .textAreaStyle{
 	width : 98%;
 	height: 30vh;
@@ -87,6 +89,10 @@ body {
 .regularTextAreaStyle{
 	/*width : 450px;*/
 	width : 98%;
+}
+
+.equipTextArea{
+	height: 30px;
 }
 
 header {
