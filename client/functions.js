@@ -370,12 +370,10 @@ updateRoleList = function(){
 
    var role = $("#clinicalRole").val();
    var customRole = $('#customActor').val().trim();
-   console.log(customRole);
    if(role === '-'){
     if(customRole != ''){//non-empty
          item = {role : customRole, id : roleEntryList.length};
          roleEntryList[roleEntryList.length] = item;
-         console.log(item);
     }
    }else{
        item = {role : role, id : roleEntryList.length};
