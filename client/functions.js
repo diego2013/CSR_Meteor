@@ -369,8 +369,22 @@ updateRoleList = function(){
    roleEntryList = currentScenarioDTO.roleEntryList;
 
    var role = $("#clinicalRole").val();
-   item = {role : role, id : roleEntryList.length};
-   roleEntryList[roleEntryList.length] = item;
+   var customRole = $('#customActor').val().trim();
+   console.log(customRole);
+   if(role === '-'){
+    if(customRole != ''){//non-empty
+         item = {role : customRole, id : roleEntryList.length};
+         roleEntryList[roleEntryList.length] = item;
+         console.log(item);
+    }
+   }else{
+       item = {role : role, id : roleEntryList.length};
+       roleEntryList[roleEntryList.length] = item;
+   }
+   $('#customActor').val('');//clean
+
+   // item = {role : role, id : roleEntryList.length};
+   // roleEntryList[roleEntryList.length] = item;
    
    return roleEntryList;
 };

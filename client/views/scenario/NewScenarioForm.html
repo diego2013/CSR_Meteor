@@ -408,6 +408,7 @@
 
         Choose a clinical role from this list
         <select id="clinicalRole" class="selectbox-wrapper">
+            <option value='-'>-</option>
             <option value='Allergist'>Allergist</option>
             <option value='Anesthesiologist'>Anesthesiologist</option>
             <option value='Cardiologist'>Cardiologist</option>
@@ -454,6 +455,10 @@
             <option value='Urologist'>Urologist</option>
             <option value='X-Ray Technician'>X-Ray Technician</option>
         </select>
+
+        or tpye your own 
+
+        <textarea id="customActor" class="customClinicalEntry"></textarea>
 
         <button type="button" id="addActor" class="btn btn-small btn-mint">Add Actor</button>
     </div>

@@ -198,6 +198,12 @@ Template.roleInput.events({
     currentScenarioDTO.roleEntryList = roleEntryList;
     Session.set("currentScenarioDTO", currentScenarioDTO);
   }
+  ,"change #clinicalRole" : function(){//click works as event
+      $('#customActor').val('');
+  }
+  ,"click #customActor" : function(){
+    document.getElementById('clinicalRole').value = "-";//reset dropdown select
+  }
 });
 
 Template.roleEntry.events({

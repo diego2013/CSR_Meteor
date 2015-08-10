@@ -95,6 +95,11 @@ body {
 	height: 30px;
 }
 
+.customClinicalEntry{
+	height: 15px;
+    vertical-align: middle;
+}
+
 header {
   background: #d2edf4;
   
