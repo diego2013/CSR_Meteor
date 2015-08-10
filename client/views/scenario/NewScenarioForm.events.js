@@ -226,6 +226,12 @@ Template.environmentInput.events({
     currentScenarioDTO.environmentEntryList = updateEnvironmentList();
     Session.set("currentScenarioDTO", currentScenarioDTO);
   }
+  ,"change #clinicalEnvironment" : function(){//click works as event
+      $('#customEnvironment').val('');
+  }
+  ,"click #customEnvironment" : function(){
+    document.getElementById('clinicalEnvironment').value = "-";//reset dropdown select
+  }
 });
 
 Template.environmentEntry.events({

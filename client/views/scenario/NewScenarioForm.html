@@ -460,7 +460,7 @@
 
         <textarea id="customActor" class="customClinicalEntry"></textarea>
 
-        <button type="button" id="addActor" class="btn btn-small btn-mint">Add Actor</button>
+        <button type="button" id="addActor" class="btn btn-small btn-mint" style="vertical-align:middle;">Add Actor</button>
     </div>
 </template>
 
@@ -500,6 +500,7 @@
     <div class="div-chooseClinical"> 
         Choose a clinical environment from this list
         <select id="clinicalEnvironment" class="selectbox-wrapper">
+            <option value='-'>-</option>
             <option value='Acute assessment unit'>Acute assessment unit</option>
             <option value='Ambulatory wing'>Ambulatory wing</option>
             <option value='Birthing Room/LDR Room/LDRP Room'>Birthing Room/LDR Room/LDRP Room</option>
@@ -537,7 +538,11 @@
             <option value='Wound Care Unit'>Wound Care Unit</option>
         </select>
 
-        <button type="button" id="addPlace" class="btn btn-small btn-mint">Add Environment</button>
+        or type your own 
+
+        <textarea id="customEnvironment" class="customClinicalEntry"></textarea>
+
+        <button type="button" id="addPlace" class="btn btn-small btn-mint" style="vertical-align:middle;">Add Environment</button>
     </div>
 </template>
 

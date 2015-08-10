@@ -393,8 +393,19 @@ updateEnvironmentList = function(){
    environmentEntryList = currentScenarioDTO.environmentEntryList;
 
    var place = $("#clinicalEnvironment").val();
-   item = {place : place, id : environmentEntryList.length};
-   environmentEntryList[environmentEntryList.length] = item;
+   var customEnv = $('#customEnvironment').val().trim();
+   if(place === '-'){
+    if(customEnv != ''){//non-empty
+         item = {place : customEnv, id : environmentEntryList.length};
+         environmentEntryList[environmentEntryList.length] = item;
+    }
+   }else{
+       item = {place : place, id : environmentEntryList.length};
+       environmentEntryList[environmentEntryList.length] = item;
+   }
+   $('#customEnvironment').val('');//clean
+   // item = {place : place, id : environmentEntryList.length};
+   // environmentEntryList[environmentEntryList.length] = item;
    
    return environmentEntryList;
 };
