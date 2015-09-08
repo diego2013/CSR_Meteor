@@ -62,7 +62,9 @@
 
 	<div style="background:#A9D0F5;">
 	<!-- For a detached to left login button-->
+  {{#if currentUser}}
   <span class="loginSalutationStyle"> Hello </span>
+  {{/if}}
 	<span class="loginButtonsStyle"> {{> loginButtons}} </span>
 	 <nav class="nav">
 		<ul class="nav-list">
