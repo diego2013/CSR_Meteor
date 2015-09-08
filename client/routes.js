@@ -29,7 +29,7 @@ Uses Iron:router https://github.com/iron-meteor/iron-router
    //***** Footer *****
    this.route('disclaimer');
    this.route('privacyStatement');
-   this.route('contactInfo');
+   this.route('aboutUs');
 
    
    this.route('createNewScenario', function(){
