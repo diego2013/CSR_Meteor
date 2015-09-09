@@ -132,6 +132,14 @@ Template.hazardInput.events({
     //console.log(JSON.stringify(currentScenarioDTO.hazardEntryList));
     Session.set("currentScenarioDTO", currentScenarioDTO);
   }
+  ,"click #idAhrqLevels": function(event){
+    event.preventDefault();
+    var explanatoryText = 
+    "The AHRQ Harm Scale (https://www.pso.ahrq.gov/common/generic) was grouped into categories to facilitate comparisons between harm: \n\n "
+    +"Unsafe Condition,\n Near Miss,\n No Harm,\n Emotional Distress or Inconvenience,\n Harm—Additional Treatment,\n Temporary Harm," 
+    +"\n Permanent Harm,\n Severe Permanent Harm and\n Death."
+    window.alert(explanatoryText);
+  }
   });
 
 Template.hazardEntry.events({
