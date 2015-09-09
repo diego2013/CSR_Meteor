@@ -59,6 +59,8 @@ if (Meteor.isClient) {
   Session.setDefault('userListResultsPerPage', 10 /*25*/);
   Session.setDefault('userListOrder', defaultSortObject);
 
+  Session.setDefault('showGuidelines', true);
+
   //Meteor.subscribe("scenarios");
 //  Meteor.subscribe('myScenarios');  //scenarios of the current user
   Meteor.subscribe('scenariosAll'); //all available scenarios
@@ -253,6 +255,16 @@ UI.registerHelper('getGuidelinesButtonClass' , function(){
     return 'guidelinesHidden';
   }else{
     return '';
+  }
+});
+
+/* Returns TRUE if we are in "expert mode" (showing guidelines for new scenario Submissions)
+*/
+UI.registerHelper('getExpertMode' , function(){
+  if(!Session.get('showGuidelines')){
+    return false;
+  }else{
+    return true;
   }
 });
 
