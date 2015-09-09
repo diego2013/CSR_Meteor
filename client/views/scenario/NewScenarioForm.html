@@ -67,7 +67,8 @@
        {{ > scenarioAuditInfo }} <br/>
     {{/if}}
 
-    <label>Title</label>
+    <br/>
+    <label>Title of the Scenario <span class="red-asterisk">*</span></label>
     <!-- <a href="#"  id="exampleTitle" style="float:right;">example of a title</a> -->
     <br/>
     <!-- {{#if editableScn}} 
@@ -77,8 +78,10 @@
     {{/if}} -->
 
     <textarea type="text" id="title" name="title" rows="1" cols="100" placeholder="Type to add a title" {{isScenarioReadOnly}}>{{title}}</textarea><br/>
-    <label>Description</label><br/>
+    <label>Description of the Scenario <span class="red-asterisk">*</span></label><br/>
     <textarea type="text" id="description" name="description"  class="textAreaStyle" placeholder="Type to add a description" {{isScenarioReadOnly}}>{{description}}</textarea><br/>
+
+    <p> The <span class="red-asterisk">red asterisk (*)</span>  in the form indicates a mandatory field.</p>
 
 </template>
 
