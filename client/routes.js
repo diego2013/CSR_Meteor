@@ -43,6 +43,9 @@ Uses Iron:router https://github.com/iron-meteor/iron-router
 
    this.route('newScenarioForm' , 
      function ()  {
+       if(!Meteor.userId()){
+        window.alert('Please, log in or register to create (even save) a new clinical scenario.');
+       }
        currentScenarioDTO = Session.get("currentScenarioDTO"); 
        if(Session.get(_SCENARIO_FORM_STEP)==undefined){//could happen with reload
           Session.set(_SCENARIO_FORM_STEP, _SCENARIO_FORM_STEP_BASIC_INFO);
