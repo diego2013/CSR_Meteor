@@ -30,6 +30,7 @@ Uses Iron:router https://github.com/iron-meteor/iron-router
    this.route('disclaimer');
    this.route('privacyStatement');
    this.route('aboutUs');
+   this.route('help');
 
    
    this.route('createNewScenario', function(){
