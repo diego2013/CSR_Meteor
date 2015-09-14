@@ -243,6 +243,16 @@ header .hide-completed {
 	color:red;
 }
 
+.exampleLabel{
+	text-decoration: none;
+	font-size: 12px;
+	color:#FFF;
+	background: #FFBE58;
+	border-radius:5px ;
+	padding: 1px 3px;
+}
+
+
 .decentText{
 	font-size: 18px;
 	display:inline-block;
@@ -285,11 +295,6 @@ header .hide-completed {
 	margin: 10px 0px;
 	width: 98%;
 	background: #BAD9F7;
-	/*background-image:linear-gradient(bottom, rgb(22,174,118) 1%, rgb(53,190,142) 51%);
-	background-image:-o-linear-gradient(bottom, rgb(22,174,118) 1%, rgb(53,190,142) 51%);
-	background-image:-moz-linear-gradient(bottom, rgb(22,174,118) 1%, rgb(53,190,142) 51%);
-	background-image:-webkit-linear-gradient(bottom, rgb(22,174,118) 1%, rgb(53,190,142) 51%);
-	background-image:-ms-linear-gradient(bottom, rgb(22,174,118) 1%, rgb(53,190,142) 51%);*/
 }
 
 /***************

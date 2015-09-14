@@ -42,7 +42,7 @@
     <div id="guidelinesDiv" class="{{getGuidelinesButtonClass}}">    
     <span style="font-size:12pt;"><b>Guidelines</b></span>
     <ul>
-        <li>A brief explanation of an event is enough to describe a scenario. Try to keep information relevant, short and simple. Click "example" to see an illustrative example on how an actual scenario would complete each field.</li>
+        <li>A brief explanation of an event is enough to describe a scenario. Try to keep information relevant, short and simple. Click <a href="{{ pathFor 'exampleScenario_step1' }}" target="_blank" class="exampleLabel"> see an example</a> to see an illustrative example on how an actual scenario would complete each field.</li>
         <li>Do not include protected health information. Omit actual names of individuals or institutions.</li>
         <li>Try avoid submitting scenarios redundant to the ones already in the repository.</li>
         <li>Don't forget to save your progress. Click the green <b class="btn-mint ">Save & Continue</b> button.</li>
@@ -57,7 +57,7 @@
     {{/if}}
 
     <label>Title of the Scenario <span class="red-asterisk">*</span></label>
-    <!-- <a href="#"  id="exampleTitle" style="float:right;">example of a title</a> -->
+    <a href="{{ pathFor 'exampleScenario_step1' }}" target="_blank" class="exampleLabel" style="margin-left:10px"> see an example</a>
     <br/>
     <!-- {{#if editableScn}} 
         <textarea type="text" id="title" name="title" rows="1" cols="100" placeholder="Type to add a title" >{{title}}</textarea><br/>
@@ -65,9 +65,13 @@
         <textarea type="text" id="title" name="title" rows="1" cols="100" placeholder="Type to add a title" readonly>{{title}}</textarea><br/>
     {{/if}} -->
 
-    <textarea type="text" id="title" name="title" rows="1" cols="100" placeholder="Type to add a title" {{isScenarioReadOnly}}>{{title}}</textarea><br/>
-    <label>Description of the Scenario <span class="red-asterisk">*</span></label><br/>
-    <textarea type="text" id="description" name="description"  class="textAreaStyle" placeholder="Type to add a description" {{isScenarioReadOnly}}>{{description}}</textarea><br/>
+    <textarea type="text" id="title" name="title" rows="1" cols="100" placeholder="Type to add a title" style="margin-top:3px" {{isScenarioReadOnly}}>{{title}}</textarea>
+    <br/>
+
+    <label>Description of the Scenario <span class="red-asterisk">*</span></label>
+    <a href="{{ pathFor 'exampleScenario_step1' }}" target="_blank" class="exampleLabel" style="margin-left:10px"> see an example</a>
+    <br/>
+    <textarea type="text" id="description" name="description"  class="textAreaStyle" placeholder="Type to add a description" style="margin-top:3px" {{isScenarioReadOnly}}>{{description}}</textarea><br/>
 
     <p> The <span class="red-asterisk">red asterisk (*)</span>  in the form indicates a mandatory field.</p>
 
@@ -114,7 +118,7 @@
     <span style="font-size:12pt;"><b>Share a Good Idea</b></span>
     <p>Step 3 of 3 (optional): Propose a solution for a barrier in patient safety or share a <em>good idea</em>.</p>
     <ul>
-        <li>Share a good idea to improve Healthcare, clinical processes or patient safety. </li>
+        <li>Share a good idea to improve Healthcare, clinical processes or patient safety. Click <a href="{{ pathFor 'exampleScenario_step3' }}" target="_blank" class="exampleLabel"> see an example</a> to see an illustrative example on how an actual scenario would complete each field.</li>
         <li>Describe, in any degree of detail you feel comfortable with, what you think could provide a solution for a barrier in patient safety.</li>   
         <li>Feel welcome to address early any potential new risks in the workflow or systems introduced by the solution.</li>
         <li>Discuss or highlight the benefits of your proposed solution or idea.</li>
@@ -130,12 +134,21 @@
 
     <label><b>Scenario Title: </b></label>
     <label>{{title}}</label><br/>
-    <label>Describe Your Good Idea or Solution</label><br/>
-    <textarea type="text" id="solutionDescription" rows="6" class="solutionTextAreaStyle" {{isScenarioReadOnly}}>{{solutionDescription}}</textarea><br/>
-    <label>Benefits of the New System</label><br/>
-    <textarea type="text" id="benefitsDescription"  rows="5" class="solutionTextAreaStyle" {{isScenarioReadOnly}}>{{benefitsDescription}}</textarea><br/>
-    <label>Foreseen Risks of the New System</label><br/>
-    <textarea type="text" id="risksDescription"  rows="5" class="solutionTextAreaStyle" {{isScenarioReadOnly}}>{{risksDescription}}</textarea><br/>
+    <label>Describe Your Good Idea or Solution</label>
+    <a href="{{ pathFor 'exampleScenario_step3' }}" target="_blank" class="exampleLabel" style="margin-left:10px"> see an example</a>
+    <br/>
+
+    <textarea type="text" id="solutionDescription" rows="6" class="solutionTextAreaStyle" style="margin-top:3px" {{isScenarioReadOnly}}>{{solutionDescription}}</textarea><br/>
+    <label>Benefits of the New System</label>
+    <a href="{{ pathFor 'exampleScenario_step3' }}" target="_blank" class="exampleLabel" style="margin-left:10px"> see an example</a>
+    <br/>
+
+    <textarea type="text" id="benefitsDescription"  rows="5" class="solutionTextAreaStyle" style="margin-top:3px" {{isScenarioReadOnly}}>{{benefitsDescription}}</textarea><br/>
+    <label>Foreseen Risks of the New System</label>
+    <a href="{{ pathFor 'exampleScenario_step3' }}" target="_blank" class="exampleLabel" style="margin-left:10px"> see an example</a>
+
+    <br/>
+    <textarea type="text" id="risksDescription"  rows="5" class="solutionTextAreaStyle" style="margin-top:3px" {{isScenarioReadOnly}}>{{risksDescription}}</textarea><br/>
 </template>
 
 <!-- template to display some auditing information about the scenario -->
