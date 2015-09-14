@@ -7,9 +7,6 @@
     <!--div here for control buttons -->
     <div id="controlButtons" style="text-align:center;">
 
-    <!--{{#if isScenarioEditable}}
-    <a href="#"  id="saveScenarioButton" class="btn btn-small btn-mint" title="Save the chages in this scenario" >Save Scenario</a>
-    {{/if}}-->
         {{#if isScenarioEditable}}
         <a href="#"  id="saveScenarioButton" class="btn btn-small btn-mint" title="Save the chages in this scenario" >Save & Continue</a>
         {{/if}}
@@ -25,15 +22,6 @@
         <a href="#"  id="submitScenarioButton" class="btn btn-small btn-mint" title="Submit for approval" >Finish & Submit</a>
         <a href="#"  id="deleteButton" class="btn btn-small btn-mint" title="Delete this scenario" >Delete</a>
         {{/if}}
-        
-        <!--
-        <input type="submit" id="saveScenarioButton" name="saveButton" title="Save the chages in this scenario" value="Save" />-->
-        <!--<button type="button" id="showGuidelines"  title="show/hide guidelines" >Show guidelines</button>-->
-        <!--<button type="button" id="goToStep1" class="hiddenButton" name="none1" title="Go to the Basic Information panel" >Go back to basic information</button>
-        <button type="button" id="goToStep2" name="none2" title="Go to the Advanced Information panel" >Add further details</button> 
-        <button type="button" id="goToStep3" name="none3" title="Propose a solution for this scenario" >Propose a solution</button>
-        <input type="submit" id="submitScenarioButton" name="submitButton" title="Submit for approval" value="Finish and Submit" />
-        -->
 
     </div>
 
@@ -65,10 +53,9 @@
 
 
     {{#if printScenarioMetainfo}}
-       {{ > scenarioAuditInfo }} <br/>
+       {{ > scenarioAuditInfo }} 
     {{/if}}
 
-    <br/>
     <label>Title of the Scenario <span class="red-asterisk">*</span></label>
     <!-- <a href="#"  id="exampleTitle" style="float:right;">example of a title</a> -->
     <br/>
@@ -102,7 +89,7 @@
     </div>
 
     {{#if printScenarioMetainfo}}
-        {{ > scenarioAuditInfo }} <br/>
+        {{ > scenarioAuditInfo }} 
     {{/if}}
 
     <div id="setp2tab" class="tabbar">
@@ -136,13 +123,13 @@
     </ul>
     </div>
 
-    <label><b>Scenario Title: </b></label>
-    <label>{{title}}</label>
+
     {{#if printScenarioMetainfo}}
         {{ > scenarioAuditInfo }}
     {{/if}}
-    <br/>
 
+    <label><b>Scenario Title: </b></label>
+    <label>{{title}}</label><br/>
     <label>Describe Your Good Idea or Solution</label><br/>
     <textarea type="text" id="solutionDescription" rows="6" class="solutionTextAreaStyle" {{isScenarioReadOnly}}>{{solutionDescription}}</textarea><br/>
     <label>Benefits of the New System</label><br/>
@@ -153,7 +140,9 @@
 
 <!-- template to display some auditing information about the scenario -->
 <template name="scenarioAuditInfo">
-        <b>Scenario UID:</b> {{_id}} <b>Saved last:</b> {{formatDateTime modifiedAt}} <b>Status</b> {{showScenarioStatus}}
+        <div class="scenarioAuditInfoSection"> 
+        <b>Scenario UID:</b> {{_id}} <b>Saved last:</b> {{formatDateTime modifiedAt}} <b>Status:</b> {{showScenarioStatus}}
+        </div>
 </template>
 
 

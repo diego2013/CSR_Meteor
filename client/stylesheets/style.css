@@ -280,6 +280,18 @@ header .hide-completed {
 	padding:0px 10px;
 }
 
+.scenarioAuditInfoSection{
+	/*border: 1px solid black;*/
+	margin: 10px 0px;
+	width: 98%;
+	background: #BAD9F7;
+	/*background-image:linear-gradient(bottom, rgb(22,174,118) 1%, rgb(53,190,142) 51%);
+	background-image:-o-linear-gradient(bottom, rgb(22,174,118) 1%, rgb(53,190,142) 51%);
+	background-image:-moz-linear-gradient(bottom, rgb(22,174,118) 1%, rgb(53,190,142) 51%);
+	background-image:-webkit-linear-gradient(bottom, rgb(22,174,118) 1%, rgb(53,190,142) 51%);
+	background-image:-ms-linear-gradient(bottom, rgb(22,174,118) 1%, rgb(53,190,142) 51%);*/
+}
+
 /***************
  =TABLES
  ***************/
