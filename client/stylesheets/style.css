@@ -297,6 +297,7 @@ header .hide-completed {
 	margin: 10px 0px;
 	width: 98%;
 	background: #BAD9F7;
+	/*display: inline;*/
 }
 
 /***************
