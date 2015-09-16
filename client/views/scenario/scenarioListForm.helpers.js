@@ -42,9 +42,22 @@ Template.scenarioListTable.helpers({
       else
         return '';
     }
-    ,diegofunction : function(){
-      var currentPath = Router.current().route.getName()
-      return currentPath=='scenarioList' || Roles.userIsInRole(Meteor.user(), ['admin'])  
+    ,getTypeOfTableView : function(){
+      var currentPath = Router.current().route.getName();
+      console.log(currentPath);
+      // return currentPath=='scenarioList' || Roles.userIsInRole(Meteor.user(), ['admin'])  
+
+      if(currentPath=='scenarioList')
+        return 'myScenariosTableView'
+      else if (Roles.userIsInRole(Meteor.user(), ['admin']))
+        return 'scenarioTableViewAdmin'
+      else
+        return 'scenarioTableViewPublic'
+
+      // if(currentPath=='scenarioList' || Roles.userIsInRole(Meteor.user(), ['admin']) )
+      //   return scenarioTableViewAdmin
+      // else
+      //   return scenarioTableViewPublic
     }
  });
 

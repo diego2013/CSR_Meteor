@@ -15,12 +15,15 @@
 
 	<table class="tablePijama">
   <!-- if user is an andmin has access to priviledged view -->
- {{#if getTypeOfTableView}}
+<!--  {{#if getTypeOfTableView}}
      {{ > scenarioTableViewAdmin}}
  {{else}}
  you are not an admin
       {{ > scenarioTableViewPublic}}
- {{/if}}
+ {{/if}} -->
+
+<!-- {{ > myScenariosTableView}} -->
+ {{ > Template.dynamic template=getTypeOfTableView}} 
   </table>
 
   <div style="margin-top:10px;">
@@ -30,6 +33,35 @@
     </ul>
   </div> 
 
+</template>
+
+<!-- Template for the view of 'MyScenarios' -->
+<template name="myScenariosTableView">
+     <colgroup>
+        <col data-caption="linkButton" style="width: 7%;">
+        <col data-caption="UID" style="width: 13%;">
+        <col data-caption="title" style="width: 24%;">
+        <col data-caption="description" style="width: 20%;">
+        <col data-caption="status" style="width: 10%;">
+        <col data-caption="createdAt" style="width: 10%;">
+        <col data-caption="modifiedAt" style="width: 10%;">
+        <col data-caption="acks" style="width: 13%;">
+    </colgroup>
+
+    <tr class="btn-turquesa clickableHeader" id="cabecera">
+      <th data-name="_id" >Link</th>
+      <th data-name="_id" >Scenario UID</th>
+      <th data-name="title" >Title</th>
+      <th data-name="description" >Description</th>
+      <th data-name="status" >Status</th>
+      <th data-name="createdAt" >Created on</th>
+      <th data-name="modifiedAt" >Saved last</th>
+      <th data-name="acks" ># ACKs</th>
+    </tr>
+
+    {{#each scenarios}}
+         <tr style="text-align: center"> {{ > MyScenariosScenarioRow }} </tr>
+    {{/each}}
 </template>
 
 
@@ -82,6 +114,20 @@
       {{#each scenarios}}
            <tr style="text-align: center"> {{ > publicScenarioRow }} </tr>
       {{/each}}
+</template>
+
+<!-- Template with the information of a scenario for a row on the table of 'My Scenarios'-->
+<template name="MyScenariosScenarioRow">
+   
+    <td class="thin-column"><button id="visitScenario" style="width:100%" class="btn-orange clickableHeader" name={{_id}}>Visit Scenario</button> </td>
+    <td>{{_id}} </td>
+    <td>{{trimLength title 45}} </td>
+    <td>{{trimLength description 50}} </td>
+    <td>{{fstatus}}  </td>
+    <td>{{formatDate createdAt}}  </td>
+    <td>{{formatDate modifiedAt}}  </td>
+    <td>-</td>
+
 </template>
 
 <!-- template with the information of a single scenario -->
