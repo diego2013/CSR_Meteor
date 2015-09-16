@@ -306,6 +306,13 @@ UI.registerHelper('isVerifiedEmail' , function(emailsObject){
 });
 
 
+/**Returns the number of ACKs / LIKES of a scenario with the given ID
+@param ScnId ID of the scenario
+*/
+UI.registerHelper('getScenarioACKcount', function(ScnId){
+  return scenarioAcks.find({scnID : ScnId}).count();
+})
+
 
 //OTHER CLIENT FUNCTIONS
 //======================================================================

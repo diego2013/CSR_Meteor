@@ -35,6 +35,13 @@ Template.scenarioListTable.events({
 }
 });
 
+Template.MyScenariosScenarioRow.events({
+  "click #visitScenario" : function(event){
+    var currentPath = Router.current().route.getName()
+    visitScenario(currentPath);
+  }
+});
+
 Template.scenarioRow.events({
   "click #visitScenario" : function(event){
     var currentPath = Router.current().route.getName()

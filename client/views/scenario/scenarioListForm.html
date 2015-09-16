@@ -117,7 +117,7 @@
     <td>{{fstatus}}  </td>
     <td>{{formatDate createdAt}}  </td>
     <td>{{formatDate modifiedAt}}  </td>
-    <td>-</td>
+    <td>{{getScenarioACKcount _id}}</td>
 
 </template>
 
@@ -142,6 +142,6 @@
     <td>{{_id}} </td>
     <td>{{trimLength title 45}} </td>
     <td>{{trimLength description 50}} </td>
-    <td>-</td>
+    <td>{{getScenarioACKcount _id}}</td>
 
 </template>
