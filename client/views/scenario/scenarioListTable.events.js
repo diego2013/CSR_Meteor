@@ -31,7 +31,8 @@ Template.scenarioListTable.events({
        obj['param'] = obj['param'] ? name : "createdAt"; // "createdAt" will be "default" val
        obj['order'] =  1;
     }
-    Session.set( 'scenarioCursorOrder', obj );
+    if(name != '')//we don't sort
+      Session.set( 'scenarioCursorOrder', obj );
 }
 });
 

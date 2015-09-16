@@ -29,25 +29,25 @@
 <!-- Template for the view of 'MyScenarios' -->
 <template name="myScenariosTableView">
      <colgroup>
-        <col data-caption="linkButton" style="width: 7%;">
+        <col data-caption="linkButton" style="width: 6%;">
         <col data-caption="UID" style="width: 13%;">
         <col data-caption="title" style="width: 24%;">
         <col data-caption="description" style="width: 20%;">
-        <col data-caption="status" style="width: 10%;">
+        <col data-caption="status" style="width: 7%;">
         <col data-caption="createdAt" style="width: 10%;">
         <col data-caption="modifiedAt" style="width: 10%;">
-        <col data-caption="acks" style="width: 13%;">
+        <col data-caption="acks" style="width: 10%;">
     </colgroup>
 
     <tr class="btn-turquesa clickableHeader" id="cabecera">
-      <th data-name="_id" >Link</th>
+      <th data-name="" >Link</th>
       <th data-name="_id" >Scenario UID</th>
       <th data-name="title" >Title</th>
       <th data-name="description" >Description</th>
       <th data-name="status" >Status</th>
       <th data-name="createdAt" >Created on</th>
       <th data-name="modifiedAt" >Saved last</th>
-      <th data-name="acks" ># ACKs</th>
+      <th data-name="" ># ACKs</th>
     </tr>
 
     {{#each scenarios}}
@@ -114,7 +114,7 @@
     <td>{{_id}} </td>
     <td>{{trimLength title 45}} </td>
     <td>{{trimLength description 50}} </td>
-    <td>{{fstatus}}  </td>
+    <td>{{status}}  </td>
     <td>{{formatDate createdAt}}  </td>
     <td>{{formatDate modifiedAt}}  </td>
     <td>{{getScenarioACKcount _id}}</td>
