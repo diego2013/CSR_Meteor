@@ -161,8 +161,13 @@ Uses Iron:router https://github.com/iron-meteor/iron-router
      objSort[obj.param]= obj.order;
      Session.set('scenarioCursorStart', 0);
      // this.render('scenarioListTable', {data : { scenarios : MyScenarios.find({}, {sort: objSort}) }} );
-     this.render('scenarioListTable', 
-      {data : { scenarios : MyScenarios.find({}, {limit: Number(Session.get('scenarioResultsPerPage')), sort: objSort}) }} ); //issue #75
+     if(Meteor.user()){
+        this.render('scenarioListTable', 
+          {data : { scenarios : MyScenarios.find({}, {limit: Number(Session.get('scenarioResultsPerPage')), sort: objSort}) }} ); //issue #75 
+     }else{
+        this.render('home');//issue #101  
+     }
+     
    });
    this.route('approvedScenarioList' , function(){
      var obj = Session.get('scenarioCursorOrder');
