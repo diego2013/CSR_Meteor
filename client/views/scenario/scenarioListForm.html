@@ -14,16 +14,7 @@
 
 
 	<table class="tablePijama">
-  <!-- if user is an andmin has access to priviledged view -->
-<!--  {{#if getTypeOfTableView}}
-     {{ > scenarioTableViewAdmin}}
- {{else}}
- you are not an admin
-      {{ > scenarioTableViewPublic}}
- {{/if}} -->
-
-<!-- {{ > myScenariosTableView}} -->
- {{ > Template.dynamic template=getTypeOfTableView}} 
+    {{ > Template.dynamic template=getTypeOfTableView}} 
   </table>
 
   <div style="margin-top:10px;">

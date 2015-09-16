@@ -44,20 +44,12 @@ Template.scenarioListTable.helpers({
     }
     ,getTypeOfTableView : function(){
       var currentPath = Router.current().route.getName();
-      console.log(currentPath);
-      // return currentPath=='scenarioList' || Roles.userIsInRole(Meteor.user(), ['admin'])  
-
-      if(currentPath=='scenarioList')
-        return 'myScenariosTableView'
+      if(currentPath == ROUTE_scenarioList)
+        return myScenariosTableView_templateName
       else if (Roles.userIsInRole(Meteor.user(), ['admin']))
-        return 'scenarioTableViewAdmin'
+        return scenarioTableViewAdmin_templateName;
       else
-        return 'scenarioTableViewPublic'
-
-      // if(currentPath=='scenarioList' || Roles.userIsInRole(Meteor.user(), ['admin']) )
-      //   return scenarioTableViewAdmin
-      // else
-      //   return scenarioTableViewPublic
+        return scenarioTableViewPublic_templateName;
     }
  });
 
