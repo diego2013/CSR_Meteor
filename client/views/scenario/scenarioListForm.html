@@ -14,7 +14,28 @@
 
 
 	<table class="tablePijama">
-    <colgroup>
+  <!-- if user is an andmin has access to priviledged view -->
+ {{#if getTypeOfTableView}}
+     {{ > scenarioTableViewAdmin}}
+ {{else}}
+ you are not an admin
+      {{ > scenarioTableViewPublic}}
+ {{/if}}
+  </table>
+
+  <div style="margin-top:10px;">
+    <ul class="pager">
+        <li class="previous disabled" id="previousButton"> <a href="#">&larr; {{prevText}}</a> </li>
+        <li class="next" id="nextButton"> <a href="#">{{nextText}} &rarr;</a> </li>
+    </ul>
+  </div> 
+
+</template>
+
+
+<!-- Template with the table display for admin view-->
+<template name="scenarioTableViewAdmin">
+     <colgroup>
         <col data-caption="creator" style="width: 7%;">
         <col data-caption="linkButton" style="width: 7%;">
         <col data-caption="UID" style="width: 13%;">
@@ -34,24 +55,37 @@
       <th data-name="modifiedAt" >Saved last</th>
     </tr>
 
-        {{#each scenarios}}
-             <tr style="text-align: center"> {{ > scenarioRow }} </tr>
-        {{/each}}
-
-  </table>
-
-  <div style="margin-top:10px;">
-    <ul class="pager">
-        <li class="previous disabled" id="previousButton"> <a href="#">&larr; {{prevText}}</a> </li>
-        <li class="next" id="nextButton"> <a href="#">{{nextText}} &rarr;</a> </li>
-    </ul>
-  </div> 
-
+    {{#each scenarios}}
+         <tr style="text-align: center"> {{ > scenarioRow }} </tr>
+    {{/each}}
 </template>
 
-<!-- template with the informatio of a single scenario -->
+<template name="scenarioTableViewPublic">
+      <colgroup>
+          <col data-caption="created" style="width: 10%;">
+          <col data-caption="linkButton" style="width: 7%;">
+          <col data-caption="UID" style="width: 13%;">
+          <col data-caption="title" style="width: 24%;">
+          <col data-caption="description" style="width: 29%;">
+          <col data-caption="acks" style="width: 7%;">
+      </colgroup>
+
+      <tr class="btn-turquesa clickableHeader" id="cabecera">
+          <th data-name="createdAt" >Created</th>
+          <th data-name="_id" >Link</th>
+          <th data-name="_id" >Scenario UID</th>
+          <th data-name="title" >Title</th>
+          <th data-name="description" >Description</th>
+          <th data-name="acks" >ACKs</th>
+      </tr>
+
+      {{#each scenarios}}
+           <tr style="text-align: center"> {{ > publicScenarioRow }} </tr>
+      {{/each}}
+</template>
+
+<!-- template with the information of a single scenario -->
 <template name="scenarioRow">
-  
 
   	<td>{{username}}</td>
   	<td class="thin-column"><button id="visitScenario" style="width:100%" class="btn-orange clickableHeader" name={{_id}}>Visit Scenario</button> </td>
@@ -61,5 +95,16 @@
   	<td>{{status}} </td>
     <td>{{formatDate modifiedAt}}  </td>
 
+</template>
+
+<!-- template with the information of a single scenario for public view-->
+<template name="publicScenarioRow">
+
+    <td>{{formatDate createdAt}}  </td>
+    <td class="thin-column"><button id="visitScenario" style="width:100%" class="btn-orange clickableHeader" name={{_id}}>Visit Scenario</button> </td>
+    <td>{{_id}} </td>
+    <td>{{trimLength title 45}} </td>
+    <td>{{trimLength description 50}} </td>
+    <td>-</td>
 
 </template>

@@ -42,6 +42,10 @@ Template.scenarioListTable.helpers({
       else
         return '';
     }
+    ,diegofunction : function(){
+      var currentPath = Router.current().route.getName()
+      return currentPath=='scenarioList' || Roles.userIsInRole(Meteor.user(), ['admin'])  
+    }
  });
 
 

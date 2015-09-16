@@ -38,7 +38,25 @@ Template.scenarioListTable.events({
 Template.scenarioRow.events({
   "click #visitScenario" : function(event){
     var currentPath = Router.current().route.getName()
+    visitScenario(currentPath);
+  }
+});
+
+Template.publicScenarioRow.events({
+  "click #visitScenario" : function(event){
+    var currentPath = Router.current().route.getName()
     //do an action or another based on the route
+    visitScenario(currentPath);
+  }
+});
+
+
+//************* AUXILIARY FUNCTIONS *************
+/**
+  Displays one view or another based on the given url to show
+  @currentPath url of the view we are trying to reach
+*/
+var  visitScenario = function(currentPath){
     if(currentPath=='scenarioList'){
       //find by ID, with the scn ID being in the text of the button just clicked
       findByID(event.target.name);
@@ -48,6 +66,4 @@ Template.scenarioRow.events({
       //findByID(event.target.name);
       Router.go("/scenarioComplete/"+event.target.name);
     }
-
-  }
-});
+}
