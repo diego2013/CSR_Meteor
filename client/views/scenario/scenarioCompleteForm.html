@@ -46,8 +46,13 @@
 
 </div>
     
-    <div style="border : 0px solid black">
-       <label class="scenarioAuditInfoTextBox">{{ > scenarioAuditInfo }}</label>
+    <div style="border : 0px solid black;">
+        <label class="scenarioAuditInfoTextBox">
+        <b>Scenario UID:</b> {{_id}} <b>Saved last:</b> {{formatDateTime modifiedAt}} <b>Status:</b> {{showScenarioStatus}}
+        </label>
+        <span style="padding:0px 5px;"></span>
+       <!-- <label class="scenarioAuditInfoTextBox">{{ > scenarioAuditInfo }}</label> -->
+       <!-- {{ > scenarioAuditInfo }} -->
        <a href="#"  id="downloadScn"  class="btn btn-tiny btn-blue" title="Download">Download</a> 
     </div>
 

@@ -286,8 +286,10 @@ header .hide-completed {
 }
 
 .scenarioAuditInfoTextBox{
-	background: #a9d0f5;
-	padding:0px 10px;
+	background: #BAD9F7;
+	/*padding-right:10px;*/
+	margin: 10px 0px;
+	width: 98%;
 }
 
 .scenarioAuditInfoSection{
