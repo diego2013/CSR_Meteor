@@ -8,6 +8,7 @@
 /** Returns a boolean to indicare if the provided scenario is editable or not.
 1. If the scenario is UNSUBMITTED it should only be editable by the the owner (current user is owner)
 2. If the scenario is SUBMITTED or APPROVED is editable if the current user is the scenario lock's owner
+3. If user is not logged in we don't allow scenario editing (not even 'anonymous sceanrios').
 NOTE: tis simple approach does not have in consideration the anonymous scenarios
 */
 isScenarioEditable = function(currentScenarioDTO){
