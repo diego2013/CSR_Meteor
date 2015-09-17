@@ -12,6 +12,9 @@ NOTE: tis simple approach does not have in consideration the anonymous scenarios
 */
 isScenarioEditable = function(currentScenarioDTO){
   //console.log(JSON.stringify(currentScenarioDTO));
+  if(!Meteor.user())
+    return false; //issue #99. If user is not logged in scenario is not editable
+
   if(currentScenarioDTO == undefined ){
     return true;
   }
