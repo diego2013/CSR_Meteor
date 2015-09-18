@@ -96,7 +96,9 @@
       {{#if isInRole 'admin'}}
         <li class="nav-item" id="listUsersNavBarItem"><a href="{{ pathFor 'usersList' }}">List Users</a></li>
       {{/if}}
+      {{#if currentUser}}
 		  <li class="nav-item" id="upNavBarItem"><a href="{{ pathFor 'userProfile'}}">User Profile</a></li>
+      {{/if}}
       <li class="nav-item" ><a href="{{ pathFor 'aboutUs'}}">About Us</a></li>
       <li class="nav-item" ><a href="{{ pathFor 'help'}}">Help</a></li>
 		</ul>
