@@ -340,6 +340,11 @@ header .hide-completed {
 	white-space:nowrap;
 }
 
+#contributionsStatsTable td:first-child{
+	text-align:right; 
+	padding-right:5px;
+}
+
 
 /*******************
 Navigation bar

@@ -313,6 +313,22 @@ UI.registerHelper('getScenarioACKcount', function(ScnId){
   return scenarioAcks.find({scnID : ScnId}).count();
 })
 
+/** Returns the number of scenarios of this user by status
+@param scnState state of the scenario : values from scenarioStatusEnum or empty string for "ALL"
+*/
+UI.registerHelper('myContributionsCountByState', function(scnState){
+  if (scnState == scenarioStatusEnum.UNSUBMITTED)
+    return Counts.get('unSubmittedScenariosCounter');
+  else if (scnState == scenarioStatusEnum.SUBMITTED)
+    return Counts.get('submittedScenariosCounter');
+  else if (scnState == scenarioStatusEnum.APPROVED)
+    return Counts.get('approvedScenariosCounter')
+  else if (scnState == '')
+    return Counts.get('myScenariosCounter');
+  else
+    return 0;
+})
+
 
 //OTHER CLIENT FUNCTIONS
 //======================================================================

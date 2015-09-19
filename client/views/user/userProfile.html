@@ -4,11 +4,30 @@
 <template name="userProfile">
 	<form id="userProfileForm" >
 
-		{{#if userLoggedIn}}
+	{{#if currentUser}}
+	<table style="border:0px solid black; background-color: #C2E0FF;">
+	<tr>
+		<span style="font-size:16px; text-decoration:underline; font-weight:bold;" >User Profile </span>
+	</tr>
+ 		<tr style="vertical-align: text-top;" >
+			<td style="width:500px; ">
+					{{> userDataTemplate}}
+			</td>
+			<td>
+					{{> contributionsStats}}
+			</td>
+		</tr>
+	</table> 
+	{{else}}
+		{{> userProfileError}}
+	{{/if}}
+
+
+<!-- 		{{#if userLoggedIn}}
 			{{> userDataTemplate}}
 		{{else}}
 			{{> userProfileError}}
-		{{/if}}
+		{{/if}} -->
 
 	</form>
 
@@ -17,9 +36,7 @@
 
 <!-- Template with the data associated to this user's profile -->
 <template name="userDataTemplate"> 
-	<strong>User Profile</strong> <br/>
-	
-	{{#if currentUser}}
+
 		<p><strong>Username</strong> {{username}} <strong>UID</strong> {{_id}}</p>
 
 		<p><strong>Member since </strong>{{formatDate createdAt}}</p>
@@ -27,7 +44,32 @@
 		<p><strong>Email: </strong>{{getEmail emails}} <strong>verified: </strong>{{isVerifiedEmail emails}}</p>
 
 		<p><strong>Roles: </strong>{{roles}}</p>
-	{{/if}}
+
+
+</template>
+
+<!-- Template with stats about the user's contributons -->
+<template name="contributionsStats">
+
+	<b>Total number of scenarios: </b>  {{ myContributionsCountByState ''}} <br/>
+	<table id="contributionsStatsTable">
+		<tr>
+			<td>{{ myContributionsCountByState 'unsubmitted'}}</td>
+			<td>Scenarios pending of submission.</td>
+		</tr>
+		<tr>
+			<td>{{ myContributionsCountByState 'submitted'}} </td>
+			<td>Scenarios pending of approval. </td>
+		</tr>
+		<tr>
+			<td>{{ myContributionsCountByState 'approved'}}</td>
+			<td>Scenarios approved. </td>
+		</tr>
+	</table>
+	
+<!-- 	 Scenarios pending of submission. <br/> 
+	Scenarios pending of approval. <br/> 
+	 Scenarios approved. <br/>  -->
 
 </template>
 

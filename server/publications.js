@@ -153,8 +153,9 @@ Meteor.publish('feedbackDocuments', function(cursorStart, recordLimit, sortPrefe
 Meteor.publish('publication', function() {
   Counts.publish(this, 'feedbackCounter', FeedbackCollection.find());
   Counts.publish(this, 'myScenariosCounter', Scenarios.find({owner: this.userId }));
-  Counts.publish(this, 'approvedScenariosCounter', Scenarios.find({status : scenarioStatusEnum.APPROVED}));
-  Counts.publish(this, 'submittedScenariosCounter', Scenarios.find({status : scenarioStatusEnum.SUBMITTED}));
+  Counts.publish(this, 'approvedScenariosCounter', Scenarios.find({owner: this.userId , status : scenarioStatusEnum.APPROVED}));
+  Counts.publish(this, 'submittedScenariosCounter', Scenarios.find({owner: this.userId , status : scenarioStatusEnum.SUBMITTED}));
+  Counts.publish(this, 'unSubmittedScenariosCounter', Scenarios.find({owner: this.userId , status : scenarioStatusEnum.UNSUBMITTED}));
   Counts.publish(this, 'usersListCounter', Meteor.users.find());
 });
 
