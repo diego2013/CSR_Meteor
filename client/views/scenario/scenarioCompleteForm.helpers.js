@@ -23,9 +23,10 @@ Template.scenarioCompleteForm.helpers({
        Current user didn't vote already for the scenario
     */
     ,allowedToACK: function(){
-      if(!Meteor.user()) //anonymous user
+      if(!Meteor.user()){ //anonymous user
+        console.log("anonymous user....")
         return false;
-
+}
       scenarioDTO = this;
       var obj = scenarioAcks.findOne({_id : scenarioDTO._id+Meteor.userId()});
 
