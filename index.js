@@ -334,7 +334,7 @@ UI.registerHelper('myContributionsCountByState', function(scnState){
 //OTHER CLIENT FUNCTIONS
 //======================================================================
 
-//To configure the accounts UI
+//To configure the accounts UI https://docs.meteor.com/#/full/accounts_ui_config
 Accounts.ui.config({
   //passwordSignupFields: "USERNAME_ONLY"
   passwordSignupFields: 'USERNAME_AND_EMAIL'
