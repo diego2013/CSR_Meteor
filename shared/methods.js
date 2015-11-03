@@ -61,19 +61,29 @@ Meteor.methods({
   //save Feedback entry
   ,saveFeedback  : function (feedbackDto){
 
-   if(feedbackDto) 
+   if(feedbackDto){
     if(feedbackDto._id)
       FeedbackCollection.update(feedbackDto._id, feedbackDto);
     else
-      FeedbackCollection.insert(feedbackDto);
+      var feedbackDtoUID = FeedbackCollection.insert(feedbackDto);
+
+    feedbackDto._id = feedbackDtoUID;
+    return feedbackDto;
+  }
+
+  return '';
 
   }
 
   //update Feedback entry
   ,updateFeedback : function (feedbackDto){
 
-   if(feedbackDto) 
-    FeedbackCollection.update(feedbackDto);
+   if(feedbackDto){
+        FeedbackCollection.update(feedbackDto);
+        return feedbackDto;
+   } 
+
+    return '';
   }
 
   /** Unlocks a scenario for modification, granting the lock ownership to the current (logged in) user

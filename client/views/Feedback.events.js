@@ -37,7 +37,19 @@ Template.FeedbackForm.events({
       reviewedAt: undefined
     }
 
-    Meteor.call("saveFeedback", feedbackDto);
+    Meteor.call("saveFeedback", feedbackDto, function(err, callbackFeedbackDto){
+            if (err){  
+              console.log(err);
+            }else{
+              feedbackDto = callbackFeedbackDto;
+                  Meteor.call('sendEmailFeedbackSubmitted',
+                  'diego@mdpnp.org',
+                  'mdpnpteam@gmail.com',
+                  'Feedback Submitted',
+                  'This is a test of Email.send form feedback submission. Submited feedback with ID '+feedbackDto._id);
+            }
+      });
+    
     Router.go("/FeedbackFormThakYou") //redirect user to "Thank you page"
 
   }

@@ -41,8 +41,6 @@ scenarioStatusEnum = {
 //CLIENT SIDE
 if (Meteor.isClient) {
 
-
-
   // Scenarios = new Mongo.Collection("scenarios");
   // FeedbackCollection = new Mongo.Collection("FeedbackCollection");
   // ScenarioAcks = new Mongo.Collection("ScenarioAcks");
@@ -112,7 +110,6 @@ Template.NavBar.events({
     var folderName = "MDPnP_CSR_Scenarios_Export_"+date;
 
     Meteor.call('exportAllScenarios', folderName, function(err, data){
-      // console.log("hola")
       if (err){  
         console.log(err);
         window.alert("Error exporting data. \n\n"+err.error);
@@ -123,6 +120,7 @@ Template.NavBar.events({
     });
 
   }
+
 });
 
 
@@ -349,12 +347,5 @@ Accounts.ui.config({
 //======================================================================
 
 if (Meteor.isServer) {
-
-  Meteor.startup(function () {
-    // code to run on server at startup
-    process.env.MAIL_URL="smtp://md.pnp.team%40gmail.com:mdpnpCSR@smtp.gmail.com:465/"; 
-    //XXX check this SO Answer in order to know how to allow the less secure applications and allowe access to a GMAIL account.
-    // http://stackoverflow.com/a/31875371/3961519
-  });
   
 }
