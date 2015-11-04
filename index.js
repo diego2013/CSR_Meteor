@@ -118,7 +118,6 @@ Template.NavBar.events({
         saveAs(blob, folderName+".zip");
       }
     });
-
   }
 
 });

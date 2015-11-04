@@ -1,0 +1,61 @@
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+  <meta name="viewport" content="width=device-width" />
+  <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+  <title>HTML email test</title>
+  <link href="styles.css" media="all" rel="stylesheet" type="text/css" />
+</head>
+
+<body itemscope itemtype="http://schema.org/EmailMessage">
+
+Clinical Scenario Repository Administrator,
+
+<p>New Feedback has been submitted. To check this submission visit {{link}} or the <a href="https://csr.openice.info/feedbackReviewList">Review Feedback Reports</a> section.
+</p>
+
+<p>The content of the feedback submitted was:</p>
+
+<div style="background:#CCE6FF">
+
+<div><b>How would you rate this website?</b></div>
+<div style='padding-left:10px'>{{rateSite}}</div>
+
+<div><b>Is the repository easy to navigate and use? </b></div>
+<div style='padding-left:10px'>{{rateNavigation}}</div>
+
+<div><b>Is the information and functionality logically organized? </b></div>
+<div style='padding-left:10px'>{{rateOrganization}}</div>
+
+<div><b>Did you have trouble logging in? </b></div>
+<div style='padding-left:10px'>{{rateLogin}}</div>
+
+<div><b>Are there any unclear questions or fields?</b></div>
+<div style='padding-left:10px'>{{rateClarity}}</div>
+
+<div><b>Are the any missing fields, sections or elements?</b></div>
+<div style='padding-left:10px'>{{rateSections}}</div>
+
+<div><b>Would you find this useful if it was available to your department? Who would find it useful?</b></div>
+<div style='padding-left:10px'>{{rateUsefulness}}</div>
+
+<div><b>Does the website appear professional and trustworthy?</b></div>
+<div style='padding-left:10px'>{{rateAppearance}}</div>
+
+<div><b>Do you like the visual design of the website? </b> <span style='padding-left:5px'>{{visualDesign}}</span></div>
+
+<div><b>Do you have any other suggestions, requests or complaints?</b></div>
+<div style='padding-left:10px'>{{rateGeneral}}</div>
+
+</div>
+
+<p>
+  The information in this e-mail is intended only for the person to whom it is
+addressed. If you believe this e-mail was sent to you in error and the e-mail
+contains patient information, protected health information of defamatory information 
+please contact the MD PnP Clinical Repository administrators at info@mdpnp.org
+</p>
+
+<p>Clinical Scenario Repository. <a href="https://csr.openice.info/">Good Ideas for Patient Safety</a> © 2013 - 2015 
+<a href="wwww.mdpnp.org">MD PnP Program</a></p>
+</body>
+</html>

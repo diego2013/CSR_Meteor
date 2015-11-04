@@ -68,6 +68,7 @@ Meteor.methods({
       var feedbackDtoUID = FeedbackCollection.insert(feedbackDto);
 
     feedbackDto._id = feedbackDtoUID;
+    Meteor.call('sendEmailFeedbackSubmitted',feedbackDto);
     return feedbackDto;
   }
 
