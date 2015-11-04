@@ -18,6 +18,7 @@ deps@1.0.7
 ejson@1.0.6
 email@1.0.6
 fastclick@1.0.3
+fortawesome:fontawesome@4.4.0
 geojson-utils@1.0.3
 google@1.1.5
 html-tools@1.0.4
@@ -49,6 +50,7 @@ minimongo@1.0.8
 mobile-status-bar@1.0.3
 momentjs:moment@2.10.6
 mongo@1.1.0
+mrt:bootstrap-3@0.3.8
 npm-bcrypt@0.7.8_2
 npm-container@1.1.0
 oauth@1.1.4

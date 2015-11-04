@@ -19,6 +19,17 @@ body {
   font-size: 14px;
 }
 
+#footer {
+
+    margin-top: 5px;
+    padding-top: 5px;
+    padding-bottom: 20px;
+    border-top: 1px solid #DDF;
+    background-color: #F7FCFF;
+    color: #333;
+    text-align: center;
+}
+
 #webtitle{
 	font-size : 28px; 
 	color : #606060 ; 

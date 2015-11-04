@@ -21,3 +21,5 @@ meteorhacks:npm
 npm-container
 email
 meteorhacks:ssr
+mrt:bootstrap-3
+fortawesome:fontawesome
