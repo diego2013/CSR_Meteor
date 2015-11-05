@@ -8,7 +8,7 @@
     <div id="controlButtons" style="text-align:center;">
 
         {{#if isScenarioEditable}}
-        <a href="#"  id="saveScenarioButton" class="btn btn-small btn-mint" title="Save the chages in this scenario" >Save & Continue</a>
+        <a href="#"  id="saveScenarioButton" class="btn btn-small btn-mint" title="Save the chages in this scenario" > <span class="fa fa-save"></span> Save & Continue</a>
         {{/if}}
         {{#if getExpertMode}}
         <a href="#"  id="showGuidelines"  class="btn btn-small btn-dark-grey" >Hide Guidelines</a>
@@ -20,7 +20,7 @@
         <a href="#"  id="goToStep3"  class="btn btn-small btn-blue" title="Propose a solution for this scenario" >Step 3: Propose a Solution</a>
         {{#if isScenarioEditable}}
         <a href="#"  id="submitScenarioButton" class="btn btn-small btn-mint" title="Submit for approval" >Finish & Submit</a>
-        <a href="#"  id="deleteButton" class="btn btn-small btn-mint" title="Delete this scenario" >Delete</a>
+        <a href="#"  id="deleteButton" class="btn btn-small btn-red" title="Delete this scenario" > <span class="fa fa-trash"></span>&nbsp; Delete</a>
         {{/if}}
 
     </div>
