@@ -111,6 +111,11 @@ body {
     vertical-align: middle;
 }
 
+.justifiedText{
+    text-align: justify;
+    text-justify: inter-word;
+}
+
 header {
   background: #d2edf4;
   
