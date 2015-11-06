@@ -19,6 +19,10 @@ body {
   font-size: 14px;
 }
 
+
+/*
+=Footer
+*/
 #footer a {
 	text-decoration: none;
 }
@@ -295,6 +299,17 @@ header .hide-completed {
 	/* div>selectbox-wrapper is helping with this trick instead of setting a fixed line-height*/
 }
 
+.clinicalInputTable th, 
+.clinicalInputTable td{
+    background-color: #EAF2FB;
+    border: 1px solid black;
+}
+
+.clinicalInputDiv{
+  border-bottom: 1px solid #ccc;
+  margin: 1em 0;
+}
+
 .selectbox-wrapper{
 	margin:10px;
 }
@@ -373,7 +388,7 @@ header .hide-completed {
 /*******************
 Navigation bar
 *********************/
-.nav {
+/*.nav {
   margin-left: auto;
   margin-right: auto;
   margin-top:1px;
@@ -382,7 +397,7 @@ Navigation bar
   font-size:14px;
   font-weight:900;
 
-}
+}*/
 .nav-list {
   
 }
@@ -525,43 +540,5 @@ ul.fallback{
 }
 
 
-/*******
-=Tabbar
-*******/
 
-.tabbar{
-	border-bottom: 1px solid #00A4EF; 
-	padding:15px 0px 3px;
-}
-
-.tab{
-	text-align:center;
-	margin-top: 15px;
-	padding: 5px 10px;
-	border-radius:3px;
-	text-decoration:none;
-	font-weight:900;
-	font-family:'Helvetica Neue', Helvetica, Arial, sans-serif;
-}
-
-.tab:hover{
-	text-decoration:underline;
-
-}
-
-.tab:active{
-	color: -webkit-link; /*force no color change when clicking the link*/
-}
-
-.selectedTab{
-	  /*background-color: #fff; /*#FF8080;*/
-	border-radius : 5px  5px 0px 0px;
-	color:#FFF;
-	/*border:1px solid #0082BE;*/
-	background:#00A4EF;
-}
-
-.selectedTab:hover{
-	 text-decoration:none;
-}
 

@@ -8,7 +8,7 @@
     <div id="controlButtons" style="text-align:center;">
 
         {{#if isScenarioEditable}}
-        <a href="#"  id="saveScenarioButton" class="btn btn-small btn-mint" title="Save the chages in this scenario" > <span class="fa fa-save"></span> Save & Continue</a>
+        <a href="#"  id="saveScenarioButton" class="btn btn-small btn-mint" title="Save the chages in this scenario" > <span class="fa fa-save"></span> &nbsp; Save</a>
         {{/if}}
         {{#if getExpertMode}}
         <a href="#"  id="showGuidelines"  class="btn btn-small btn-dark-grey" >Hide Guidelines</a>
@@ -19,7 +19,7 @@
         <a href="#"  id="goToStep2"  class="btn btn-small btn-blue" title="Go to the Advanced Information panel" >Step 2: Add Further Details</a>
         <a href="#"  id="goToStep3"  class="btn btn-small btn-blue" title="Propose a solution for this scenario" >Step 3: Propose a Solution</a>
         {{#if isScenarioEditable}}
-        <a href="#"  id="submitScenarioButton" class="btn btn-small btn-mint" title="Submit for approval" >Finish & Submit</a>
+        <a href="#"  id="submitScenarioButton" class="btn btn-small btn-mint" title="Submit for approval" >Submit</a>
         <a href="#"  id="deleteButton" class="btn btn-small btn-red" title="Delete this scenario" > <span class="fa fa-trash"></span>&nbsp; Delete</a>
         {{/if}}
 
@@ -99,17 +99,18 @@
 
     <div id="setp2tab" class="tabbar">
           <a href="#"  id="hazardsButton" class="tab selectedTab" title="check the Hazards tab" data-step="advancedDetailsHazards">Hazards</a>
-          <a href="#"  id="equipmentButton"  class="tab" title="check the Equipment tab" data-step="advancedDetailsEquipment">Equipment</a>
+          <a href="#"  id="equipmentButton" class="tab" title="check the Equipment tab" data-step="advancedDetailsEquipment">Equipment</a>
           <a href="#"  id="lessonsLearnedButton" class="tab" title="check the Lessons Learned tab" data-step="advancedDetailsLessonsLearned">Lessons Learned</a>
           <a href="#"  id="rolesButton" class="tab" title="check the Roles Involved tab" data-step="advancedDetailsRoles">Roles Involved</a>
           <a href="#"  id="environmentsButton" class="tab" title="check the Environments Involved tab" data-step="advancedDetailsEnvironments">Environments Involved</a>
-          <a href="#"  id="referencesButton" class="tab" title="check the References tab" data-step="advancedDetailsReferences">Relevant References</a>
+          <a href="#"  id="referencesButton"  class="tab" title="check the References tab" data-step="advancedDetailsReferences">Relevant References</a>
           <!-- <label class="{{getGuidelinesButtonClass}}" style="float:right;" > &#8592; visit any of these tabs in any specific order</label> -->
     </div>
 
-    <div>
+    <div style="padding-bottom:10px">
         {{> Template.dynamic template=advancedDetailsTemplateName}}
     </div>
+
 </template>
 
 <!-- Template for the Third step of the New Scenario submission: Solution -->
@@ -165,10 +166,9 @@
 
 <!-- Template for step 2: advanced details: Hazards-->
 <template name="advancedDetailsHazards" >
-{{#if isScenarioEditable}}
-   {{> hazardInput}}
-   <hr>
-{{/if}}
+    {{#if isScenarioEditable}}
+       {{> hazardInput}}
+    {{/if}}
 
     <span>Current hazards of the scenario</span>
     <table >
@@ -186,17 +186,30 @@
 
 <!-- Template ot display the input form  to create a new hazard -->
 <template name="hazardInput">
-     <p>Describe current or possible risks to patient safety</p>
 
-    <table class="div-chooseClinical" border="1">
+  <div class="clinicalInputDiv">
+    <div style="margin:5px;">
+         Describe current or possible risks to patient safety. 
+
+         <button type="button" id="addNewHazard" class="btn btn-tiny btn-mint" >
+         <span class="fa fa-plus"></span>
+         Add Hazard Description
+         </button>
+
+    </div>
+
+    <table class="clinicalInputTable">
+
+       <col width="100%"> <!-- First columnm -->
         <tr>
-            <th>Description</th>
+            <th>Description <span class="red-asterisk">*</span></th>
             <th title="Likeness to Predict this Hazard">Predictability</th>
-            <th title="Level of Harm to Patient (per AHRQ Scale)">Severity <a href='#' id="idAhrqLevels" style="font-size:10px">(per AHRQ Scale)</a></th>
+            <th title="Level of Harm to Patient (per AHRQ Scale)" style="text-align:center">Severity 
+                <a href='#' id="idAhrqLevels" style="font-size:10px;">(per AHRQ Scale)</a>
+            </th>
         </tr>
-        <tr>
-        
-            <td><textarea type="text" id="hazardDescription" rows="3" cols="115" placeholder="Type to add a Description" ></textarea></td>
+        <tr>       
+            <td><textarea type="text" id="hazardDescription" rows="3" style="width:100%" placeholder="Type to add a description" ></textarea></td>
             <td><select id="hazardRisk">
                 <option value="Unknown" autofocus>Unknown</option>
                 <option value="Expected">Expected</option>
@@ -217,10 +230,12 @@
             </select>               
             </td>      
         </tr>
+
     </table>
 
+    The <span class="red-asterisk">red asterisk (*)</span> indicates a mandatory field.
 
-    <button type="button" id="addNewHazard" class="btn btn-small btn-mint">Add This Hazard Description</button> <br/>
+  </div>
 
 </template>
 
@@ -251,7 +266,7 @@
             <th><label>Device Type</label></th>
             <th ><label>Manufacturer</label></th>
             <th ><label>Model</label></th>
-            <th><label>Rosetta - Unique ID</label></th>
+            <th><label>Unique Device ID</label></th>
             <th><label>Training related problem</label></th>
             <th><label>Instructions related problem</label></th>
             <th><label>Confusing device usage</label></th>
@@ -270,12 +285,12 @@
 <template name="equipmentInput">
     <p>Add further details about related/involved hardware</p>
 
-    <table class="div-chooseClinical">
+    <table class="div-chooseClinical" >
         <tr>
             <th><label>Device Type</label></th>
             <th><label>Manufacturer</label></th>
             <th><label>Model</label></th>
-            <th><label>Rosetta - Unique ID</label> <a href="http://accessgudid.nlm.nih.gov/about-gudid" target="_blank">(GUDID)</a></th>
+            <th><label>Unique Device ID</label> <a href="http://accessgudid.nlm.nih.gov/about-gudid" target="_blank">(UDI)</a></th>
             <th><label></label></th>
             <th><label></label></th>
             <th><label></label></th>
