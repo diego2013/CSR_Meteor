@@ -27,7 +27,9 @@
 }
 
 /*I'm unsure id this one is working as expected... */
-
+.btn:active{
+	color: -webkit-link; /*force no color change when clicking the link*/
+}
 
 button[type=button]:hover {
     color: #fff;
@@ -43,8 +45,6 @@ a.btn:focus{
 a.btn:hover{
 	color:  #fff;
 }
-
-
 
 
 .pill{
