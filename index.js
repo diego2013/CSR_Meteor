@@ -163,8 +163,6 @@ UI.registerHelper('count', function(arrayObject){
   return arrayObject.length;
 });
 
-//Returns if a scenario is editable or not
-//UI.RegisterHelper('isScenarioEditable', );
 
 /********* UTILITY FUNCTIONS *********/
 
@@ -218,6 +216,7 @@ UI.registerHelper('printScenarioMetainfo' , function(){
 UI.registerHelper('isScenarioEditable', function(){
   currentScenarioDTO = Session.get('currentScenarioDTO');
   return isScenarioEditable(currentScenarioDTO);
+  // return false;
 });
 
 /** Returns an HTML "readonly" attribute that indicates if the current scenario is editable or not

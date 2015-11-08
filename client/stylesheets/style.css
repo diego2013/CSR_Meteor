@@ -299,11 +299,38 @@ header .hide-completed {
 	/* div>selectbox-wrapper is helping with this trick instead of setting a fixed line-height*/
 }
 
+
+
 .clinicalInputTable th, 
 .clinicalInputTable td{
     background-color: #EAF2FB;
     border: 1px solid black;
 }
+.clinicalInputTablePijama tr:nth-child(2n+1){
+  background: #fff; /*#F5FAFF;*/
+}
+.clinicalInputTablePijama th{
+  text-align: center;
+
+  /* what follows is actually button turquoise */
+  color:#FFF;
+  text-shadow:none;
+  /*border:1px solid #0066FF;*/
+  background:#0099CC;
+  background-image:linear-gradient(bottom, rgb(0, 153, 204)1%, rgb(51, 204, 204) 51%);
+  background-image:-o-linear-gradient(bottom, rgb(0, 153, 204) 1%, rgb(51, 204, 204) 51%);
+  background-image:-moz-linear-gradient(bottom, rgb(0, 153, 204) 1%, rgb(51, 204, 204) 51%);
+  background-image:-webkit-linear-gradient(bottom, rgb(0, 153, 204) 1%, rgb(51, 204, 204) 51%);
+  background-image:-ms-linear-gradient(bottom, rgb(0, 153, 204) 1%, rgb(51, 204, 204) 51%);
+}
+.clinicalInputTablePijama td{
+  border: 1px solid #ccc;
+}
+.clinicalInputTablePijama td:last-child{
+  border: none;
+}
+
+
 
 .clinicalInputDiv{
   border-bottom: 1px solid #ccc;
@@ -368,6 +395,7 @@ header .hide-completed {
 	background: #F5FAFF;
 
 }
+
 
 .clickableHeader{
 	cursor: pointer;

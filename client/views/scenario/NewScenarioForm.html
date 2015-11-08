@@ -170,12 +170,21 @@
        {{> hazardInput}}
     {{/if}}
 
-    <span>Current hazards of the scenario</span>
-    <table >
-        <tr class ="btn-turquesa">
+    <span>Current hazards of the scenario ({{hazardEntryListCount}} entries)</span>
+    <table class="clinicalInputTablePijama">
+
+        <col width="65%"> <!-- First columnm -->
+        <col width="10%">
+        <col width="25%"> 
+        <col width="1%"> 
+
+        <tr class ="">
             <th>Description</th>
-            <th>Expected risks</th>
+            <th>Expected Risks</th>
             <th>Severity <span style="font-size:8px">(per AHRQ Scale)</span></th>
+            {{#if isScenarioEditable}}
+            <th></th>
+            {{/if}}
         </tr>
         {{#each hazardEntryList}}
             {{> hazardEntry}} 
@@ -188,7 +197,7 @@
 <template name="hazardInput">
 
   <div class="clinicalInputDiv">
-    <div style="margin:5px;">
+    <div style="margin-bottom:5px;">
          Describe current or possible risks to patient safety. 
 
          <button type="button" id="addNewHazard" class="btn btn-tiny btn-mint" >
@@ -241,13 +250,15 @@
 
 <!-- Template ot display the info of a single hazard-->
 <template name="hazardEntry">
-  <tr class="tablePijamaEvenRow">
-    <td style="width:60%"><label>{{hazardDescription}}</label></td>
+  <tr class="">
+    <td><label>{{hazardDescription}}</label></td>
     <td><label>{{hazardRisk}}</label></td>
     <td><label>{{hazardSeverity}}</label></td>
     <!--<td><label>{{id}}</label></td>-->
     {{#if isScenarioEditable}}
-    <td> <button style="width:100%;" class="btn-red" id="deleteHazard">Delete</button></td>
+    <td> <button class="btn-red" id="deleteHazard"><span class="fa fa-trash"></span>
+        </button>
+    </td>
     {{/if}}
    </tr>
 </template>

@@ -49,6 +49,14 @@
       else
         return currentScenarioDTO.hazardEntryList;
     } 
+    ,hazardEntryListCount : function(){
+      currentScenarioDTO = Session.get('currentScenarioDTO');
+      hazardEntryList = currentScenarioDTO==undefined?[]:currentScenarioDTO.hazardEntryList;
+      if(hazardEntryList==undefined)
+        return 0;
+      else
+        return hazardEntryList.length;
+    } 
   });
 
   Template.advancedDetailsEquipment.helpers({
