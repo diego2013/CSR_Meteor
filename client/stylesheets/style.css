@@ -306,7 +306,7 @@ header .hide-completed {
     background-color: #EAF2FB;
     border: 1px solid black;
 }
-.clinicalInputTablePijama tr:nth-child(2n+1){
+.clinicalInputTablePijama tr:nth-child(2n){
   background: #fff; /*#F5FAFF;*/
 }
 .clinicalInputTablePijama th{
