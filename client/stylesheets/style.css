@@ -306,10 +306,16 @@ header .hide-completed {
 
 
 
+
 .clinicalInputTable th, 
 .clinicalInputTable td{
     background-color: #EAF2FB;
     border: 1px solid black;
+}
+
+
+.clinicalInputTablePijama{
+   margin-bottom: 15px;
 }
 .clinicalInputTablePijama tr:nth-child(2n){
   background: #fff; /*#F5FAFF;*/ 
