@@ -440,9 +440,9 @@
 
 <!-- Template for step : advanced details: Actors -->
 <template name="advancedDetailsRoles">
- {{#if isScenarioEditable}}
-    {{ > roleInput}}
- {{/if}}
+     {{#if isScenarioEditable}}
+        {{ > roleInput}}
+     {{/if}}
 
     <table class="clinicalInputTablePijama">
         <tr>
@@ -545,15 +545,14 @@
 <!-- Template for step : advanced details: Environments -->
 <template name="advancedDetailsEnvironments">
 
-{{#if isScenarioEditable}}
-    {{ > environmentInput}}
-    <hr>
-{{/if}}
+    {{#if isScenarioEditable}}
+        {{ > environmentInput}}
+    {{/if}}
 
-    <table>
+    <table class="clinicalInputTablePijama">
         <tr>
         {{#if isScenarioEditable}}<th></th>{{/if}}
-         <th>Clinical Environments of the Scenario</th>
+         <th>Clinical Environments of the Scenario ({{environmentEntryListCount}} entries)</th>
         </tr>
         {{#each environmentEntryList}}
             {{> environmentEntry}}
@@ -564,7 +563,12 @@
 
 <!-- Template ot display the input form to create a new clinical role -->
 <template name="environmentInput">
-<p>Add further details about the places where this scenario can take place.</p>
+
+  <div class="clinicalInputDiv">
+    <div style="margin-bottom:5px;">
+        Add further details about the places where this scenario can take place.
+    </div>
+        
     <div class="div-chooseClinical"> 
         Choose a clinical environment from this list
         <select id="clinicalEnvironment" class="selectbox-wrapper">
@@ -610,7 +614,11 @@
 
         <textarea id="customEnvironment" class="customClinicalEntry"></textarea>
 
-        <button type="button" id="addPlace" class="btn btn-small btn-mint" style="vertical-align:middle;">Add Environment</button>
+        <button type="button" id="addPlace" class="btn btn-small btn-mint" style="vertical-align:middle;">
+            <span class="fa fa-plus"></span>
+            Add Environment
+        </button>
+    </div>
     </div>
 </template>
 
@@ -618,7 +626,10 @@
 <template name="environmentEntry">
     <tr>
         {{#if isScenarioEditable}}
-            <td> <button type="button" class="btn-red" style="width:100%" id="deletePlace">Delete</button></td>
+            <td> <button type="button" class="btn-red" style="width:100%" id="deletePlace" title="Delete environment">
+                <span class="fa fa-trash"></span>
+                </button>
+            </td>
         {{/if}}
         <td>{{place}}</td>
     </tr>

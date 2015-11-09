@@ -95,6 +95,14 @@
         return [];
       else
         return currentScenarioDTO.environmentEntryList;
+    }     
+    ,environmentEntryListCount : function(){
+      currentScenarioDTO = Session.get('currentScenarioDTO');
+      environmentEntryList = currentScenarioDTO==undefined?[]:currentScenarioDTO.environmentEntryList;
+      if(environmentEntryList==undefined)
+        return 0;
+      else
+        return environmentEntryList.length;
     } 
   });
 
