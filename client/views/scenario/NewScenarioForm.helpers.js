@@ -106,6 +106,14 @@
       else
         return currentScenarioDTO.roleEntryList;
     } 
+    ,roleEntryListCount : function(){
+      currentScenarioDTO = Session.get('currentScenarioDTO');
+      roleEntryList = currentScenarioDTO==undefined?[]:currentScenarioDTO.roleEntryList;
+      if(roleEntryList==undefined)
+        return 0;
+      else
+        return roleEntryList.length;
+    } 
   });
 
   Template.scenarioFormSolution.helpers({

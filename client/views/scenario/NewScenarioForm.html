@@ -442,13 +442,12 @@
 <template name="advancedDetailsRoles">
  {{#if isScenarioEditable}}
     {{ > roleInput}}
-    <hr>
  {{/if}}
 
-    <table>
+    <table class="clinicalInputTablePijama">
         <tr>
-        {{#if isScenarioEditable}}<th></th>{{/if}}
-         <th >Clinical Roles of the scenario</th>
+         {{#if isScenarioEditable}}<th></th>{{/if}}
+         <th >Clinical Roles of the Scenario ({{roleEntryListCount}} entries)</th>
         </tr>
         {{#each roleEntryList}}
             {{> roleEntry}}
@@ -460,8 +459,12 @@
 
 <!-- Template ot display the input form to create a new clinical role -->
 <template name="roleInput">
-<p>Add further details about people involved in the scenario and their roles.</p>
-    <div class="div-chooseClinical"> 
+  <div class="clinicalInputDiv">
+    <div style="margin-bottom:5px;">
+        Add further details about people involved in the scenario and their roles.
+
+    </div>    
+    <div class="clinicalInputBar"> 
 
         Choose a clinical role from this list
         <select id="clinicalRole" class="selectbox-wrapper">
@@ -517,7 +520,12 @@
 
         <textarea id="customActor" class="customClinicalEntry"></textarea>
 
-        <button type="button" id="addActor" class="btn btn-small btn-mint" style="vertical-align:middle;">Add Actor</button>
+        <button type="button" id="addActor" class="btn btn-small btn-mint" style="vertical-align:middle;">
+            <span class="fa fa-plus"></span>
+            Add Actor
+        </button>
+    </div>
+
     </div>
 </template>
 
@@ -525,7 +533,10 @@
 <template name="roleEntry">
     <tr> 
         {{#if isScenarioEditable}}
-        <td> <button type="button" id="deleteRole" class="btn-red">Delete</button></td>
+        <td> <button type="button" id="deleteRole" class="btn-red" title="Delete role">
+                <span class="fa fa-trash"></span>
+            </button>
+        </td>
         {{/if}}
         <td>{{role}}</td>
     </tr>

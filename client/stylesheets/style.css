@@ -305,7 +305,10 @@ header .hide-completed {
 }
 
 
-
+.clinicalInputBar{
+  background-color: #EAF2FB;
+  margin-bottom: 10px;
+}
 
 .clinicalInputTable th, 
 .clinicalInputTable td{
