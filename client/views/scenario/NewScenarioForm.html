@@ -56,24 +56,26 @@
        {{ > scenarioAuditInfo }} 
     {{/if}}
 
-    <label>Title of the Scenario <span class="red-asterisk">*</span></label>
-    <a href="{{ pathFor 'exampleScenario_step1' }}" target="_blank" class="exampleLabel" style="margin-left:10px"> see an example</a>
-    <br/>
-    <!-- {{#if editableScn}} 
-        <textarea type="text" id="title" name="title" rows="1" cols="100" placeholder="Type to add a title" >{{title}}</textarea><br/>
-    {{else}}
-        <textarea type="text" id="title" name="title" rows="1" cols="100" placeholder="Type to add a title" readonly>{{title}}</textarea><br/>
-    {{/if}} -->
+    <div class="padding-bottom-10">
+        <label>Title of the Scenario <span class="red-asterisk">*</span></label>
+        <a href="{{ pathFor 'exampleScenario_step1' }}" target="_blank" class="exampleLabel" style="margin-left:10px"> see an example</a>
+        <br/>
+        <!-- {{#if editableScn}} 
+            <textarea type="text" id="title" name="title" rows="1" cols="100" placeholder="Type to add a title" >{{title}}</textarea><br/>
+        {{else}}
+            <textarea type="text" id="title" name="title" rows="1" cols="100" placeholder="Type to add a title" readonly>{{title}}</textarea><br/>
+        {{/if}} -->
 
-    <textarea type="text" id="title" name="title" rows="1" cols="100" placeholder="Type to add a title" style="margin-top:3px" {{isScenarioReadOnly}}>{{title}}</textarea>
-    <br/>
+        <textarea type="text" id="title" name="title" rows="1" cols="100" placeholder="Type to add a title" style="margin-top:3px" {{isScenarioReadOnly}}>{{title}}</textarea>
+        <br/>
 
-    <label>Description of the Scenario <span class="red-asterisk">*</span></label>
-    <a href="{{ pathFor 'exampleScenario_step1' }}" target="_blank" class="exampleLabel" style="margin-left:10px"> see an example</a>
-    <br/>
-    <textarea type="text" id="description" name="description"  class="textAreaStyle" placeholder="Type to add a description" style="margin-top:3px" {{isScenarioReadOnly}}>{{description}}</textarea><br/>
+        <label>Description of the Scenario <span class="red-asterisk">*</span></label>
+        <a href="{{ pathFor 'exampleScenario_step1' }}" target="_blank" class="exampleLabel" style="margin-left:10px"> see an example</a>
+        <br/>
+        <textarea type="text" id="description" name="description"  class="textAreaStyle" placeholder="Type to add a description" style="margin-top:3px" {{isScenarioReadOnly}}>{{description}}</textarea><br/>
 
     <p> The <span class="red-asterisk">red asterisk (*)</span>  in the form indicates a mandatory field.</p>
+    </div>
 
 </template>
 
@@ -107,7 +109,7 @@
           <!-- <label class="{{getGuidelinesButtonClass}}" style="float:right;" > &#8592; visit any of these tabs in any specific order</label> -->
     </div>
 
-    <div style="padding-bottom:10px">
+    <div class="padding-bottom-10">
         {{> Template.dynamic template=advancedDetailsTemplateName}}
         <!-- <hr> -->
     </div>
@@ -135,6 +137,7 @@
         {{ > scenarioAuditInfo }}
     {{/if}}
 
+<div class="padding-bottom-10">
     <label><b>Scenario Title: </b></label>
     <label>{{title}}</label><br/>
     <label>Describe Your Good Idea or Solution</label>
@@ -151,7 +154,9 @@
     <a href="{{ pathFor 'exampleScenario_step3' }}" target="_blank" class="exampleLabel" style="margin-left:10px"> see an example</a>
 
     <br/>
-    <textarea type="text" id="risksDescription"  rows="5" class="solutionTextAreaStyle" style="margin-top:3px" {{isScenarioReadOnly}}>{{risksDescription}}</textarea><br/>
+    <textarea type="text" id="risksDescription"  rows="5" class="solutionTextAreaStyle" style="margin-top:3px" {{isScenarioReadOnly}}>{{risksDescription}}</textarea>
+
+  </div>  
 </template>
 
 <!-- template to display some auditing information about the scenario -->
