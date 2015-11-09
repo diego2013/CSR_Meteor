@@ -341,8 +341,6 @@ header .hide-completed {
   border: none;
 }
 
-
-
 .clinicalInputDiv{
   border-bottom: 1px solid #ccc;
   margin: 1em 0;
@@ -425,7 +423,8 @@ header .hide-completed {
 
 
 /*******************
-Navigation bar
+=Navigation bar
+=NavBar
 *********************/
 /*.nav {
   margin-left: auto;
@@ -513,6 +512,11 @@ ul.fallback{
     background: #8AB8E6;
     margin-left: 15px;
     border-radius:5px ;
+}
+
+.divider{
+  border: 1px dashed #8AB8E6;
+  margin: 0px 5px;
 }
 
 
