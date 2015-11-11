@@ -40,9 +40,23 @@
          <a href="#"  id="showGuidelines"  class="guidelines" >Show Guidelines (Verbose mode)</a>
         {{/if}}
 
-        <span style="float:right">
+    </div>
 
-        <span style="vertical-align:middle" class="badge-color">Navigate freely through the steps</span>
+    <!-- Div here for main content-->
+    <div>
+        {{> Template.dynamic template=newScenarioStep}}
+    </div>
+
+  </form>
+</template>
+
+
+
+<!-- Template for the Helper Navigation Badges-->
+<template name="navbadges">
+
+    <div align="right"> 
+        <span style="vertical-align:middle"  title="Revise other scenario steps. Submit when ready">Navigate to complete/revisit other steps</span>
 
         <a href="#" class="badge badge-color-selected" id="getToStep1" title="Go to Step 1: Basic Information">
             <span class="fa-stack"  >
@@ -51,9 +65,9 @@
             </span>
         </a>  
 
-       <span class="fa fa-exchange badge-color" title="Go to Step 2: Advanced Information"></span>
+       <span class="fa fa-exchange badge-color"></span>
 
-        <a href="#" class="badge" id="getToStep2">
+        <a href="#" class="badge" id="getToStep2" title="Go to Step 2: Advanced Information">
             <span class="fa-stack"  >
               <span class="fa fa-circle-thin fa-stack-2x" ></span> 
               <span class="fa fa-stack-1x" >2</span>     
@@ -68,16 +82,8 @@
               <span class="fa fa-stack-1x" >3</span>     
             </span>
         </a>  
-            
-        </span>
     </div>
 
-    <!-- Div here for main content-->
-    <div>
-        {{> Template.dynamic template=newScenarioStep}}
-    </div>
-
-  </form>
 </template>
 
 <!-- Templates to move between the different scenario submission steps -->
@@ -128,9 +134,10 @@
         </span>
     </div>
 
+
     <p> The <span class="red-asterisk">red asterisk (*)</span>  in the form indicates a mandatory field.</p>
 
-
+    {{> navbadges}}
 
     </div>
 
@@ -169,7 +176,10 @@
     <div class="padding-bottom-10">
         {{> Template.dynamic template=advancedDetailsTemplateName}}
         <!-- <hr> -->
+        <span class="hr-thin"></span>
+        {{> navbadges}}
     </div>
+
 
 </template>
 
@@ -213,20 +223,13 @@
     <br/>
     <textarea type="text" id="risksDescription"  rows="5" class="solutionTextAreaStyle" style="margin-top:3px" {{isScenarioReadOnly}}>{{risksDescription}}</textarea>
 
-
+    {{> navbadges}}
 <!--     <span>
         <a href="#"  id="goToStep2"  class="btn btn-tiny btn-orange" title="Go to the Advanced Information panel" >&lt; Prev</a>
     </span> -->
 
 
   </div>  
-</template>
-
-<!-- template to display some auditing information about the scenario -->
-<template name="scenarioAuditInfo">
-        <div class="scenarioAuditInfoSection"> 
-        <b>Scenario UID:</b> {{_id}} <b>Saved last:</b> {{formatDateTime modifiedAt}} <b>Status:</b> {{showScenarioStatus}}
-        </div>
 </template>
 
 
