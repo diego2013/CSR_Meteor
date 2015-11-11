@@ -1,0 +1,96 @@
+/*******************
+=Navigation bar
+=NavBar
+*********************/
+/*.nav {
+  margin-left: auto;
+  margin-right: auto;
+  margin-top:1px;
+  position:relative;
+  display:inline-block;
+  font-size:14px;
+  font-weight:900;
+
+}*/
+.nav-list {
+  
+}
+
+.nav-list >ul>li{
+
+}
+
+
+.nav-item {
+  margin: 0px;
+  float:left;
+  display:inline;
+  zoom:1;
+}
+.nav-item a {
+  font-family:'Helvetica Neue', Helvetica, Arial, sans-serif;
+  text-shadow:0 1px 1px rgba(0,0,0,0.5);
+  text-decoration:none;
+  font-weight:900;
+  display:block;
+  padding:10px 20px;
+ /*padding: 10px;*/
+  color:#FFF;
+  text-decoration: none;
+  /*background:#34495E;*/
+}
+.nav-item:first-child a {
+  border-radius:5px 0 0 5px;
+}
+.nav-item:last-child a {
+  border-radius:0 5px 5px 0;
+}
+.nav-item a:hover {
+  /*background:#2C3E50;*/
+  background: #8AB8E6;
+  border-radius:5px ;
+}
+
+.selectedNavItem{
+  background: #8AB8E6;
+  border-radius:5px ;
+}
+
+
+nav>ul>li>ul>li{
+	list-style:none; 
+	margin-left: 0px;
+}
+
+nav ul li:hover {background:#8AB8E6;border-radius:5px }
+
+nav ul li ul {
+	position: absolute;
+	padding:0px;
+}
+
+nav ul li ul.fallback {display:none;}
+
+nav ul li ul li:hover a {background:#F7F7F7;}
+
+nav ul li:hover ul.fallback {
+	width: 150%;
+	background:#A9D0F5;
+	display:block; 
+	text-align: left;  
+	/*z-index:1;
+    opacity:1;*/}
+
+ul.fallback{
+	z-index:1;
+    opacity:1;
+    position: absolute;
+    background: #8AB8E6;
+    margin-left: 15px;
+    border-radius:5px ;
+}
+
+.divider{
+  border: 1px dashed #8AB8E6;
+  margin: 0px 5px;
+}

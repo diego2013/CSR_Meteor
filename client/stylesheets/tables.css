@@ -1,0 +1,88 @@
+/***************
+ =TABLES
+ ***************/
+
+ .narrowColumn{
+ 	text-align : center;
+ 	width : 5%;
+ }
+
+/* class for EVEN rows on tables with pijamas */
+.tablePijamaEvenRow{
+	background: #FFFFFF;
+}
+
+
+/* class for ODD rows on tables with pijamas */
+.tablePijamaOddRow{
+	background: #99CCFF;
+}
+
+.tablePijama{
+	width: 100%;
+}
+
+.tablePijama tr:nth-child(2n+4){
+	background: #F5FAFF;
+
+}
+
+
+.clickableHeader{
+	cursor: pointer;
+}
+
+.thin-column{
+	/*width:1%; */
+	/*display: inline-block;*/
+	white-space:nowrap;
+}
+
+#contributionsStatsTable td:first-child{
+	text-align:right; 
+	padding-right:5px;
+}
+
+
+/* -------------------------
+New Scenario Form Step 2
+-------------------------- */
+.clinicalInputTable th, 
+.clinicalInputTable td{
+    background-color: #EAF2FB;
+    border: 1px solid black;
+}
+
+
+.clinicalInputTablePijama{
+   margin-bottom: 15px;
+}
+.clinicalInputTablePijama tr:nth-child(2n){
+  background: #fff; /*#F5FAFF;*/ 
+}
+/*.clinicalInputTablePijama tr:nth-child(2n+1){
+  background: #d0edf5;
+}*/
+
+.clinicalInputTablePijama th{
+  text-align: center;
+
+  /* what follows is actually button turquesa */
+  color:#FFF;
+  text-shadow:none;
+  border:1px solid #0066FF;
+  background:#0099CC;
+  background-image:linear-gradient(bottom, rgb(0, 153, 204)1%, rgb(51, 204, 204) 51%);
+  background-image:-o-linear-gradient(bottom, rgb(0, 153, 204) 1%, rgb(51, 204, 204) 51%);
+  background-image:-moz-linear-gradient(bottom, rgb(0, 153, 204) 1%, rgb(51, 204, 204) 51%);
+  background-image:-webkit-linear-gradient(bottom, rgb(0, 153, 204) 1%, rgb(51, 204, 204) 51%);
+  background-image:-ms-linear-gradient(bottom, rgb(0, 153, 204) 1%, rgb(51, 204, 204) 51%);
+}
+.clinicalInputTablePijama td{
+  border: 1px solid #ccc;
+}
+.clinicalInputTablePijama td:last-child{
+  border: none;
+}
+
+/* ----------------------------- */
