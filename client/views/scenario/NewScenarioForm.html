@@ -50,7 +50,10 @@
   </form>
 </template>
 
-
+<!-- template to display some auditing information about the scenario -->
+<template name="scenarioAuditInfo">
+        <b>Scenario UID:</b> {{_id}} <b>Saved last:</b> {{formatDateTime modifiedAt}} <b>Status</b> {{showScenarioStatus}}
+</template>
 
 <!-- Template for the Helper Navigation Badges-->
 <template name="navbadges">
