@@ -11,3 +11,9 @@ scenarioTableViewPublic_templateName  = 'scenarioTableViewPublic';
 
 //######### =Routes #########
 ROUTE_scenarioList = 'scenarioList';
+
+
+//######### =Labels #########
+
+_hideguidelinestext = 'Hide Guidelines (Expert mode)';
+_showguidelinestext = 'Show Guidelines (Verbose mode)'

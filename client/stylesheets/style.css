@@ -19,6 +19,28 @@ body {
   font-size: 14px;
 }
 
+/* -------------------------------
+=Guidelines. New Scenario Form Verbose / Expert mode
+ * ------------------------------- */
+.guidelines{
+    font: 12px / 15px Helvetica, Arial;
+    color: #00a0be;
+    font-weight: normal;
+    text-decoration: none;
+}
+.guidelines:hover{
+    text-decoration: none;
+}
+
+#subControlBar .fa-toggle-off, 
+#subControlBar .fa-toggle-on{
+  color: #00a0be;
+}
+
+.guidelines-color{
+  color: #00a0be;
+}
+/* ------------------------------- */
 
 /*
 =Footer

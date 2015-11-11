@@ -74,19 +74,35 @@ Template.NewScenarioForm.events({
       Session.set(_ADVANCEDDETAILS_TAB, _ADT_HAZARDS_templateName);
       hideScenarioFormButtons();
     }
-    , "click #goToStep3": function(event, template){
+    , "click #goToStep3": function(){
+      collectScenarioInfo();
+      Session.set(_SCENARIO_FORM_STEP, _SCENARIO_FORM_STEP_SOLUTION);
+      hideScenarioFormButtons();
+    }
+    ,"click #getToStep1": function(){
+      collectScenarioInfo();
+      Session.set(_SCENARIO_FORM_STEP, _SCENARIO_FORM_STEP_BASIC_INFO);
+      hideScenarioFormButtons();
+    }
+    , "click #getToStep2": function(){
+      collectScenarioInfo();
+      Session.set(_SCENARIO_FORM_STEP, _SCENARIO_FORM_STEP_ADVANCED_INFO);
+      Session.set(_ADVANCEDDETAILS_TAB, _ADT_HAZARDS_templateName);
+      hideScenarioFormButtons();
+    }
+    , "click #getToStep3": function(){
       collectScenarioInfo();
       Session.set(_SCENARIO_FORM_STEP, _SCENARIO_FORM_STEP_SOLUTION);
       hideScenarioFormButtons();
     }
     , "click #showGuidelines" : function(){
      //toggle value of the button and update reactive variable
-      var buttonName = $('#showGuidelines').html();
-      if(buttonName=='Show Guidelines'){
-        $('#showGuidelines').html('Hide Guidelines');
+      var buttonName = $('#showGuidelines').html().trim();
+      if(stringStartsWith(buttonName, 'Show'))  {
+        $('#showGuidelines').html(_hideguidelinestext);
          Session.set('showGuidelines', true);
       }else{
-        $('#showGuidelines').html('Show Guidelines');
+        $('#showGuidelines').html(_showguidelinestext);
         Session.set('showGuidelines', false);
       }
     }

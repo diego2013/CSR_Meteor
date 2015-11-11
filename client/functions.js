@@ -60,23 +60,32 @@ hideScenarioFormButtons = function(){
   $("#goToStep2").addClass("btn-blue");
   $("#goToStep3").addClass("btn-blue");
 
+  $("#getToStep1").removeClass("badge-color-selected");
+  $("#getToStep2").removeClass("badge-color-selected");
+  $("#getToStep3").removeClass("badge-color-selected");
+
 //figure out in which panel we are and add the slamon button class to just that button
   var newScenarioStep = Session.get(_SCENARIO_FORM_STEP);
 
   if(newScenarioStep === _SCENARIO_FORM_STEP_BASIC_INFO){
     $("#goToStep1").removeClass("btn-blue");
     $("#goToStep1").addClass("btn-salmon");
+    $("#getToStep1").addClass("badge-color-selected");
+    // $("[id='goToStep1']").addClass("btn-salmon"); // to select more than one elm with the same ID (bad practice)
   }
   else if(newScenarioStep === _SCENARIO_FORM_STEP_ADVANCED_INFO){
     $("#goToStep2").removeClass("btn-blue");
     $("#goToStep2").addClass("btn-salmon");
+    $("#getToStep2").addClass("badge-color-selected");
   }
   else if(newScenarioStep === _SCENARIO_FORM_STEP_SOLUTION){
     $("#goToStep3").removeClass("btn-blue");
     $("#goToStep3").addClass("btn-salmon");
+    $("#getToStep3").addClass("badge-color-selected");
   }else {//default
     $("#goToStep1").removeClass("btn-blue");
     $("#goToStep1").addClass("btn-salmon");
+    $("#getToStep1").addClass("badge-color-selected");
   }
 
  };
@@ -447,4 +456,14 @@ base64ToBlob = function(base64String, blobType) {
   var byteArray = new Uint8Array(byteNumbers);
   return blob = new Blob([byteArray], {type: blobType});
 };
+
+
+/* Returns if the given string strats with the prefix. It is case sensitive.
+@param String the string to text
+@param prefix
+@reruns true or false
+*/
+ stringStartsWith = function(string, prefix) {
+    return string.slice(0, prefix.length) == prefix;
+}
 
