@@ -51,9 +51,9 @@
     <div style="border : 0px solid black;">
     <!-- Rebuild the scenarioAuditInfo because its DIV should display inline to display correctly, but then would alter
     other components in other interfaces. Better add fields here than try to keep consitency for display between the two interfaces-->
-        <label class="scenarioAuditInfoTextBox">
+        <span class="scenarioAuditInfoTextBox">
         <b>Scenario UID:</b> {{_id}} <b>Saved last:</b> {{formatDateTime modifiedAt}} <b>Status:</b> {{showScenarioStatus}}
-        </label>
+        </span>
         <span style="padding:0px 5px;"></span>
        <!-- {{ > scenarioAuditInfo }} -->
        <a href="#"  id="downloadScn"  class="btn btn-tiny btn-blue" title="Download">Download</a> 
