@@ -40,7 +40,7 @@
     </colgroup>
 
     <tr class="clickableHeader" id="cabecera"> <!-- clinicalInputTablePijama -->
-      <th data-name="" >Link</th>
+      <th data-name="" >Examine</th>
       <th data-name="_id" >Scenario UID</th>
       <th data-name="title" >Title</th>
       <th data-name="description" >Description</th>
@@ -70,7 +70,7 @@
 
     <tr class="clickableHeader" id="cabecera">
       <th data-name="createdAt" >Created by</th>
-      <th data-name="_id" >Link</th>
+      <th data-name="_id" >Examine</th>
       <th data-name="_id" >Scenario UID</th>
       <th data-name="title" >Title</th>
       <th data-name="description" >Description</th>
@@ -97,7 +97,7 @@
 
       <tr class="clickableHeader" id="cabecera">
           <th data-name="createdAt" >Created</th>
-          <th data-name="_id" >Link</th>
+          <th data-name="_id" >Examine</th>
           <th data-name="_id" >Scenario UID</th>
           <th data-name="title" >Title</th>
           <th data-name="description" >Description</th>
@@ -113,8 +113,8 @@
 <template name="MyScenariosScenarioRow">
    
     <td class="thin-column">
-      <button id="visitScenario" class="linkCell-blue" name={{_id}}>
-       <span class="fa fa-eye"></span>&nbsp;Visit 
+      <button id="visitScenario" class="linkCell-silver" name={{_id}} title="Examine this scenario">
+       <span class="fa fa-search-plus"></span> 
       </button> 
     </td>
     <td>{{_id}} </td>
@@ -132,8 +132,8 @@
 
   	<td>{{username}}</td>
   	<td class="thin-column">
-      <button id="visitScenario" class="linkCell-green" name={{_id}}>
-        <span class="fa fa-eye"></span>&nbsp;Visit 
+      <button id="visitScenario" class="linkCell-silver" name={{_id}} title="Examine this scenario">
+        <span class="fa fa-search-plus"></span>
       </button>
     </td>
   	<td>{{_id}} </td>
@@ -149,8 +149,8 @@
 
     <td>{{formatDate createdAt}}  </td>
     <td class="thin-column">
-      <button id="visitScenario" class="linkCell-blue" name={{_id}}>
-        <span class="fa fa-eye"></span>&nbsp;Visit 
+      <button id="visitScenario" class="linkCell-silver" name={{_id}} title="Examine this scenario">
+        <span class="fa fa-search-plus"></span>
       </button>
     </td>
     <td>{{_id}} </td>
