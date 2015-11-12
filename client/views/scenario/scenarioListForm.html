@@ -59,7 +59,7 @@
 <!-- Template with the table display for admin view-->
 <template name="scenarioTableViewAdmin">
      <colgroup>
-        <col data-caption="creator" style="width: 7%;">
+        <col data-caption="creator" style="width: 10%;">
         <col data-caption="linkButton" style="width: 7%;">
         <col data-caption="UID" style="width: 13%;">
         <col data-caption="title" style="width: 24%;">
@@ -83,6 +83,8 @@
     {{/each}}
 </template>
 
+
+<!-- Template with the table display for regular view-->
 <template name="scenarioTableViewPublic">
       <colgroup>
           <col data-caption="created" style="width: 10%;">
@@ -110,7 +112,9 @@
 <!-- Template with the information of a scenario for a row on the table of 'My Scenarios'-->
 <template name="MyScenariosScenarioRow">
    
-    <td class="thin-column"><button id="visitScenario" style="width:100%" class="btn-orange clickableHeader" name={{_id}}>Visit Scenario</button> </td>
+    <td class="thin-column">
+      <button id="visitScenario" style="width:100%" class="btn-orange clickableHeader" name={{_id}}>Visit Scenario</button> 
+    </td>
     <td>{{_id}} </td>
     <td>{{trimLength title 45}} </td>
     <td>{{trimLength description 50}} </td>
