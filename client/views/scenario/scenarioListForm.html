@@ -13,7 +13,7 @@
   </p>
 
 
-	<table class="tablePijama">
+	<table class="scenarioListTable">
     {{ > Template.dynamic template=getTypeOfTableView}} 
   </table>
 
@@ -31,15 +31,15 @@
      <colgroup>
         <col data-caption="linkButton" style="width: 6%;">
         <col data-caption="UID" style="width: 13%;">
-        <col data-caption="title" style="width: 24%;">
-        <col data-caption="description" style="width: 20%;">
-        <col data-caption="status" style="width: 7%;">
+        <col data-caption="title" style="width: 22%;">
+        <col data-caption="description" style="width: 22%;">
+        <col data-caption="status" style="width: 9%;">
         <col data-caption="createdAt" style="width: 10%;">
         <col data-caption="modifiedAt" style="width: 10%;">
-        <col data-caption="acks" style="width: 6%;">
+        <col data-caption="acks" style="width: 8%;">
     </colgroup>
 
-    <tr class="btn-turquesa clickableHeader" id="cabecera">
+    <tr class="clickableHeader" id="cabecera"> <!-- clinicalInputTablePijama -->
       <th data-name="" >Link</th>
       <th data-name="_id" >Scenario UID</th>
       <th data-name="title" >Title</th>
@@ -63,12 +63,12 @@
         <col data-caption="linkButton" style="width: 7%;">
         <col data-caption="UID" style="width: 13%;">
         <col data-caption="title" style="width: 24%;">
-        <col data-caption="description" style="width: 29%;">
+        <col data-caption="description" style="width: 24%;">
         <col data-caption="status" style="width: 10%;">
-        <col data-caption="modifiedAt" style="width: 10%;">
+        <col data-caption="modifiedAt" style="width: 12%;">
     </colgroup>
 
-    <tr class="btn-turquesa clickableHeader" id="cabecera">
+    <tr class="clickableHeader" id="cabecera">
       <th data-name="createdAt" >Created by</th>
       <th data-name="_id" >Link</th>
       <th data-name="_id" >Scenario UID</th>
@@ -89,13 +89,13 @@
       <colgroup>
           <col data-caption="created" style="width: 10%;">
           <col data-caption="linkButton" style="width: 7%;">
-          <col data-caption="UID" style="width: 13%;">
-          <col data-caption="title" style="width: 24%;">
-          <col data-caption="description" style="width: 29%;">
-          <col data-caption="acks" style="width: 6%;">
+          <col data-caption="UID" style="width: 15%;">
+          <col data-caption="title" style="width: 25%;">
+          <col data-caption="description" style="width: 35%;">
+          <col data-caption="acks" style="width: 7%;">
       </colgroup>
 
-      <tr class="btn-turquesa clickableHeader" id="cabecera">
+      <tr class="clickableHeader" id="cabecera">
           <th data-name="createdAt" >Created</th>
           <th data-name="_id" >Link</th>
           <th data-name="_id" >Scenario UID</th>
@@ -113,7 +113,9 @@
 <template name="MyScenariosScenarioRow">
    
     <td class="thin-column">
-      <button id="visitScenario" style="width:100%" class="btn-orange clickableHeader" name={{_id}}>Visit Scenario</button> 
+      <button id="visitScenario" class="linkCell-blue" name={{_id}}>
+       <span class="fa fa-eye"></span>&nbsp;Visit 
+      </button> 
     </td>
     <td>{{_id}} </td>
     <td>{{trimLength title 45}} </td>
@@ -129,7 +131,11 @@
 <template name="scenarioRow">
 
   	<td>{{username}}</td>
-  	<td class="thin-column"><button id="visitScenario" style="width:100%" class="btn-orange clickableHeader" name={{_id}}>Visit Scenario</button> </td>
+  	<td class="thin-column">
+      <button id="visitScenario" class="linkCell-green" name={{_id}}>
+        <span class="fa fa-eye"></span>&nbsp;Visit 
+      </button>
+    </td>
   	<td>{{_id}} </td>
   	<td>{{trimLength title 45}} </td>
   	<td>{{trimLength description 50}} </td>
@@ -142,7 +148,11 @@
 <template name="publicScenarioRow">
 
     <td>{{formatDate createdAt}}  </td>
-    <td class="thin-column"><button id="visitScenario" style="width:100%" class="btn-orange clickableHeader" name={{_id}}>Visit Scenario</button> </td>
+    <td class="thin-column">
+      <button id="visitScenario" class="linkCell-blue" name={{_id}}>
+        <span class="fa fa-eye"></span>&nbsp;Visit 
+      </button>
+    </td>
     <td>{{_id}} </td>
     <td>{{trimLength title 45}} </td>
     <td>{{trimLength description 50}} </td>

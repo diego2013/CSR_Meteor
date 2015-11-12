@@ -75,3 +75,85 @@ New Scenario Form Step 2
 }
 
 /* ----------------------------- */
+
+/* -------------------------
+ScenarioLists Tables
+-------------------------- */
+
+.scenarioListTable{
+   margin-bottom: 15px;
+   table-layout: fixed;
+}
+
+/* Every other row background is white */
+.scenarioListTable tr:nth-child(2n+1){
+  background: #fff; /*#F5FAFF;*/ 
+}
+/*.scenarioListTablePijama tr:nth-child(2n+1){
+  background: #d0edf5;
+}*/
+
+.scenarioListTable th{
+  text-align: center;
+
+  /* what follows is actually button turquesa */
+  color:#FFF;
+  text-shadow:none;
+  border:1px solid #0066FF;
+  background:#0099CC;
+  background-image:linear-gradient(bottom, rgb(0, 153, 204)1%, rgb(51, 204, 204) 51%);
+  background-image:-o-linear-gradient(bottom, rgb(0, 153, 204) 1%, rgb(51, 204, 204) 51%);
+  background-image:-moz-linear-gradient(bottom, rgb(0, 153, 204) 1%, rgb(51, 204, 204) 51%);
+  background-image:-webkit-linear-gradient(bottom, rgb(0, 153, 204) 1%, rgb(51, 204, 204) 51%);
+  background-image:-ms-linear-gradient(bottom, rgb(0, 153, 204) 1%, rgb(51, 204, 204) 51%);
+}
+.scenarioListTable td{
+  border: 1px solid #ccc;
+}
+.scenarioListTable td:last-child{
+  /*border: none;*/
+}
+
+.linkCell-orange{
+  width:100%;
+  height: 100%;
+  padding: 0;
+  border:none;
+  color:#FFF;
+  background:#FFA210;
+  background-image:linear-gradient(bottom, rgb(255,163,16) 1%, rgb(255,179,56) 51%);
+  background-image:-o-linear-gradient(bottom, rgb(255,163,16) 1%, rgb(255,179,56) 51%);
+  background-image:-moz-linear-gradient(bottom, rgb(255,163,16) 1%, rgb(255,179,56) 51%);
+  background-image:-webkit-linear-gradient(bottom, rgb(255,163,16) 1%, rgb(255,179,56) 51%);
+  background-image:-ms-linear-gradient(bottom, rgb(255,163,16) 1%, rgb(255,179,56) 51%);
+}
+
+.linkCell-green{
+  width:100%;
+  height: 100%;
+  padding: 0;
+  border:none;
+  color:#FFF;
+  background:#00e698;
+  background-image:linear-gradient(bottom, rgb(0, 153, 101) 1%,  rgb(0, 204, 135) 51%);
+  background-image:-o-linear-gradient(bottom, rgb(0, 153, 101) 1%, rgb(0, 204, 135)  51%);
+  background-image:-moz-linear-gradient(bottom, rgb(0, 153, 101) 1%, rgb(10, 204, 135)  51%);
+  background-image:-webkit-linear-gradient(bottom, rgb(0, 153, 101) 1%, rgb(0, 204, 135)  51%);
+  background-image:-ms-linear-gradient(bottom, rgb(0, 153, 101) 1%, rgb(0, 204, 135)  51%);
+}
+
+.linkCell-blue{
+  width:100%;
+  height: 100%;
+  padding: 0;
+  border:none;
+  color:#FFF;
+  background:#99ccff;
+  background-image:linear-gradient(bottom, rgb(77, 166, 255) 1%,  rgb(153, 204, 255) 51%);
+  background-image:-o-linear-gradient(bottom, rgb(77, 166, 255) 1%, rgb(153, 204, 255) 51%);
+  background-image:-moz-linear-gradient(bottom, rgb(77, 166, 255) 1%, rgb(153, 204, 255)  51%);
+  background-image:-webkit-linear-gradient(bottom, rgb(77, 166, 255) 1%, rgb(153, 204, 255)  51%);
+  background-image:-ms-linear-gradient(bottom, rgb(77, 166, 255) 1%, rgb(153, 204, 255)  51%);
+}
+
+/* ----------------------------- */
