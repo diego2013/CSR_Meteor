@@ -167,6 +167,7 @@
     {{/if}}
     </div>
 
+
     <div id="setp2tab" class="tabbar">
           <a href="#"  id="hazardsButton" class="tab selectedTab" title="Add Contributing Hazards and Dangers" data-step="advancedDetailsHazards">Hazards</a>
           <a href="#"  id="equipmentButton" class="tab" title="Add Equipment description" data-step="advancedDetailsEquipment">Equipment</a>
@@ -175,7 +176,12 @@
           <a href="#"  id="environmentsButton" class="tab" title="Add Clinical Environments Involved" data-step="advancedDetailsEnvironments">Environments Involved</a>
           <a href="#"  id="referencesButton"  class="tab" title="Add Relevant References" data-step="advancedDetailsReferences">Relevant References</a>
           <!-- <label class="{{getGuidelinesButtonClass}}" style="float:right;" > &#8592; visit any of these tabs in any specific order</label> -->
+
+          <span  style="align:right;padding-left:15px" title="Visit the tabs relevant to your scenario">
+            <img id="tabbarredarrow" alt="flashing red arrow" style="max-width:2%;max-height:2%;" src="/images/red-arrow.png">
+          </span>
     </div>
+
 
     <div class="padding-bottom-10">
         {{> Template.dynamic template=advancedDetailsTemplateName}}

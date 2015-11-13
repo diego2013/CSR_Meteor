@@ -465,5 +465,24 @@ base64ToBlob = function(base64String, blobType) {
 */
  stringStartsWith = function(string, prefix) {
     return string.slice(0, prefix.length) == prefix;
-}
+};
+
+
+
+/*
+Flashing (animated) red arrow for the tab bar panel
+@param a boolean parameter to switch between two states
+*/
+flashingRedArrow = function(back){
+    if(back==undefined)
+      var back=false;
+    $('#tabbarredarrow').animate(
+      { opacity: (back) ? 1 : 0.5
+        // ,"padding-left": (back) ? "+=5" :"0"
+      }, 1000
+      , function(){flashingRedArrow(!back)}
+    );
+};
+
+
 
