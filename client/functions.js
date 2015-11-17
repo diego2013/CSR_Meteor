@@ -309,10 +309,12 @@ updateHarzardList = function(){
       hazardEntryList[hazardEntryList.length] = listItem;
       //currentScenarioDTO.hazardEntryList = hazardEntryList;
     }
-    //clear form
+
+    //clear form. Initialize dropdownd and clear text areas
     $("#hazardDescription").val('');
-    $("#hazardRisk").val("Unknown");
-    $("#hazardSeverity").val("Unknown");
+    $("#hazardRisk")[0].selectedIndex = 0
+    $("#hazardSeverity")[0].selectedIndex = 0
+
 
     return hazardEntryList
 };
