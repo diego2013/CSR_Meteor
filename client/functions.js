@@ -91,41 +91,53 @@ hideScenarioFormButtons = function(){
  };
 
 
-//Highlights the element of the navigation bar that idenfifies the route where we are on
+/*Highlights the element of the navigation bar that idenfifies the route where we are on
+// Is easier to do it this way than using CSS pseudoselectors due to the anidated nev links
+@param routeName the path we are currently on 
+*/
 highLightNavBatItem = function(routeName){
-  //clean. Remove the class from all main nav bar items
-  $("#cnsNavBarItem").removeClass("selectedNavItem");
-  $("#ssNavBarItem").removeClass("selectedNavItem");  
-  $("#fbiNavBarItem").removeClass("selectedNavItem");
-  $("#feedNavBarItem").removeClass("selectedNavItem");  
-  $("#homeNavBarItem").removeClass("selectedNavItem");
-  $("#upNavBarItem").removeClass("selectedNavItem");
-  $("#listUsersNavBarItem").removeClass("selectedNavItem");
-
-  //ID the route we are on
-  var navItemID;
 
   if(routeName==undefined)
     return;
+
+  //clean. Remove the class from all main nav bar items
+  // $("#cnsNavBarItem").removeClass("selectedNavItem");
+  // $("#ssNavBarItem").removeClass("selectedNavItem");  
+  // $("#fbiNavBarItem").removeClass("selectedNavItem");
+  // $("#feedNavBarItem").removeClass("selectedNavItem");  
+  // $("#homeNavBarItem").removeClass("selectedNavItem");
+  // $("#upNavBarItem").removeClass("selectedNavItem");
+  // $("#listUsersNavBarItem").removeClass("selectedNavItem");
+
+  //clean. Remove the class from all main nav bar items
+  $('.nav li').removeClass("selectedNavItem");
+
+  //ID the route we are on
+  var navItemID;
 
   if(routeName=='/' || routeName=='home')
     navItemID = 'homeNavBarItem';
   else   if(routeName=='createNewScenario' || routeName=='newScenarioForm' || (routeName.lastIndexOf('NewScenarioForm', 0) === 0) ||
       routeName=='new' || routeName=='scenarioFormSubmitConfirmation' || routeName=='scenarioFormThankYou')
     navItemID = 'cnsNavBarItem';
-  else   if(routeName=='scenarioList' || routeName=='approvedScenarioList')
+  else   if(routeName=='scenarioList' || routeName=='approvedScenarioList' || routeName=='recentSubmissionsScenarioList')
     navItemID = 'ssNavBarItem';
   else   if(routeName=='findByIDTemplate')
     navItemID = 'fbiNavBarItem';
   else   if(routeName=='userProfile' || (routeName.substring(0,'userProfile'.length)==='userProfile'))
     navItemID = 'upNavBarItem';
-  else   if(routeName=='FeedbackForm' || routeName=='FeedbackFormThakYou')
+  else   if(routeName=='FeedbackForm' || routeName=='FeedbackFormThakYou' || routeName=='feedbackReviewList')
     navItemID = 'feedNavBarItem';
   else if(routeName=='usersList')
     navItemID = 'listUsersNavBarItem';
+  else if(routeName=='aboutUs')
+    navItemID = 'aboutNavBarItem';
+  else if(routeName=='help')
+    navItemID = 'helpNavBarItem';
 
   //add the "shaded" class to that nav bar item
   $("#"+navItemID).addClass("selectedNavItem");
+
  };
 
  /** Collects data from the New Scenario form into an object and
