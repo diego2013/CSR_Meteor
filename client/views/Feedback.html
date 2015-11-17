@@ -102,18 +102,18 @@
     results per page </label>
     </p>
 	
-	<table class="tablePijama">
+	<table class="scenarioListTable">
 	    <colgroup>
-	        <col data-caption="Submitter" >
-	        <col data-caption="linkButton" style="width: 8%;">
-	        <col data-caption="UID" >
-	        <col data-caption="Submission Date" >
-	        <col data-caption="Revision" >
-	        <col data-caption="Reviewer" >
-	        <col data-caption="reviewedAt" >
-	        <col data-caption="Completion" >
+	        <col data-caption="Submitter" style="width: 12%;">
+	        <col data-caption="linkButton" style="width: 6%;">
+	        <col data-caption="UID" tyle="width: 20%;">
+	        <col data-caption="Submission Date" style="width: 12%;">
+	        <col data-caption="Revision" style="width: 10%;">
+	        <col data-caption="Reviewer" style="width: 12%;">
+	        <col data-caption="reviewedAt" style="width: 12%;">
+	        <col data-caption="Completion" style="width: 25%;">
 	    </colgroup>
-		<tr class="btn-turquesa clickableHeader" id="cabecera">
+		<tr class="clickableHeader" id="cabecera">
 			<th data-name="username">Submitter</th>
 			<th data-name="_id">Link</th>
 			<th data-name="_id">UID</th>
@@ -142,7 +142,11 @@
 <!-- Template to display a single feedback report -->
 <template name="feedbackReport">
     <td>{{username}}</td>
-  	<td class="thin-column"><button id="seeFeedbackReport" style="width:100%" class="btn-orange clickableHeader"  name={{_id}}>See Report</button> </td>
+  	<td>
+  		<button id="seeFeedbackReport" class="linkCell-orange" name={{_id}} title="See this report">
+  			<span class="fa fa-search-plus"></span> 
+  		</button> 
+  	</td>
   	<td>{{_id}} </td>
   	<td>{{formatDate createdAt}}  </td>
   	<td>{{reviewed}}</td>
