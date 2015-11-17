@@ -2,14 +2,19 @@
 
 <!-- Template for the Find by ID functionality -->
 <template name="findByIDTemplate">
-	<form id="findByIDForm" >
-		<input type="text" id="findByIDbox" name="findBox"  placeholder="Enter a Scenario ID" autofocus/>
-		<button type="button" id="searchByIDButton"  title="Search for a scenario with thr given ID" >Search</button> 
-	</form>
+
+	<div class="padding-bottom-10">
+		<form id="findByIDForm" >
+			<input type="text" id="findByIDbox" name="findBox"  placeholder="Enter a Scenario ID" autofocus/>
+			<button type="button" id="searchByIDButton"  title="Search for a scenario with thr given ID" >Search</button> 
+		</form>
+	</div>
 
 </template>
 
 <template name="findByIDErrorTemplate">
+
+<div class="padding-bottom-10">
 The scenario with ID: {{scenarioID}} you requested is not available.<br/>
 Either this scenario does not exist or you lack the permissions to access it (only <b>approved</b> scenarios are publicly available). <br/>
 Try looking for a different scenario.
@@ -18,5 +23,6 @@ Try looking for a different scenario.
 		<input type="text" id="findByIDbox" name="findBox"  placeholder="Enter a Scenario ID" autofocus/>
 		<button type="button" id="searchByIDButton"  title="Search for a scenario with thr given ID" >Search</button> 
 	</form>
+</div>
 
 </template>
