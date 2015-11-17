@@ -104,8 +104,19 @@ ul.fallback{
     border-radius:5px ;
 }
 
-.divider{
+/*.divider{
   border: 1px dashed #8AB8E6;
   margin: 0px 5px;
   font-size: 1px;
+}*/
+
+.divider{ 
+    display: block;
+/*    margin-top: 0.1em;
+    margin-bottom: 0.1em;*/
+    margin-left: auto;
+    margin-right: auto;
+    border-style: inset;
+    border-width: 1px;
+    border-color: #A9D0F5;
 }
