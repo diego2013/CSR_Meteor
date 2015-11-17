@@ -26,9 +26,7 @@
 <header>
   <!--<h1>Clinical Scenario Repository Prototype</h1> -->
 
- <!-- TODO: move to the left. Make sure the popup box displays ok -->
- <!-- <span class="allToLeft"> {{> loginButtons}} </span> -->
-  <div style="text-align:center;" >
+  <div id="mainHeaderDiv" style="" >
 
   {{> NavBar}}
 
@@ -56,18 +54,32 @@
 <!-- Template for the navigation bar -->
 <template name="NavBar">
 
-<div>
 
 	<div style="background:#A9D0F5;">
 	<!-- For a detached to left login button-->
+<!--   <span style="">
   {{#if currentUser}}
-  <span class="loginSalutationStyle"> Hello </span>
+  <span class="loginSalutationStyle">Hello</span>
   {{/if}}
 	<span class="loginButtonsStyle"> {{> loginButtons}} </span>
-	 <nav class="nav">
+  </span> -->
+
+	 <nav class="nav" style="">
+
 		<ul class="nav-list">
-		  <!-- <li class="nav-item">{{> loginButtons}}</li> -->
-      <li class="nav-item" id="homeNavBarItem"><a href="{{ pathFor 'home' }}"><span class="fa fa-home" ></span>  Home</a></li>
+
+		  <li class="nav-item-loginbuttons" style="">  
+        {{#if currentUser}}          
+  <!--         <span class="fa-stack">
+            <span class="fa fa-circle-thin fa-stack-2x" title="Community site"></span> 
+            <span class="fa fa-user fa-stack-1x" ></span>        
+          </span> -->
+          <span class="loginSalutationStyle"> Hello</span>
+        {{/if}}
+        {{> loginButtons}}
+      </li>
+
+      <li class="nav-item" id="homeNavBarItem"><a href="{{ pathFor 'home' }}"><span class="fa fa-home" ></span>&nbsp;Home</a></li>
 		  <li class="nav-item" id="cnsNavBarItem"><a href="{{ pathFor 'createNewScenario'}} " >Create New Scenario</a></li>
 		  <li class="nav-item" id="ssNavBarItem"><a href="#">Search Scenarios</a>
 		  	<ul class="fallback">
@@ -107,8 +119,6 @@
 	 <!--<span style="float:right;"><img id="mdpnpLogo" alt="MD PnP Logo" style="float:left;" src="/images/mdpnp-small.png" width="150" height="45"/></span>-->
 	</div>
 
-
-</div>	
 </template>
 
 

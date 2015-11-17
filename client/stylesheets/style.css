@@ -187,17 +187,21 @@ header {
   position: relative;
 }
 
-#login-buttons {
-  display: block;
+#mainHeaderDiv{
+  text-align:center;
 }
 
+/*#login-buttons {
+  display: block;
+}*/
+
 .loginButtonsStyle {
-  float: left;
-  position: relative;
+/*  float: left;
+  position: relative;*/
   padding: 10px 5px;
   color:#FFF;
 
-  font-size:15px;
+  font-size:14px;
   font-weight:900;
   font-family:'Helvetica Neue', Helvetica, Arial, sans-serif;
   /*text-shadow:0 1px 1px rgba(0,0,0,0.5);*/
@@ -206,8 +210,9 @@ header {
 }
 
 .loginSalutationStyle {
-  float: left;
-  position: relative;
+/*  float: left;
+  position: relative;*/
+  vertical-align: middle;
   padding: 10px 5px;
   color:#FFF;
 

@@ -2,16 +2,20 @@
 =Navigation bar
 =NavBar
 *********************/
-/*.nav {
+.nav {
   margin-left: auto;
   margin-right: auto;
-  margin-top:1px;
+  margin-top:5px;
   position:relative;
   display:inline-block;
-  font-size:14px;
+  font-size:12px;
   font-weight:900;
+}
 
-}*/
+.nav>ul{
+    padding:0px;
+}
+
 .nav-list {
   
 }
@@ -20,6 +24,12 @@
 
 }
 
+.nav-item-loginbuttons{
+  display:inline;
+  float:left;
+  zoom:1;
+  padding:10px 20px;
+}
 
 .nav-item {
   margin: 0px;
@@ -32,6 +42,7 @@
   text-shadow:0 1px 1px rgba(0,0,0,0.5);
   text-decoration:none;
   font-weight:900;
+  /*font-size: 55%;*/
   display:block;
   padding:10px 20px;
  /*padding: 10px;*/
@@ -62,7 +73,10 @@ nav>ul>li>ul>li{
 	margin-left: 0px;
 }
 
-nav ul li:hover {background:#8AB8E6;border-radius:5px }
+nav ul li:hover {
+  background:#8AB8E6;
+  border-radius:5px; 
+}
 
 nav ul li ul {
 	position: absolute;
@@ -93,4 +107,5 @@ ul.fallback{
 .divider{
   border: 1px dashed #8AB8E6;
   margin: 0px 5px;
+  font-size: 1px;
 }
