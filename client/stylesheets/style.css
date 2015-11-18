@@ -19,6 +19,8 @@ body {
   font-size: 14px;
 }
 
+.clearboth {clear:both;}
+
 .hr-thin { 
     display: block;
     margin-top: 0.5em;
@@ -198,7 +200,7 @@ header {
 .loginButtonsStyle {
 /*  float: left;
   position: relative;*/
-  padding: 10px 5px;
+  padding: 5px 5px;
   color:#FFF;
 
   font-size:14px;
@@ -213,10 +215,10 @@ header {
 /*  float: left;
   position: relative;*/
   vertical-align: middle;
-  padding: 10px 5px;
+  padding: 5px 5px;
   color:#FFF;
 
-  font-size:14px;
+  font-size:12px;
   font-weight:900;
   font-family:'Helvetica Neue', Helvetica, Arial, sans-serif;
   /*text-shadow:0 1px 1px rgba(0,0,0,0.5);*/

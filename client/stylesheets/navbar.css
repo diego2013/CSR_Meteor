@@ -5,11 +5,18 @@
 .nav {
   margin-left: auto;
   margin-right: auto;
-  margin-top:5px;
+  /*margin-top:5px;*/
   position:relative;
   display:inline-block;
-  font-size:12px;
-  font-weight:900;
+  font-size: 12px;
+  font-weight: 900;
+  /*font-size:12px;*/
+  /*font-weight:900;*/
+}
+
+.navbar-container{
+  background:#A9D0F5;
+  display:flex;
 }
 
 .nav>ul{
@@ -17,11 +24,12 @@
 }
 
 .nav-list {
-  
+  padding-top: 0px;
+  /*empty*/
 }
 
 .nav-list >ul>li{
-
+/*empty*/
 }
 
 .nav-item-loginbuttons{
@@ -37,6 +45,7 @@
   display:inline;
   zoom:1;
 }
+
 .nav-item a {
   font-family:'Helvetica Neue', Helvetica, Arial, sans-serif;
   text-shadow:0 1px 1px rgba(0,0,0,0.5);
@@ -112,11 +121,42 @@ ul.fallback{
 
 .divider{ 
     display: block;
-/*    margin-top: 0.1em;
-    margin-bottom: 0.1em;*/
     margin-left: auto;
     margin-right: auto;
     border-style: inset;
     border-width: 1px;
     border-color: #A9D0F5;
+}
+
+
+/*
+Style for other components that go in the nav bar, such as the loginButtons from Meteor Accounts UI (and salutation) 
+*/
+
+.loginButtonsStyle {
+/*  float: left;
+  position: relative;*/
+  padding: 5px 5px;
+  color:#FFF;
+
+  font-size:12px;
+  font-weight:900;
+  font-family:'Helvetica Neue', Helvetica, Arial, sans-serif;
+  text-decoration:none;
+
+}
+
+.loginSalutationStyle {
+/*  float: left;
+  position: relative;*/
+  vertical-align: middle;
+  padding: 5px 5px;
+  color:#FFF;
+
+  font-size:12px; /* This size should be the same as in the nav class for proper rendering*/
+  font-weight:900;
+  font-family:'Helvetica Neue', Helvetica, Arial, sans-serif;
+  /*text-shadow:0 1px 1px rgba(0,0,0,0.5);*/
+  text-decoration: none;
+
 }
