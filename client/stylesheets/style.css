@@ -32,6 +32,10 @@ body {
     border-color: #fff;
 }
 
+#mainHeaderDiv{
+  text-align:center;
+}
+
 /* -------------------------------
 =Guidelines. New Scenario Form Verbose / Expert mode
  * ------------------------------- */
@@ -97,9 +101,6 @@ body {
   color:#000;
 }
 
-#ffgfgf{
-	colspan : 4;
-}
 
 .centered{
   margin-left:5%;
@@ -120,13 +121,6 @@ body {
 .padding-bottom-10{
   padding-bottom: 10px;
 }
-
-/*.container {
-  max-width: 600px;
-  margin: 0 auto;
-  min-height: 100%;
-  background: white;
-}*/
 
 .scrollable-subpanel{
 	height : 300px; 
@@ -174,12 +168,18 @@ regular
     vertical-align: middle;
 }
 
+/* ------------------------------- */
+
+
+/*
+=Text styles
+*/
 .justifiedText{
     text-align: justify;
     text-justify: inter-word;
 }
 
-/* ------------------------------- */
+/* +OTHERS */
 
 header {
   background: #d2edf4;
@@ -189,47 +189,6 @@ header {
   position: relative;
 }
 
-#mainHeaderDiv{
-  text-align:center;
-}
-
-/*#login-buttons {
-  display: block;
-}*/
-
-.loginButtonsStyle {
-/*  float: left;
-  position: relative;*/
-  padding: 5px 5px;
-  color:#FFF;
-
-  font-size:14px;
-  font-weight:900;
-  font-family:'Helvetica Neue', Helvetica, Arial, sans-serif;
-  /*text-shadow:0 1px 1px rgba(0,0,0,0.5);*/
-  text-decoration:none;
-
-}
-
-.loginSalutationStyle {
-/*  float: left;
-  position: relative;*/
-  vertical-align: middle;
-  padding: 5px 5px;
-  color:#FFF;
-
-  font-size:12px;
-  font-weight:900;
-  font-family:'Helvetica Neue', Helvetica, Arial, sans-serif;
-  /*text-shadow:0 1px 1px rgba(0,0,0,0.5);*/
-  text-decoration: none;
-
-}
-
-.hiddenButton {
-  /*visibility: hidden;*/
-  display: none;
-}
 
 h1 {
   font-size: 1.5em;
@@ -245,35 +204,9 @@ form {
   position: relative;
 }
 
-.new-task input {
-  box-sizing: border-box;
-  padding: 10px 0;
-  background: transparent;
-  border: none;
-  width: 100%;
-  padding-right: 80px;
-  font-size: 1em;
-}
-
-.new-task input:focus{
-  outline: 0;
-}
 
 ul {
   margin: 0;
- /* padding: 5px;*/
-
-  /*list-style: square outside none ; */
-  /* background: white; */
-}
-
-.delete {
-  float: right;
-  font-weight: bold;
-  /*background: none; */
-  font-size: 1em;
-  /*border: none;*/
-  position: relative;
 }
 
 li {
@@ -301,13 +234,6 @@ li.private {
   border-color: #ddd;
 }
 
-header .hide-completed {
-  float: right;
-}
-
-.toggle-private {
-  margin-left: 5px;
-}
 
 @media (max-width: 600px) {
   li {
@@ -354,13 +280,6 @@ header .hide-completed {
 	font-weight:900;
 	font-family:'Helvetica Neue', Helvetica, Arial, sans-serif;
 }
-
-/* divs for choose clinical role or environment*/
-/*.div-chooseClinical{
-	display: table-cell; 
-	align-items: center;  
-	background-color: #EAF2FB;
-}*/
 
 
 .clinicalInputBar{
