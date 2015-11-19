@@ -135,10 +135,12 @@ Template.scenarioCompleteForm.helpers({
     }
     ,getScenarioLockOwner : function(){
       currentScenarioDTO = Session.get('currentScenarioDTO');
+      var fa_lock = '<span class="fa fa-lock"></span>';
+      var fa_unlock = '<span class="fa fa-unlock"></span>';
       if(currentScenarioDTO && currentScenarioDTO.lockOwnerID)
-        return ("Scenario is unlocked to user "+currentScenarioDTO.lockOwnerID);
+        return (fa_lock+" Scenario was locked for modification by user "+currentScenarioDTO.lockOwnerID);
       else
-        return "Scenario is locked to modification";
+        return fa_unlock+" Scenario is unlocked to modification (click <em>Edit</em>)";
     }
     /** retruns true if current user can approve the scenario
     The current user could perform the action to approve a scenario if

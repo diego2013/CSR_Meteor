@@ -4,9 +4,11 @@
 <template name="scenarioCompleteForm">
 <div class="centered">
 
-<div style="text-align: center; border:1px solid black;">
+<div style="text-align: center;">
 
-<!-- {{#if userHasRole 'admin'}}
+<!-- 
+try this in a new branch
+{{#if userHasRole 'admin'}}
     {{#if isScenarioEditable}}
         <a href="#"  id="editLockButton"  data-action="lock" class="btn btn-small btn-red" title="Finish editing and lock (protect) the scenario" >
             <span class="fa fa-unlock-alt"></span>&nbsp;Finish Editing
@@ -23,7 +25,12 @@
 
 {{/if}} -->
 
-
+    <label style="float:right;clear:right;margin-top:2px;">
+    <span style="border-radius: 5px; padding:2px 4px;" class="btn-purple">
+        <span class="fa fa-star" style="color:gold;"></span> {{acknowledgersCount}}  
+    </span>
+    &nbsp;users acknowledged this scenario
+    </label>
 
 {{#if isScenarioEditable}}
     <a href="#"  id="editLockButton"  data-action="lock" class="btn btn-small btn-red" title="Finish editing and lock (protect) the scenario" >
@@ -60,14 +67,24 @@
     {{#if isNotScenarioOwner}}
       {{#if currentUser}}
         {{#if allowedToACK}}
-        <a href="#"  id="like"  class="btn btn-small btn-purple" title="Acknowledge the Scenario">ACK Scenario</a>
+        <a href="#"  id="like"  class="btn btn-small btn-purple" title="Acknowledge the Scenario">
+        <span class="fa fa-star" style="color:gold;"></span>
+            ACK Scenario
+        </a>
         {{else}}
-        <a href="#"  id="acked"  class="btn btn-small btn-light-purple" title="You have already acknowledged the scenario">Scenario ACKed</a>
+  <!--       <a href="#"  id="acked"  class="btn btn-small btn-light-purple" title="You have already acknowledged the scenario">
+            <span class="fa fa-star-o"></span>
+            Scenario ACKed
+        </a> -->
+        <label style="font-size:10px;float:right;clear:right">(You acknowledged this scenario)
+        </label>
         {{/if}}
       {{/if}}
     {{/if}}
 
-    <label class="decentText">{{acknowledgersCount}} users acknowledged this scenario</label>
+<!--     <label style="float:right;clear:right;">{{acknowledgersCount}} <span class="fa fa-star" style="color:gold;"></span> users acknowledged this scenario
+    </label> -->
+
 
 {{/if}}
 
@@ -83,18 +100,23 @@
         </span>
         <span style="padding:0px 5px;"></span>
        <!-- {{ > scenarioAuditInfo }} -->
-       <a href="#"  id="downloadScn"  class="btn btn-tiny btn-blue" title="Download">
+       <a href="#"  id="downloadScn"  class="btn btn-tiny btn-mint" title="Download">
         <span class="fa fa-download"></span>&nbsp;Download
        </a> 
     </div>
 
+    {{#if userHasRole 'admin'}}
+        <div class="notificationBox" >
+            {{{getScenarioLockOwner}}}
 
-<div class="notificationBox" >
-    {{getScenarioLockOwner}}
-    {{#if isScenarioEditable}}<br/>
-        <label>IMPORTANT! Remember to <b>save</b> or discard your changes before locking the scenario or approving it</label>
+            {{#if isScenarioEditable}}<br/>
+                <label>IMPORTANT! Remember to <b>save</b> or discard your changes before locking the scenario or approving it</label>
+            {{/if}}
+        </div> 
+    {{else}}
+        <hr style="border-color:#A9D0F5;  margin-top: 0.5em; margin-bottom: 0.3em;"/>
     {{/if}}
-</div> 
+
 <!--     {{ > scenarioAuditInfo }} <br/>  --> 
 
 
@@ -116,101 +138,48 @@
 
 <!-- Scenario Advanced Information-->
 <br/>
-    <p>HAZARDS ({{hazardEntryListCount}} entries)</p>
+    <p class="scenarioFormCaption">HAZARDS ({{hazardEntryListCount}} entries)</p>
+    {{> advancedDetailsHazards}}
 
-    {{#if isScenarioEditable}}
-        {{> hazardInput}}
-         <span>Current hazards of the scenario</span>
-    {{/if}}
-    <table>
-        <tr class="btn-turquesa">
-            <th>Description</th>
-            <th>Expected risks</th>
-            <th>Severity</th>
-        </tr>
-        {{#each hazardEntryList}}
-            {{> hazardEntry}}
-        {{/each}}
-    </table>
+    <p class="scenarioFormCaption">EQUIPMENT ({{equipmentEntryListCount}} entries)</p>
+    {{> advancedDetailsEquipment}}
 
-    <p>EQUIPMENT ({{equipmentEntryListCount}} entries)</p>
-     {{#if isScenarioEditable}}
-        {{ > equipmentInput}} 
-        <span>List of hazardrous equipment included in the scenario</span>
-     {{/if}}  
-        <table>
-        <tr class="btn-turquesa">
-            <th><label>Device Type</label></th>
-            <th><label>Manufacturer</label></th>
-            <th><label>Model</label></th>
-            <th><label>Rosetta - Unique ID</label></th>
-            <th><label>Training related problem</label></th>
-            <th><label>Instructions related problem</label></th>
-            <th><label>Confusing device usage</label></th>
-            <th><label>Software related problem</label></th>
-            <th><label>Hardware related problem</label></th>
-        </tr>
-        {{#each equipmentEntryList}}
-            {{> equipmentEntry}}
-        {{/each}}
-    </table>  
+    <p class="scenarioFormCaption">LESSONS LEARNED</p>
+    {{> advancedDetailsLessonsLearned}}
 
-    <p>LESSONS LEARNED</p>
-        <textarea type="text" id="lesson" rows="4" class="solutionTextAreaStyle" placeholder="Describe what can be learned from this scenario" {{isScenarioReadOnly}}>{{lessonsLearned}}</textarea><br/>
-    Do you think this incident could have been prevented or mitigated through better technology?
-    <select id="preventable" value="yes">
-        <option value ="notSure" {{selectedLessonLearned "notSure"}}>I am not sure</option>   
-        <option value ="yes" {{selectedLessonLearned "yes"}}>Yes</option>   
-        <option value ="no" {{selectedLessonLearned "no"}}>No</option>      
-    </select>
+    <p class="scenarioFormCaption">CLINICAL ROLES</p>
+    {{> advancedDetailsRoles}}
 
-    <p>CLINICAL ROLES</p>
+    <p class="scenarioFormCaption">CLINICAL ENVIRONMENTS</p>
+    {{> advancedDetailsEnvironments}}
 
-     {{#if isScenarioEditable}}
-        {{ > roleInput}}
-     {{/if}}
-    <table>
-        {{#each roleEntryList}}
-            {{> roleEntry}}
-        {{/each}}
-    </table>
-
-    <p>CLINICAL ENVIRONMENTS</p>
-    {{#if isScenarioEditable}}
-        {{ > environmentInput}}
-    {{/if}}
-    <table>
-        {{#each environmentEntryList}}
-            {{> environmentEntry}}
-        {{/each}}
-        <tr></tr>
-    </table>
-
-    <p>REFERENCES ({{referenceEntryListCount}} entries)</p>
-    {{#if isScenarioEditable}}
-        {{> referenceInput}}
-        <span>Current references added to the scenario</span>
-    {{/if}}
-
-     <table>
-     <tr class="btn-turquesa">
-         <th>URL of the reference</th>
-         <th>Relevance</th>
-         <th></th>
-     </tr>
-     {{#each referenceEntryList}}
-         {{> referenceEntry}}
-     {{/each}}
- </table>
+    <p class="scenarioFormCaption">REFERENCES ({{referenceEntryListCount}} entries)</p>
+    {{> advancedDetailsReferences}}
 
 <!-- Scenario solution-->
 <br/>
-    <label>Description of the Good Idea / Solution</label><br/>
-    <textarea type="text" id="solutionDescription" rows="4" class="solutionTextAreaStyle" {{isScenarioReadOnly}}>{{solutionDescription}}</textarea><br/>
-    <label>Benefits of the New System</label><br/>
-    <textarea type="text" id="benefitsDescription"  rows="4" class="solutionTextAreaStyle" {{isScenarioReadOnly}}>{{benefitsDescription}}</textarea><br/>
+    <label class="scenarioFormCaption">Description of the Good Idea / Solution</label><br/>
+    {{#if isScenarioEditable}}
+        <textarea type="text" id="solutionDescription" rows="4" class="solutionTextAreaStyle">{{solutionDescription}}</textarea><br/>
+    {{else}}
+        {{solutionDescription}}<br/>
+    {{/if}}
+
+    <label class="scenarioFormCaption">Benefits of the New System</label><br/>
+    {{#if isScenarioEditable}}
+        <textarea type="text" id="benefitsDescription"  rows="4" class="solutionTextAreaStyle" >{{benefitsDescription}}</textarea><br/>
+    {{else}}    
+        {{benefitsDescription}}<br/>
+    {{/if}}
+
     <label>Foreseen Risks of the New System</label><br/>
-    <textarea type="text" id="risksDescription"  rows="4" class="solutionTextAreaStyle" {{isScenarioReadOnly}}>{{risksDescription}}</textarea><br/>
+
+    {{#if isScenarioEditable}}
+        <textarea type="text" id="risksDescription"  rows="4" class="solutionTextAreaStyle" >{{risksDescription}}</textarea><br/>
+    {{else}}
+        {{risksDescription}}<br/>
+    {{/if}}
+
 
 </div>
 </template>
