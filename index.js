@@ -22,10 +22,6 @@ _SCENARIO_FORM_STEP_SOLUTION_templateName = "scenarioFormSolution";
  _ADT_PLACES_templateName = "advancedDetailsEnvironments"; 
  _ADT_LESSONSLEARNED_templateName = "advancedDetailsLessonsLearned"; 
  _ADT_REFERENCES_templateName = "advancedDetailsReferences"; 
-
-
- _LOCKBUTTON_NAME_LOCK = "Lock Modification";
- _LOCKBUTTON_NAME_UNLOCK = "Unlock Modification";
                                         
 
 //Scenario states for governance
@@ -145,17 +141,6 @@ UI.registerHelper('selectedLessonLearned', function( value){
 });
 
 
-// UI.registerHelper('getTablePijamaClass', function(index){
-
-// //  if(typeof index != 'number')
-// //    index2 = parseInt(index);
-
-//   if(index%2==0)
-//     return "tablePijamaEvenRow";
-//   else 
-//     return "tablePijamaOddRow";
-
-// });
 
 /** Return the length of an arrayObject
 */

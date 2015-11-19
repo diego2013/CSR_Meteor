@@ -17,3 +17,10 @@ ROUTE_scenarioList = 'scenarioList';
 
 _hideguidelinestext = 'Hide Guidelines (Expert mode)';
 _showguidelinestext = 'Show Guidelines (Verbose mode)'
+
+
+/*  ######### =Actions #########
+	######### =ScenarioCopmleteForm #########
+*/
+ _LOCKBUTTON_ACTION_LOCK = "lock";
+ _LOCKBUTTON_ACTION_UNLOCK = "unlock";

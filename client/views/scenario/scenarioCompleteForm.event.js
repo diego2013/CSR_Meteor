@@ -4,12 +4,12 @@
 /** Events on the form used to display the complete scenario information in one single place
 */
 Template.scenarioCompleteForm.events({
-  "click #lockButton" : function(){
+  "click #editLockButton" : function(){
 
      //toggle value of the button and update reactive variable
-      var buttonName = $('#lockButton').html();
-      //console.log(buttonName);
-      if(buttonName==_LOCKBUTTON_NAME_LOCK){
+      var buttonAction = $('#editLockButton').data('action');
+      // console.log(buttonAction);
+      if(buttonAction==_LOCKBUTTON_ACTION_LOCK){
         Meteor.call('lockScenario', Session.get('currentScenarioDTO'), function(err, callbackScenarioDTO){
           //callback function
              if (err){  

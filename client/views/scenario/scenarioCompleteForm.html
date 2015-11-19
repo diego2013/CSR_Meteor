@@ -4,25 +4,52 @@
 <template name="scenarioCompleteForm">
 <div class="centered">
 
-<div style="text-align : center;">
-<!--<input type="image" src="/images/padlock_open.png" alt="padlock open" width="20" height="20">-->
+<div style="text-align: center; border:1px solid black;">
+
+<!-- {{#if userHasRole 'admin'}}
+    {{#if isScenarioEditable}}
+        <a href="#"  id="editLockButton"  data-action="lock" class="btn btn-small btn-red" title="Finish editing and lock (protect) the scenario" >
+            <span class="fa fa-unlock-alt"></span>&nbsp;Finish Editing
+        </a>
+        <a href="#"  id="saveChanges"  class="btn btn-small btn-blue" title="Save the chages in this scenario" >
+            <span class="fa fa-save"></span> &nbsp; Save Edits
+        </a>
+
+    {{else}}
+     <a href="#"  id="editLockButton"  data-action="unlock" class="btn btn-small btn-mint" title="Enable modification of the scenario" >
+        <span class="fa fa-edit"></span>&nbsp;Edit
+     </a>
+     {{/if}}
+
+{{/if}} -->
+
+
+
 {{#if isScenarioEditable}}
-    <a href="#"  id="lockButton"  class="btn btn-small btn-red" title="Enable modification" >Lock Modification</a>
-    <a href="#"  id="saveChanges"  class="btn btn-small btn-blue" title="Save the chages in this scenario" >Save Changes</a>
+    <a href="#"  id="editLockButton"  data-action="lock" class="btn btn-small btn-red" title="Finish editing and lock (protect) the scenario" >
+        <span class="fa fa-unlock-alt"></span>&nbsp;Finish Editing
+    </a>
+    <a href="#"  id="saveChanges"  class="btn btn-small btn-blue" title="Save the chages in this scenario" >
+        <span class="fa fa-save"></span> &nbsp; Save Edits
+    </a>
     <!-- I'll hide this button until we have more clear its need and how to correctly implement its function
     <a href="#"  id="discardChanges"  class="btn btn-small btn-blue" title="Discard modifications on this scenario" >Discard Changes</a>
     <a href="#"  id="returnScenario"  class="btn btn-small btn-blue" title="Return this scenario to its submitter for clarification" >Return Scenario</a>
      -->
 {{else}}
     {{#if userHasRole 'admin'}}
-     <a href="#"  id="lockButton"  class="btn btn-small btn-blue" title="Enable modification" >Unlock Modification</a>
+     <a href="#"  id="editLockButton"  data-action="unlock" class="btn btn-small btn-mint" title="Enable modification of the scenario" >
+        <span class="fa fa-edit"></span>&nbsp;Edit
+     </a>
     {{/if}}
 {{/if}}
 
 
 
 {{#if canApproveScenario}}
-    <a href="#"  id="approveScenario"  class="btn btn-small btn-blue" title="Approve Scenario">Approve Scenario</a>
+    <a href="#"  id="approveScenario"  class="btn btn-small btn-blue" title="Approve Scenario">
+        <span class="fa fa-check-square-o"></span>&nbsp;Approve Scenario
+    </a>
 {{/if}}
 
 
@@ -56,7 +83,9 @@
         </span>
         <span style="padding:0px 5px;"></span>
        <!-- {{ > scenarioAuditInfo }} -->
-       <a href="#"  id="downloadScn"  class="btn btn-tiny btn-blue" title="Download">Download</a> 
+       <a href="#"  id="downloadScn"  class="btn btn-tiny btn-blue" title="Download">
+        <span class="fa fa-download"></span>&nbsp;Download
+       </a> 
     </div>
 
 
@@ -71,9 +100,19 @@
 
 <!-- Scenario basic info -->
     <label>Title of the Scenario</label>
-    <textarea type="text" id="title" name="title" rows="1" cols="75" placeholder="Type to add a title" {{isScenarioReadOnly}}>{{title}}</textarea><br/>
-    <label>Description of the Scenario</label><br/>
-    <textarea type="text" id="description" name="description" rows="4" class="solutionTextAreaStyle" placeholder="Type to add a description" {{isScenarioReadOnly}}>{{description}}</textarea><br/>
+    {{#if isScenarioEditable}}
+        <textarea type="text" id="title" name="title" rows="1" cols="75" placeholder="Type to add a title">{{title}}</textarea>
+    {{else}}
+        {{title}}
+    {{/if}}
+
+    <br/><label>Description of the Scenario</label><br/>
+    {{#if isScenarioEditable}}
+        <textarea type="text" id="description" name="description" rows="4" class="solutionTextAreaStyle" placeholder="Type to add a description" >{{description}}</textarea><br/>
+    {{else}}
+        {{description}}
+    {{/if}}
+<!--     <textarea type="text" id="description" name="description" rows="4" class="solutionTextAreaStyle" placeholder="Type to add a description" {{isScenarioReadOnly}}>{{description}}</textarea><br/> -->
 
 <!-- Scenario Advanced Information-->
 <br/>
