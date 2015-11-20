@@ -70,9 +70,9 @@ New Scenario Form Step 2
 .clinicalInputTablePijama td{
   border: 1px solid #ccc;
 }
-.clinicalInputTablePijama td:last-child{
+/*.clinicalInputTablePijama td:last-child{
   border: none;
-}
+}*/
 
 /* ----------------------------- */
 
