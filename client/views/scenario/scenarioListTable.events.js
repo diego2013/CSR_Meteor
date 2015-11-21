@@ -39,14 +39,14 @@ Template.scenarioListTable.events({
 Template.MyScenariosScenarioRow.events({
   "click #visitScenario" : function(event){
     var currentPath = Router.current().route.getName()
-    visitScenario(currentPath);
+    visitScenario(this._id, currentPath);
   }
 });
 
 Template.scenarioRow.events({
   "click #visitScenario" : function(event){
     var currentPath = Router.current().route.getName()
-    visitScenario(currentPath);
+    visitScenario(this._id, currentPath);
   }
 });
 
@@ -54,7 +54,7 @@ Template.publicScenarioRow.events({
   "click #visitScenario" : function(event){
     var currentPath = Router.current().route.getName()
     //do an action or another based on the route
-    visitScenario(currentPath);
+    visitScenario(this._id, currentPath);
   }
 });
 
@@ -62,16 +62,21 @@ Template.publicScenarioRow.events({
 //************* AUXILIARY FUNCTIONS *************
 /**
   Displays one view or another based on the given url to show
+  @scenarioID ID of the scenario we want to show
   @currentPath url of the view we are trying to reach
 */
-var  visitScenario = function(currentPath){
+var  visitScenario = function(scenarioID, currentPath){
+
     if(currentPath=='scenarioList'){
       //find by ID, with the scn ID being in the text of the button just clicked
-      findByID(event.target.name);
+      // findByID(event.target.name);
+       findByID(scenarioID);
     }else if(currentPath=='recentSubmissionsScenarioList'){
-      Router.go("/scenarioComplete/"+event.target.name)
+      // Router.go("/scenarioComplete/"+event.target.name)
+      Router.go("/scenarioComplete/"+scenarioID)
     }else if(currentPath=='approvedScenarioList'){
       //findByID(event.target.name);
-      Router.go("/scenarioComplete/"+event.target.name);
+      // Router.go("/scenarioComplete/"+event.target.name);
+      Router.go("/scenarioComplete/"+scenarioID)
     }
 }
