@@ -80,7 +80,7 @@ Template.scenarioCompleteForm.events({
   ,"mouseover #like" : function(){
     var mybutton = $('a#like');
     var text = 'ACKnowledge this scenario if you have heard or experieced a similar problem,'+
-    ' or if you think this problem is important and requires attention from the community';
+    ' or if you think this problem is important and requires attention from the community.';
     mybutton.attr('title', text);
     //console.log(mybutton);
   }
