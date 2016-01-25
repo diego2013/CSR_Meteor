@@ -50,8 +50,10 @@ Template.scenarioCompleteForm.events({
     var confirm = window.confirm("Are you sure you want to approve the current scenario: \n\n"+Session.get('currentScenarioDTO').title);
     //console.log(confirm);
     if(confirm){
-      //collect new info (if any) from the scenario
-      collectScenarioCompleteFormInfo();
+      //collect new info (if any) from the scenario. Issue #139: we only try to collect if in "editing" mode
+      console.log("is scenairo editable "+ isScenarioEditable())
+      if(isScenarioEditable(Session.get('currentScenarioDTO')))
+        collectScenarioCompleteFormInfo();
 
       currentScenarioDTO = Session.get('currentScenarioDTO');
 
