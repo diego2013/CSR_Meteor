@@ -68,8 +68,7 @@ try this in a new branch
       {{#if currentUser}}
         {{#if allowedToACK}}
         <a href="#"  id="like"  class="btn btn-small btn-purple" title="Acknowledge the Scenario">
-        <span class="fa fa-star" style="color:gold;"></span>
-            ACK Scenario
+            <span class="fa fa-star" style="color:gold;"></span>&nbsp;ACK Scenario
         </a>
         {{else}}
   <!--       <a href="#"  id="acked"  class="btn btn-small btn-light-purple" title="You have already acknowledged the scenario">
@@ -133,7 +132,7 @@ try this in a new branch
     {{#if isScenarioEditable}}
         <textarea type="text" id="description" name="description" rows="4" class="solutionTextAreaStyle" placeholder="Type to add a description" >{{description}}</textarea><br/>
     {{else}}
-        {{description}}
+        <div class='approvedScnTextArea'>{{description}}</div>
     {{/if}}
 <!--     <textarea type="text" id="description" name="description" rows="4" class="solutionTextAreaStyle" placeholder="Type to add a description" {{isScenarioReadOnly}}>{{description}}</textarea><br/> -->
 
@@ -163,14 +162,14 @@ try this in a new branch
     {{#if isScenarioEditable}}
         <textarea type="text" id="solutionDescription" rows="4" class="solutionTextAreaStyle">{{solutionDescription}}</textarea><br/>
     {{else}}
-        {{solutionDescription}}<br/>
+        <div class='approvedScnTextArea'>{{solutionDescription}}</div>
     {{/if}}
 
     <label class="scenarioFormCaption">Benefits of the New System</label><br/>
     {{#if isScenarioEditable}}
         <textarea type="text" id="benefitsDescription"  rows="4" class="solutionTextAreaStyle" >{{benefitsDescription}}</textarea><br/>
     {{else}}    
-        {{benefitsDescription}}<br/>
+        <div class='approvedScnTextArea'>{{benefitsDescription}}</div>
     {{/if}}
 
     <label>Foreseen Risks of the New System</label><br/>
@@ -178,7 +177,7 @@ try this in a new branch
     {{#if isScenarioEditable}}
         <textarea type="text" id="risksDescription"  rows="4" class="solutionTextAreaStyle" >{{risksDescription}}</textarea><br/>
     {{else}}
-        {{risksDescription}}<br/>
+        <div class='approvedScnTextArea'>{{risksDescription}}</div>
     {{/if}}
 
 

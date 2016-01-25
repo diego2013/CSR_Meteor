@@ -168,6 +168,13 @@ regular
     vertical-align: middle;
 }
 
+.approvedScnTextArea{
+  border: 1px solid grey; 
+  width: 100%;
+  padding-top: 5px;
+  padding-bottom: 5px;
+}
+
 /* ------------------------------- */
 
 
