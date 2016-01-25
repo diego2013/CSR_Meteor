@@ -124,12 +124,15 @@ Meteor.methods({
   /** Persist a scenario ACK
   */
   ,persistACK : function (scenarioID, userID){
-    var ack = {
-      _id : scenarioID + userID,
-      scnID : scenarioID,
-      userID : userID
-    }
+    //1. Get the scenario document
+    var scenario = Scenarios.findOne({'_id': scenarioID}, {"acknowledgers" :1})
 
-    ScenarioAcks.insert(ack);
+    //2. add the user ID to the acknowledgers array
+    if (scenario["acknowledgers"] == undefined)
+      scenario["acknowledgers"] = []
+    scenario["acknowledgers"].push(userID)
+
+    //3. save the scenario document again
+    Scenarios.update({'_id': scenarioID}, {'$set' : {"acknowledgers" :scenario["acknowledgers"]}})
   }
 });

@@ -27,13 +27,16 @@ Template.scenarioCompleteForm.helpers({
         return false;
 
       scenarioDTO = this;
-      var obj = scenarioAcks.findOne({_id : scenarioDTO._id+Meteor.userId()});
 
-      if(obj)
-        return false;
+      if(scenarioDTO.acknowledgers!= undefined)
+        if ($.inArray(Meteor.userId(), scenarioDTO.acknowledgers) != -1) //using jQuery to check if element in in array
+          return false //user ID in the ACKers array
+        else 
+          return true
       else
-        return true;
+        return true 
     }
+
     /** Indicates if the ACK button should be displayed:
     1- Current user doesn't own the scenario
     2- Current user didn't vote already for the scenario
@@ -57,7 +60,12 @@ Template.scenarioCompleteForm.helpers({
     }
     //returns the number of users who acknowledged this scenario
     ,acknowledgersCount : function(){
-      return scenarioAcks.find({scnID : this._id}).count();
+      var scenarioDTO = this
+      if (scenarioDTO.acknowledgers == undefined)
+        return 0
+      else 
+        return scenarioDTO.acknowledgers.length
+      // return scenarioAcks.find({scnID : this._id}).count();
     }
   });
 
