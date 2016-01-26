@@ -159,11 +159,3 @@ Meteor.publish('publication', function() {
   Counts.publish(this, 'usersListCounter', Meteor.users.find());
 });
 
-
-/** Publish all scenario ACKs
-*/
-Meteor.publish('scenarioAcks', function(){
-    Mongo.Collection._publishCursor( ScenarioAcks.find(), this, 'scenarioAcks'); 
-    this.ready();
-});
-

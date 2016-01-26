@@ -16,7 +16,7 @@ isScenarioEditable = function(currentScenarioDTO){
   if(!Meteor.user())
     return false; //issue #99. If user is not logged in scenario is not editable
 
-  if(currentScenarioDTO == undefined ){
+  if(currentScenarioDTO == undefined ){//so we can edit brand new scenarios not yet persited for the first time.
     return true;
   }
   if(currentScenarioDTO.status == scenarioStatusEnum.UNSUBMITTED){
