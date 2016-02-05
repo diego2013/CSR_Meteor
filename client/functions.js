@@ -245,6 +245,22 @@ cleanNewScenarioForm = function(){
   
  };
 
+ forceRenderScenarioCompleteForm = function(scenarioDTO){
+  if(scenarioDTO == undefined)
+    return 
+
+  $('#title').val(currentScenarioDTO.title);
+  $("#description").val(currentScenarioDTO.description);
+
+  $('#solutionDescription').val(currentScenarioDTO.solutionDescription);
+  $("#benefitsDescription").val(currentScenarioDTO.benefitsDescription);
+  $("#risksDescription").val(currentScenarioDTO.risksDescription);
+
+  $('#lesson').val(currentScenarioDTO.lessonsLearned);
+  $('#preventable').val(currentScenarioDTO.preventable);
+
+ }
+
 //Finds a scenario from the current collection by ID
 findByID = function(scenarioID){
    //1. validation that the input is valid

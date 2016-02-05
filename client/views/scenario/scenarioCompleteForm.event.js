@@ -42,9 +42,39 @@ Template.scenarioCompleteForm.events({
             }else{
                 Session.set('currentScenarioDTO', callbackScenarioDTO);
             }
+
       }); 
   }
-  ,"click #discardChanges" : function(){
+  ,"click #discardChanges" : function(event, template){
+
+
+      scenarioID = this._id; //get the scenario ID
+      // Router.go("/scenarioComplete/"+scenarioID) //redender this template for this ID (will take docuemnt form mongo col)
+
+
+      //XXX for some reason I don't understand, Router.go doesn't work here, but work as part of a callback 
+      // Meteor.call("saveScenario", Session.get('currentScenarioDTO'), function(err, callbackScenarioDTO) {
+      //   // Router.go("/scenarioComplete/"+scenarioID)
+      //   Router.go('approvedScenarioList')
+      //   Router.go("/scenarioComplete/"+scenarioID)
+      // })
+      
+
+      scenarioDTO = scenariosAllApproved.findOne({'_id' : scenarioID}); //find the scenario with that ID
+      Session.set('currentScenarioDTO', scenarioDTO); //set scenario as context scenario
+      forceRenderScenarioCompleteForm(scenarioDTO);
+      // Router.go("/scenarioComplete/"+scenarioID)
+
+      /* Since Router.go() is not working well here I am force to manually re render the template, instead
+      of letting iron router do the work for me. Thus, I get the old object from the collection and put it in session
+      which is enough to refresh most of the fiels.
+      For the text areas I am forced though to call the  forceRenderScenarioCompleteForm() method and 
+      update those fields manually.
+      */
+
+
+      // scenarioDTO = scenariosAllApproved.find({'_id' : scenarioID}); //find the scenario with that ID
+      //Session.set('currentScenarioDTO', scenarioDTO.fetch()[0])
   }
   ,"click #approveScenario" : function(){
     var confirm = window.confirm("Are you sure you want to approve the current scenario: \n\n"+Session.get('currentScenarioDTO').title);
