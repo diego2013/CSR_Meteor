@@ -62,8 +62,9 @@ Template.scenarioCompleteForm.events({
 
       scenarioDTO = scenariosAllApproved.findOne({'_id' : scenarioID}); //find the scenario with that ID
       Session.set('currentScenarioDTO', scenarioDTO); //set scenario as context scenario
-      forceRenderScenarioCompleteForm(scenarioDTO);
+      forceRenderScenarioCompleteForm(scenarioDTO); //see issue #145
       // Router.go("/scenarioComplete/"+scenarioID)
+
 
       /* Since Router.go() is not working well here I am force to manually re render the template, instead
       of letting iron router do the work for me. Thus, I get the old object from the collection and put it in session
