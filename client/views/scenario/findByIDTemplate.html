@@ -4,13 +4,9 @@
 <template name="findByIDTemplate">
 
 	<div class="padding-bottom-10">
-		<form id="findByIDForm" >
-			<input type="text" id="findByIDbox" name="findBox"  placeholder="Enter a Scenario ID" autofocus/>
-			<button type="button" id="searchByIDButton"  title="Search for a scenario with thr given ID" class="btn-orange">
-				<span class="fa fa-search"></span>
-				Search
-			</button> 
-		</form>
+
+		{{> findByIDInputTemplate }}
+			
 	</div>
 
 </template>
@@ -18,14 +14,22 @@
 <template name="findByIDErrorTemplate">
 
 <div class="padding-bottom-10">
-The scenario with ID: {{scenarioID}} you requested is not available.<br/>
+The scenario with ID: "{{scenarioID}}" you requested is not available.<br/>
 Either this scenario does not exist or you lack the permissions to access it (only <b>approved</b> scenarios are publicly available). <br/>
 Try looking for a different scenario.
 
-	<form id="findByIDForm" >
-		<input type="text" id="findByIDbox" name="findBox"  placeholder="Enter a Scenario ID" autofocus/>
-		<button type="button" id="searchByIDButton"  title="Search for a scenario with thr given ID" >Search</button> 
-	</form>
+{{> findByIDInputTemplate }}
+
 </div>
 
+</template>
+
+<template name = "findByIDInputTemplate">
+		<form id="findByIDForm" >
+			<input type="text" id="findByIDbox" name="findBox"  placeholder="Enter a Scenario ID" autofocus/>
+			<button type="button" id="searchByIDButton"  title="Search for a scenario with thr given ID" class="btn-orange">
+				<span class="fa fa-search"></span>
+				Search
+			</button> 
+		</form>
 </template>
