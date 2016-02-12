@@ -12,16 +12,17 @@
       results per page </label>
     </p>
 
-	<table  class="tablePijama">
+	<table  class="scenarioListTable" style="width: 100%;">
     <colgroup>
         <col data-caption="username" style="width: 10%;">
         <col data-caption="emails.address" >
-        <col ddata-caption="emails.verified" >
+        <col data-caption="emails.verified" >
         <col data-caption="roles" >
         <col data-caption="UID" >
         <col data-caption="creation date" style="width: 10%;">
     </colgroup>
-		<tr class="btn-turquesa clickableHeader" id="cabecera" name="cabecera">
+
+		<tr class="clickableHeader" id="cabecera" name="cabecera">
 			<th name="username" >username</th>
 			<th name="emails.address" >email</th>
 			<th name="emails.verified">verified</th>
@@ -29,9 +30,11 @@
 			<th name="_id">UID</th>
 			<th name="createdAt">creation date</th>
 		</tr>
+
 	  {{#each usuarios}}
         {{ > userProf }}
-      {{/each}}
+    {{/each}}
+
 	</table>
 
   <div style="margin-top:10px;">
@@ -46,7 +49,11 @@
 <!-- Template-row to display the info of a single user -->
 <template name="userProf">
   <tr style="text-align: center">
-  <td><button id="seeUser" style="width:100%" class="btn-orange clickableHeader" name={{_id}}>{{username}}</button></td>
+  <td>
+    <button id="seeUser" class="linkCell-orange" name={{_id}}>
+      <span class="fa fa-search-plus"></span>  {{username}}
+    </button>
+  </td>
   <td >{{getEmail emails}}</td>
   <td>{{isVerifiedEmail emails}}</td>
   <td align='center' >{{roles}}</td>

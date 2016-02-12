@@ -66,7 +66,7 @@ Template.scenarioCompleteForm.events({
       // Router.go("/scenarioComplete/"+scenarioID)
 
 
-      /* Since Router.go() is not working well here I am force to manually re render the template, instead
+      /* Since Router.go() is not working well here (see issue #145) I am force to manually re render the template, instead
       of letting iron router do the work for me. Thus, I get the old object from the collection and put it in session
       which is enough to refresh most of the fiels.
       For the text areas I am forced though to call the  forceRenderScenarioCompleteForm() method and 
