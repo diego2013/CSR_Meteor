@@ -26,3 +26,15 @@
         return 'not applicable';
     }
  });
+
+Template.userPreferencesStats.helpers({
+  //mark/unmark options for the user preferences panel
+  checkshowcontexthelp : function(){
+    if (Meteor.user().profile && Meteor.user().profile.user_preferences){
+      if (Meteor.user().profile.user_preferences.show_context_help)
+        return 'checked'
+    }
+    else 
+      return 'checked'; //by default show contextual help
+  }
+})

@@ -99,6 +99,12 @@ Meteor.publish('scenariosAllApproved', function(cursorStart, recordLimit, sortPr
     this.ready();
 });
 
+/** Note about the publication of USER's data
+By default, the current user's username, emails and profile are published to the client
+http://docs.meteor.com/#/full/meteor_users
+
+*/
+
 /** Publish info about the current user
 */
 Meteor.publish('userdata', function() {

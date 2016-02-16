@@ -135,4 +135,13 @@ Meteor.methods({
     //3. save the scenario document again
     Scenarios.update({'_id': scenarioID}, {'$set' : {"acknowledgers" :scenario["acknowledgers"]}})
   }
+
+  /** Update the user's profile information.
+  Expects a JSON object with the user's profile.
+  as per http://docs.meteor.com/#/full/meteor_users the 'profile' field is an Object which the user can create and update with any data
+  This is the field to use for customized user data
+  */
+  ,updateUserProfilePreferences : function(userProfilePreferencesDTO){
+    Meteor.users.update({_id: Meteor.userId()}, {$set: {"profile.user_preferences": userProfilePreferencesDTO}});
+  }
 });

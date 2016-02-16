@@ -8,9 +8,9 @@
 
 	{{#if currentUser}}
 	<table style="border:0px solid black; background-color: #C2E0FF;">
-	<tr>
-		<span style="font-size:16px; text-decoration:underline; font-weight:bold;" >User Profile </span>
-	</tr>
+		<tr>
+			<span style="font-size:16px; text-decoration:underline; font-weight:bold;" >User Profile </span>
+		</tr>
  		<tr style="vertical-align: text-top;" >
 			<td style="width:500px; ">
 					{{> userDataTemplate}}
@@ -20,6 +20,9 @@
 			</td>
 		</tr>
 	</table> 
+	<div style="margin-top: 10px">
+		{{> userPreferencesStats}}
+	</div>
 	{{else}}
 		{{> userProfileError}}
 	{{/if}}
@@ -81,4 +84,22 @@
 	There is a problem loading this profile.
 
 	<p>Maybe you need to be logged in?</p> 
+</template>
+
+<!-- Template for the user preferences -->
+<template name="userPreferencesStats">
+	<span style="font-size:16px; text-decoration:underline; font-weight:bold;" >User Preferences </span>
+	<div>Customize views, alerts and other preferences</div>
+	<table >
+		<tr><td class="paddingLeft3">
+				<input type="checkbox" id="showcontexthelp" {{checkshowcontexthelp}}>
+				&nbsp;Show contextual help by defult
+				<span class="fa fa-question-circle" title="Will show/hide the guidelines when creating a new scenario"></span>
+		</td></tr>
+	</table>
+	<button type="button" id="savepreferences" class="btn btn-small btn-mint">
+    	<span class="fa fa-save"></span>
+                Save preferences
+    </button>
+	
 </template>
