@@ -56,11 +56,8 @@ if (Meteor.isClient) {
   Session.setDefault('userListOrder', defaultSortObject);
 
   // Session.setDefault('showGuidelines', true); Issue #147
-  if (Meteor.user()&& Meteor.user().profile && Meteor.user().profile.user_preferences){
-    Session.setDefault('showGuidelines', Meteor.user().profile.user_preferences.show_context_help)
-  }
-  else
-    Session.setDefault('showGuidelines', true);
+  Session.setDefault('showGuidelines', true)
+
 
   //Meteor.subscribe("scenarios");
 //  Meteor.subscribe('myScenarios');  //scenarios of the current user
@@ -91,6 +88,12 @@ if (Meteor.isClient) {
       var routeName = Router.current().route.getName();
       highLightNavBatItem(routeName);
     }
+
+    //update user preferences
+    if (Meteor.user()&& Meteor.user().profile && Meteor.user().profile.user_preferences){
+      Session.set('showGuidelines', Meteor.user().profile.user_preferences.show_context_help)
+    }
+
 
     //subscriptions
     Meteor.subscribe('feedbackDocuments', Number(Session.get('feedbackCursorStart')), Number(Session.get('feedbackResultsPerPage')), Session.get('feedbackCursorOrder'));
