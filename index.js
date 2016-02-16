@@ -55,7 +55,12 @@ if (Meteor.isClient) {
   Session.setDefault('userListResultsPerPage', 10 /*25*/);
   Session.setDefault('userListOrder', defaultSortObject);
 
-  Session.setDefault('showGuidelines', true);
+  // Session.setDefault('showGuidelines', true); Issue #147
+  if (Meteor.user()&& Meteor.user().profile && Meteor.user().profile.user_preferences){
+    Session.setDefault('showGuidelines', Meteor.user().profile.user_preferences.show_context_help)
+  }
+  else
+    Session.setDefault('showGuidelines', true);
 
   //Meteor.subscribe("scenarios");
 //  Meteor.subscribe('myScenarios');  //scenarios of the current user
@@ -80,20 +85,19 @@ if (Meteor.isClient) {
 
 // Tracker.autorun(function(){
   Deps .autorun(function(){
-  //Meteor.subscribe('scenariosAll'); //all available scenarios
 
-  //http://stackoverflow.com/questions/15680461/meteor-collection-not-updating-subscription-on-client
-  if(Router.current()!= null){
-    var routeName = Router.current().route.getName();
-    highLightNavBatItem(routeName);
-  }
+    //http://stackoverflow.com/questions/15680461/meteor-collection-not-updating-subscription-on-client
+    if(Router.current()!= null){
+      var routeName = Router.current().route.getName();
+      highLightNavBatItem(routeName);
+    }
 
-  //subscriptions
-  Meteor.subscribe('feedbackDocuments', Number(Session.get('feedbackCursorStart')), Number(Session.get('feedbackResultsPerPage')), Session.get('feedbackCursorOrder'));
-  Meteor.subscribe('myScenarios', Number(Session.get('scenarioCursorStart')), Number(Session.get('scenarioResultsPerPage')), Session.get('scenarioCursorOrder'));  //scenarios of the current user
-  Meteor.subscribe('scenariosAllSubmitted', Number(Session.get('scenarioCursorStart')), Number(Session.get('scenarioResultsPerPage')), Session.get('scenarioCursorOrder')); //all available scenarios
-  Meteor.subscribe('scenariosAllApproved', Number(Session.get('scenarioCursorStart')), Number(Session.get('scenarioResultsPerPage')), Session.get('scenarioCursorOrder')); //all approved scenarios
-  Meteor.subscribe('allUsersList', Number(Session.get('userListCursorStart')), Number(Session.get('userListResultsPerPage')), Session.get('userListOrder'));//all available users
+    //subscriptions
+    Meteor.subscribe('feedbackDocuments', Number(Session.get('feedbackCursorStart')), Number(Session.get('feedbackResultsPerPage')), Session.get('feedbackCursorOrder'));
+    Meteor.subscribe('myScenarios', Number(Session.get('scenarioCursorStart')), Number(Session.get('scenarioResultsPerPage')), Session.get('scenarioCursorOrder'));  //scenarios of the current user
+    Meteor.subscribe('scenariosAllSubmitted', Number(Session.get('scenarioCursorStart')), Number(Session.get('scenarioResultsPerPage')), Session.get('scenarioCursorOrder')); //all available scenarios
+    Meteor.subscribe('scenariosAllApproved', Number(Session.get('scenarioCursorStart')), Number(Session.get('scenarioResultsPerPage')), Session.get('scenarioCursorOrder')); //all approved scenarios
+    Meteor.subscribe('allUsersList', Number(Session.get('userListCursorStart')), Number(Session.get('userListResultsPerPage')), Session.get('userListOrder'));//all available users
 
 });
 
