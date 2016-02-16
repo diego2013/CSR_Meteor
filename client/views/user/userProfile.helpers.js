@@ -21,7 +21,7 @@
     },
     verifiedUseremail : function(){
       if(Meteor.userId() && Meteor.user().emails!=undefined)
-        return Meteor.user().emails[0].veified;
+        return Meteor.user().emails[0].verified;
       else
         return 'not applicable';
     }
