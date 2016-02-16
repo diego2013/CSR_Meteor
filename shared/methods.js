@@ -142,6 +142,16 @@ Meteor.methods({
   This is the field to use for customized user data
   */
   ,updateUserProfilePreferences : function(userProfilePreferencesDTO){
-    Meteor.users.update({_id: Meteor.userId()}, {$set: {"profile.user_preferences": userProfilePreferencesDTO}});
+    ar = Meteor.users.update({_id: Meteor.userId()}, {$set: {"profile.user_preferences": userProfilePreferencesDTO}}, 
+      function(error, affected_docs){
+        if (error){
+          console.log(error)
+        }
+      }
+    );
+
+    // return ar;//https://github.com/meteor/meteor/issues/3349
+    // update is not returning correctly the number of updated rows
+
   }
 });
