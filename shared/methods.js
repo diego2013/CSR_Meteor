@@ -147,6 +147,9 @@ Meteor.methods({
         if (error){
           console.log(error)
         }
+        // else{
+        //   return affected_docs;
+        // }
       }
     );
 
