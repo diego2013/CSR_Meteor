@@ -15,12 +15,15 @@
     //XXX Also, probably the pwd should not be here in plain text
     //use an environment variable to set process.env.MAIL_URL to keep passwords out of source control.
 
+// EMAIL CUSTOMIZATION
+//  Options to customize emails sent from the Accounts system.
+//  http://docs.meteor.com/#/full/accounts_emailtemplates
 
-  //Send verification email on user account creation
-  // Format the email
   //-- Application name
   Accounts.emailTemplates.siteName = 'Clinical Scenario Repository';
+  Accounts.emailTemplates.from = 'md.pnp.team@gmail.com';
 
+  //verification email on user account creation
   //-- Subject line of the email.
   Accounts.emailTemplates.verifyEmail.subject = function(user) {
     return "Confirm Your Email Address for the MD PnP's Clinical Scenario Repository";
@@ -36,7 +39,25 @@
     return text;
   };
 
-  // 3.  Send email when account is created
+   //reset password email customization
+  //-- Subject line of the email.
+  Accounts.emailTemplates.resetPassword.subject = function(user) {
+    return "Request to reset password on MD PnP's Clinical Scenario Repository";
+  };
+
+  //body of the email
+  Accounts.emailTemplates.resetPassword.text = function(user, url) {
+    var text = "Dear " +user.username +",\r\n\n"
+        + 'We received a request to reset your password on the Clinical Scenario Repository.\r\n'
+        + 'To reset your password, simply click the link below: \r\n' 
+        + url
+        + "\r\n \n Thanks."
+    return text;
+  };
+
+
+
+  //Send verification email when account is created
   Accounts.config({
     sendVerificationEmail: true
     // ,forbidClientAccountCreation : false
