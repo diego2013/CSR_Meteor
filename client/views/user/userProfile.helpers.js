@@ -37,4 +37,16 @@ Template.userPreferencesStats.helpers({
     else 
       return 'checked'; //by default show contextual help
   }
+  /**if the current user preference resembles the parameter
+  this functoin returns a string that will make the option in the dropwon which called with this value selected
+  and will return an empty string if not
+  */
+  ,selectedResultPerPageScenarios : function(param){
+    if (Meteor.user().profile && Meteor.user().profile.user_preferences){
+        return Meteor.user().profile.user_preferences.selectedResultPerPageScenarios === param ? {selected:'selected'}: '';
+    }
+    else 
+      return param === 10 ? {selected:'selected'}: ''; //default value is 10
+
+  }
 })
