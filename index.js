@@ -58,6 +58,13 @@ if (Meteor.isClient) {
   // Session.setDefault('showGuidelines', true); Issue #147
   Session.setDefault('showGuidelines', true)
 
+  
+  if (Meteor.user() && Meteor.user().profile && Meteor.user().profile.user_preferences.selectedResultPerPageScenarios){
+    if ( Meteor.user().profile.user_preferences.selectedResultPerPageScenarios)
+        Session.set('scenarioResultsPerPage', Meteor.user().profile.user_preferences.selectedResultPerPageScenarios)
+  }
+
+
 
   //Meteor.subscribe("scenarios");
 //  Meteor.subscribe('myScenarios');  //scenarios of the current user
@@ -91,7 +98,14 @@ if (Meteor.isClient) {
 
     //update user preferences
     if (Meteor.user()&& Meteor.user().profile && Meteor.user().profile.user_preferences){
-      Session.set('showGuidelines', Meteor.user().profile.user_preferences.show_context_help)
+
+      //show contextual help
+      if(Meteor.user().profile.user_preferences.show_context_help != undefined)
+        Session.set('showGuidelines', Meteor.user().profile.user_preferences.show_context_help)
+      // //number of entries shoen per page for scenario searches
+      // var selectedResultPerPageScenarios = Meteor.user().profile.user_preferences.selectedResultPerPageScenarios;
+      // if ( selectedResultPerPageScenarios && selectedResultPerPageScenarios != Session.get('scenarioResultsPerPage'))
+      //   Session.set('scenarioResultsPerPage', Meteor.user().profile.user_preferences.selectedResultPerPageScenarios)
     }
 
 
