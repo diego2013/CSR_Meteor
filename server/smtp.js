@@ -10,14 +10,15 @@
 
 
     process.env.MAIL_URL="smtp://md.pnp.team%40gmail.com:mdpnpCSR@smtp.gmail.com:465/"; 
+
     //XXX check this SO Answer in order to know how to allow the less secure applications and allow access to a GMAIL account.
     // http://stackoverflow.com/a/31875371/3961519
     //XXX Also, probably the pwd should not be here in plain text
     //use an environment variable to set process.env.MAIL_URL to keep passwords out of source control.
 
-// EMAIL CUSTOMIZATION
-//  Options to customize emails sent from the Accounts system.
-//  http://docs.meteor.com/#/full/accounts_emailtemplates
+  // EMAIL CUSTOMIZATION
+  //  Options to customize emails sent from the Accounts system.
+  //  http://docs.meteor.com/#/full/accounts_emailtemplates
 
   //-- Application name
   Accounts.emailTemplates.siteName = 'Clinical Scenario Repository';
