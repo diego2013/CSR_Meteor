@@ -124,7 +124,7 @@ try this in a new branch
 
 
 <!-- Scenario basic info -->
-    <label>Title of the Scenario</label>
+    <label>Title of the Scenario: </label>
     {{#if isScenarioEditable}}
         <textarea type="text" id="title" name="title" rows="1" cols="75" placeholder="Type to add a title">{{title}}</textarea>
     {{else}}
@@ -141,10 +141,10 @@ try this in a new branch
 
 <!-- Scenario Advanced Information-->
 <br/>
-    <p class="scenarioFormCaption">HAZARDS ({{hazardEntryListCount}} entries)</p>
+    <p class="scenarioFormCaption">HAZARDS </p>
     {{> advancedDetailsHazards}}
 
-    <p class="scenarioFormCaption">EQUIPMENT ({{equipmentEntryListCount}} entries)</p>
+    <p class="scenarioFormCaption">EQUIPMENT</p>
     {{> advancedDetailsEquipment}}
 
     <p class="scenarioFormCaption">LESSONS LEARNED</p>
@@ -156,7 +156,7 @@ try this in a new branch
     <p class="scenarioFormCaption">CLINICAL ENVIRONMENTS</p>
     {{> advancedDetailsEnvironments}}
 
-    <p class="scenarioFormCaption">REFERENCES ({{referenceEntryListCount}} entries)</p>
+    <p class="scenarioFormCaption">REFERENCES</p>
     {{> advancedDetailsReferences}}
 
 <!-- Scenario solution-->
@@ -175,8 +175,7 @@ try this in a new branch
         <div class='approvedScnTextArea'>{{benefitsDescription}}</div>
     {{/if}}
 
-    <label>Foreseen Risks of the New System</label><br/>
-
+    <label class="scenarioFormCaption">Foreseen Risks of the New System</label><br/>
     {{#if isScenarioEditable}}
         <textarea type="text" id="risksDescription"  rows="4" class="solutionTextAreaStyle" >{{risksDescription}}</textarea><br/>
     {{else}}

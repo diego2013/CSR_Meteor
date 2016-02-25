@@ -117,31 +117,31 @@ Template.scenarioCompleteForm.helpers({
   });
 
   Template.scenarioCompleteForm.helpers({
-    hazardEntryListCount : function(){
-      currentScenarioDTO = Session.get('currentScenarioDTO');
-      hazardEntryList = currentScenarioDTO==undefined?[]:currentScenarioDTO.hazardEntryList;
-      if(hazardEntryList==undefined)
-        return 0;
-      else
-        return hazardEntryList.length;
-    },
-    equipmentEntryListCount: function(){
-      currentScenarioDTO = Session.get('currentScenarioDTO');
-      equipmentEntryList = currentScenarioDTO==undefined?[]:currentScenarioDTO.equipmentEntryList;
-      if(equipmentEntryList==undefined)
-        return 0;
-      else
-        return equipmentEntryList.length;
-    }
-    ,referenceEntryListCount: function(){
-      currentScenarioDTO = Session.get('currentScenarioDTO');
-      referenceEntryList = currentScenarioDTO==undefined?[]:currentScenarioDTO.referenceEntryList;
-      if(referenceEntryList==undefined)
-        return 0;
-      else
-        return referenceEntryList.length;
-    }
-    ,getScenarioLockOwner : function(){
+    // hazardEntryListCount : function(){
+    //   currentScenarioDTO = Session.get('currentScenarioDTO');
+    //   hazardEntryList = currentScenarioDTO==undefined?[]:currentScenarioDTO.hazardEntryList;
+    //   if(hazardEntryList==undefined)
+    //     return 0;
+    //   else
+    //     return hazardEntryList.length;
+    // },
+    // equipmentEntryListCount: function(){
+    //   currentScenarioDTO = Session.get('currentScenarioDTO');
+    //   equipmentEntryList = currentScenarioDTO==undefined?[]:currentScenarioDTO.equipmentEntryList;
+    //   if(equipmentEntryList==undefined)
+    //     return 0;
+    //   else
+    //     return equipmentEntryList.length;
+    // }
+    // ,referenceEntryListCount: function(){
+    //   currentScenarioDTO = Session.get('currentScenarioDTO');
+    //   referenceEntryList = currentScenarioDTO==undefined?[]:currentScenarioDTO.referenceEntryList;
+    //   if(referenceEntryList==undefined)
+    //     return 0;
+    //   else
+    //     return referenceEntryList.length;
+    // },
+    getScenarioLockOwner : function(){
       currentScenarioDTO = Session.get('currentScenarioDTO');
       var fa_lock = '<span class="fa fa-lock"></span>';
       var fa_unlock = '<span class="fa fa-unlock"></span>';
