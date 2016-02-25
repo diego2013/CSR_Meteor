@@ -10,7 +10,7 @@ utils.js Common utilities
 */
 scenarioToTxt = function(scenarioDTO) {
 	var result = "Scenario Title: "+ scenarioDTO.title+"\n\n";
-	var acks = scenarioDTO.acknowledgers? acknowledgers.length : 0;
+	var acks = scenarioDTO.acknowledgers ? scenarioDTO.acknowledgers.length : 0;
 
 	result += "This scenario has been acknowledged by "+acks+" users."+"\n\n";
 
