@@ -36,10 +36,12 @@ scenarioStatusEnum = {
 
 //CLIENT SIDE
 if (Meteor.isClient) {
+ 
+  //-----------------------------
+  // INITIALIZE SESSION VARIABLES
+  //-----------------------------
 
-  // Scenarios = new Mongo.Collection("scenarios");
-  // FeedbackCollection = new Mongo.Collection("FeedbackCollection");
-  // ScenarioAcks = new Mongo.Collection("ScenarioAcks");
+  //Set default values for Session variables
 
   var defaultSortObject = {param : 'createdAt', order : 1};
 
@@ -55,8 +57,7 @@ if (Meteor.isClient) {
   Session.setDefault('userListResultsPerPage', 10 /*25*/);
   Session.setDefault('userListOrder', defaultSortObject);
 
-  // Session.setDefault('showGuidelines', true); Issue #147
-  Session.setDefault('showGuidelines', true)
+  Session.setDefault('showGuidelines', true); //NOTE; see issue #147
 
   
   if (Meteor.user() && Meteor.user().profile && Meteor.user().profile.user_preferences.selectedResultPerPageScenarios){
@@ -64,17 +65,52 @@ if (Meteor.isClient) {
         Session.set('scenarioResultsPerPage', Meteor.user().profile.user_preferences.selectedResultPerPageScenarios)
   }
 
+//----------
+// ON LOGOUT 
+//----------
 
+// Issue #143. On user's sign out/ logout we redirect to the home page
+// We do this via hijacking the accounts "logout" method. 
+// a tricky courtesy of SO: http://stackoverflow.com/a/22770999/3961519
+  var _logout = Meteor.logout;
+  Meteor.logout = function customLogout() {
+    // Do your thing here
+    console.log("manual logout")
+    Router.go('/home')
+    _logout.apply(Meteor, arguments);
+  }
 
-  //Meteor.subscribe("scenarios");
-//  Meteor.subscribe('myScenarios');  //scenarios of the current user
+  //--------------------------
+  // SUBSCRIBE TO PUBLICATIONS
+  //--------------------------
+
   Meteor.subscribe('scenariosAll'); //all available scenarios
-//  Meteor.subscribe('scenariosAllApproved'); //all approved scenarios
-  
-  // Meteor.subscribe('allUsersList');
-  //Meteor.subscribe('feedbackDocuments', Session.get('feedbackCursorStart'), 10 /*limit*/);
-  //Meteor.subscribe('userdata');
+
   Meteor.subscribe('publication');
+  Meteor.subscribe('scenarioAcks')
+
+  Meteor.subscribe('feedbackDocuments', Number(Session.get('feedbackCursorStart')), Number(Session.get('feedbackResultsPerPage')), 
+    Session.get('feedbackCursorOrder'));
+
+  //scenarios of the current user
+  Meteor.subscribe('myScenarios', Number(Session.get('scenarioCursorStart')), Number(Session.get('scenarioResultsPerPage')), 
+    Session.get('scenarioCursorOrder'));
+  
+  //all submitted scenarios
+  Meteor.subscribe('scenariosAllSubmitted', Number(Session.get('scenarioCursorStart')), Number(Session.get('scenarioResultsPerPage')), 
+    Session.get('scenarioCursorOrder'));
+  
+  //all approved scenarios
+  Meteor.subscribe('scenariosAllApproved', Number(Session.get('scenarioCursorStart')), Number(Session.get('scenarioResultsPerPage')), 
+    Session.get('scenarioCursorOrder')); 
+
+  //all available users
+  Meteor.subscribe('allUsersList', Number(Session.get('userListCursorStart')), Number(Session.get('userListResultsPerPage')), 
+    Session.get('userListOrder'));
+
+  //--------------------------
+  // CREATE CLIENT COLLECTIONS
+  //--------------------------
 
   // partial collections (Minimongo collections)
   MyScenarios = new Mongo.Collection('myScenarios');
@@ -85,9 +121,14 @@ if (Meteor.isClient) {
   feedbackCol = new Mongo.Collection('feedbackDocuments')
   //currentUser = new Mongo.Collection('userdata');
   scenarioAcks = new Mongo.Collection("scenarioAcks");
-  Meteor.subscribe('scenarioAcks')
+
+
+  //------------------------------
+  // TRACK DEPENDENCIES W/ AUTORUN
+  //------------------------------  
 
 // Tracker.autorun(function(){
+  //Deps.autorun used to be Tracker.autorun (Meteor's dependency tracker system) http://docs.meteor.com/#/full/tracker
   Deps .autorun(function(){
 
     //http://stackoverflow.com/questions/15680461/meteor-collection-not-updating-subscription-on-client
@@ -102,19 +143,12 @@ if (Meteor.isClient) {
       //show contextual help
       if(Meteor.user().profile.user_preferences.show_context_help != undefined)
         Session.set('showGuidelines', Meteor.user().profile.user_preferences.show_context_help)
-      // //number of entries shoen per page for scenario searches
+      // //number of entries shown per page for scenario searches
       // var selectedResultPerPageScenarios = Meteor.user().profile.user_preferences.selectedResultPerPageScenarios;
       // if ( selectedResultPerPageScenarios && selectedResultPerPageScenarios != Session.get('scenarioResultsPerPage'))
       //   Session.set('scenarioResultsPerPage', Meteor.user().profile.user_preferences.selectedResultPerPageScenarios)
     }
 
-
-    //subscriptions
-    Meteor.subscribe('feedbackDocuments', Number(Session.get('feedbackCursorStart')), Number(Session.get('feedbackResultsPerPage')), Session.get('feedbackCursorOrder'));
-    Meteor.subscribe('myScenarios', Number(Session.get('scenarioCursorStart')), Number(Session.get('scenarioResultsPerPage')), Session.get('scenarioCursorOrder'));  //scenarios of the current user
-    Meteor.subscribe('scenariosAllSubmitted', Number(Session.get('scenarioCursorStart')), Number(Session.get('scenarioResultsPerPage')), Session.get('scenarioCursorOrder')); //all available scenarios
-    Meteor.subscribe('scenariosAllApproved', Number(Session.get('scenarioCursorStart')), Number(Session.get('scenarioResultsPerPage')), Session.get('scenarioCursorOrder')); //all approved scenarios
-    Meteor.subscribe('allUsersList', Number(Session.get('userListCursorStart')), Number(Session.get('userListResultsPerPage')), Session.get('userListOrder'));//all available users
 
 });
 
@@ -344,6 +378,7 @@ Accounts.ui.config({
 
 
 }//meteor.isClient
+
 
 
 
