@@ -5,10 +5,6 @@
 
 */
 
-//Collections
-// Scenarios = new Mongo.Collection("scenarios");
-// FeedbackCollection = new Mongo.Collection("FeedbackCollection");
-// ScenarioAcks = new Mongo.Collection("ScenarioAcks");
 
 //Scenario states for governance
 var scenarioStatusEnum = {

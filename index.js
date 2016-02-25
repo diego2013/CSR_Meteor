@@ -74,9 +74,9 @@ if (Meteor.isClient) {
 // a tricky courtesy of SO: http://stackoverflow.com/a/22770999/3961519
   var _logout = Meteor.logout;
   Meteor.logout = function customLogout() {
-    // Do your thing here
-    console.log("manual logout")
-    Router.go('/home')
+    // Do logoug "cleanup" work
+    // console.log("manual logout")
+    Router.go('/home'); //redirect to homepage
     _logout.apply(Meteor, arguments);
   }
 
@@ -86,8 +86,7 @@ if (Meteor.isClient) {
 
   Meteor.subscribe('scenariosAll'); //all available scenarios
 
-  Meteor.subscribe('publication');
-  Meteor.subscribe('scenarioAcks')
+  Meteor.subscribe('publication');//publication with general information for publish-counts. 
 
   Meteor.subscribe('feedbackDocuments', Number(Session.get('feedbackCursorStart')), Number(Session.get('feedbackResultsPerPage')), 
     Session.get('feedbackCursorOrder'));
@@ -119,8 +118,6 @@ if (Meteor.isClient) {
   scenariosAllSubmitted = new Mongo.Collection('scenariosAllSubmitted');
   AllTheUsers = new Mongo.Collection('allUsersList');
   feedbackCol = new Mongo.Collection('feedbackDocuments')
-  //currentUser = new Mongo.Collection('userdata');
-  scenarioAcks = new Mongo.Collection("scenarioAcks");
 
 
   //------------------------------
@@ -342,13 +339,6 @@ UI.registerHelper('isVerifiedEmail' , function(emailsObject){
       return "not applicable";
 });
 
-
-/**Returns the number of ACKs / LIKES of a scenario with the given ID
-@param ScnId ID of the scenario
-*/
-UI.registerHelper('getScenarioACKcount', function(ScnId){
-  return scenarioAcks.find({scnID : ScnId}).count();
-})
 
 /** Returns the number of scenarios of this user by status
 @param scnState state of the scenario : values from scenarioStatusEnum or empty string for "ALL"

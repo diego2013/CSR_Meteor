@@ -51,12 +51,13 @@ Template.scenarioCompleteForm.helpers({
       if(scenarioDTO.owner === Meteor.userId())
         return false;
 
-      var obj = scenarioAcks.findOne({_id : scenarioDTO._id+Meteor.userId()});
+      var acknowledgers = scenarioDTO.acknowledgers;
+      if (acknowledgers == undefined)
+        return true;// nobody has "liked" the scenario yet
 
-      if(obj)
-        return false;
-
-      return true;
+      var exists = $.inArray(Meteor.userId, acknowledgers)
+      
+      return (exists == -1)
     }
     //returns the number of users who acknowledged this scenario
     ,acknowledgersCount : function(){
@@ -65,7 +66,6 @@ Template.scenarioCompleteForm.helpers({
         return 0
       else 
         return scenarioDTO.acknowledgers.length
-      // return scenarioAcks.find({scnID : this._id}).count();
     }
   });
 

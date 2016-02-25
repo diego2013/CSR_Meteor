@@ -43,8 +43,7 @@ Meteor.methods({
 
 	    for(var i = 0; i<apprvScenarios.length; i++){
 	    	var scenarioDTO = apprvScenarios[i];
-			var acks = ScenarioAcks.find({scnID : scenarioDTO._id}).count();
-			scnInfo = scenarioToTxt(scenarioDTO, acks);
+			scnInfo = scenarioToTxt(scenarioDTO);
 			folder.file('scenario_'+scenarioDTO._id+'.txt', scnInfo);//adds a file to the folder
 	    }
 		
@@ -57,8 +56,7 @@ Meteor.methods({
 		zip = new jsZip();// create an instance of JSZip
 		// csv = fastCsv;  //create an instance of fast-csv
 		var scenarioDTO = Scenarios.findOne({_id: scenarioID});
-		var acks = ScenarioAcks.find({scnID : scenarioID}).count();
-		scnInfo = scenarioToTxt(scenarioDTO, acks);
+		scnInfo = scenarioToTxt(scenarioDTO);
 		zip.file('scenario_'+scenarioID+'.txt', scnInfo);//adds a file
 		return zip.generate({type: "base64"});
 

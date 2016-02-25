@@ -7,10 +7,10 @@ utils.js Common utilities
 
 /** (pretty) Prints the info of a scenario in txt format
 @scenarioDTO original scenario as an object
-@acks number of users who ACKed the scenario
 */
-scenarioToTxt = function(scenarioDTO, acks) {
+scenarioToTxt = function(scenarioDTO) {
 	var result = "Scenario Title: "+ scenarioDTO.title+"\n\n";
+	var acks = scenarioDTO.acknowledgers? acknowledgers.length : 0;
 
 	result += "This scenario has been acknowledged by "+acks+" users."+"\n\n";
 
