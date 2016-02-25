@@ -164,8 +164,10 @@ regular
 }
 
 .customClinicalEntry{
-	height: 15px;
-    vertical-align: middle;
+	height: 20px;
+  vertical-align: middle;
+  font-size: small;
+
 }
 
 .approvedScnTextArea{
