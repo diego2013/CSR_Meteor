@@ -24,3 +24,13 @@ _showguidelinestext = 'Show Guidelines (Verbose mode)'
 */
  _LOCKBUTTON_ACTION_LOCK = "lock";
  _LOCKBUTTON_ACTION_UNLOCK = "unlock";
+
+
+ //##########################
+ //#### FEEDBACK REPORTS ####
+ //##########################
+
+ FEEDBACK_REPORT_STATUS = {
+ 	REVIEWED : 'Reviewed',
+ 	PENDING : 'Pending'
+ }

@@ -357,6 +357,31 @@ UI.registerHelper('myContributionsCountByState', function(scnState){
 })
 
 
+/** returns number of feedback reports by status
+*/
+UI.registerHelper('countFeedbackReportsByStatus', function(feedbackReportStatus){
+  if(feedbackReportStatus == FEEDBACK_REPORT_STATUS.REVIEWED)
+    return Counts.get('feedbackCounterReviewed')
+  else if (feedbackReportStatus == FEEDBACK_REPORT_STATUS.PENDING)
+    return Counts.get('feedbackCounterPending')
+  else
+    return 0
+})
+
+UI.registerHelper('feedbackReportsByStatusRatio', function(feedbackReportStatus){
+  var all_reports = Counts.get('feedbackCounter')
+  var r = 0;
+  if(feedbackReportStatus == FEEDBACK_REPORT_STATUS.REVIEWED){
+    r = (Counts.get('feedbackCounterReviewed')/all_reports)*100;   
+  }else if (feedbackReportStatus == FEEDBACK_REPORT_STATUS.PENDING){
+    r = (Counts.get('feedbackCounterPending')/all_reports)*100;
+  }
+  else
+    r = 0
+
+  return parseFloat(r).toFixed(2);
+})
+
 //OTHER CLIENT FUNCTIONS
 //======================================================================
 

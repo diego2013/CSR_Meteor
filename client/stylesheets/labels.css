@@ -18,3 +18,8 @@
 	white-space: pre; /* or pre-wrap 
 }*/
 
+.feedbakReportPercentageStatus{
+	color: gray; 
+	padding-left: 10px;
+	font-size: 12px;
+}

@@ -15,6 +15,8 @@ var scenarioStatusEnum = {
     REJECTED    : 'rejected'          //Permantenlty discarded (but not deleted)
 }
 
+//
+
 
 
 //PUBLICATIONS (reference)
@@ -154,6 +156,8 @@ Meteor.publish('feedbackDocuments', function(cursorStart, recordLimit, sortPrefe
 //https://github.com/percolatestudio/publish-counts
 Meteor.publish('publication', function() {
   Counts.publish(this, 'feedbackCounter', FeedbackCollection.find());
+  Counts.publish(this, 'feedbackCounterReviewed', FeedbackCollection.find({'reviewed' : FEEDBACK_REPORT_STATUS.REVIEWED}));
+  Counts.publish(this, 'feedbackCounterPending', FeedbackCollection.find({'reviewed' : FEEDBACK_REPORT_STATUS.PENDING}));
   Counts.publish(this, 'myScenariosCounter', Scenarios.find({owner: this.userId }));
   Counts.publish(this, 'approvedScenariosCounter', Scenarios.find({owner: this.userId , status : scenarioStatusEnum.APPROVED}));
   Counts.publish(this, 'submittedScenariosCounter', Scenarios.find({owner: this.userId , status : scenarioStatusEnum.SUBMITTED}));
