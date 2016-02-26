@@ -80,32 +80,7 @@ if (Meteor.isClient) {
     _logout.apply(Meteor, arguments);
   }
 
-  //--------------------------
-  // SUBSCRIBE TO PUBLICATIONS
-  //--------------------------
 
-  Meteor.subscribe('scenariosAll'); //all available scenarios
-
-  Meteor.subscribe('publication');//publication with general information for publish-counts. 
-
-  Meteor.subscribe('feedbackDocuments', Number(Session.get('feedbackCursorStart')), Number(Session.get('feedbackResultsPerPage')), 
-    Session.get('feedbackCursorOrder'));
-
-  //scenarios of the current user
-  Meteor.subscribe('myScenarios', Number(Session.get('scenarioCursorStart')), Number(Session.get('scenarioResultsPerPage')), 
-    Session.get('scenarioCursorOrder'));
-  
-  //all submitted scenarios
-  Meteor.subscribe('scenariosAllSubmitted', Number(Session.get('scenarioCursorStart')), Number(Session.get('scenarioResultsPerPage')), 
-    Session.get('scenarioCursorOrder'));
-  
-  //all approved scenarios
-  Meteor.subscribe('scenariosAllApproved', Number(Session.get('scenarioCursorStart')), Number(Session.get('scenarioResultsPerPage')), 
-    Session.get('scenarioCursorOrder')); 
-
-  //all available users
-  Meteor.subscribe('allUsersList', Number(Session.get('userListCursorStart')), Number(Session.get('userListResultsPerPage')), 
-    Session.get('userListOrder'));
 
   //--------------------------
   // CREATE CLIENT COLLECTIONS
@@ -119,6 +94,14 @@ if (Meteor.isClient) {
   AllTheUsers = new Mongo.Collection('allUsersList');
   feedbackCol = new Mongo.Collection('feedbackDocuments')
 
+
+  //--------------------------
+  // SUBSCRIBE TO PUBLICATIONS
+  //--------------------------
+
+  Meteor.subscribe('scenariosAll'); //all available scenarios
+
+  Meteor.subscribe('publication');//publication with general information for publish-counts. 
 
   //------------------------------
   // TRACK DEPENDENCIES W/ AUTORUN
@@ -145,6 +128,30 @@ if (Meteor.isClient) {
       // if ( selectedResultPerPageScenarios && selectedResultPerPageScenarios != Session.get('scenarioResultsPerPage'))
       //   Session.set('scenarioResultsPerPage', Meteor.user().profile.user_preferences.selectedResultPerPageScenarios)
     }
+
+  //--------------------------
+  // SUBSCRIBE TO PUBLICATIONS using reactivity to update parameters
+  //--------------------------
+
+
+  Meteor.subscribe('feedbackDocuments', Number(Session.get('feedbackCursorStart')), Number(Session.get('feedbackResultsPerPage')), 
+    Session.get('feedbackCursorOrder'));
+
+  //scenarios of the current user
+  Meteor.subscribe('myScenarios', Number(Session.get('scenarioCursorStart')), Number(Session.get('scenarioResultsPerPage')), 
+    Session.get('scenarioCursorOrder'));
+  
+  //all submitted scenarios
+  Meteor.subscribe('scenariosAllSubmitted', Number(Session.get('scenarioCursorStart')), Number(Session.get('scenarioResultsPerPage')), 
+    Session.get('scenarioCursorOrder'));
+  
+  //all approved scenarios
+  Meteor.subscribe('scenariosAllApproved', Number(Session.get('scenarioCursorStart')), Number(Session.get('scenarioResultsPerPage')), 
+    Session.get('scenarioCursorOrder')); 
+
+  //all available users
+  Meteor.subscribe('allUsersList', Number(Session.get('userListCursorStart')), Number(Session.get('userListResultsPerPage')), 
+    Session.get('userListOrder'));
 
 
 });
