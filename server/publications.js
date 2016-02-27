@@ -139,7 +139,7 @@ Meteor.publish('allUsersList', function(cursorStart, recordLimit, obj){
 @recordLimit, limit parameter
 @sortPreferences, object to sort the pulbished cursor
 */
-Meteor.publish('feedbackDocuments', function(cursorStart, recordLimit, sortPreferences){
+Meteor.publish('feedbackDocuments', function(cursorStart, recordLimit, sortPreferences, status){
   if(Roles.userIsInRole(this.userId, 'admin')){
     var objSort = {};//object to sort the cursor
     if(sortPreferences){
@@ -147,7 +147,13 @@ Meteor.publish('feedbackDocuments', function(cursorStart, recordLimit, sortPrefe
     }else{
       objSort['createdAt'] = 1;
     }
-    Mongo.Collection._publishCursor( FeedbackCollection.find({}, {limit :recordLimit, skip : cursorStart, sort : objSort }), this, 'feedbackDocuments');
+    console.log("status "+status + " ... "+ FEEDBACK_REPORT_STATUS.ALL + " retovles to ")
+    var criteria = {}
+    if(status != FEEDBACK_REPORT_STATUS.ALL)
+      criteria['reviewed'] = status
+    console.log(criteria)
+
+    Mongo.Collection._publishCursor( FeedbackCollection.find(criteria, {limit :recordLimit, skip : cursorStart, sort : objSort }), this, 'feedbackDocuments');
   }
   this.ready();
 });

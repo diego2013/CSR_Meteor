@@ -98,6 +98,10 @@ Template.feedbackListTable.events({
   Session.set('feedbackCursorStart', 0);
   Session.set('feedbackResultsPerPage', newValue);
 }
+, "change #reportStatus" : function(event){
+  var newValue = $(event.target).val();
+  Session.set('feedbackReportsStatus', newValue);
+}
 ,"click #cabecera" :function(event){
     var name = event.target.getAttribute("data-name");
     var obj = Session.get('feedbackCursorOrder'); 

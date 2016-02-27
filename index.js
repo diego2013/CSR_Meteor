@@ -48,6 +48,7 @@ if (Meteor.isClient) {
   Session.setDefault('feedbackCursorStart', 0);
   Session.setDefault('feedbackResultsPerPage', 10 /*25*/);
   Session.setDefault('feedbackCursorOrder', defaultSortObject);
+  Session.setDefault('feedbackReportsStatus', FEEDBACK_REPORT_STATUS.ALL);
 
   Session.setDefault('scenarioCursorStart', 0);
   Session.setDefault('scenarioResultsPerPage', 10 /*25*/);
@@ -80,6 +81,14 @@ if (Meteor.isClient) {
     _logout.apply(Meteor, arguments);
   }
 
+
+  //--------------------------
+  // SUBSCRIBE TO PUBLICATIONS
+  //--------------------------
+
+  Meteor.subscribe('scenariosAll'); //all available scenarios
+
+  Meteor.subscribe('publication');//publication with general information for publish-counts. 
 
 
   //--------------------------
@@ -133,9 +142,9 @@ if (Meteor.isClient) {
   // SUBSCRIBE TO PUBLICATIONS using reactivity to update parameters
   //--------------------------
 
-
+console.log(Session.get('feedbackReportsStatus'));
   Meteor.subscribe('feedbackDocuments', Number(Session.get('feedbackCursorStart')), Number(Session.get('feedbackResultsPerPage')), 
-    Session.get('feedbackCursorOrder'));
+    Session.get('feedbackCursorOrder'), Session.get('feedbackReportsStatus'));
 
   //scenarios of the current user
   Meteor.subscribe('myScenarios', Number(Session.get('scenarioCursorStart')), Number(Session.get('scenarioResultsPerPage')), 

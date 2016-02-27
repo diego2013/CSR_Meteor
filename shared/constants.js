@@ -31,6 +31,7 @@ _showguidelinestext = 'Show Guidelines (Verbose mode)'
  //##########################
 
  FEEDBACK_REPORT_STATUS = {
+ 	ALL : 'All',
  	REVIEWED : 'Reviewed',
  	PENDING : 'Pending'
  }
