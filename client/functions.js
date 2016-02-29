@@ -269,10 +269,12 @@ findByID = function(scenarioID){
    else{
      //2. Search
      currentScenarioDTO = ScenariosAll.findOne({_id: scenarioID});
+     // console.log(currentScenarioDTO)
 
      //3. Check authorization: user must be scenario owner or scenario must be "approved"
+     // and redirect
      if(currentScenarioDTO===undefined ||
-       (currentScenarioDTO.owner != Meteor.userId())  && currentScenarioDTO.status != scenarioStatusEnum.APPROVED){
+       (currentScenarioDTO.owner != Meteor.userId()  && currentScenarioDTO.status != scenarioStatusEnum.APPROVED)){
 
         Session.set('auxScenarioID', scenarioID);
          //console.log(JSON.stringify(currentScenarioDTO));
@@ -280,14 +282,23 @@ findByID = function(scenarioID){
         //Router.go('findByIDErrorTemplate', {data : function() {return scenarioID}});
         
      }else{
-       Session.set(_SCENARIO_FORM_STEP, _SCENARIO_FORM_STEP_BASIC_INFO);
-       Session.set("currentScenarioDTO", currentScenarioDTO);
-       Router.go("/newScenarioForm", {
-        // data : currentScenarioDTO,
-         yieldTemplates: {
-               'scenarioFormBasicInfo': {to: 'newScenarioStep'}
-         }
-       });
+          Session.set("currentScenarioDTO", currentScenarioDTO);
+          //redirect based on scenario status
+          if(currentScenarioDTO.status == scenarioStatusEnum.APPROVED){
+            //redirect to complete scenario view
+             Router.go("/scenarioComplete/"+currentScenarioDTO._id)
+          }else{
+            //redirect to the "create sceanro" view
+               Session.set(_SCENARIO_FORM_STEP, _SCENARIO_FORM_STEP_BASIC_INFO);
+               // Session.set("currentScenarioDTO", currentScenarioDTO);
+               Router.go("/newScenarioForm", {
+                // data : currentScenarioDTO,
+                 yieldTemplates: {
+                       'scenarioFormBasicInfo': {to: 'newScenarioStep'}
+                 }
+               });
+          }
+
      }
 
    } 
