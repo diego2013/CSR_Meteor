@@ -141,7 +141,7 @@ if (Meteor.isClient) {
   //--------------------------
   // SUBSCRIBE TO PUBLICATIONS using reactivity to update parameters
   //--------------------------
-  
+
   Meteor.subscribe('feedbackDocuments', Number(Session.get('feedbackCursorStart')), Number(Session.get('feedbackResultsPerPage')), 
     Session.get('feedbackCursorOrder'), Session.get('feedbackReportsStatus'));
 
@@ -209,12 +209,21 @@ UI.registerHelper('selectedLessonLearned', function( value){
 
 
 
-/** Return the length of an arrayObject
+/** Returns the length of an arrayObject
 */
 UI.registerHelper('count', function(arrayObject){
   return arrayObject.length;
 });
 
+
+/** Returns the length of an arrayObject
+*/
+UI.registerHelper('lengthOfArray', function(arrayObject){
+  if(arrayObject==undefined || !Array.isArray(arrayObject))
+    return 0;
+  else
+    return arrayObject.length;
+});
 
 /********* UTILITY FUNCTIONS *********/
 
