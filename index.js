@@ -369,11 +369,11 @@ UI.registerHelper('isVerifiedEmail' , function(emailsObject){
 */
 UI.registerHelper('myContributionsCountByState', function(scnState){
   if (scnState == scenarioStatusEnum.UNSUBMITTED)
-    return Counts.get('unSubmittedScenariosCounter');
+    return Counts.get('myScenariosCounter_unsubmitted');
   else if (scnState == scenarioStatusEnum.SUBMITTED)
-    return Counts.get('submittedScenariosCounter');
+    return Counts.get('myScenariosCounter_submitted');
   else if (scnState == scenarioStatusEnum.APPROVED)
-    return Counts.get('approvedScenariosCounter')
+    return Counts.get('myScenariosCounter_approved')
   else if (scnState == '')
     return Counts.get('myScenariosCounter');
   else

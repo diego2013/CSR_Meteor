@@ -162,10 +162,17 @@ Meteor.publish('publication', function() {
   Counts.publish(this, 'feedbackCounter', FeedbackCollection.find());
   Counts.publish(this, 'feedbackCounterReviewed', FeedbackCollection.find({'reviewed' : FEEDBACK_REPORT_STATUS.REVIEWED}));
   Counts.publish(this, 'feedbackCounterPending', FeedbackCollection.find({'reviewed' : FEEDBACK_REPORT_STATUS.PENDING}));
+
   Counts.publish(this, 'myScenariosCounter', Scenarios.find({owner: this.userId }));
-  Counts.publish(this, 'approvedScenariosCounter', Scenarios.find({owner: this.userId , status : scenarioStatusEnum.APPROVED}));
-  Counts.publish(this, 'submittedScenariosCounter', Scenarios.find({owner: this.userId , status : scenarioStatusEnum.SUBMITTED}));
-  Counts.publish(this, 'unSubmittedScenariosCounter', Scenarios.find({owner: this.userId , status : scenarioStatusEnum.UNSUBMITTED}));
+  Counts.publish(this, 'myScenariosCounter_unsubmitted', Scenarios.find({owner: this.userId, status :  scenarioStatusEnum.UNSUBMITTED}));
+  Counts.publish(this, 'myScenariosCounter_submitted', Scenarios.find({owner: this.userId, status :  scenarioStatusEnum.SUBMITTED }));
+  Counts.publish(this, 'myScenariosCounter_approved', Scenarios.find({owner: this.userId, status :  scenarioStatusEnum.APPROVED }));
+
+
+  Counts.publish(this, 'approvedScenariosCounter', Scenarios.find({status : scenarioStatusEnum.APPROVED}));
+  Counts.publish(this, 'submittedScenariosCounter', Scenarios.find({status : scenarioStatusEnum.SUBMITTED}));
+  Counts.publish(this, 'unSubmittedScenariosCounter', Scenarios.find({status : scenarioStatusEnum.UNSUBMITTED}));
+  
   Counts.publish(this, 'usersListCounter', Meteor.users.find());
 });
 

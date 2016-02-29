@@ -12,6 +12,9 @@
       results per page </label>
   </p>
 
+  {{#if isMyScenariosView }}
+  My scenarios
+  {{/if}}
 
 	<table class="scenarioListTable">
     {{ > Template.dynamic template=getTypeOfTableView}} 

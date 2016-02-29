@@ -51,6 +51,12 @@ Template.scenarioListTable.helpers({
       else
         return scenarioTableViewPublic_templateName;
     }
+    /** Returns true if the current view is "My Sceanrios" 
+    */
+    ,isMyScenariosView : function(){
+      var currentPath = Router.current().route.getName();
+      return currentPath == ROUTE_scenarioList;
+    }
  });
 
 
