@@ -147,11 +147,9 @@ Meteor.publish('feedbackDocuments', function(cursorStart, recordLimit, sortPrefe
     }else{
       objSort['createdAt'] = 1;
     }
-    console.log("status "+status + " ... "+ FEEDBACK_REPORT_STATUS.ALL + " retovles to ")
     var criteria = {}
     if(status != FEEDBACK_REPORT_STATUS.ALL)
       criteria['reviewed'] = status
-    console.log(criteria)
 
     Mongo.Collection._publishCursor( FeedbackCollection.find(criteria, {limit :recordLimit, skip : cursorStart, sort : objSort }), this, 'feedbackDocuments');
   }
