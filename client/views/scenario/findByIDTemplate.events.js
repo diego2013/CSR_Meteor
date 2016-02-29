@@ -7,7 +7,7 @@ Template.findByIDTemplate.events({
     //event.preventDefault();
     //Fetch and process input
     var scenarioID = template.find("#findByIDbox").value;
-    console.log(scenarioID)
+    // console.log(scenarioID)
     scenarioID = scenarioID.trim();
     findByID(scenarioID); 
     //clear
