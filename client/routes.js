@@ -239,7 +239,8 @@ Uses Iron:router https://github.com/iron-meteor/iron-router
     var obj = Session.get('feedbackCursorOrder');
     var objSort = {};//object to sort the cursor
     objSort[obj.param]= obj.order;
-    Session.set('feedbackCursorStart', 0)
+    Session.set('feedbackCursorStart', 0);
+    Session.set('feedbackReportsStatus', FEEDBACK_REPORT_STATUS.ALL);
     this.render('feedbackListTable', 
       {data : {  feedbackCol : feedbackCol.find({}, {limit : Number(Session.get('feedbackResultsPerPage')), sort: objSort}) }} );
       //Issue #75 add limit to this query
