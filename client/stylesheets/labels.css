@@ -23,3 +23,15 @@
 	padding-left: 10px;
 	font-size: 12px;
 }
+
+
+
+#contributionsStatsTable tr td:nth-child(1){
+	font-weight: bold;
+}
+
+#contributionsStatsTable tr td:nth-child(3){
+	color: gray; 
+	padding-left: 10px;
+	font-size: 12px;
+}

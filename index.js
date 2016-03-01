@@ -392,6 +392,9 @@ UI.registerHelper('countFeedbackReportsByStatus', function(feedbackReportStatus)
     return 0
 })
 
+/** Retruns a number with two decimal positions that represents the % of feedback reports in the given state
+@param feedbackReportStatus : status
+*/
 UI.registerHelper('feedbackReportsByStatusRatio', function(feedbackReportStatus){
   var all_reports = Counts.get('feedbackCounter')
   var r = 0;
@@ -404,6 +407,24 @@ UI.registerHelper('feedbackReportsByStatusRatio', function(feedbackReportStatus)
     r = 0
 
   return parseFloat(r).toFixed(2);
+})
+
+/** Returns a number that represents the % of 'My Sceanarios' in a given state
+*/
+UI.registerHelper('myScenariosRatioByState', function(scnState){
+  var all_my_scenarios = Counts.get('myScenariosCounter');
+  var count_by_state
+  if (scnState == scenarioStatusEnum.UNSUBMITTED)
+    count_by_state = Counts.get('myScenariosCounter_unsubmitted');
+  else if (scnState == scenarioStatusEnum.SUBMITTED)
+    count_by_state = Counts.get('myScenariosCounter_submitted');
+  else if (scnState == scenarioStatusEnum.APPROVED)
+    count_by_state = Counts.get('myScenariosCounter_approved')
+  else if (scnState == '')
+    count_by_state = Counts.get('myScenariosCounter');
+  else
+    count_by_state = 0;
+  return parseFloat((count_by_state/all_my_scenarios) * 100).toFixed(2);
 })
 
 //OTHER CLIENT FUNCTIONS
