@@ -469,8 +469,17 @@ updateEnvironmentList = function(){
 @routeName current route
 */
 scenarioTotalCount = function(routeName){
-  if(routeName == 'scenarioList')
-    return Counts.get('myScenariosCounter');
+  if(routeName == 'scenarioList'){
+    var scenarioStatusFilter = Session.get('scenarioStatusFilter');
+    if(scenarioStatusFilter == scenarioStatusEnum.UNSUBMITTED)
+      return Counts.get('myScenariosCounter_unsubmitted')
+    else if (scenarioStatusFilter == scenarioStatusEnum.SUBMITTED)
+      return Counts.get('myScenariosCounter_submitted')
+    else if (scenarioStatusFilter == scenarioStatusEnum.APPROVED)
+      return Counts.get('myScenariosCounter_approved')
+    else
+      return Counts.get('myScenariosCounter');
+  }
   else if(routeName == 'approvedScenarioList')
     return Counts.get('approvedScenariosCounter');
   else if(routeName == 'recentSubmissionsScenarioList')

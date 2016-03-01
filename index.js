@@ -147,7 +147,7 @@ if (Meteor.isClient) {
 
   //scenarios of the current user
   Meteor.subscribe('myScenarios', Number(Session.get('scenarioCursorStart')), Number(Session.get('scenarioResultsPerPage')), 
-    Session.get('scenarioCursorOrder'));
+    Session.get('scenarioCursorOrder'), Session.get('scenarioStatusFilter'));
   
   //all submitted scenarios
   Meteor.subscribe('scenariosAllSubmitted', Number(Session.get('scenarioCursorStart')), Number(Session.get('scenarioResultsPerPage')), 

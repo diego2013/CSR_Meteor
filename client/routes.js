@@ -160,6 +160,7 @@ Uses Iron:router https://github.com/iron-meteor/iron-router
      var objSort = {};//object to sort the cursor
      objSort[obj.param]= obj.order;
      Session.set('scenarioCursorStart', 0);
+     Session.set('scenarioStatusFilter', FEEDBACK_REPORT_STATUS.ALL);
      // this.render('scenarioListTable', {data : { scenarios : MyScenarios.find({}, {sort: objSort}) }} );
      if(Meteor.user()){
         this.render('scenarioListTable', 

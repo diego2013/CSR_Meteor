@@ -59,6 +59,14 @@ Template.publicScenarioRow.events({
 });
 
 
+Template.contributionsStatsFilter.events({
+  "change #scenarioStatusFilter" : function(event){
+  var newValue = $(event.target).val();
+  Session.set('scenarioStatusFilter', newValue);
+  }
+});
+
+
 //************* AUXILIARY FUNCTIONS *************
 /**
   Displays one view or another based on the given url to show

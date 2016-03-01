@@ -2,6 +2,14 @@
 
 <!-- Template to list all scenarios -->
 <template name="scenarioListTable">
+
+  {{#if isMyScenariosView }}
+  <div style="background-color: #C2E0FF; margin: 10px 0px;">
+    {{> contributionsStatsFilter}}
+    {{> contributionsStats}}
+  </div>  
+  {{/if}}
+
 	<p>Content of the database: {{totalCount}} scenarios. {{paginationCaption}}
     <label style="float:right;"> Show 
       <select id="resultsPerPage" value="10">
@@ -12,9 +20,6 @@
       results per page </label>
   </p>
 
-  {{#if isMyScenariosView }}
-  My scenarios
-  {{/if}}
 
 	<table class="scenarioListTable">
     {{ > Template.dynamic template=getTypeOfTableView}} 
@@ -161,4 +166,20 @@
     <td>{{trimLength description 50}} </td>
     <td>{{ lengthOfArray acknowledgers}}</td>
 
+</template>
+
+<template name="contributionsStatsFilter">
+   <!-- <div style = "position:relative;"> -->
+    <!-- <label style="right:0;position:absolute;">  -->
+    <label style="float:right">
+      Show 
+      <select id="scenarioStatusFilter" >
+          <option value ="All"  >All</option>
+          <option value ="unsubmitted" >Unsubmitted</option>
+          <option value ="submitted"  >Submitted</option>
+          <option value ="approved"  >Approved</option>
+      </select>
+      scenarios
+    </label>
+  <!-- </div> -->
 </template>

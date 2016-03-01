@@ -27,15 +27,19 @@ var scenarioStatusEnum = {
 @recordLimit, limit parameter
 @sortPreferences, object to sort the published cursor
 */
-Meteor.publish('myScenarios', function(cursorStart, recordLimit, sortPreferences){
+Meteor.publish('myScenarios', function(cursorStart, recordLimit, sortPreferences, status){
     var objSort = {};//object to sort the cursor
     if(sortPreferences){
       objSort[sortPreferences.param] = sortPreferences.order;
     }else{
       objSort['createdAt'] = 1;
     }
+    var criteria = { 'owner': this.userId }
+    if(status != FEEDBACK_REPORT_STATUS.ALL)
+      criteria['status'] = status
+
     Mongo.Collection._publishCursor( 
-      Scenarios.find({owner: this.userId }, {limit :recordLimit, skip : cursorStart, sort : objSort}), 
+      Scenarios.find(criteria, {limit :recordLimit, skip : cursorStart, sort : objSort}), 
       this, 'myScenarios'); 
     this.ready();
 });
