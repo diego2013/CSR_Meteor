@@ -143,6 +143,7 @@ if (Meteor.isClient) {
   // SUBSCRIBE TO PUBLICATIONS using reactivity to update parameters
   //--------------------------
 
+// console.log(Session.set('feedbackReportsStatus'));
   Meteor.subscribe('feedbackDocuments', Number(Session.get('feedbackCursorStart')), Number(Session.get('feedbackResultsPerPage')), 
     Session.get('feedbackCursorOrder'), Session.get('feedbackReportsStatus'));
 

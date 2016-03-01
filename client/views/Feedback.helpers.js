@@ -4,22 +4,24 @@
 Template.feedbackListTable.helpers({
     paginationCaption : function(){
       var filter = Session.get('feedbackReportsStatus')
-      var total = getReportCoutByStatus(filter);
+      // console.log(Session.get('feedbackReportsStatus'));
+      var total = getReportCountByStatus(filter);
+      // var total = Counts.get('feedbackCounter')
 
       minVal = Math.min(Number(Session.get('feedbackCursorStart'))+Number(Session.get('feedbackResultsPerPage')), total);
       return 'Showing results '+Number(Session.get('feedbackCursorStart')+1) + " to "+minVal+".";
     }
     ,totalCount : function(){
       var filter = Session.get('feedbackReportsStatus');
-      return getReportCoutByStatus(filter);
+      // return Counts.get('feedbackCounter')
+      return getReportCountByStatus(filter);
     }
     ,nextText : function(){
       var filter = Session.get('feedbackReportsStatus')
-      var total = getReportCoutByStatus(filter);
-      console.log(total)
+      var total = getReportCountByStatus(filter);
+      // var total = Counts.get('feedbackCounter')
 
       minVal = Math.min(Number(Session.get('feedbackCursorStart')+ 2*Session.get('feedbackResultsPerPage')), total);
-      console.log(minVal)
       if(Number(Session.get('feedbackCursorStart'))+ Number(Session.get('feedbackResultsPerPage')) > Number(total)){
         $(".next").addClass('disabled');
         return ''
@@ -82,12 +84,15 @@ Template.feedbackListTable.helpers({
 /** Return the total number of reports in a given state
 @param filter feedback report status
 */
- getReportCoutByStatus = function(filter){
+ getReportCountByStatus = function(filter){
+  // console.log("filter "+filter)
+   // return Counts.get('feedbackCounter');
+
       if(filter == FEEDBACK_REPORT_STATUS.REVIEWED)
-        total = Counts.get('feedbackCounterReviewed')
+        return Counts.get('feedbackCounterReviewed')
       else if (filter == FEEDBACK_REPORT_STATUS.PENDING)
-        total = Counts.get('feedbackCounterPending')
+        return Counts.get('feedbackCounterPending')
       else 
-        total = Counts.get('feedbackCounter')
-    return total;
+        return Counts.get('feedbackCounter')
+
  }
