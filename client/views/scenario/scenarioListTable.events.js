@@ -34,6 +34,24 @@ Template.scenarioListTable.events({
     if(name != '')//we don't sort
       Session.set( 'scenarioCursorOrder', obj );
 }
+/** Toggle the statistics for "My Scenarios"
+*/
+, "click #toggleMyScenariosStats" : function(){
+ //toggle value of the button and update reactive variable
+  var buttonName = $('#toggleMyScenariosStats').text().trim();
+  $('#myScenarioStats').toggleClass('guidelinesHidden')
+  if($('#myScenarioStats').hasClass('guidelinesHidden')){
+     $('#toggleMyScenariosStats').html("Show Statistics and Filters");
+  }else{
+     $('#toggleMyScenariosStats').html("Hide Statistics and Filters");
+  }
+
+  // if(stringStartsWith(buttonName, 'Show'))  {
+  //   $('#toggleMyScenariosStats').html("Hide Statistics/Filters");
+  // }else{
+  //   $('#toggleMyScenariosStats').html("Show Statistics/filters");
+  // }
+}
 });
 
 Template.MyScenariosScenarioRow.events({

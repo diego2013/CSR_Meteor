@@ -4,10 +4,12 @@
 <template name="scenarioListTable">
 
   {{#if isMyScenariosView }}
-  <div style="background-color: #C2E0FF; margin: 10px 0px;">
-    {{> contributionsStatsFilter}}
-    {{> contributionsStats}}
-  </div>  
+    <span class="fa fa-info-circle" id ="myscenariosstatsicon"></span>
+    <a href="#"  id="toggleMyScenariosStats" class="guidelines" title="Toggle My Scenarios statistics" >Hide Statistics and Filters</a>
+    <div id="myScenarioStats" style="background-color: #C2E0FF; margin: 10px 0px;">
+      {{> contributionsStatsFilter}}
+      {{> contributionsStats}}
+    </div>  
   {{/if}}
 
 	<p>Content of the database: {{totalCount}} scenarios. {{paginationCaption}}

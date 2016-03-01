@@ -67,6 +67,13 @@ body {
 }
 /* ------------------------------- */
 
+
+/*Info icon for show/hide stats my scenarios*/
+#myscenariosstatsicon{
+  color: #00a0be;
+}
+
+
 /* -------------------------------
 =Footer
    ------------------------------- */
