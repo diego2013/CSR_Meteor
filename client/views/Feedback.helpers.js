@@ -3,16 +3,23 @@
 
 Template.feedbackListTable.helpers({
     paginationCaption : function(){
-      total = Counts.get('feedbackCounter');
+      var filter = Session.get('feedbackReportsStatus')
+      var total = getReportCoutByStatus(filter);
+
       minVal = Math.min(Number(Session.get('feedbackCursorStart'))+Number(Session.get('feedbackResultsPerPage')), total);
       return 'Showing results '+Number(Session.get('feedbackCursorStart')+1) + " to "+minVal+".";
     }
     ,totalCount : function(){
-      return Counts.get('feedbackCounter');
+      var filter = Session.get('feedbackReportsStatus');
+      return getReportCoutByStatus(filter);
     }
     ,nextText : function(){
-      total = Counts.get('feedbackCounter');
+      var filter = Session.get('feedbackReportsStatus')
+      var total = getReportCoutByStatus(filter);
+      console.log(total)
+
       minVal = Math.min(Number(Session.get('feedbackCursorStart')+ 2*Session.get('feedbackResultsPerPage')), total);
+      console.log(minVal)
       if(Number(Session.get('feedbackCursorStart'))+ Number(Session.get('feedbackResultsPerPage')) > Number(total)){
         $(".next").addClass('disabled');
         return ''
@@ -71,3 +78,16 @@ Template.feedbackListTable.helpers({
       return count + " of 9 fields completed";
   }
  });
+
+/** Return the total number of reports in a given state
+@param filter feedback report status
+*/
+ getReportCoutByStatus = function(filter){
+      if(filter == FEEDBACK_REPORT_STATUS.REVIEWED)
+        total = Counts.get('feedbackCounterReviewed')
+      else if (filter == FEEDBACK_REPORT_STATUS.PENDING)
+        total = Counts.get('feedbackCounterPending')
+      else 
+        total = Counts.get('feedbackCounter')
+    return total;
+ }

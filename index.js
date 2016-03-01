@@ -53,6 +53,7 @@ if (Meteor.isClient) {
   Session.setDefault('scenarioCursorStart', 0);
   Session.setDefault('scenarioResultsPerPage', 10 /*25*/);
   Session.setDefault('scenarioCursorOrder', defaultSortObject);
+  Session.setDefault('scenarioStatusFilter', FEEDBACK_REPORT_STATUS.ALL);
 
   Session.setDefault('userListCursorStart', 0);
   Session.setDefault('userListResultsPerPage', 10 /*25*/);
@@ -388,6 +389,8 @@ UI.registerHelper('countFeedbackReportsByStatus', function(feedbackReportStatus)
     return Counts.get('feedbackCounterReviewed')
   else if (feedbackReportStatus == FEEDBACK_REPORT_STATUS.PENDING)
     return Counts.get('feedbackCounterPending')
+  else if (feedbackReportStatus == FEEDBACK_REPORT_STATUS.ALL)
+    return Counts.get('feedbackCounter')
   else
     return 0
 })

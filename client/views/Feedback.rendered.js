@@ -9,7 +9,15 @@ Template.feedbackListTable.rendered = function(){
     $("#previousButton").removeClass('disabled');
   } 
 
-  total = Counts.get('feedbackCounter');
+  var filter = Session.get('feedbackReportsStatus')
+  var total = 0
+  if(filter == FEEDBACK_REPORT_STATUS.REVIEWED)
+        total = Counts.get('feedbackCounterReviewed')
+  else if (filter == FEEDBACK_REPORT_STATUS.PENDING)
+        total = Counts.get('feedbackCounterPending')
+  else 
+        total = Counts.get('feedbackCounter')
+
   if(Number(Session.get('feedbackCursorStart'))+ Number(Session.get('feedbackResultsPerPage')) > Number(total)){
     $("#nextButton").addClass('next disabled');
   }else {

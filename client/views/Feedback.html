@@ -91,8 +91,25 @@
 <!-- Template to display the feedback documents -->
 <template name="feedbackListTable">
 
+    <div style = "margin-bottom:10px;"> 
+    <b>Pending reports:</b> {{countFeedbackReportsByStatus 'Pending'}} 
+    	<span class="feedbakReportPercentageStatus">({{feedbackReportsByStatusRatio 'Pending'}}% of total)</span>
+    <br/> <b>Reviewed reports:</b> {{countFeedbackReportsByStatus 'Reviewed'}}  
+    	<span class="feedbakReportPercentageStatus">({{feedbackReportsByStatusRatio 'Reviewed'}}% of total)</span>
+    <br/> <b>Total :</b> {{countFeedbackReportsByStatus 'All'}} 
+    
+    <label style="float:right;"> 
+    	Show 	
+	    <select id="reportStatus" >
+	        <option value ="All"  >All</option>
+	        <option value ="Reviewed"  >Reviewed</option>   
+	        <option value ="Pending"  >Pending</option> 
+	    </select>
+	    feedback reports
+    </label>	
+    </div>
+
 	<p>Content of the database: {{totalCount}} entries. {{paginationCaption}}
-	<!-- <p>There are {{getPublishedCount 'feedbackCounter'}} database entries</p> -->
 	<label style="float:right;"> 
 		Show 
 		<select id="resultsPerPage" value="10">
@@ -104,21 +121,6 @@
     </label>
     </p>
 
-    <div style = "margin-bottom:10px;"> 
-    <b>Pending reports:</b> {{countFeedbackReportsByStatus 'Pending'}} 
-    	<span class="feedbakReportPercentageStatus">({{feedbackReportsByStatusRatio 'Pending'}}% of total)</span>
-    <br/> <b>Reviewed reports:</b> {{countFeedbackReportsByStatus 'Reviewed'}}  
-    	<span class="feedbakReportPercentageStatus">({{feedbackReportsByStatusRatio 'Reviewed'}}% of total)</span>
-    <label style="float:right;"> 
-    	Show 	
-	    <select id="reportStatus" >
-	        <option value ="All"  >All</option>
-	        <option value ="Reviewed"  >Reviewed</option>   
-	        <option value ="Pending"  >Pending</option> 
-	    </select>
-	    feedback reports
-    </label>	
-    </div>
 	
 	<table class="scenarioListTable">
 	    <colgroup>
