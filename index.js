@@ -188,6 +188,9 @@ Template.NavBar.events({
   ,"click #reviewReports" : function(event){
     Session.set('feedbackReportsStatus', FEEDBACK_REPORT_STATUS.ALL);
   }
+  ,"click #mySceanriosNavBatItem" : function(event){
+     Session.set('scenarioStatusFilter', FEEDBACK_REPORT_STATUS.ALL);
+  }
 
 });
 

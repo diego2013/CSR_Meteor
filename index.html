@@ -84,7 +84,7 @@
 		  <li class="nav-item" id="ssNavBarItem"><a href="#">Search Scenarios</a>
 		  	<ul class="fallback">
         {{#if currentUser}}
-		  		<li><a href="{{ pathFor 'scenarioList'}}">My Scenarios</a></li>
+		  		<li><a id="mySceanriosNavBatItem" href="{{ pathFor 'scenarioList'}}">My Scenarios</a></li>
         {{/if}}  
 		  		<li><a href="{{ pathFor 'approvedScenarioList'}}">Approved Scenarios</a></li>
         {{#if isInRole 'admin'}}
