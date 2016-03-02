@@ -42,6 +42,7 @@ Template.scenarioListTable.events({
   $('#myScenarioStats').toggleClass('guidelinesHidden')
   if($('#myScenarioStats').hasClass('guidelinesHidden')){
      $('#toggleMyScenariosStats').html("Show Statistics and Filters");
+     $('#scenarioStatusFilter').val(FEEDBACK_REPORT_STATUS.ALL);
      Session.set('scenarioStatusFilter', FEEDBACK_REPORT_STATUS.ALL);
   }else{
      $('#toggleMyScenariosStats').html("Hide Statistics and Filters");
