@@ -58,6 +58,7 @@
   color:#FFF;
   text-decoration: none;
   /*background:#34495E;*/
+  white-space: nowrap;
 }
 .nav-item:first-child a {
   border-radius:5px 0 0 5px;

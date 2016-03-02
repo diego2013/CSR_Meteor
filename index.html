@@ -56,13 +56,6 @@
 
 
 	<div class="navbar-container">
-	<!-- For a detached to left login button-->
-<!--   <span style="">
-  {{#if currentUser}}
-  <span class="loginSalutationStyle">Hello</span>
-  {{/if}}
-	<span class="loginButtonsStyle"> {{> loginButtons}} </span>
-  </span> -->
 
 	 <nav class="nav" style="">
 
@@ -70,10 +63,6 @@
 
 		  <li class="nav-item-loginbuttons" style="">  
         {{#if currentUser}}          
-  <!--         <span class="fa-stack">
-            <span class="fa fa-circle-thin fa-stack-2x" title="Community site"></span> 
-            <span class="fa fa-user fa-stack-1x" ></span>        
-          </span> -->
           <span class="loginSalutationStyle"> Hello</span>
         {{/if}}
         {{> loginButtons}}
@@ -81,7 +70,7 @@
 
       <li class="nav-item" id="homeNavBarItem"><a href="{{ pathFor 'home' }}"><span class="fa fa-home" ></span>&nbsp;Home</a></li>
 		  <li class="nav-item" id="cnsNavBarItem"><a href="{{ pathFor 'createNewScenario'}} " >Create New Scenario</a></li>
-		  <li class="nav-item" id="ssNavBarItem"><a href="#">Search Scenarios</a>
+		  <li class="nav-item" id="ssNavBarItem"><a href="#">Scenarios</a>
 		  	<ul class="fallback">
         {{#if currentUser}}
 		  		<li><a id="mySceanriosNavBatItem" href="{{ pathFor 'scenarioList'}}">My Scenarios</a></li>
@@ -96,7 +85,7 @@
 		  </li>
 		  <li class="nav-item" id="fbiNavBarItem"><a href="{{ pathFor 'findByIDTemplate' }}">Find by ID</a></li>
       {{#if isInRole 'admin'}}
-      <li class="nav-item" id="feedNavBarItem"><a href="#">Feedback Reports</a>
+      <li class="nav-item" id="feedNavBarItem"><a href="#">Feedback</a>
         <ul class="fallback">
           <li><a id="reviewReports" href="{{ pathFor 'feedbackReviewList'}}">Review Reports</a></li>
           <li><a href="{{ pathFor 'FeedbackForm'}}">Submit Feedback</a></li>
@@ -110,7 +99,7 @@
         <li class="nav-item" id="listUsersNavBarItem"><a href="{{ pathFor 'usersList' }}">List Users</a></li>
       {{/if}}
       {{#if currentUser}}
-		  <li class="nav-item" id="upNavBarItem"><a href="{{ pathFor 'userProfile'}}">User Profile</a></li>
+		  <li class="nav-item" id="upNavBarItem"><a href="{{ pathFor 'userProfile'}}">Your Profile</a></li>
       {{/if}}
       <li class="nav-item" id="aboutNavBarItem"><a href="{{ pathFor 'aboutUs'}}">About Us</a></li>
       <li class="nav-item" id="helpNavBarItem"><a href="{{ pathFor 'help'}}">Help</a></li>
