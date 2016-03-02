@@ -11,7 +11,7 @@ Template.scenarioListTable.events({
 }
 ,"click .next" : function(){
   var routeName = Router.current().route.getName();
-  scenarioCount = scenarioTotalCount(routeName);
+  var scenarioCount = scenarioTotalCount(routeName);
   if(Number(Session.get('scenarioCursorStart')) + Number(Session.get('scenarioResultsPerPage')) < scenarioCount)
    Session.set('scenarioCursorStart', Number(Session.get('scenarioCursorStart'))+Number(Session.get('scenarioResultsPerPage')));
 }
