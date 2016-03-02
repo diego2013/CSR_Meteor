@@ -98,7 +98,7 @@
       {{#if isInRole 'admin'}}
       <li class="nav-item" id="feedNavBarItem"><a href="#">Feedback Reports</a>
         <ul class="fallback">
-          <li><a href="{{ pathFor 'feedbackReviewList'}}">Review Reports</a></li>
+          <li><a id="reviewReports" href="{{ pathFor 'feedbackReviewList'}}">Review Reports</a></li>
           <li><a href="{{ pathFor 'FeedbackForm'}}">Submit Feedback</a></li>
         </ul>
       </li>

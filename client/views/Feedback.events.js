@@ -90,6 +90,7 @@ Template.feedbackListTable.events({
 }
 ,"click .next" : function(){
   //XXX check that this is not going "out of range"
+  console.log("next")
   if(Number(Session.get('feedbackCursorStart')) + Number(Session.get('feedbackResultsPerPage')) < Counts.get('feedbackCounter'))
    Session.set('feedbackCursorStart', Number(Session.get('feedbackCursorStart'))+Number(Session.get('feedbackResultsPerPage')));
 }
@@ -101,6 +102,8 @@ Template.feedbackListTable.events({
 , "change #reportStatus" : function(event){
   var newValue = $(event.target).val();
   Session.set('feedbackReportsStatus', newValue);
+  //XXX should reset 
+  Session.set('feedbackCursorStart', 0);
 }
 ,"click #cabecera" :function(event){
     var name = event.target.getAttribute("data-name");
