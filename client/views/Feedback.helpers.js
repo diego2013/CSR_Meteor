@@ -4,22 +4,18 @@
 Template.feedbackListTable.helpers({
     paginationCaption : function(){
       var filter = Session.get('feedbackReportsStatus')
-      // console.log(Session.get('feedbackReportsStatus'));
       var total = getReportCountByStatus(filter);
-      // var total = Counts.get('feedbackCounter')
 
       minVal = Math.min(Number(Session.get('feedbackCursorStart'))+Number(Session.get('feedbackResultsPerPage')), total);
       return 'Showing results '+Number(Session.get('feedbackCursorStart')+1) + " to "+minVal+".";
     }
     ,totalCount : function(){
       var filter = Session.get('feedbackReportsStatus');
-      // return Counts.get('feedbackCounter')
       return getReportCountByStatus(filter);
     }
     ,nextText : function(){
       var filter = Session.get('feedbackReportsStatus')
       var total = getReportCountByStatus(filter);
-      // var total = Counts.get('feedbackCounter')
 
       minVal = Math.min(Number(Session.get('feedbackCursorStart')+ 2*Session.get('feedbackResultsPerPage')), total);
       if(Number(Session.get('feedbackCursorStart'))+ Number(Session.get('feedbackResultsPerPage')) > Number(total)){
