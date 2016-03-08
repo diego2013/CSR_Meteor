@@ -10,7 +10,7 @@
     <span style="border-radius: 5px; padding:2px 4px;" class="btn-purple">
         <span class="fa fa-star" style="color:gold;"></span> {{acknowledgersCount}}  
     </span>
-    &nbsp;users acknowledged this scenario
+    &nbsp;users acknowledged and upvoted this scenario
     </label>
 
 {{#if isScenarioEditable}}
@@ -52,7 +52,7 @@
       {{#if currentUser}}
         {{#if allowedToACK}}
             <a href="#"  id="like"  class="btn btn-small btn-purple" title="Acknowledge the Scenario">
-                <span class="fa fa-star" style="color:gold;"></span>&nbsp;ACK Scenario
+                <span class="fa fa-thumbs-up" style="color:gold;"></span>&nbsp;Upvote Scenario
             </a>
         {{else}}
             <label style="font-size:10px;float:right;clear:right">(You acknowledged this scenario)
