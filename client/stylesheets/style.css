@@ -68,7 +68,7 @@ body {
 /* ------------------------------- */
 
 
-/*Info icon for show/hide stats my scenarios*/
+/*Info icon for show/hide stats my scenarioso*/
 #myscenariosstatsicon{
   color: #00a0be;
 }
@@ -179,9 +179,11 @@ regular
 
 .approvedScnTextArea{
   border: 1px solid grey; 
+  background: #EAF2FB; 
   width: 100%;
   padding-top: 5px;
   padding-bottom: 5px;
+  margin-bottom: 5px;
 }
 
 /* ------------------------------- */

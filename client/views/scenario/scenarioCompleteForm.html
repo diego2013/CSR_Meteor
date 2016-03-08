@@ -6,25 +6,6 @@
 
 <div style="text-align: center;">
 
-<!-- 
-try this in a new branch
-{{#if userHasRole 'admin'}}
-    {{#if isScenarioEditable}}
-        <a href="#"  id="editLockButton"  data-action="lock" class="btn btn-small btn-red" title="Finish editing and lock (protect) the scenario" >
-            <span class="fa fa-unlock-alt"></span>&nbsp;Finish Editing
-        </a>
-        <a href="#"  id="saveChanges"  class="btn btn-small btn-blue" title="Save the chages in this scenario" >
-            <span class="fa fa-save"></span> &nbsp; Save Edits
-        </a>
-
-    {{else}}
-     <a href="#"  id="editLockButton"  data-action="unlock" class="btn btn-small btn-mint" title="Enable modification of the scenario" >
-        <span class="fa fa-edit"></span>&nbsp;Edit
-     </a>
-     {{/if}}
-
-{{/if}} -->
-
     <label style="float:right; clear:right; margin-left:5px; margin-top:2px;">
     <span style="border-radius: 5px; padding:2px 4px;" class="btn-purple">
         <span class="fa fa-star" style="color:gold;"></span> {{acknowledgersCount}}  
@@ -70,24 +51,16 @@ try this in a new branch
     {{#if isNotScenarioOwner}}
       {{#if currentUser}}
         {{#if allowedToACK}}
-        <a href="#"  id="like"  class="btn btn-small btn-purple" title="Acknowledge the Scenario">
-            <span class="fa fa-star" style="color:gold;"></span>&nbsp;ACK Scenario
-        </a>
+            <a href="#"  id="like"  class="btn btn-small btn-purple" title="Acknowledge the Scenario">
+                <span class="fa fa-star" style="color:gold;"></span>&nbsp;ACK Scenario
+            </a>
         {{else}}
-  <!--       <a href="#"  id="acked"  class="btn btn-small btn-light-purple" title="You have already acknowledged the scenario">
-            <span class="fa fa-star-o"></span>
-            Scenario ACKed
-        </a> -->
-        <label style="font-size:10px;float:right;clear:right">(You acknowledged this scenario)
-        </label>
+            <label style="font-size:10px;float:right;clear:right">(You acknowledged this scenario)
+            </label>
         {{/if}}
 
       {{/if}}
     {{/if}}
-
-<!--     <label style="float:right;clear:right;">{{acknowledgersCount}} <span class="fa fa-star" style="color:gold;"></span> users acknowledged this scenario
-    </label> -->
-
 
 {{/if}}
 
@@ -137,7 +110,7 @@ try this in a new branch
     {{else}}
         <div class='approvedScnTextArea'>{{description}}</div>
     {{/if}}
-<!--     <textarea type="text" id="description" name="description" rows="4" class="solutionTextAreaStyle" placeholder="Type to add a description" {{isScenarioReadOnly}}>{{description}}</textarea><br/> -->
+
 
 <!-- Scenario Advanced Information-->
 <br/>
