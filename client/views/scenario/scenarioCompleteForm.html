@@ -161,21 +161,21 @@ try this in a new branch
 
 <!-- Scenario solution-->
 <br/>
-    <label class="scenarioFormCaption">Description of the Good Idea / Solution</label><br/>
+    <p class="scenarioFormCaption">Description of the Good Idea / Solution</p>
     {{#if isScenarioEditable}}
         <textarea type="text" id="solutionDescription" rows="4" class="solutionTextAreaStyle">{{solutionDescription}}</textarea><br/>
     {{else}}
         <div class='approvedScnTextArea'>{{solutionDescription}}</div>
     {{/if}}
 
-    <label class="scenarioFormCaption">Benefits of the New System</label><br/>
+    <p class="scenarioFormCaption">Benefits of the New System</p>
     {{#if isScenarioEditable}}
         <textarea type="text" id="benefitsDescription"  rows="4" class="solutionTextAreaStyle" >{{benefitsDescription}}</textarea><br/>
     {{else}}    
         <div class='approvedScnTextArea'>{{benefitsDescription}}</div>
     {{/if}}
 
-    <label class="scenarioFormCaption">Foreseen Risks of the New System</label><br/>
+    <p class="scenarioFormCaption">Foreseen Risks of the New System</p>
     {{#if isScenarioEditable}}
         <textarea type="text" id="risksDescription"  rows="4" class="solutionTextAreaStyle" >{{risksDescription}}</textarea><br/>
     {{else}}
