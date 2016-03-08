@@ -43,11 +43,13 @@
 <!-- Template with the data associated to this user's profile -->
 <template name="userDataTemplate"> 
 
-		<p><strong>Username</strong> {{username}} <strong>UID</strong> {{_id}}</p>
+		<p><strong>Username</strong> {{username}} </p>
+
+		<p><strong>User ID</strong> {{_id}} <span class="fa fa-question-circle sup_small_icon" title="This is a unique user identifier within the repository"></span></p>
 
 		<p><strong>Member since </strong>{{formatDate createdAt}}</p>
 
-		<p><strong>Email: </strong>{{getEmail emails}} <strong>verified: </strong>{{isVerifiedEmail emails}}</p>
+		<p><strong>Email: </strong>{{getEmail emails}} <strong>Verified: </strong>{{isVerifiedEmail emails}}</p>
 
 		<p><strong>Roles: </strong>{{roles}}</p>
 
@@ -91,17 +93,18 @@
 
 <!-- Template for the user preferences -->
 <template name="userPreferencesStats">
-	<span style="font-size:16px; text-decoration:underline; font-weight:bold;" >User Preferences </span>
+	<span style="font-size:16px; text-decoration:underline; font-weight:bold;" >
+	<span class="fa fa- fa-gears">&nbsp;</span>User Preferences & Settings</span>
 	<div>Customize views, alerts and other preferences</div>
 	<table >
 		<tr><td class="paddingLeft3">
-				<input type="checkbox" id="showcontexthelp" {{checkshowcontexthelp}}>
+				<input type="checkbox" id="showcontexthelp" {{checkshowcontexthelp}} {{areUserPreferencesEnabled _id}}>
 				&nbsp;Show contextual help by defult
-				<span class="fa fa-question-circle" title="Will show/hide the guidelines when creating a new scenario"></span>
+				<span class="fa fa-question-circle  sup_small_icon" title="Will show/hide the guidelines when creating a new scenario"></span>
 		</td></tr>
 		<tr><td>
 			Show by default 
-			<select id="resultsPerPageScenarios">
+			<select id="resultsPerPageScenarios" {{areUserPreferencesEnabled _id}}>
 		        <option value ="10" {{selectedResultPerPageScenarios "10"}} >10</option>
 		        <option value ="25" {{selectedResultPerPageScenarios "25"}} >25</option>   
 		        <option value ="50" {{selectedResultPerPageScenarios "50"}} >50</option> 
@@ -112,9 +115,11 @@
 		<!-- repeat for feedback reports list, if the current user has priviledges for that functionality -->
 	</table>
 
+
+{{#if isCurrentUserID _id}}
 	<button type="button" id="savepreferences" class="btn btn-small btn-mint">
     	<span class="fa fa-save"></span>
                 Save preferences
     </button>
-	
+{{/if}}	
 </template>

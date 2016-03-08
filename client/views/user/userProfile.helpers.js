@@ -49,4 +49,21 @@ Template.userPreferencesStats.helpers({
       return param === 10 ? {selected:'selected'}: ''; //default value is 10
 
   }
+
+  /** Returns TRUE if the provided ID is the current user's _ID
+  @param an _id as in the meteor.users collection
+  */
+    ,isCurrentUserID : function(user_id){
+      return user_id == Meteor.userId();
+    }
+   /** Returns empty string if the user preferences are editable and 'disabled="disabled" ' if not, making the components on the UI disabled.
+   In order to know if the components should be enabled the current user ID must be the user_id provided as a parameter (from the template)
+   @param an _id as in the meteor.users collection
+   */ 
+   ,areUserPreferencesEnabled : function(user_id){
+      if (user_id == Meteor.userId())
+        return ''
+      else 
+        return 'disabled'
+   }
 })
