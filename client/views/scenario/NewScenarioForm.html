@@ -455,13 +455,14 @@
     <textarea type="text" id="lesson" rows="4" class="textAreaStyle" placeholder="Describe what can be learned from this scenario">{{lessonsLearned}}</textarea><br/>
     {{/if}}
 
-    Do you think this incident could have been prevented or mitigated through better technology?
-    <select id="preventable" value="yes">
-        <option value ="notSure" {{selectedLessonLearned "notSure"}}>I am not sure</option>   
-        <option value ="yes" {{selectedLessonLearned "yes"}}>Yes</option>   
-        <option value ="no" {{selectedLessonLearned "no"}}>No</option>      
-    </select>
-
+    <p>
+        Do you think this incident could have been prevented or mitigated through better technology?
+        <select id="preventable" value="yes">
+            <option value ="notSure" {{selectedLessonLearned "notSure"}}>I am not sure</option>   
+            <option value ="yes" {{selectedLessonLearned "yes"}}>Yes</option>   
+            <option value ="no" {{selectedLessonLearned "no"}}>No</option>      
+        </select>
+    </p>
 
 </template>
 
