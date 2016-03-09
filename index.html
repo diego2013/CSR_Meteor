@@ -83,7 +83,11 @@
         <li><a href="#" id="downloadAllItem" title="Download all scenarios in plain *.txt format.">Download All</a></li>
 		  	</ul>
 		  </li>
-		  <li class="nav-item" id="fbiNavBarItem"><a href="{{ pathFor 'findByIDTemplate' }}">Find by ID</a></li>
+       <li class="nav-item" id="searchNavBarItem"><a href="#">Search Scenarios</a>
+        <ul class="fallback">
+		     <li><a id="fbiNavBarItem" href="{{ pathFor 'findByIDTemplate' }}">Find by ID</a></li>
+         </ul>
+       </li>  
       {{#if isInRole 'admin'}}
       <li class="nav-item" id="feedNavBarItem"><a href="#">Feedback</a>
         <ul class="fallback">

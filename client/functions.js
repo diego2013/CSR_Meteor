@@ -123,7 +123,7 @@ highLightNavBatItem = function(routeName){
   else   if(routeName=='scenarioList' || routeName=='approvedScenarioList' || routeName=='recentSubmissionsScenarioList')
     navItemID = 'ssNavBarItem';
   else   if(routeName=='findByIDTemplate')
-    navItemID = 'fbiNavBarItem';
+    navItemID = 'searchNavBarItem';
   else   if(routeName=='userProfile' || (routeName.substring(0,'userProfile'.length)==='userProfile'))
     navItemID = 'upNavBarItem';
   else   if(routeName=='FeedbackForm' || routeName=='FeedbackFormThakYou' || routeName=='feedbackReviewList')
