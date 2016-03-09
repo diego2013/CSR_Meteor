@@ -1,5 +1,13 @@
 /*labels.css*/
 
+.scenarioTitleCaption{
+	background: #e6f2ff;
+	padding-left: 5px;
+	padding-right: 5px;
+	border-radius: 5px;
+	/*border: 1px solid;*/
+}
+
 .scenarioFormCaption{
 	padding-top: 5px;
 	padding-left: 10px;
