@@ -99,7 +99,7 @@
         <li class="nav-item" id="listUsersNavBarItem"><a href="{{ pathFor 'usersList' }}">List Users</a></li>
       {{/if}}
       {{#if currentUser}}
-		  <li class="nav-item" id="upNavBarItem"><a href="{{ pathFor 'userProfile'}}">Your Profile</a></li>
+		  <li class="nav-item" id="upNavBarItem"><a href="{{ pathFor 'userProfile'}}"><span class="fa fa-user icon-large" style="color: #fff"></span>&nbsp;Your Profile</a></li>
       {{/if}}
       <li class="nav-item" id="aboutNavBarItem"><a href="{{ pathFor 'aboutUs'}}">About Us</a></li>
       <li class="nav-item" id="helpNavBarItem"><a href="{{ pathFor 'help'}}">Help</a></li>
