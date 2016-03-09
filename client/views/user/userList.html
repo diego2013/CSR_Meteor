@@ -14,21 +14,23 @@
 
 	<table  class="scenarioListTable" style="width: 100%;">
     <colgroup>
-        <col data-caption="username" style="width: 10%;">
-        <col data-caption="emails.address" >
-        <col data-caption="emails.verified" >
-        <col data-caption="roles" >
+        <col data-caption="" style="width: 5%;">
+        <col data-caption="username">
+        <col data-caption="emails.address" style="width: 25%;">
+        <col data-caption="emails.verified" style="width: 10%;">
+        <col data-caption="roles" style="width: 10%;">
         <col data-caption="UID" >
         <col data-caption="creation date" style="width: 10%;">
     </colgroup>
 
 		<tr class="clickableHeader" id="cabecera" name="cabecera">
-			<th name="username" >username</th>
-			<th name="emails.address" >email</th>
-			<th name="emails.verified">verified</th>
-			<th name="roles.admin">current roles</th>
+      <th name="username" >View</th>
+			<th name="username" >Username</th>
+			<th name="emails.address" >Email</th>
+			<th name="emails.verified">Verified</th>
+			<th name="roles.admin">Current roles</th>
 			<th name="_id">UID</th>
-			<th name="createdAt">creation date</th>
+			<th name="createdAt">Creation date</th>
 		</tr>
 
 	  {{#each usuarios}}
@@ -51,9 +53,10 @@
   <tr style="text-align: center">
   <td>
     <button id="seeUser" class="linkCell-orange" name={{_id}}>
-      <span class="fa fa-search-plus"></span>  {{username}}
+      <span class="fa fa-search-plus"></span>
     </button>
   </td>
+  <td >{{username}}</td>
   <td >{{getEmail emails}}</td>
   <td>{{isVerifiedEmail emails}}</td>
   <td align='center' >{{roles}}</td>
