@@ -110,6 +110,11 @@ ScenarioLists Tables
 .scenarioListTable td{
   border: 1px solid #ccc;
 }
+
+.paddedScenarioListTableCell {
+  padding-left: 2px;
+  padding-right: 2px;
+}
 .scenarioListTable td:last-child{
   /*border: none;*/
 }
