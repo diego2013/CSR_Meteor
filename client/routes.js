@@ -9,7 +9,6 @@ Uses Iron:router https://github.com/iron-meteor/iron-router
   //global Router option to use a default layout template for all routes 
   Router.configure({
     layoutTemplate: 'complexLayout',
-    // layoutTemplate: 'examplesTemplate',
     loadingTemplate: "Loading",
     notFoundTemplate: "NotFound",
   //  yieldTemplates: {
