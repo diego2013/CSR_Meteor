@@ -106,26 +106,38 @@ Template.NewScenarioForm.events({
         Session.set('showGuidelines', false);
       }
     }
-    ,  "click #deleteButton": function () {
-    var confirm = window.confirm("Are you sure you want to delete scenario with UID "+this._id+ " \ntitled \""+ this.title+"\"");
-    if(confirm){
-
-      if(this._id)
-        Meteor.call("deleteScenario", this._id, function(err, result) {
-            //callback function
-               if (err){
-                  console.log(err);
-               }else{
-                  Session.set('currentScenarioDTO', undefined);
-               }
-            });
-      else
-        Session.set('currentScenarioDTO', undefined);
-    }
-
+    ,"click #deleteButton": function () {
+      var confirm = window.confirm("Are you sure you want to delete scenario with UID "+this._id+ " \ntitled \""+ this.title+"\"");
+      if(confirm){
+        if(this._id)
+          Meteor.call("deleteScenario", this._id, function(err, result) {
+              //callback function
+                 if (err){
+                    console.log(err);
+                 }else{
+                    Session.set('currentScenarioDTO', undefined);
+                 }
+              });
+        else
+          Session.set('currentScenarioDTO', undefined);
+      }
     }
 });
 
+
+Template.scenarioFormBasicInfo.events({
+  "click .exampleLabel" : function(event){
+    event.preventDefault();
+    //we'll show the example is a new window with half of the dimensions of the parent one
+    var w = window.innerWidth; w = 2*w/3; 
+    var h = window.innerHeight; h = 2*h/3;
+    var preferences = "width=" + w  + ", height=" + h;
+
+    // var myWindow = window.open(event.target.href, "", "width=200, height=100");
+    var myWindow = window.open(event.target.href, "", preferences);
+
+  }
+});
 
 Template.scenarioFormAdvancedInfo.events({
   "click #setp2tab a" : function( event ){

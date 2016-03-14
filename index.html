@@ -23,29 +23,9 @@
 
 <body>
 
-<header>
-  <!--<h1>Clinical Scenario Repository Prototype</h1> -->
-
-  <div id="mainHeaderDiv" style="" >
-
-  {{> NavBar}}
-
-    <table   style="margin-left:auto;margin-right:auto;">
-	    <tr>
-		    <td rowspan="2"><a href="http://www.mdpnp.org/" target="_blank"><img id="mdpnpLogo" alt="MD PnP Logo" style="float:left;" src="/images/mdpnp2.png" width="170" height="60"/></a></td>
-		    <td id="webtitle">Clinical Scenario Repository Prototype</td>
-		    <td style="height:10px; text-align:justify;">&nbsp;© 2013 - 2016 <a href="http://www.mdpnp.org/" target="_blank" style="text-decoration:none">MD PnP Program</a></td>
-
-	    </tr>
-      <tr>
-
-        <td id="subtitle">Good ideas for patient safety</td>
-      </tr>
-    </table>
-
-  </div>
-
-</header>
+<!-- <header>
+</header> -->
+<!-- Body is currently empty because template layout is done via IRON ROUTER. ComplexLayout template is the default template -->
 
 
 </body>
@@ -116,8 +96,30 @@
 </template>
 
 
-<!-- Basic Layout -->
+<template name="headerBanner">
+
+    <table   style="margin-left:auto;margin-right:auto;text-align:center">
+      <tr>
+        <td rowspan="2"><a href="http://www.mdpnp.org/" target="_blank"><img id="mdpnpLogo" alt="MD PnP Logo" style="float:left;" src="/images/mdpnp2.png" width="170" height="60"/></a></td>
+        <td id="webtitle">Clinical Scenario Repository Prototype</td>
+        <td style="height:10px; text-align:justify;">&nbsp;© 2013 - 2016 <a href="http://www.mdpnp.org/" target="_blank" style="text-decoration:none">MD PnP Program</a></td>
+
+      </tr>
+      <tr>
+
+        <td id="subtitle">Good ideas for patient safety</td>
+      </tr>
+    </table>
+  
+</template>
+
+
+<!-- Basic (defaault) Layout. Used with Iron Router (see Routes.js) -->
 <template name="complexLayout">
+
+ {{> NavBar}}
+
+ {{> headerBanner}}
 
   <div class="main">
     {{> yield}}
@@ -146,21 +148,6 @@
 <template name="Loading">
   Loading... (Thank you for your patience)
 </template>
-
-<!-- Footer common to all pages -->
-<!-- <template name="FooterTemplate">
-  <div>
-    <table  cellpadding="10" style="margin-left:auto;margin-right:auto; margin-top:5px; ">
-	    <tr>
-	    	<td><a href="{{ pathFor 'disclaimer' }}">Disclaimer</a></td>
-	    	<td><a href="{{ pathFor 'privacyStatement' }}">Privacy Statement</a></td>
-	    	<td><a href="{{ pathFor 'aboutUs' }}">Contact - About MD PnP</a></td>
-	    	<td><a href="{{ pathFor 'FeedbackForm' }}">Feedback</a></td>    	
-	    </tr>
-	</table>
-</div>	
-</template> -->
-
 
 <!-- Footer common to all pages -->
 <template name="FooterTemplate">
@@ -227,5 +214,13 @@
 </template>
 
 
+<!-- Template for scenario example 'mock' pages -->
+<template name="examplesTemplate">
 
+  {{> headerBanner}}
 
+  <div class="main">
+    {{> yield}}
+  </div>
+
+</template>

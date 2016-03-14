@@ -9,6 +9,7 @@ Uses Iron:router https://github.com/iron-meteor/iron-router
   //global Router option to use a default layout template for all routes 
   Router.configure({
     layoutTemplate: 'complexLayout',
+    // layoutTemplate: 'examplesTemplate',
     loadingTemplate: "Loading",
     notFoundTemplate: "NotFound",
   //  yieldTemplates: {
@@ -33,9 +34,15 @@ Uses Iron:router https://github.com/iron-meteor/iron-router
    this.route('help');
 
    //***** Examples links *****
-   this.route('exampleScenario_step1');
+   // this.route('exampleScenario_step1');
+   this.route('exampleScenario_step1', function(){
+      this.layout('examplesTemplate');
+      this.render("exampleScenarioStep1", {to: "main"});
+   });
    this.route('exampleScenario_step3');
 
+
+  
    
    this.route('createNewScenario', function(){
       Session.set(_SCENARIO_FORM_STEP, _SCENARIO_FORM_STEP_BASIC_INFO);
