@@ -126,7 +126,7 @@ Template.NewScenarioForm.events({
 
 
 Template.scenarioFormBasicInfo.events({
-  "click .exampleLabel" : function(event){
+  "click .example" : function(event){
     event.preventDefault();
     //we'll show the example is a new window with half of the dimensions of the parent one
     var w = window.innerWidth; w = 2*w/3; 

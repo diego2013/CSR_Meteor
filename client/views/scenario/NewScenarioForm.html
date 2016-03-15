@@ -10,12 +10,6 @@
         {{#if isScenarioEditable}}
         <a href="#"  id="saveScenarioButton" class="btn btn-small btn-mint" title="Save the chages in this scenario" > <span class="fa fa-save"></span> &nbsp; Save</a>
         {{/if}}
-
-<!--         {{#if getExpertMode}}
-        <a href="#"  id="showGuidelines"  class="btn btn-small btn-dark-grey" >Hide Guidelines</a>
-        {{else}}
-        <a href="#"  id="showGuidelines"  class="btn btn-small btn-dark-grey" >Show Guidelines</a>
-        {{/if}} -->
  
         <a href="#"  id="goToStep1"  class="btn btn-small btn-salmon" title="Go to the Basic Information panel" >1. Basic Information</a>
 
@@ -101,7 +95,7 @@
     <div id="guidelinesDiv" class="{{getGuidelinesButtonClass}}">    
     <span style="font-size:12pt;"><b>Guidelines</b></span>
     <ul>
-        <li>A brief explanation of an event is enough to describe a scenario. Try to keep information relevant, short and simple. Click <a href="{{ pathFor 'exampleScenario_step1' }}" target="_blank" class="guidelines-color"> see an example</a> to see an illustrative example on how an actual scenario would complete each field.</li>
+        <li>A brief explanation of an event is enough to describe a scenario. Try to keep information relevant, short and simple. Click <a href="{{ pathFor 'exampleScenario_step1' }}" target="_blank" class="example guidelines-color"> see an example</a> to see an illustrative example on how an actual scenario would complete each field.</li>
         <li>Do not include protected health information. Omit actual names of individuals or institutions.</li>
         <li>Try avoid submitting scenarios redundant to the ones already in the repository.</li>
         <li>Don't forget to <b>save your progress</b>. Click the green <b class="btn-mint btn-tiny pill"> <span class="fa fa-save"></span>&nbsp; Save</b> button.</li>
@@ -117,7 +111,7 @@
 
     <div class="padding-bottom-10">
         <label>Title of the Scenario <span class="red-asterisk">*</span></label>
-        <a href="{{ pathFor 'exampleScenario_step1' }}"  class="exampleLabel"> see an example</a>
+        <a href="{{ pathFor 'exampleScenario_step1' }}"  class="example exampleLabel"> see an example</a>
         <br/>
         <!-- {{#if editableScn}} 
             <textarea type="text" id="title" name="title" rows="1" cols="100" placeholder="Type to add a title" >{{title}}</textarea><br/>
@@ -129,7 +123,7 @@
         <br/>
 
         <label>Description of the Scenario <span class="red-asterisk">*</span></label>
-        <a href="{{ pathFor 'exampleScenario_step1' }}" target="_blank" class="exampleLabel"> see an example</a>
+        <a href="{{ pathFor 'exampleScenario_step1' }}" target="_blank" class="example exampleLabel"> see an example</a>
         <br/>
         <textarea type="text" id="description" name="description"  class="textAreaStyle" placeholder="Type to add a description" style="margin-top:3px" {{isScenarioReadOnly}}>{{description}}</textarea>
 
