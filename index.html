@@ -117,9 +117,12 @@
 <!-- Basic (defaault) Layout. Used with Iron Router (see Routes.js) -->
 <template name="complexLayout">
 
- {{> NavBar}}
+  <header>
+    {{> NavBar}}
 
- {{> headerBanner}}
+    {{> headerBanner}} 
+  </header>
+
 
   <div class="main">
     {{> yield}}
@@ -217,7 +220,10 @@
 <!-- Template for scenario example 'mock' pages -->
 <template name="examplesTemplate">
 
+<header>
   {{> headerBanner}}
+</header>
+  
 
   <div class="main">
     {{> yield}}
