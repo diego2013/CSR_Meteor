@@ -1,9 +1,13 @@
 <template name="exampleScenarioStep3">
 
 <div>
-<p class="btn-orange btn-medium" style="width:98%">Example of a scenario's solution or good idea</p>
 
-<p>This step is completey optional. Not all the clinical scenarios provided need to have a solution (and you are very welcome to submit a clincial scenario even if you don't envision a solution for it).
+<p class="btn-orange btn-medium" style="text-align:center">
+    <span style="font-size: 20px">Example of a scenario's solution or good idea</span><br/>
+    <span style="font-size: 10px">Do not try to edit this page or continue your work on this page</span>
+</p>
+
+<p>This step is completey <b>optional</b>. You are encouraged to submit a clinical scenario or description of an event even if you do not envision a possible solution or <em>good idea</em> for it. Solutions and good ideas just take one step further the notion of "<em>lesson learned</em>" and invite to describe or brainstorm what would it take to prevent or mitigate the event or situation described in the clinical scenario.
 </p>
 
 <ol>
@@ -14,8 +18,8 @@
 
 </div>
 
-    <label><b>Scenario Title: </b> Delayed detection of respiratory compromise in patient under PCA</label>
-    <span class="exampleLabel"> This is just a reminder of the title of the scenario you are submitting</span>
+    <b>Scenario Title: </b> <span class="scenarioTitleCaption"> Delayed detection of respiratory compromise in patient under PCA</span>
+    <span class="fa fa-question-circle color-purple" title="This is just a reminder of the title of the scenario you are submitting"> </span>
     <label>{{title}}</label><br/>
     <label>Describe Your Good Idea or Solution</label>
    
@@ -39,5 +43,9 @@
     <textarea type="text" id="risksDescription"  rows="5" class="solutionTextAreaStyle" style="margin-top:3px" readonly>
     </textarea>
     <br/>
+
+    <p class="btn-orange btn-medium" style="text-align:center">
+        <span style="font-size: 20px">Example of a scenario's solution or good idea</span><br/>
+    </p>
 
 </template>

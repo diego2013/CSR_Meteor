@@ -131,13 +131,11 @@ Template.scenarioFormBasicInfo.events({
     //we'll show the example is a new window with half of the dimensions of the parent one
     var w = window.innerWidth; w = 2*w/3; 
     var h = window.innerHeight; h = 2*h/3;
-    var preferences = "width=" + w  + ", height=" + h;
-
-    // var myWindow = window.open(event.target.href, "", "width=200, height=100");
-    var myWindow = window.open(event.target.href, "", preferences);
+    showInWindow(event.target.href, w, h);
 
   }
 });
+
 
 Template.scenarioFormAdvancedInfo.events({
   "click #setp2tab a" : function( event ){
@@ -150,6 +148,24 @@ Template.scenarioFormAdvancedInfo.events({
        Session.set(_ADVANCEDDETAILS_TAB, $element.data('step'));
   }
 });
+
+Template.scenarioFormSolution.events({
+  "click .example" : function(event){
+    event.preventDefault();
+    //we'll show the example is a new window with half of the dimensions of the parent one
+    var w = window.innerWidth; w = 2*w/3; 
+    var h = window.innerHeight; h = 2*h/3;
+    showInWindow(event.target.href, w, h);
+
+  }
+});
+
+/** Aux function to show a URL / template in a different window.
+*/
+showInWindow = function(url, width, height){
+  var preferences = "width=" + width  + ", height=" + height;
+  window.open(url, "", preferences)
+}
 
 /***** HAZARDS *****/
 
