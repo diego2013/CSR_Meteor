@@ -32,13 +32,16 @@ Uses Iron:router https://github.com/iron-meteor/iron-router
    this.route('aboutUs');
    this.route('help');
 
-   //***** Examples links *****
+   //***** Scenario Examples  *****
    // this.route('exampleScenario_step1');
    this.route('exampleScenario_step1', function(){
       this.layout('examplesTemplate');
       this.render("exampleScenarioStep1", {to: "main"});
    });
-   this.route('exampleScenario_step3');
+   this.route('exampleScenario_step3', function(){
+      this.layout('examplesTemplate');
+      this.render("exampleScenarioStep3", {to: "main"});
+   });
 
 
   
