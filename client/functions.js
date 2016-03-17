@@ -400,14 +400,14 @@ updateReferenceList = function(){
     var _referenceUrlProtocol = $("#referenceUrlProtocol").val();
     var _referenceUrl = $("#referenceUrl").val();
     var _referenceRelevance = $("#referenceRelevance").val();
-    if(_referenceUrl.trim() != ""){
-      var listItem = {
-        referenceUrl : _referenceUrlProtocol + _referenceUrl,
-        referenceRelevance : _referenceRelevance,
-        id : referenceEntryList.length
-      }
-      referenceEntryList[referenceEntryList.length] = listItem;
+    // if(_referenceUrl.trim() != ""){ Issue #172. URL not mandatory to add references.
+    var listItem = {
+      referenceUrl : _referenceUrl.trim() != "" ? _referenceUrlProtocol + _referenceUrl : "",
+      referenceRelevance : _referenceRelevance,
+      id : referenceEntryList.length
     }
+    referenceEntryList[referenceEntryList.length] = listItem;
+    // }
 
     //clean form 
     $("#referenceUrlProtocol").val("http://");
