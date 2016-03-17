@@ -55,9 +55,9 @@ New Scenario Form Step 2
 .clinicalInputTablePijama tr:nth-child(2n){
   background: #fff; /*#F5FAFF;*/ 
 }
-/*.clinicalInputTablePijama tr:nth-child(2n+1){
-  background: #d0edf5;
-}*/
+.clinicalInputTablePijama tr:nth-child(2n+1){
+  background: #e6f2ff;
+}
 
 .clinicalInputTablePijama th{
   text-align: center;
