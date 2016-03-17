@@ -256,9 +256,9 @@
         <col width="25%"> 
         <col width="1%"> 
 
-        <tr class ="">
+        <tr>
             <th>Hazard Description</th>
-            <th>Expected Risks</th>
+            <th>Predictability</th>
             <th>Severity <span style="font-size:8px">(per AHRQ Scale)</span></th>
             {{#if isScenarioEditable}}
             <th></th>
@@ -277,20 +277,14 @@
   <div class="clinicalInputDiv">
     <div style="margin-bottom:5px;">
          Describe current or possible risks to patient safety. 
-
-         <button type="button" id="addNewHazard" class="btn btn-tiny btn-mint" >
-         <span class="fa fa-plus"></span>
-         Add Hazard Description
-         </button>
-
     </div>
 
     <table class="clinicalInputTable">
 
        <col width="100%"> <!-- First columnm -->
         <tr>
-            <th>Hazard Description <span class="red-asterisk">*</span></th>
-            <th title="Likeness to Predict this Hazard">Predictability</th>
+            <th>&nbsp;Hazard Description <span class="red-asterisk">*</span></th>
+            <th title="Likeness to Predict this Hazard" style="text-align:center">Predictability</th>
             <th title="Level of Harm to Patient (per AHRQ Scale)" style="text-align:center">Severity 
                 <a href='#' id="idAhrqLevels" style="font-size:10px;">(per AHRQ Scale)</a>
             </th>
@@ -322,7 +316,13 @@
 
     </table>
 
+    <p>
     The <span class="red-asterisk">red asterisk (*)</span> indicates a mandatory field.
+
+    <button type="button" id="addNewHazard" class="btn btn-tiny btn-mint" >
+         <span class="fa fa-plus"></span> Add Hazard
+    </button>
+    </p>
 
   </div>
 
@@ -381,10 +381,6 @@
     <div class="clinicalInputDiv">
         <div style="margin-bottom:5px;">
             Add further details about related/involved hardware
-            <button type="button" id="addNewEquipment" class="btn btn-tiny btn-mint">
-                <span class="fa fa-plus"></span>
-                Add Equipment Description
-            </button>
         </div>
 
     <table class="clinicalInputTable" >
@@ -413,7 +409,14 @@
         </tr>       
     </table>
 
-   The <span class="red-asterisk">red asterisk (*)</span> indicates a mandatory field.
+   <p>
+       The <span class="red-asterisk">red asterisk (*)</span> indicates a mandatory field.
+
+       <button type="button" id="addNewEquipment" class="btn btn-tiny btn-mint">
+           <span class="fa fa-plus"></span> Add Equipment Description
+       </button>
+  </p> 
+
    </div>
 
 </template>
@@ -490,14 +493,10 @@
 
   <div class="clinicalInputDiv">
     <div style="margin-bottom:5px;">
-        Add any relevant online references to this scenario (FDA or Maude reports, articles or white papers, pieces of software and/or other documentation)
-        <button type="button" id="addNewReference" class="btn btn-tiny btn-mint">
-            <span class="fa fa-plus"></span>
-            Add Reference
-        </button>
+        Add or describe any relevant online references to this scenario (FDA or Maude reports, articles or white papers, pieces of software and/or other documentation). Adding a <b>URL</b> is not mandatory, but it is the best way to link to an existing online reference. When adding a URL, you can change the prefix of the url from <em>http</em> to <em>https</em> at your convenience.
     </div>    
 
-    <div class="clinicalInputBar" style="padding:10px 0px;">
+    <div class="clinicalInputBar" style="padding:5px 0px 20px;">
         <div class="input-group">
           <span class="input-group-addon" id="basic-addon1">
             <select id="referenceUrlProtocol" style="vertical-align:middle;">
@@ -505,19 +504,21 @@
                  <option value ="https://">https</option>
             </select>
           </span>
-          <input type="text" class="form-control" id="referenceUrl" placeholder="URL of the reference*" aria-describedby="basic-addon1">
+          <input type="text" class="form-control" id="referenceUrl" placeholder="URL of the reference" aria-describedby="basic-addon1">
         </div>
 
         <div>
             <textarea  class="regularTextAreaStyle" type="text" id="referenceRelevance" rows="3" style="width:100%;margin-top:10px" placeholder="Briefly describe why is important or relevant" ></textarea>
         </div>
         
+        <button type="button" id="addNewReference" class="btn btn-tiny btn-mint">
+            <span class="fa fa-plus"></span>
+            Add Reference
+        </button>
     </div>
 
-
- The asterisk (*) indicates a mandatory field. You can change the prefix of the url from <em>http</em> to <em>https</em> at your convenience.
-
  </div>
+
 </template>
 
 <!-- Template to display the info of a single reference-->

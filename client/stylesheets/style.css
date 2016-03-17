@@ -315,6 +315,10 @@ li.private {
   margin: 1em 0;
 }
 
+.clinicalInputDiv p{
+  margin-top: 5px;
+}
+
 .selectbox-wrapper{
 	margin:10px;
 }

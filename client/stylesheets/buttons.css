@@ -251,3 +251,7 @@ a.btn:hover{
 .btn-disabled{
     text-decoration: line-through !important;
 }
+
+#addNewReference, #addNewHazard, #addNewEquipment{
+	float: right;
+}
