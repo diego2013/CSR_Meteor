@@ -145,6 +145,7 @@ Template.scenarioFormAdvancedInfo.events({
        $('div#setp2tab a').removeClass('selectedTab');//remove the class for all the tabs
        $element.addClass('selectedTab'); //add the class to the appropriate tab
        collectScenarioInfo();
+       cleanupEditingHazards();
        Session.set(_ADVANCEDDETAILS_TAB, $element.data('step'));
   }
 });
@@ -195,6 +196,23 @@ Template.hazardEntry.events({
     hazardEntryList = deleteFromArrayByID(this.id, hazardEntryList)
     currentScenarioDTO.hazardEntryList = currentScenarioDTO.hazardEntryList;
     Session.set("currentScenarioDTO", currentScenarioDTO);
+  }
+  ,"click #updateHazard" : function(event, template){
+     event.preventDefault();
+
+    var hazardDescription = $('[name="description-' + this.id + '"]').val();
+    var hazardRisk = $('[name="risk-' + this.id + '"]').val();
+    var hazardSeverity = $('[name="severity-' + this.id + '"]').val();
+
+     hazardEntryList = updateHarzardListByElementID(this.id, hazardDescription, hazardRisk, hazardSeverity);
+
+     currentScenarioDTO.hazardEntryList = hazardEntryList;
+     Session.set("currentScenarioDTO", currentScenarioDTO);
+     Session.set("editingHazard-"+this.id, false);
+  }
+  ,"click #editHazard" : function(event, template){
+        event.preventDefault();
+        Session.set("editingHazard-"+this.id, true);
   }
 });
 

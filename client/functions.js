@@ -346,6 +346,32 @@ updateHarzardList = function(){
     return hazardEntryList
 };
 
+
+/**
+Updates a hazard on the current scenario dto (in session) given an element ID
+*/
+updateHarzardListByElementID = function(itemID, description, risk, severity){
+
+    currentScenarioDTO = Session.get("currentScenarioDTO");
+    hazardEntryList = currentScenarioDTO.hazardEntryList;
+
+    if (itemID == undefined || itemID < 0)
+      return hazardEntryList;
+
+    if(description.trim()!= ''){
+      for(var i = 0; i<hazardEntryList.length; i++){
+        if(hazardEntryList[i].id==Number(itemID)){
+          hazardEntryList[i].hazardDescription = description;
+          hazardEntryList[i].hazardRisk = risk;
+          hazardEntryList[i].hazardSeverity = severity;
+        }
+      }
+    }
+
+    return hazardEntryList;
+
+}
+
 //reads the equipment description that is in the form and returns the 
 // updated equipment list
 updateEquipmentList = function(){
@@ -533,6 +559,23 @@ flashingRedArrow = function(back){
       , function(){flashingRedArrow(!back)}
     );
 };
+
+/**
+Clean-up function for eny entris on the "Add Hazard" that might be updating/editing entries
+This clean up function will set to "false" all editing variables.
+*/
+
+cleanupEditingHazards = function(){
+    currentScenarioDTO =  Session.get("currentScenarioDTO");
+    if (currentScenarioDTO == undefined)
+      return;
+
+    hazardEntryList = currentScenarioDTO.hazardEntryList;
+    for (var i =0; i< hazardEntryList.length; i++){
+      Session.set("editingHazard-"+i, false);
+    }
+
+}
 
 
 

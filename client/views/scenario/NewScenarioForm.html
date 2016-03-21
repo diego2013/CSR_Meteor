@@ -251,9 +251,10 @@
     <span>Current hazards of the scenario ({{hazardEntryListCount}} entries)</span>
     <table class="clinicalInputTablePijama">
 
-        <col width="65%"> <!-- First columnm -->
+        <col width="60%"> <!-- First columnm -->
         <col width="10%">
-        <col width="25%"> 
+        <col width="28%"> 
+        <col width="1%"> 
         <col width="1%"> 
 
         <tr>
@@ -261,6 +262,7 @@
             <th>Predictability</th>
             <th>Severity <span style="font-size:8px">(per AHRQ Scale)</span></th>
             {{#if isScenarioEditable}}
+            <th></th>
             <th></th>
             {{/if}}
         </tr>
@@ -331,15 +333,48 @@
 <!-- Template ot display the info of a single hazard-->
 <template name="hazardEntry">
 
-<!-- First columnm -->
-  <tr class="">
-    <td style="width:50%"><label>{{hazardDescription}}</label></td>
-    <td><label>{{hazardRisk}}</label></td>
-    <td><label>{{hazardSeverity}}</label></td>
-    <!--<td><label>{{id}}</label></td>-->
+  <tr>
+
+    {{#if editingHazard}}
+        <td><textarea type="text" name={{getHazardUpdateDescription_NameId}} class="nr" rows="3" style="width:100%" placeholder="Type to add a description" >{{hazardDescription}}</textarea></td>
+            <td><select name={{getHazardUpdateRisk_NameId}}>
+                <option value="Not Relevant" autofocus>Not Relevant</option>
+                <option value="Unknown" >Unknown</option>
+                <option value="Expected">Expected</option>
+                <option value="Unexpected">Unexpected</option>
+                </select>
+            </td>
+            <td><select name={{getHazardUpdateSeverity_NameId}}>
+                <option value="Not Relevant" autofocus>Not Relevant</option>
+                <option value ="Unknown">Unknown</option>
+                <option value ="Unsafe Condition">Unsafe Condition</option>
+                <option value ="Near Miss">Near Miss</option>
+                <option value ="No Harm">No Harm</option>
+                <option value ="Emotional Distress or Inconvenience">Emotional Distress or Inconvenience</option>
+                <option value ="Additional Treatment">Additional Treatment</option>
+                <option value ="Temporary Harm">Temporary Harm</option>
+                <option value ="Permanent Harm">Permanent Harm</option>
+                <option value ="Severe Permanent Harm">Severe Permanent Harm</option>
+                <option value ="Death">Death</option>       
+            </select>               
+            </td>  
+    {{else}}
+        <td style="width:50%"><label>{{hazardDescription}}</label></td>
+        <td><label>{{hazardRisk}}</label></td>
+        <td><label>{{hazardSeverity}}</label></td>
+        <!--<td><label>{{id}}</label></td>-->
+    {{/if}}
     {{#if isScenarioEditable}}
-    <td> <button class="btn-red" id="deleteHazard"><span class="fa fa-trash"></span>
-        </button>
+    <td> 
+        <button class="btn-red" id="deleteHazard"><span class="fa fa-trash"></span></button>
+    </td>
+    <td> 
+        {{#if editingHazard}}
+            <button class="btn-mint" style="width: 100%" id="updateHazard"><span class="fa fa-save"></span></button>
+        {{else}}
+            <button class="btn-mint" style="width: 100%" id="editHazard"><span class="fa fa-edit"></span></button>
+        {{/if}}    
+        
     </td>
     {{/if}}
    </tr>

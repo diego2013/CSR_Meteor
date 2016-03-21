@@ -59,6 +59,21 @@
     } 
   });
 
+  Template.hazardEntry.helpers({
+    editingHazard : function(){
+      return Session.get("editingHazard-"+this.id);
+    }
+    ,getHazardUpdateDescription_NameId : function(){
+      return "description-"+this.id;
+    }
+    ,getHazardUpdateRisk_NameId : function(){
+      return "risk-"+this.id;
+    }
+    ,getHazardUpdateSeverity_NameId : function(){
+      return "severity-"+this.id;
+    }
+  });
+
   Template.advancedDetailsEquipment.helpers({
     equipmentEntryList : function(){
       currentScenarioDTO = Session.get('currentScenarioDTO')
