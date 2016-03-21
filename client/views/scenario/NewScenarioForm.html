@@ -251,19 +251,21 @@
     <span>Current hazards of the scenario ({{hazardEntryListCount}} entries)</span>
     <table class="clinicalInputTablePijama">
 
-        <col width="60%"> <!-- First columnm -->
+<!--         <col width="60%"> 
         <col width="10%">
-        <col width="28%"> 
+        <col width="25%"> 
         <col width="1%"> 
-        <col width="1%"> 
+        <col width="1%">  -->
 
         <tr>
-            <th>Hazard Description</th>
-            <th>Predictability</th>
-            <th>Severity <span style="font-size:8px">(per AHRQ Scale)</span></th>
+            <th style="width: 60%">Hazard Description</th>
+            <th style="width: 10%">Predictability</th>
+            <th style="width: 25%">Severity <span style="font-size:8px">(per AHRQ Scale)</span></th>
             {{#if isScenarioEditable}}
-            <th></th>
-            <th></th>
+                {{#if hasHazards}}
+                    <th style="width: 1%"><span class="fa fa-trash"></span></th>
+                    <th style="width: 1%"><span class="fa fa-edit"></span></th>
+                {{/if}}
             {{/if}}
         </tr>
         {{#each hazardEntryList}}
@@ -336,7 +338,7 @@
   <tr>
 
     {{#if editingHazard}}
-        <td><textarea type="text" name={{getHazardUpdateDescription_NameId}} class="nr" rows="3" style="width:100%" placeholder="Type to add a description" >{{hazardDescription}}</textarea></td>
+        <td><textarea type="text" name={{getHazardUpdateDescription_NameId}} rows="3" style="width:100%" placeholder="Type to add a description" >{{hazardDescription}}</textarea></td>
             <td><select name={{getHazardUpdateRisk_NameId}}>
                 <option value="Not Relevant" autofocus>Not Relevant</option>
                 <option value="Unknown" >Unknown</option>
