@@ -343,27 +343,27 @@
     {{#if editingHazard}}
         <td><textarea type="text" name={{getHazardUpdateDescription_NameId}} rows="2" style="width:100%" placeholder="Type to add a description" >{{hazardDescription}}</textarea></td>
             <td><select name={{getHazardUpdateRisk_NameId}}>
-<!--                 <option value="Not Relevant" autofocus>Not Relevant</option>
-                <option value="Unknown" >Unknown</option>
-                <option value="Expected">Expected</option>
-                <option value="Unexpected">Unexpected</option> -->
-                {{#each hazardRiskcategories}}
+                <option value="Not Relevant" {{getHazardRisk 'Not Relevant'}}>Not Relevant</option>
+                <option value="Unknown" {{getHazardRisk 'Unknown'}}>Unknown</option>
+                <option value="Expected" {{getHazardRisk 'Expected'}}>Expected</option>
+                <option value="Unexpected" {{getHazardRisk 'Unexpected'}}>Unexpected</option>
+<!--                 {{#each hazardRiskcategories}}
                     <option value="{{this}}" >{{this}}</option>
-                {{/each}}
+                {{/each}} -->
                 </select>
             </td>
             <td><select name={{getHazardUpdateSeverity_NameId}}>
-                <option value="Not Relevant" autofocus>Not Relevant</option>
-                <option value ="Unknown">Unknown</option>
-                <option value ="Unsafe Condition">Unsafe Condition</option>
-                <option value ="Near Miss">Near Miss</option>
-                <option value ="No Harm">No Harm</option>
-                <option value ="Emotional Distress or Inconvenience">Emotional Distress or Inconvenience</option>
-                <option value ="Additional Treatment">Additional Treatment</option>
-                <option value ="Temporary Harm">Temporary Harm</option>
-                <option value ="Permanent Harm">Permanent Harm</option>
-                <option value ="Severe Permanent Harm">Severe Permanent Harm</option>
-                <option value ="Death">Death</option>       
+                <option value="Not Relevant" {{getHazardSeverity 'Not Relevant'}}>Not Relevant</option>
+                <option value ="Unknown" {{getHazardSeverity 'Unknown'}}>Unknown</option>
+                <option value ="Unsafe Condition" {{getHazardSeverity 'Unsafe Condition'}}>Unsafe Condition</option>
+                <option value ="Near Miss" {{getHazardSeverity 'Near Miss'}}>Near Miss</option>
+                <option value ="No Harm" {{getHazardSeverity 'No Harm'}}>No Harm</option>
+                <option value ="Emotional Distress or Inconvenience" {{getHazardSeverity 'Emotional Distress or Inconvenience'}}>Emotional Distress or Inconvenience</option>
+                <option value ="Additional Treatment" {{getHazardSeverity 'Additional Treatment'}}>Additional Treatment</option>
+                <option value ="Temporary Harm" {{getHazardSeverity 'Temporary Harm'}}>Temporary Harm</option>
+                <option value ="Permanent Harm" {{getHazardSeverity 'Permanent Harm'}}>Permanent Harm</option>
+                <option value ="Severe Permanent Harm" {{getHazardSeverity 'Severe Permanent Harm'}}>Severe Permanent Harm</option>
+                <option value ="Death" {{getHazardSeverity 'Death'}}>Death</option>       
             </select>               
             </td>  
     {{else}}
