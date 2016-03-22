@@ -148,6 +148,11 @@ Template.scenarioFormAdvancedInfo.events({
        cleanupEditingHazards();
        Session.set(_ADVANCEDDETAILS_TAB, $element.data('step'));
   }
+  ,"click #currentHazardsInfo" : function(){
+    var msg = "You can edit entries on this table by using the 'edit', 'update' and 'delete' buttons on each row."
+      + "\n\nClick 'edit' to enable changes and 'update' to save the changes or 'discard' to revert the changes. "
+    alert(msg)
+  }
 });
 
 Template.scenarioFormSolution.events({
@@ -207,6 +212,9 @@ Template.hazardEntry.events({
   //click to update the information of a hazard
   ,"click #updateHazard" : function(event, template){
      event.preventDefault();
+
+    // currentScenarioDTO =  Session.get("currentScenarioDTO");
+    // hazardEntryList = currentScenarioDTO.hazardEntryList;
 
     var hazardDescription = $('[name="description-' + this.id + '"]').val();
     var hazardRisk = $('[name="risk-' + this.id + '"]').val();
