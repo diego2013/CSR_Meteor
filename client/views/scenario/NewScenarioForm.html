@@ -249,6 +249,9 @@
     {{/if}}
 
     <span>Current hazards of the scenario ({{hazardEntryListCount}} entries)</span>
+    {{#if isScenarioEditable}}
+        <span class="fa fa-info-circle color-purple" title="You can edit entries on this table by using the 'edit', 'update' and 'delete' buttons on each row."></span>
+    {{/if}}
     <table class="clinicalInputTablePijama">
 
 <!--         <col width="60%"> 
@@ -338,12 +341,15 @@
   <tr>
 
     {{#if editingHazard}}
-        <td><textarea type="text" name={{getHazardUpdateDescription_NameId}} rows="3" style="width:100%" placeholder="Type to add a description" >{{hazardDescription}}</textarea></td>
+        <td><textarea type="text" name={{getHazardUpdateDescription_NameId}} rows="2" style="width:100%" placeholder="Type to add a description" >{{hazardDescription}}</textarea></td>
             <td><select name={{getHazardUpdateRisk_NameId}}>
-                <option value="Not Relevant" autofocus>Not Relevant</option>
+<!--                 <option value="Not Relevant" autofocus>Not Relevant</option>
                 <option value="Unknown" >Unknown</option>
                 <option value="Expected">Expected</option>
-                <option value="Unexpected">Unexpected</option>
+                <option value="Unexpected">Unexpected</option> -->
+                {{#each hazardRiskcategories}}
+                    <option value="{{this}}" >{{this}}</option>
+                {{/each}}
                 </select>
             </td>
             <td><select name={{getHazardUpdateSeverity_NameId}}>
@@ -368,13 +374,14 @@
     {{/if}}
     {{#if isScenarioEditable}}
     <td> 
-        <button class="btn-red" id="deleteHazard"><span class="fa fa-trash"></span></button>
+        <button class="btn-red" id="deleteHazard" title="Delete this entry"><span class="fa fa-trash"></span></button>
     </td>
     <td> 
         {{#if editingHazard}}
-            <button class="btn-mint" style="width: 100%" id="updateHazard"><span class="fa fa-save"></span></button>
+            <button class="btn-mint" style="width: 100%;" id="updateHazard" title="Save changes on this entry"><span class="fa fa-save" ></span></button>
+            <button class="btn-yellow" style="width: 100%" id="discardHazardChanges" title="Discard changes on this entry"><span class="fa fa-history"></span></button>
         {{else}}
-            <button class="btn-mint" style="width: 100%" id="editHazard"><span class="fa fa-edit"></span></button>
+            <button class="btn-mint" style="width: 100%" id="editHazard" title="Edit this entry"><span class="fa fa-edit"></span></button>
         {{/if}}    
         
     </td>

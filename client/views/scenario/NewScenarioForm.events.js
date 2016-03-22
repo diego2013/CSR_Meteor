@@ -187,7 +187,13 @@ Template.hazardInput.events({
   }
   });
 
+/**
+Template for the individual enttries of a scenario hazard's list.
+These will be the entries on the table containing the actual hazards of a scenario, either on the Create New Scenario View or 
+while editing a submitted scenario.
+*/
 Template.hazardEntry.events({
+  //Click to delete a hazard entry
     "click #deleteHazard" : function(event){
     event.preventDefault();
     currentScenarioDTO =  Session.get("currentScenarioDTO");
@@ -196,7 +202,9 @@ Template.hazardEntry.events({
     hazardEntryList = deleteFromArrayByID(this.id, hazardEntryList)
     currentScenarioDTO.hazardEntryList = currentScenarioDTO.hazardEntryList;
     Session.set("currentScenarioDTO", currentScenarioDTO);
+    Session.set("editingHazard-"+this.id, false);
   }
+  //click to update the information of a hazard
   ,"click #updateHazard" : function(event, template){
      event.preventDefault();
 
@@ -210,9 +218,15 @@ Template.hazardEntry.events({
      Session.set("currentScenarioDTO", currentScenarioDTO);
      Session.set("editingHazard-"+this.id, false);
   }
+  //click to enable the "update" interface of the table rows
   ,"click #editHazard" : function(event, template){
         event.preventDefault();
         Session.set("editingHazard-"+this.id, true);
+  }
+  //click to discard the changes done to a scenario entry
+  ,"click #discardHazardChanges" : function(event, template){
+      event.preventDefault();
+      Session.set("editingHazard-"+this.id, false);
   }
 });
 

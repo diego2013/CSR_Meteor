@@ -79,6 +79,12 @@
     ,getHazardUpdateSeverity_NameId : function(){
       return "severity-"+this.id;
     }
+    ,hazardRiskcategories : function(){
+        return ["Not Relevant", "Unknown", "Expected", "Unexpected"]
+    }
+    ,getHazardUpdateSelected : function(value){
+      // console.log($(this));
+    }
   });
 
   Template.advancedDetailsEquipment.helpers({
