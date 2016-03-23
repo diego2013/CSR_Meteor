@@ -443,6 +443,31 @@ updateReferenceList = function(){
     return referenceEntryList;
 };
 
+/**
+Updates a reference on the current scenario dto (in session) given an element ID
+*/
+updateReferenceListByElementID = function(itemID, url, relevance){
+
+    currentScenarioDTO = Session.get("currentScenarioDTO");
+    referenceEntryList = currentScenarioDTO.referenceEntryList;
+
+    if (itemID == undefined || itemID < 0)
+      return referenceEntryList;
+
+    if(url.trim()!= '' || relavance.trim() != ''){
+      for(var i = 0; i<referenceEntryList.length; i++){
+        if(referenceEntryList[i].id==Number(itemID)){
+          referenceEntryList[i].referenceUrl = url;
+          referenceEntryList[i].referenceRelevance = relevance;
+
+        }
+      }
+    }
+
+    return referenceEntryList;
+
+}
+
 //reads the Roles Involved panel and updates the clinical roles list
 updateRoleList = function(){
    currentScenarioDTO = Session.get("currentScenarioDTO");
