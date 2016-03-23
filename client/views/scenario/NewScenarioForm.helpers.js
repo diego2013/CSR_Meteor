@@ -134,6 +134,28 @@
       else
         return referenceEntryList.length;
     } 
+    ,hasReferences : function(){
+      currentScenarioDTO = Session.get('currentScenarioDTO');
+      if (currentScenarioDTO==undefined || currentScenarioDTO.referenceEntryList == undefined)
+        return false;
+      else
+        return referenceEntryList.length > 0;
+    }
+  });
+
+  Template.referenceEntry.helpers({
+    editingReference : function(){
+      return Session.get("editingReference-"+this.id);
+    }
+    // ,getHazardUpdateDescription_NameId : function(){
+    //   return "description-"+this.id;
+    // }
+    // ,getHazardUpdateRisk_NameId : function(){
+    //   return "risk-"+this.id;
+    // }
+    // ,getHazardUpdateSeverity_NameId : function(){
+    //   return "severity-"+this.id;
+    // }
   });
 
   Template.advancedDetailsEnvironments.helpers({

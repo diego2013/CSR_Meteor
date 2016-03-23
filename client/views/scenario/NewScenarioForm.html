@@ -516,13 +516,21 @@
     {{/if}}
 
      <span>Current references added to the scenario  ({{referenceEntryListCount}} entries)</span>
+
+    {{#if isScenarioEditable}}
+        <span class="fa fa-info-circle color-purple clickableHeader" title="You can edit entries on this table by using the 'edit', 'update' and 'delete' buttons on each row."></span>
+    {{/if}}
+
      <table class="clinicalInputTablePijama">
          <tr>
              <th style="width:30%">URL of the reference</th>
              <th style="width:70%">Relevance</th>
              {{#if isScenarioEditable}}
-              <th></th>
-             {{/if}}
+                {{#if hasReferences}}
+                    <th style="width: 1%"><span class="fa fa-trash"></span></th>
+                    <th style="width: 1%"><span class="fa fa-edit"></span></th>
+                {{/if}}
+            {{/if}}
          </tr>
          {{#each referenceEntryList}}
              {{> referenceEntry}}
@@ -568,14 +576,28 @@
 <!-- Template to display the info of a single reference-->
 <template name="referenceEntry">
     <tr>
-    <td style="width:30%"><a href="{{referenceUrl}}" target="_blank">{{referenceUrl}}</a></td>
-    <td style="width:70%"><label>{{referenceRelevance}}</label></td>
+    {{#if editingReference}}
+        <td style="width:30%"><textarea type="text" style="width:100%;">{{referenceUrl}}</textarea></td>
+        <td style="width:60%"><textarea type="text" style="width:100%;">{{referenceRelevance}}</textarea></td>
+ <!--        <textarea  class="regularTextAreaStyle" type="text" id="referenceRelevance" rows="3" style="width:100%;margin-top:10px" placeholder="Briefly describe why is important or relevant" ></textarea> -->
+    {{else}}
+        <td style="width:30%"><a href="{{referenceUrl}}" target="_blank">{{referenceUrl}}</a></td>
+        <td style="width:70%"><label>{{referenceRelevance}}</label></td>
+    {{/if}}    
     {{#if isScenarioEditable}}
-    <td> 
-        <button id="deleteReference" class="btn-red" style="width:100%" title="delete reference">
-            <span class="fa fa-trash"></span>
-        </button>
-    </td>
+        <td> 
+            <button id="deleteReference" class="btn-red" style="width:100%" title="delete reference">
+                <span class="fa fa-trash"></span>
+            </button>
+        </td>
+        <td> 
+            {{#if editingReference}}
+                <button class="btn-mint" style="width: 100%;" id="updateReference" title="Save changes on this entry"><span class="fa fa-save" ></span></button>
+                <button class="btn-yellow" style="width: 100%" id="discardReferenceChanges" title="Discard (revert) changes on this entry"><span class="fa fa-history"></span></button>
+            {{else}}
+                <button class="btn-mint" style="width: 100%" id="editReference" title="Edit this entry"><span class="fa fa-edit"></span></button>
+            {{/if}}    
+        </td>
     {{/if}}
     </tr>   
 </template>

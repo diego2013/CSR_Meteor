@@ -279,6 +279,33 @@ Template.referenceEntry.events({
     currentScenarioDTO.referenceEntryList = currentScenarioDTO.referenceEntryList;
     Session.set("currentScenarioDTO", currentScenarioDTO);
   }
+  //click to update the information of a hazard
+  ,"click #updateReference" : function(event, template){
+     event.preventDefault();
+
+    // // currentScenarioDTO =  Session.get("currentScenarioDTO");
+    // // hazardEntryList = currentScenarioDTO.hazardEntryList;
+
+    // var hazardDescription = $('[name="description-' + this.id + '"]').val();
+    // var hazardRisk = $('[name="risk-' + this.id + '"]').val();
+    // var hazardSeverity = $('[name="severity-' + this.id + '"]').val();
+
+    //  hazardEntryList = updateHarzardListByElementID(this.id, hazardDescription, hazardRisk, hazardSeverity);
+
+    //  currentScenarioDTO.hazardEntryList = hazardEntryList;
+    //  Session.set("currentScenarioDTO", currentScenarioDTO);
+     Session.set("editingReference-"+this.id, false);
+  }
+  //click to enable the "update" interface of the table rows
+  ,"click #editReference" : function(event, template){
+        event.preventDefault();
+        Session.set("editingReference-"+this.id, true);
+  }
+  //click to discard the changes done to a scenario refenrece entry
+  ,"click #discardReferenceChanges" : function(event, template){
+      event.preventDefault();
+      Session.set("editingReference-"+this.id, false);
+  }
 });
 
 
