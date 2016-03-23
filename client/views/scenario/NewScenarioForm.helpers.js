@@ -147,15 +147,13 @@
     editingReference : function(){
       return Session.get("editingReference-"+this.id);
     }
-    // ,getHazardUpdateDescription_NameId : function(){
-    //   return "description-"+this.id;
-    // }
-    // ,getHazardUpdateRisk_NameId : function(){
-    //   return "risk-"+this.id;
-    // }
-    // ,getHazardUpdateSeverity_NameId : function(){
-    //   return "severity-"+this.id;
-    // }
+    ,getReferenceUpdateUrl_NameId : function(){
+      return "ref-url-"+this.id;
+    }
+    ,getReferenceUpdateRelevance_NameId : function(){
+      return "ref-relevance-"+this.id;
+    }
+
   });
 
   Template.advancedDetailsEnvironments.helpers({

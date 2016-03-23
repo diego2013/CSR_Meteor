@@ -283,17 +283,13 @@ Template.referenceEntry.events({
   ,"click #updateReference" : function(event, template){
      event.preventDefault();
 
-    // // currentScenarioDTO =  Session.get("currentScenarioDTO");
-    // // hazardEntryList = currentScenarioDTO.hazardEntryList;
+     var ref_url = $('[name="ref-url-' + this.id + '"]').val();
+     var ref_relevance = $('[name="ref-relevance-' + this.id + '"]').val();
 
-    // var hazardDescription = $('[name="description-' + this.id + '"]').val();
-    // var hazardRisk = $('[name="risk-' + this.id + '"]').val();
-    // var hazardSeverity = $('[name="severity-' + this.id + '"]').val();
+     referenceEntryList = updateReferenceListByElementID(this.id, ref_url, ref_relevance);
 
-    //  hazardEntryList = updateHarzardListByElementID(this.id, hazardDescription, hazardRisk, hazardSeverity);
-
-    //  currentScenarioDTO.hazardEntryList = hazardEntryList;
-    //  Session.set("currentScenarioDTO", currentScenarioDTO);
+     currentScenarioDTO.referenceEntryList = currentScenarioDTO.referenceEntryList;
+     Session.set("currentScenarioDTO", currentScenarioDTO);
      Session.set("editingReference-"+this.id, false);
   }
   //click to enable the "update" interface of the table rows

@@ -454,7 +454,7 @@ updateReferenceListByElementID = function(itemID, url, relevance){
     if (itemID == undefined || itemID < 0)
       return referenceEntryList;
 
-    if(url.trim()!= '' || relavance.trim() != ''){
+    if(url.trim()!= '' || relevance.trim() != ''){
       for(var i = 0; i<referenceEntryList.length; i++){
         if(referenceEntryList[i].id==Number(itemID)){
           referenceEntryList[i].referenceUrl = url;

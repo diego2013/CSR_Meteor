@@ -577,8 +577,8 @@
 <template name="referenceEntry">
     <tr>
     {{#if editingReference}}
-        <td style="width:30%"><textarea type="text" style="width:100%;">{{referenceUrl}}</textarea></td>
-        <td style="width:60%"><textarea type="text" style="width:100%;">{{referenceRelevance}}</textarea></td>
+        <td style="width:30%"><textarea type="text" style="width:100%;" name={{getReferenceUpdateUrl_NameId}}>{{referenceUrl}}</textarea></td>
+        <td style="width:60%"><textarea type="text" style="width:100%;" name={{getReferenceUpdateRelevance_NameId}}>{{referenceRelevance}}</textarea></td>
  <!--        <textarea  class="regularTextAreaStyle" type="text" id="referenceRelevance" rows="3" style="width:100%;margin-top:10px" placeholder="Briefly describe why is important or relevant" ></textarea> -->
     {{else}}
         <td style="width:30%"><a href="{{referenceUrl}}" target="_blank">{{referenceUrl}}</a></td>
