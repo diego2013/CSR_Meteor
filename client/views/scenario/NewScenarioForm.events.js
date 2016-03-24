@@ -202,10 +202,10 @@ Template.hazardEntry.events({
     "click #deleteHazard" : function(event){
     event.preventDefault();
     currentScenarioDTO =  Session.get("currentScenarioDTO");
-    hazardEntryList = currentScenarioDTO.hazardEntryList;
+    var hazardEntryList = currentScenarioDTO.hazardEntryList;
     //find and delete by index
     hazardEntryList = deleteFromArrayByID(this.id, hazardEntryList)
-    currentScenarioDTO.hazardEntryList = currentScenarioDTO.hazardEntryList;
+    currentScenarioDTO.hazardEntryList = hazardEntryList; //currentScenarioDTO.hazardEntryList;
     Session.set("currentScenarioDTO", currentScenarioDTO);
     Session.set("editingHazard-"+this.id, false);
   }
@@ -220,7 +220,7 @@ Template.hazardEntry.events({
     var hazardRisk = $('[name="risk-' + this.id + '"]').val();
     var hazardSeverity = $('[name="severity-' + this.id + '"]').val();
 
-     hazardEntryList = updateHarzardListByElementID(this.id, hazardDescription, hazardRisk, hazardSeverity);
+    var hazardEntryList = updateHarzardListByElementID(this.id, hazardDescription, hazardRisk, hazardSeverity);
 
      currentScenarioDTO.hazardEntryList = hazardEntryList;
      Session.set("currentScenarioDTO", currentScenarioDTO);
@@ -251,7 +251,7 @@ Template.equipmentEntry.events({
   "click #deleteEquipment" : function(event){
     event.preventDefault();
     currentScenarioDTO =  Session.get("currentScenarioDTO");
-    equipmentEntryList = currentScenarioDTO.equipmentEntryList;
+    var equipmentEntryList = currentScenarioDTO.equipmentEntryList;
     //find and delete by index
     currentScenarioDTO.equipmentEntryList = deleteFromArrayByID(this.id, equipmentEntryList)
     Session.set("currentScenarioDTO", currentScenarioDTO);
