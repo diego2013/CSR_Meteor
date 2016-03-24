@@ -619,7 +619,7 @@ flashingRedArrow = function(back){
 };
 
 /**
-Clean-up function for eny entris on the "Add Hazard" that might be updating/editing entries
+Clean-up function for eny entries on the "Add Hazard" that might be updating/editing entries
 This clean up function will set to "false" all editing variables.
 */
 
@@ -628,9 +628,43 @@ cleanupEditingHazards = function(){
     if (currentScenarioDTO == undefined)
       return;
 
-    hazardEntryList = currentScenarioDTO.hazardEntryList;
+    var hazardEntryList = currentScenarioDTO.hazardEntryList;
     for (var i =0; i< hazardEntryList.length; i++){
       Session.set("editingHazard-"+i, false);
+    }
+
+}
+
+/**
+Clean-up function for eny entries on the "Add Equipment" that might be updating/editing entries
+This clean up function will set to "false" all editing variables.
+*/
+
+cleanupEditingEquipments = function(){
+    currentScenarioDTO =  Session.get("currentScenarioDTO");
+    if (currentScenarioDTO == undefined)
+      return;
+
+    var equipmentEntryList = currentScenarioDTO.equipmentEntryList;
+    for (var i =0; i< equipmentEntryList.length; i++){
+      Session.set("editingEquipment-"+i, false);
+    }
+
+}
+
+/**
+Clean-up function for eny entries on the "Add Reference" that might be updating/editing entries
+This clean up function will set to "false" all editing variables.
+*/
+
+cleanupEditingReferences = function(){
+    currentScenarioDTO =  Session.get("currentScenarioDTO");
+    if (currentScenarioDTO == undefined)
+      return;
+
+    var referenceEntryList = currentScenarioDTO.referenceEntryList;
+    for (var i =0; i< referenceEntryList.length; i++){
+      Session.set("editingReference-"+i, false);
     }
 
 }

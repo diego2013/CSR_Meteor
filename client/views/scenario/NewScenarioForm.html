@@ -482,11 +482,11 @@
          <td><textarea class="equipTextArea" style="width:100%" name={{getNameId 'model'}} type="text" rows="1" cols="10" placeholder="Type to add a model" >{{model}}</textarea></td>
          <td><textarea class="equipTextArea" style="width:100%" name={{getNameId 'rosetta'}} type="text" rows="1" cols="10" placeholder="Type to add a rosetta ID" >{{rosetta}}</textarea></td>
 
-            <td class="paddingLeft3"><input type="checkbox" name={{getNameId 'trainingRelated'}}  {{getCheckboxValue 'trainingRelated'}}>&nbsp;</td>
-            <td class="paddingLeft3"><input type="checkbox" name={{getNameId 'instructionsRelated'}}  {{getCheckboxValue 'instructionsRelated'}}>&nbsp;</td>
-            <td class="paddingLeft3"><input type="checkbox" name={{getNameId 'confusingRelated'}}  {{getCheckboxValue 'confusingRelated'}}>&nbsp;</td>
-            <td class="paddingLeft3"><input type="checkbox" name={{getNameId 'softwareRelated'}}  {{getCheckboxValue 'softwareRelated'}}>&nbsp;</td>
-            <td class="paddingLeft3"><input type="checkbox" name={{getNameId 'hardwareRelated'}}  {{getCheckboxValue 'hardwareRelated'}}>&nbsp;</td>
+            <td style="text-align:center"><input type="checkbox" name={{getNameId 'trainingRelated'}}  {{getCheckboxValue 'trainingRelated'}}>&nbsp;</td>
+            <td style="text-align:center"><input type="checkbox" name={{getNameId 'instructionsRelated'}}  {{getCheckboxValue 'instructionsRelated'}}>&nbsp;</td>
+            <td style="text-align:center"><input type="checkbox" name={{getNameId 'confusingRelated'}}  {{getCheckboxValue 'confusingRelated'}}>&nbsp;</td>
+            <td style="text-align:center"><input type="checkbox" name={{getNameId 'softwareRelated'}}  {{getCheckboxValue 'softwareRelated'}}>&nbsp;</td>
+            <td style="text-align:center"><input type="checkbox" name={{getNameId 'hardwareRelated'}}  {{getCheckboxValue 'hardwareRelated'}}>&nbsp;</td>
 
     {{else}}
          <td><label>{{deviceType}}</label></td>
