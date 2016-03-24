@@ -418,7 +418,7 @@ updateEquipmentList = function(){
 /**
 Updates a equimente netry on the current scenario dto (in session) given an element ID (entry ID)
 */
-updateEquipmentListByElementID = function(itemID, deviceType, manufacturer, model, trainingRelated, instructionsRelated, confusingRelated,
+updateEquipmentListByElementID = function(itemID, deviceType, manufacturer, model, rosetta, trainingRelated, instructionsRelated, confusingRelated,
   softwareRelated, hardwareRelated){
 
     currentScenarioDTO = Session.get("currentScenarioDTO");
@@ -427,12 +427,13 @@ updateEquipmentListByElementID = function(itemID, deviceType, manufacturer, mode
     if (itemID == undefined || itemID < 0)
       return equipmentEntryList;
 
-    if(description.trim()!= ''){
+    if(deviceType.trim()!= ''){
       for(var i = 0; i<equipmentEntryList.length; i++){
         if(equipmentEntryList[i].id==Number(itemID)){
           equipmentEntryList[i].deviceType = deviceType;
           equipmentEntryList[i].manufacturer = manufacturer;
           equipmentEntryList[i].model = model;
+          equipmentEntryList[i].rosetta = rosetta;
 
           equipmentEntryList[i].trainingRelated = trainingRelated;
           equipmentEntryList[i].instructionsRelated = instructionsRelated;

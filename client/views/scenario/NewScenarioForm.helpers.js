@@ -116,6 +116,61 @@
       else
         return equipmentEntryList.length;
     }
+    ,hasEquipment : function(){
+      currentScenarioDTO = Session.get('currentScenarioDTO');
+      if (currentScenarioDTO==undefined || currentScenarioDTO.equipmentEntryList == undefined)
+        return false;
+      else
+        return equipmentEntryList.length > 0;
+    }
+  });
+
+
+   Template.equipmentEntry.helpers({
+    editingEquipment : function(){
+      return Session.get("editingEquipment-"+this.id) && isScenarioEditable(Session.get("currentScenarioDTO"));
+    }
+
+    //XXX All these could actually be a setName = function(val){return "update-"+"val"+"-"+this.id}
+    ,getEquipmentUpdateDeviceType_NameId : function(){
+      return "update-devicetype-"+this.id;
+    }
+    ,getEquipmentUpdateManufacturer_NameId : function(){
+      return "update-manufacturer-"+this.id;
+    }
+    ,getEquipmentUpdateModel_NameId : function(){
+      return "update-model-"+this.id;
+    }
+    ,getEquipmentUpdateRosetta_NameId : function(){
+      return "update-rosetta-"+this.id;
+    }
+    ,getNameId : function(name){
+      return 'update-'+name+"-"+this.id;
+    }
+    // ,getEquipmentUpdateManufacturer_NameId : function(){
+    //   return "update-manufacturer-"+this.id;
+    // }
+    // ,getEquipmentUpdateManufacturer_NameId : function(){
+    //   return "update-manufacturer-"+this.id;
+    // }
+    // ,hazardRiskcategories : function(){
+    //     return ["Not Relevant", "Unknown", "Expected", "Unexpected"]
+    // }
+    // ,getHazardUpdateSelected : function(value){
+    //   // console.log($(this));
+    // }
+    // ,getHazardRisk : function(riskValue){
+    //     if (this.hazardRisk === riskValue)
+    //       return {selected:'selected'}
+    //     else
+    //       return ''
+    // }
+    // ,getHazardSeverity : function(severityValue){
+    //     if (this.hazardSeverity === severityValue)
+    //       return {selected:'selected'}
+    //     else
+    //       return ''
+    // }
   });
 
   Template.advancedDetailsReferences.helpers({

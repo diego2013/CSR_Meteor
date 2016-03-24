@@ -397,6 +397,10 @@
 
     <span>List of hazardrous equipment included in the scenario ({{equipmentEntryListCount}} entries)</span>
 
+    {{#if isScenarioEditable}}
+        <span  class="fa fa-info-circle color-purple clickableHeader" title="You can edit entries on this table by using the 'edit', 'update' and 'delete' buttons on each row."></span>
+    {{/if}}
+
     <table class="clinicalInputTablePijama">
         <tr> 
             <th><label>Device Type</label></th>
@@ -409,7 +413,10 @@
             <th><label>Software problem</label></th>
             <th><label>Hardware problem</label></th>
             {{#if isScenarioEditable}}
-                <th></th>
+                {{#if hasEquipment}}
+                    <th style="width: 1%"><span class="fa fa-trash"></span></th>
+                    <th style="width: 1%"><span class="fa fa-edit"></span></th>
+                {{/if}}
             {{/if}}
         </tr>
         {{#each equipmentEntryList}}
@@ -468,20 +475,41 @@
 <!-- Template to display the info of a single equipment entry-->
 <template name="equipmentEntry">
   <tr class="">
-    <td><label>{{deviceType}}</label></td>
-    <td><label>{{manufacturer}}</label></td>
-    <td><label>{{model}}</label></td>
-    <td><label>{{rosetta}}</label></td>
-    <td class="narrowColumn">{{#if trainingRelated}} <label>yes</label> {{else}} <label>no</label> {{/if}}</td>
-    <td class="narrowColumn">{{#if instructionsRelated}} <label>yes</label> {{else}} <label>no</label> {{/if}}</td>
-    <td class="narrowColumn">{{#if confusingRelated}} <label>yes</label> {{else}} <label>no</label> {{/if}}</td>
-    <td class="narrowColumn"> {{#if softwareRelated}} <label>yes</label> {{else}} <label>no</label> {{/if}}</td>
-    <td class="narrowColumn">{{#if hardwareRelated}} <label>yes</label> {{else}} <label>no</label> {{/if}}</td>
-    <!--<td><label>{{id}}</label></td>-->
+
+    {{#if editingEquipment}}
+         <td><textarea class="equipTextArea" style="width:100%" name={{getNameId 'devicetype'}} type="text" rows="1" cols="10" placeholder="Type to add a device type" >{{deviceType}}</textarea></td>
+         <td><textarea class="equipTextArea" style="width:100%;" name={{getNameId 'manufacturer'}} type="text" rows="1" cols="10" placeholder="Type to add a manufacturer" >{{manufacturer}}</textarea></td>
+         <td><textarea class="equipTextArea" style="width:100%" name={{getNameId 'model'}} type="text" rows="1" cols="10" placeholder="Type to add a model" >{{model}}</textarea></td>
+         <td><textarea class="equipTextArea" style="width:100%" name={{getNameId 'rosetta'}} type="text" rows="1" cols="10" placeholder="Type to add a rosetta ID" >{{rosetta}}</textarea></td>
+         <td class="narrowColumn">{{#if trainingRelated}} <label>yes</label> {{else}} <label>no</label> {{/if}}</td>
+         <td class="narrowColumn">{{#if instructionsRelated}} <label>yes</label> {{else}} <label>no</label> {{/if}}</td>
+         <td class="narrowColumn">{{#if confusingRelated}} <label>yes</label> {{else}} <label>no</label> {{/if}}</td>
+         <td class="narrowColumn"> {{#if softwareRelated}} <label>yes</label> {{else}} <label>no</label> {{/if}}</td>
+         <td class="narrowColumn">{{#if hardwareRelated}} <label>yes</label> {{else}} <label>no</label> {{/if}}</td>
+    {{else}}
+         <td><label>{{deviceType}}</label></td>
+         <td><label>{{manufacturer}}</label></td>
+         <td><label>{{model}}</label></td>
+         <td><label>{{rosetta}}</label></td>
+         <td class="narrowColumn">{{#if trainingRelated}} <label>yes</label> {{else}} <label>no</label> {{/if}}</td>
+         <td class="narrowColumn">{{#if instructionsRelated}} <label>yes</label> {{else}} <label>no</label> {{/if}}</td>
+         <td class="narrowColumn">{{#if confusingRelated}} <label>yes</label> {{else}} <label>no</label> {{/if}}</td>
+         <td class="narrowColumn"> {{#if softwareRelated}} <label>yes</label> {{else}} <label>no</label> {{/if}}</td>
+         <td class="narrowColumn">{{#if hardwareRelated}} <label>yes</label> {{else}} <label>no</label> {{/if}}</td>
+         <!--<td><label>{{id}}</label></td>-->
+    {{/if}} 
     {{#if isScenarioEditable}}
         <td style="width:1%"> 
             <button type="button" class="btn-red" id="deleteEquipment">
             <span class="fa fa-trash"></span></button>
+        </td>
+        <td> 
+            {{#if editingEquipment}}
+                <button class="btn-mint" style="width: 100%;" id="updateEquipment" title="Save changes on this entry"><span class="fa fa-save" ></span></button>
+                <button class="btn-yellow" style="width: 100%" id="discardEquipmentChanges" title="Discard (revert) changes on this entry"><span class="fa fa-history"></span></button>
+            {{else}}
+                <button class="btn-mint" style="width: 100%" id="editEquipment" title="Edit this entry"><span class="fa fa-edit"></span></button>
+            {{/if}}           
         </td>
     {{/if}}
   </tr>

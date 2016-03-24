@@ -256,6 +256,33 @@ Template.equipmentEntry.events({
     currentScenarioDTO.equipmentEntryList = deleteFromArrayByID(this.id, equipmentEntryList)
     Session.set("currentScenarioDTO", currentScenarioDTO);
   }
+    //click to update the information of a hazard
+  ,"click #updateEquipment" : function(event, template){
+     event.preventDefault();
+
+     var equipment_devicetype = $('[name="update-devicetype-' + this.id + '"]').val();
+     var equipment_manufacturer = $('[name="update-manufacturer-' + this.id + '"]').val();
+     var equipment_model= $('[name="update-model-' + this.id + '"]').val();
+     var equipment_rosetta = $('[name="update-rosetta-' + this.id + '"]').val();
+
+
+     equipmentEntryList = updateEquipmentListByElementID(this.id, equipment_devicetype, equipment_manufacturer, equipment_model, equipment_rosetta, 
+      false, false, false, false, false)
+
+     // currentScenarioDTO.referenceEntryList = currentScenarioDTO.referenceEntryList;
+     Session.set("currentScenarioDTO", currentScenarioDTO);
+     Session.set("editingEquipment-"+this.id, false);
+  }
+  //click to enable the "update" interface of the table rows
+  ,"click #editEquipment" : function(event, template){
+        event.preventDefault();
+        Session.set("editingEquipment-"+this.id, true);
+  }
+  //click to discard the changes done to a scenario refenrece entry
+  ,"click #discardEquipmentChanges" : function(event, template){
+      event.preventDefault();
+      Session.set("editingEquipment-"+this.id, false);
+  }
 });
 
 
@@ -275,11 +302,10 @@ Template.referenceEntry.events({
     currentScenarioDTO =  Session.get("currentScenarioDTO");
     referenceEntryList = currentScenarioDTO.referenceEntryList;
     //find and delete by index
-    referenceEntryList = deleteFromArrayByID(this.id, referenceEntryList)
-    currentScenarioDTO.referenceEntryList = currentScenarioDTO.referenceEntryList;
+    currentScenarioDTO.referenceEntryList = deleteFromArrayByID(this.id, referenceEntryList);
     Session.set("currentScenarioDTO", currentScenarioDTO);
   }
-  //click to update the information of a hazard
+  //click to update the information of a reference
   ,"click #updateReference" : function(event, template){
      event.preventDefault();
 
