@@ -265,11 +265,17 @@ Template.equipmentEntry.events({
      var equipment_model= $('[name="update-model-' + this.id + '"]').val();
      var equipment_rosetta = $('[name="update-rosetta-' + this.id + '"]').val();
 
+     var equipment_trainingRelated = $('[name="update-trainingRelated-' + this.id + '"]:checked').val();
+     var equipment_instructionsRelated = $('[name="update-instructionsRelated-' + this.id + '"]:checked').val();
+     var equipment_confusingRelated= $('[name="update-confusingRelated-' + this.id + '"]:checked').val();
+     var equipment_softwareRelated = $('[name="update-softwareRelated-' + this.id + '"]:checked').val();
+     var equipment_hardwareRelated = $('[name="update-hardwareRelated-' + this.id + '"]:checked').val();
 
-     equipmentEntryList = updateEquipmentListByElementID(this.id, equipment_devicetype, equipment_manufacturer, equipment_model, equipment_rosetta, 
-      false, false, false, false, false)
 
-     // currentScenarioDTO.referenceEntryList = currentScenarioDTO.referenceEntryList;
+     var equipmentEntryList = updateEquipmentListByElementID(this.id, equipment_devicetype, equipment_manufacturer, equipment_model, equipment_rosetta, 
+      equipment_trainingRelated, equipment_instructionsRelated, equipment_confusingRelated, equipment_softwareRelated, equipment_hardwareRelated)
+
+     currentScenarioDTO.referenceEntryList = equipmentEntryList;
      Session.set("currentScenarioDTO", currentScenarioDTO);
      Session.set("editingEquipment-"+this.id, false);
   }

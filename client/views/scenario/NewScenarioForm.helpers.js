@@ -147,30 +147,16 @@
     ,getNameId : function(name){
       return 'update-'+name+"-"+this.id;
     }
-    // ,getEquipmentUpdateManufacturer_NameId : function(){
-    //   return "update-manufacturer-"+this.id;
-    // }
-    // ,getEquipmentUpdateManufacturer_NameId : function(){
-    //   return "update-manufacturer-"+this.id;
-    // }
-    // ,hazardRiskcategories : function(){
-    //     return ["Not Relevant", "Unknown", "Expected", "Unexpected"]
-    // }
-    // ,getHazardUpdateSelected : function(value){
-    //   // console.log($(this));
-    // }
-    // ,getHazardRisk : function(riskValue){
-    //     if (this.hazardRisk === riskValue)
-    //       return {selected:'selected'}
-    //     else
-    //       return ''
-    // }
-    // ,getHazardSeverity : function(severityValue){
-    //     if (this.hazardSeverity === severityValue)
-    //       return {selected:'selected'}
-    //     else
-    //       return ''
-    // }
+    ,getCheckboxValue : function(value){
+      if(value == undefined || value.trim()=='')
+        return ''
+
+      if(this[value])
+        return "checked";
+      else
+        return '';
+    }
+
   });
 
   Template.advancedDetailsReferences.helpers({
