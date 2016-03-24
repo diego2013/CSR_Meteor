@@ -415,6 +415,38 @@ updateEquipmentList = function(){
     return equipmentEntryList
 };
 
+/**
+Updates a equimente netry on the current scenario dto (in session) given an element ID (entry ID)
+*/
+updateEquipmentListByElementID = function(itemID, deviceType, manufacturer, model, trainingRelated, instructionsRelated, confusingRelated,
+  softwareRelated, hardwareRelated){
+
+    currentScenarioDTO = Session.get("currentScenarioDTO");
+    equipmentEntryList = currentScenarioDTO.equipmentEntryList;
+
+    if (itemID == undefined || itemID < 0)
+      return equipmentEntryList;
+
+    if(description.trim()!= ''){
+      for(var i = 0; i<equipmentEntryList.length; i++){
+        if(equipmentEntryList[i].id==Number(itemID)){
+          equipmentEntryList[i].deviceType = deviceType;
+          equipmentEntryList[i].manufacturer = manufacturer;
+          equipmentEntryList[i].model = model;
+
+          equipmentEntryList[i].trainingRelated = trainingRelated;
+          equipmentEntryList[i].instructionsRelated = instructionsRelated;
+          equipmentEntryList[i].confusingRelated = confusingRelated;
+          equipmentEntryList[i].softwareRelated = softwareRelated;
+          equipmentEntryList[i].hardwareRelated = hardwareRelated;
+        }
+      }
+    }
+
+    return equipmentEntryList;
+
+}
+
 
 //reads the reference description that is in the advancedDetailsReferences template
 // and updates the references list
