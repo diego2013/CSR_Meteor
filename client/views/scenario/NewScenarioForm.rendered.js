@@ -13,7 +13,7 @@ On rendering the scenarioFormAdvancedInfo (New Scenario Form step 2 template)
 	2.3 References
 */
 Template.scenarioFormAdvancedInfo.rendered = function(){
-	flashingRedArrow(false);
+	// flashingRedArrow(false); Not showing the flashing red light Issue #181
 	
 	cleanupEditingHazards();
 	cleanupEditingEquipment();
