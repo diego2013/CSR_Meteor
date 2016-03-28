@@ -242,6 +242,12 @@
 <!-- Templates for step 2: advanced details: -->
 <!-- ======================================= -->
 
+<template name="info_editStep2ListEntries">
+    {{#if isScenarioEditable}}
+        <span id="infoEditingEntries" class="fa fa-info-circle color-purple clickableHeader" title="You can edit entries on this table by using the 'edit', 'update' and 'delete' buttons on each row."></span>
+    {{/if}}
+</template>
+
 <!-- Template for step 2: advanced details: Hazards-->
 <template name="advancedDetailsHazards" >
     {{#if isScenarioEditable}}
@@ -249,9 +255,8 @@
     {{/if}}
 
     <span>Current hazards of the scenario ({{hazardEntryListCount}} entries)</span>
-    {{#if isScenarioEditable}}
-        <span id="currentHazardsInfo" class="fa fa-info-circle color-purple clickableHeader" title="You can edit entries on this table by using the 'edit', 'update' and 'delete' buttons on each row."></span>
-    {{/if}}
+    {{ > info_editStep2ListEntries}}
+
     <table class="clinicalInputTablePijama">
 
 <!--         <col width="60%"> 
@@ -396,10 +401,7 @@
      {{/if}}   
 
     <span>List of hazardrous equipment included in the scenario ({{equipmentEntryListCount}} entries)</span>
-
-    {{#if isScenarioEditable}}
-        <span  class="fa fa-info-circle color-purple clickableHeader" title="You can edit entries on this table by using the 'edit', 'update' and 'delete' buttons on each row."></span>
-    {{/if}}
+    {{ > info_editStep2ListEntries}}
 
     <table class="clinicalInputTablePijama">
         <tr> 
@@ -546,10 +548,7 @@
     {{/if}}
 
      <span>Current references added to the scenario  ({{referenceEntryListCount}} entries)</span>
-
-    {{#if isScenarioEditable}}
-        <span class="fa fa-info-circle color-purple clickableHeader" title="You can edit entries on this table by using the 'edit', 'update' and 'delete' buttons on each row."></span>
-    {{/if}}
+    {{ > info_editStep2ListEntries}}
 
      <table class="clinicalInputTablePijama">
          <tr>

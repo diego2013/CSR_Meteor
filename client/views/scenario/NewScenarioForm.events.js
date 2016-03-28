@@ -148,11 +148,11 @@ Template.scenarioFormAdvancedInfo.events({
        cleanupEditingHazards();
        Session.set(_ADVANCEDDETAILS_TAB, $element.data('step'));
   }
-  ,"click #currentHazardsInfo" : function(){
-    var msg = "You can edit entries on this table by using the 'edit', 'update' and 'delete' buttons on each row."
-      + "\n\nClick 'edit' to enable changes and 'update' to save the changes or 'discard' to revert the changes. "
-    alert(msg)
-  }
+  // ,"click #currentHazardsInfo" : function(){
+  //   var msg = "You can edit entries on this table by using the 'edit', 'update' and 'delete' buttons on each row."
+  //     + "\n\nClick 'edit' to enable changes and 'update' to save the changes or 'discard' to revert the changes. "
+  //   alert(msg)
+  // }
 });
 
 Template.scenarioFormSolution.events({
@@ -172,6 +172,15 @@ showInWindow = function(url, width, height){
   var preferences = "width=" + width  + ", height=" + height;
   window.open(url, "", preferences)
 }
+
+Template.info_editStep2ListEntries.events({
+  "click #infoEditingEntries" : function(){
+    var msg = "You can edit entries on this table by using the 'edit', 'update' and 'delete' buttons on each row."
+      + "\n\nClick 'edit' to enable changes and 'update' to save the changes or 'discard' to revert the changes. "
+    alert(msg)
+  }
+
+});
 
 /***** HAZARDS *****/
 
