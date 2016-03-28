@@ -16,6 +16,6 @@ Template.scenarioFormAdvancedInfo.rendered = function(){
 	flashingRedArrow(false);
 	
 	cleanupEditingHazards();
-	cleanupEditingEquipments();
+	cleanupEditingEquipment();
 	cleanupEditingReferences();
 };
