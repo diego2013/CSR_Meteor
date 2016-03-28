@@ -68,7 +68,7 @@
 
   Template.hazardEntry.helpers({
     editingHazard : function(){
-      return Session.get("editingHazard-"+this.id);
+      return Session.get("editingHazard-"+this.id) && isScenarioEditable(Session.get("currentScenarioDTO"));
     }
     ,getHazardUpdateDescription_NameId : function(){
       return "description-"+this.id;
@@ -186,7 +186,7 @@
 
   Template.referenceEntry.helpers({
     editingReference : function(){
-      return Session.get("editingReference-"+this.id);
+      return Session.get("editingReference-"+this.id)  &&  isScenarioEditable(Session.get("currentScenarioDTO"));
     }
     ,getReferenceUpdateUrl_NameId : function(){
       return "ref-url-"+this.id;
