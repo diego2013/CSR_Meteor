@@ -173,6 +173,8 @@ showInWindow = function(url, width, height){
   window.open(url, "", preferences)
 }
 
+/***** COMMON TEMPLATES *****/
+
 Template.info_editStep2ListEntries.events({
   "click #infoEditingEntries" : function(){
     var msg = "You can edit entries on this table by using the 'edit', 'update' and 'delete' buttons on each row."
@@ -180,6 +182,17 @@ Template.info_editStep2ListEntries.events({
     alert(msg)
   }
 
+});
+
+Template.navbadges.events({
+  "click .fa-info-circle" : function(){
+    var msg = 'These badges help you navigate the different steps of the scenario submission process by letting you know where you are in the '
+      + 'scenario creation process and what other stages you can visit before submission.' 
+     
+      + '\n\nThey do exactly the same thin as the numbered blue buttons on top of the scenario creation panel. These navigation "badges" are placed'
+      + ' here at the bottom of the screen as an additional help.'
+    alert(msg)
+  }
 });
 
 /***** HAZARDS *****/

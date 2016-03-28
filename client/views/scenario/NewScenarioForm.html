@@ -56,7 +56,7 @@
 
     <div align="right" class="padding-bottom-10"> 
         <span style="vertical-align:middle"  title="Revise other scenario steps. Submit when ready">Navigate to complete/revisit other steps</span>
-        <span class="fa fa-question-circle color-purple" title="These badges help you navigate the different steps of the scenario submission process. They tell you where you are in the process and where you could go."></span>
+        <span class="fa fa-info-circle color-purple clickableHeader" title="These badges help you navigate the different steps of the scenario submission process. They tell you where you are in the process and where you could go."></span>
 
         <a href="#" class="badge badge-color badge-color-selected" id="getToStep1" title="Go to Step 1: Basic Information">
             <span class="fa-stack"  >
@@ -242,6 +242,8 @@
 <!-- Templates for step 2: advanced details: -->
 <!-- ======================================= -->
 
+
+<!-- Template for the info icon common to the Create Scenario Step 2 tabs with an editable type of table entries-->
 <template name="info_editStep2ListEntries">
     {{#if isScenarioEditable}}
         <span id="infoEditingEntries" class="fa fa-info-circle color-purple clickableHeader" title="You can edit entries on this table by using the 'edit', 'update' and 'delete' buttons on each row."></span>
