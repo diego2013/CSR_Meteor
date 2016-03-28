@@ -640,7 +640,7 @@ Clean-up function for eny entries on the "Add Equipment" that might be updating/
 This clean up function will set to "false" all editing variables.
 */
 
-cleanupEditingEquipments = function(){
+cleanupEditingEquipment = function(){
     currentScenarioDTO =  Session.get("currentScenarioDTO");
     if (currentScenarioDTO == undefined)
       return;
