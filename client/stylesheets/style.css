@@ -19,21 +19,6 @@ body {
   font-size: 14px;
 }
 
-/*.dropdown-menu{
-  margin-right: 25px; 
-  background-color: red;
-}*/
-
-ul .typeahead.dropdown-menu > li {
-  text-decoration: underline;
-  margin-left: 0px;
-}
-
-/*li{
-  padding: 0px;
-  text-decoration: underline;
-}*/
-
 .clearboth {clear:both;}
 
 .hr-thin { 
@@ -246,7 +231,6 @@ li {
   position: relative;
   /* list-style: disc outside none; */
   display: list-item;
-  padding-right:  1em;
   margin-left: 1em;
    /* border-bottom: #eee solid 1px;  */
 }
