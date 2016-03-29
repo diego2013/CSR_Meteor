@@ -69,6 +69,7 @@ momentjs:moment@2.12.0
 mongo@1.1.5
 mongo-id@1.0.2
 mrt:bootstrap-3@0.3.8
+mrt:bootstrap3-typeahead@3.0.3
 npm-bcrypt@0.7.8_2
 npm-container@1.1.0
 npm-mongo@1.4.41
