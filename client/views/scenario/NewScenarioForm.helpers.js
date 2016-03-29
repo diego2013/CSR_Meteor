@@ -233,6 +233,12 @@
     } 
   });
 
+  Template.roleInput.helpers({
+    clinicalroles : function(){
+      return clinicalRolesArray ;
+    }
+  })
+
   Template.scenarioFormSolution.helpers({
   });
 

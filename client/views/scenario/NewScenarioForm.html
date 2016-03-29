@@ -664,52 +664,10 @@
 
         Choose a clinical role from this list
         <select id="clinicalRole" class="selectbox-wrapper">
-            <option value='-'>-</option>
-            <option value='Allergist'>Allergist</option>
-            <option value='Anesthesiologist'>Anesthesiologist</option>
-            <option value='Cardiologist'>Cardiologist</option>
-            <option value='Chief Nurse'>Chief Nurse</option>
-            <option value='Clinical Staff'>Clinical Staff</option>
-            <option value='CNA - Certified Nurse Assistant'>CNA - Certified Nurse Assistant</option>
-            <option value='Cosmetic Surgeon'>Cosmetic Surgeon</option>
-            <option value='Critical Care Nurse'>Critical Care Nurse</option>
-            <option value='CRNA - Certified Registered Nurse Asst'>CRNA - Certified Registered Nurse Asst</option>
-            <option value='Dentist'>Dentist</option>
-            <option value='Dermatologist'>Dermatologist</option>
-            <option value='Emergency Medicine Doctor'>Emergency Medicine Doctor</option>
-            <option value='Endocrinologist'>Endocrinologist</option>
-            <option value='Epidemiologist'>Epidemiologist</option>
-            <option value='Gastrologist'>Gastrologist</option>
-            <option value='General Practitioner'>General Practitioner</option>
-            <option value='Geriatrics Specialist'>Geriatrics Specialist</option>
-            <option value='Gynecologist'>Gynecologist</option>
-            <option value='Hematologist'>Hematologist</option>
-            <option value='HHN - Home Health Nurse'>HHN - Home Health Nurse</option>
-            <option value='Hospitalist'>Hospitalist</option>
-            <option value='Infectious Disease Nurse'>Infectious Disease Nurse</option>
-            <option value='Labor-Delivery Nurse'>Labor-Delivery Nurse</option>
-            <option value='LPN - Licensed Practical Nurse'>LPN - Licensed Practical Nurse</option>
-            <option value='LVN - Licensed Vocational Nurse'>LVN - Licensed Vocational Nurse</option>
-            <option value='Medical Assistant'>Medical Assistant</option>
-            <option value='Medical Emergency Team'>Medical Emergency Team</option>
-            <option value='Neonatologist'>Neonatologist</option>
-            <option value='Neurologist'>Neurologist</option>
-            <option value='Nurse'>Nurse</option>
-            <option value='Nurse Assistant'>Nurse Assistant</option>
-            <option value='Occupational Health Nurse'>Occupational Health Nurse</option>
-            <option value='Oncologist'>Oncologist</option>
-            <option value='ORRN - Operating Room Registered Nurse'>ORRN - Operating Room Registered Nurse</option>
-            <option value='Pathologist'>Pathologist</option>
-            <option value='Physician'>Physician</option>
-            <option value='Radiologist'>Radiologist</option>
-            <option value='Respiratory Therapist'>Respiratory Therapist</option>
-            <option value='Rheumatologist'>Rheumatologist</option>
-            <option value='RN - Registered Nurse'>RN - Registered Nurse</option>
-            <option value='RRT'>RRT</option>
-            <option value='Surgeon'>Surgeon</option>
-            <option value='Toxicologist'>Toxicologist</option>
-            <option value='Urologist'>Urologist</option>
-            <option value='X-Ray Technician'>X-Ray Technician</option>
+                {{#each clinicalroles}}
+                    <option value="{{this}}">{{this}}</option>
+                {{/each}}
+           
         </select>
 
         or type your own 
