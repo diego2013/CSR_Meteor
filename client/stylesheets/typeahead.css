@@ -1,3 +1,10 @@
+/* typeahead (https://github.com/bassjobsen/Bootstrap-3-Typeahead) adds to an input text element a dropdown menu consisting on an unordered list (<ul>)
+with the classes .typeahead and .dropdown. This ul has <li> with an anchor <a>. One of which has the .active class 
+(the suggested element of the dropdown)
+
+
+*/
+
 
 ul.typeahead.dropdown-menu  li {
   margin-left: 0px;
