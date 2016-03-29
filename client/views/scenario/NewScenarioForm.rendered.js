@@ -19,3 +19,10 @@ Template.scenarioFormAdvancedInfo.rendered = function(){
 	cleanupEditingEquipment();
 	cleanupEditingReferences();
 };
+
+Template.roleInput.rendered = function(){
+	// $('.typeahead').typeahead()
+
+       $('#customActor').typeahead({source:clinicalRolesArray, autoSelect: true}); 
+
+}
