@@ -707,7 +707,7 @@
     <table class="clinicalInputTablePijama">
         <tr>
         {{#if isScenarioEditable}}<th></th>{{/if}}
-         <th>Clinical Environments of the Scenario ({{environmentEntryListCount}} entries)</th>
+         <th style="padding: 0px 4px;">Clinical Environments of the Scenario ({{environmentEntryListCount}} entries)</th>
         </tr>
         {{#each environmentEntryList}}
             {{> environmentEntry}}
@@ -727,47 +727,15 @@
     <div class="clinicalInputBar"> 
         Choose a clinical environment from this list
         <select id="clinicalEnvironment" class="selectbox-wrapper">
-            <option value='-'>-</option>
-            <option value='Acute assessment unit'>Acute assessment unit</option>
-            <option value='Ambulatory wing'>Ambulatory wing</option>
-            <option value='Birthing Room/LDR Room/LDRP Room'>Birthing Room/LDR Room/LDRP Room</option>
-            <option value='Breast screening unit'>Breast screening unit</option>
-            <option value='Burn Care Unit'>Burn Care Unit</option>
-            <option value='Cafeteria'>Cafeteria</option>
-            <option value='CCU-cardiac care unit'>CCU-cardiac care unit</option>
-            <option value='Delivery room'>Delivery room</option>
-            <option value='Discharge lounge'>Discharge lounge</option>
-            <option value='Discharge unit'>Discharge unit</option>
-            <option value='ENT-Ear nose and throat'>ENT-Ear nose and throat</option>
-            <option value='ER-emergency room'>ER-emergency room</option>
-            <option value='Geriatrics'>Geriatrics</option>
-            <option value='Hospital room'>Hospital room</option>
-            <option value='ICU-intensive care unit'>ICU-intensive care unit</option>
-            <option value='Lab/pathology'>Lab/pathology</option>
-            <option value='Maternity wards'>Maternity wards</option>
-            <option value='Neonatal unit'>Neonatal unit</option>
-            <option value='Nurse station'>Nurse station</option>
-            <option value='On-call room'>On-call room</option>
-            <option value='OR-operating room'>OR-operating room</option>
-            <option value='Patient bay'>Patient bay</option>
-            <option value='Pediatrics'>Pediatrics</option>
-            <option value='Physical therapy/rehab dept'>Physical therapy/rehab dept</option>
-            <option value='Post surgical care unit'>Post surgical care unit</option>
-            <option value='Psychiatric ward'>Psychiatric ward</option>
-            <option value='Radiology/imaging'>Radiology/imaging</option>
-            <option value='Renal unit'>Renal unit</option>
-            <option value='Telemetry'>Telemetry</option>
-            <option value='Transport'>Transport</option>
-            <option value='Trauma center'>Trauma center</option>
-            <option value='Ultrasound Unit'>Ultrasound Unit</option>
-            <option value='Volunteers room'>Volunteers room</option>
-            <option value='Waiting room'>Waiting room</option>
-            <option value='Wound Care Unit'>Wound Care Unit</option>
+            {{#each clinicalenvironments}}
+                    <option value="{{this}}">{{this}}</option>
+            {{/each}}  
         </select>
 
         or type your own 
 
-        <textarea id="customEnvironment" class="customClinicalEntry"></textarea>
+        <!-- <textarea id="customEnvironment" class="customClinicalEntry"></textarea> -->
+        <input id="customEnvironment" style="width: 200px;" type="text" placeholder="Add a clinical environment" data-provide="typeahead" />  
 
         <button type="button" id="addPlace" class="btn btn-small btn-mint" style="vertical-align:middle;">
             <span class="fa fa-plus"></span>
@@ -786,6 +754,6 @@
                 </button>
             </td>
         {{/if}}
-        <td>{{place}}</td>
+        <td style="padding-left: 5px;">{{place}}</td>
     </tr>
 </template>

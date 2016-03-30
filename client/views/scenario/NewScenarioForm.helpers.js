@@ -237,7 +237,13 @@
     clinicalroles : function(){
       return clinicalRolesArray ;
     }
-  })
+  });
+
+  Template.environmentInput.helpers({
+    clinicalenvironments : function(){
+      return clinicalEnvironmentsArray ;
+    }
+  });
 
   Template.scenarioFormSolution.helpers({
   });

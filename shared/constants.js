@@ -85,4 +85,45 @@ _showguidelinestext = 'Show Guidelines (Verbose mode)'
 'Surgeon',
 'Toxicologist',
 'Urologist',
-'X-Ray Technician']
+'X-Ray Technician'];
+
+//#################################
+ //#### CLINICAL ENVIRONMENTS   ####
+ //################################# 
+clinicalEnvironmentsArray = [
+'-',
+'Acute assessment unit',
+'Ambulatory wing',
+'Birthing Room/LDR Room/LDRP Room',
+'Breast screening unit',
+'Burn Care Unit',
+'Cafeteria',
+'CCU-cardiac care unit',
+'Delivery room',
+'Discharge lounge',
+'Discharge unit',
+'ENT-Ear nose and throat',
+'ER-emergency room',
+'Geriatrics',
+'Hospital room',
+'ICU-intensive care unit',
+'Lab/pathology',
+'Maternity wards',
+'Neonatal unit',
+'Nurse station',
+'On-call room',
+'OR-operating room',
+'Patient bay',
+'Pediatrics',
+'Physical therapy/rehab dept',
+'Post surgical care unit',
+'Psychiatric ward',
+'Radiology/imaging',
+'Renal unit',
+'Telemetry',
+'Transport',
+'Trauma center',
+'Ultrasound Unit',
+'Volunteers room',
+'Waiting room',
+'Wound Care Unit'];
