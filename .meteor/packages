@@ -17,7 +17,6 @@ pfafman:filesaver
 meteorhacks:npm
 
 
-npm-container
 email
 meteorhacks:ssr
 mrt:bootstrap-3
@@ -37,3 +36,6 @@ spacebars
 check
 standard-minifier-css
 standard-minifier-js
+
+
+npm-container
