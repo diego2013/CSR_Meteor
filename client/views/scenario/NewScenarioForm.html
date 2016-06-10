@@ -643,7 +643,7 @@
     <table class="clinicalInputTablePijama">
         <tr>
          {{#if isScenarioEditable}}<th></th>{{/if}}
-         <th >Clinical Roles of the Scenario ({{roleEntryListCount}} entries)</th>
+         <th style="padding: 0px 4px;">Clinical Roles of the Scenario ({{roleEntryListCount}} entries)</th>
         </tr>
         {{#each roleEntryList}}
             {{> roleEntry}}
@@ -664,57 +664,16 @@
 
         Choose a clinical role from this list
         <select id="clinicalRole" class="selectbox-wrapper">
-            <option value='-'>-</option>
-            <option value='Allergist'>Allergist</option>
-            <option value='Anesthesiologist'>Anesthesiologist</option>
-            <option value='Cardiologist'>Cardiologist</option>
-            <option value='Chief Nurse'>Chief Nurse</option>
-            <option value='Clinical Staff'>Clinical Staff</option>
-            <option value='CNA - Certified Nurse Assistant'>CNA - Certified Nurse Assistant</option>
-            <option value='Cosmetic Surgeon'>Cosmetic Surgeon</option>
-            <option value='Critical Care Nurse'>Critical Care Nurse</option>
-            <option value='CRNA - Certified Registered Nurse Asst'>CRNA - Certified Registered Nurse Asst</option>
-            <option value='Dentist'>Dentist</option>
-            <option value='Dermatologist'>Dermatologist</option>
-            <option value='Emergency Medicine Doctor'>Emergency Medicine Doctor</option>
-            <option value='Endocrinologist'>Endocrinologist</option>
-            <option value='Epidemiologist'>Epidemiologist</option>
-            <option value='Gastrologist'>Gastrologist</option>
-            <option value='General Practitioner'>General Practitioner</option>
-            <option value='Geriatrics Specialist'>Geriatrics Specialist</option>
-            <option value='Gynecologist'>Gynecologist</option>
-            <option value='Hematologist'>Hematologist</option>
-            <option value='HHN - Home Health Nurse'>HHN - Home Health Nurse</option>
-            <option value='Hospitalist'>Hospitalist</option>
-            <option value='Infectious Disease Nurse'>Infectious Disease Nurse</option>
-            <option value='Labor-Delivery Nurse'>Labor-Delivery Nurse</option>
-            <option value='LPN - Licensed Practical Nurse'>LPN - Licensed Practical Nurse</option>
-            <option value='LVN - Licensed Vocational Nurse'>LVN - Licensed Vocational Nurse</option>
-            <option value='Medical Assistant'>Medical Assistant</option>
-            <option value='Medical Emergency Team'>Medical Emergency Team</option>
-            <option value='Neonatologist'>Neonatologist</option>
-            <option value='Neurologist'>Neurologist</option>
-            <option value='Nurse'>Nurse</option>
-            <option value='Nurse Assistant'>Nurse Assistant</option>
-            <option value='Occupational Health Nurse'>Occupational Health Nurse</option>
-            <option value='Oncologist'>Oncologist</option>
-            <option value='ORRN - Operating Room Registered Nurse'>ORRN - Operating Room Registered Nurse</option>
-            <option value='Pathologist'>Pathologist</option>
-            <option value='Physician'>Physician</option>
-            <option value='Radiologist'>Radiologist</option>
-            <option value='Respiratory Therapist'>Respiratory Therapist</option>
-            <option value='Rheumatologist'>Rheumatologist</option>
-            <option value='RN - Registered Nurse'>RN - Registered Nurse</option>
-            <option value='RRT'>RRT</option>
-            <option value='Surgeon'>Surgeon</option>
-            <option value='Toxicologist'>Toxicologist</option>
-            <option value='Urologist'>Urologist</option>
-            <option value='X-Ray Technician'>X-Ray Technician</option>
+                {{#each clinicalroles}}
+                    <option value="{{this}}">{{this}}</option>
+                {{/each}}
+           
         </select>
 
         or type your own 
 
-        <textarea id="customActor" class="customClinicalEntry"></textarea>
+        <!-- <textarea id="customActor" class="customClinicalEntry"></textarea> -->
+        <input id="customActor" type="text" placeholder="Add a clinical role" data-provide="typeahead" />  
 
         <button type="button" id="addActor" class="btn btn-small btn-mint" style="vertical-align:middle;">
             <span class="fa fa-plus"></span>
@@ -734,7 +693,7 @@
             </button>
         </td>
         {{/if}}
-        <td>{{role}}</td>
+        <td style="padding-left: 5px;">{{role}}</td>
     </tr>
 </template>
 
@@ -748,7 +707,7 @@
     <table class="clinicalInputTablePijama">
         <tr>
         {{#if isScenarioEditable}}<th></th>{{/if}}
-         <th>Clinical Environments of the Scenario ({{environmentEntryListCount}} entries)</th>
+         <th style="padding: 0px 4px;">Clinical Environments of the Scenario ({{environmentEntryListCount}} entries)</th>
         </tr>
         {{#each environmentEntryList}}
             {{> environmentEntry}}
@@ -768,47 +727,15 @@
     <div class="clinicalInputBar"> 
         Choose a clinical environment from this list
         <select id="clinicalEnvironment" class="selectbox-wrapper">
-            <option value='-'>-</option>
-            <option value='Acute assessment unit'>Acute assessment unit</option>
-            <option value='Ambulatory wing'>Ambulatory wing</option>
-            <option value='Birthing Room/LDR Room/LDRP Room'>Birthing Room/LDR Room/LDRP Room</option>
-            <option value='Breast screening unit'>Breast screening unit</option>
-            <option value='Burn Care Unit'>Burn Care Unit</option>
-            <option value='Cafeteria'>Cafeteria</option>
-            <option value='CCU-cardiac care unit'>CCU-cardiac care unit</option>
-            <option value='Delivery room'>Delivery room</option>
-            <option value='Discharge lounge'>Discharge lounge</option>
-            <option value='Discharge unit'>Discharge unit</option>
-            <option value='ENT-Ear nose and throat'>ENT-Ear nose and throat</option>
-            <option value='ER-emergency room'>ER-emergency room</option>
-            <option value='Geriatrics'>Geriatrics</option>
-            <option value='Hospital room'>Hospital room</option>
-            <option value='ICU-intensive care unit'>ICU-intensive care unit</option>
-            <option value='Lab/pathology'>Lab/pathology</option>
-            <option value='Maternity wards'>Maternity wards</option>
-            <option value='Neonatal unit'>Neonatal unit</option>
-            <option value='Nurse station'>Nurse station</option>
-            <option value='On-call room'>On-call room</option>
-            <option value='OR-operating room'>OR-operating room</option>
-            <option value='Patient bay'>Patient bay</option>
-            <option value='Pediatrics'>Pediatrics</option>
-            <option value='Physical therapy/rehab dept'>Physical therapy/rehab dept</option>
-            <option value='Post surgical care unit'>Post surgical care unit</option>
-            <option value='Psychiatric ward'>Psychiatric ward</option>
-            <option value='Radiology/imaging'>Radiology/imaging</option>
-            <option value='Renal unit'>Renal unit</option>
-            <option value='Telemetry'>Telemetry</option>
-            <option value='Transport'>Transport</option>
-            <option value='Trauma center'>Trauma center</option>
-            <option value='Ultrasound Unit'>Ultrasound Unit</option>
-            <option value='Volunteers room'>Volunteers room</option>
-            <option value='Waiting room'>Waiting room</option>
-            <option value='Wound Care Unit'>Wound Care Unit</option>
+            {{#each clinicalenvironments}}
+                    <option value="{{this}}">{{this}}</option>
+            {{/each}}  
         </select>
 
         or type your own 
 
-        <textarea id="customEnvironment" class="customClinicalEntry"></textarea>
+        <!-- <textarea id="customEnvironment" class="customClinicalEntry"></textarea> -->
+        <input id="customEnvironment" style="width: 200px;" type="text" placeholder="Add a clinical environment" data-provide="typeahead" />  
 
         <button type="button" id="addPlace" class="btn btn-small btn-mint" style="vertical-align:middle;">
             <span class="fa fa-plus"></span>
@@ -827,6 +754,6 @@
                 </button>
             </td>
         {{/if}}
-        <td>{{place}}</td>
+        <td style="padding-left: 5px;">{{place}}</td>
     </tr>
 </template>

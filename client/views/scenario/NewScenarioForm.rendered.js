@@ -19,3 +19,18 @@ Template.scenarioFormAdvancedInfo.rendered = function(){
 	cleanupEditingEquipment();
 	cleanupEditingReferences();
 };
+
+
+/* Template to add a new clinical roles to a clinical scenario
+*/
+Template.roleInput.rendered = function(){
+	// $('.typeahead').typeahead()
+    $('#customActor').typeahead({source:clinicalRolesArray, autoSelect: true}); 
+}
+
+/* Template to add a new clinical environment to a clinical scenario
+*/
+Template.environmentInput.rendered = function(){
+	// $('.typeahead').typeahead()
+    $('#customEnvironment').typeahead({source:clinicalEnvironmentsArray, autoSelect: true}); 
+}

@@ -70,6 +70,7 @@ mongo@1.1.7
 mongo-id@1.0.4
 mrt:bootstrap-3@0.3.8
 npm-bcrypt@0.8.6_1
+mrt:bootstrap3-typeahead@3.0.3
 npm-container@1.2.0
 npm-mongo@1.4.43
 oauth@1.1.10

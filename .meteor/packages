@@ -16,7 +16,6 @@ udondan:jszip
 pfafman:filesaver
 meteorhacks:npm
 
-
 email
 meteorhacks:ssr
 mrt:bootstrap-3
@@ -37,5 +36,6 @@ check
 standard-minifier-css
 standard-minifier-js
 
+mrt:bootstrap3-typeahead
 
 npm-container
