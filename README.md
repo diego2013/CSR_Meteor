@@ -12,7 +12,7 @@ You can use the [repository's issue][3] tracker for reporting bugs, problems, id
 TECHNOLOGY STACK
 ----------------
 
-This current implementation of the Clinical Scenario Repository has been developed using the [Meteor platform][2] (v1.2). Thus, is a JavaScript based app, which uses MongoDB as a database.
+This current implementation of the Clinical Scenario Repository has been developed using the [Meteor platform][2] (v1.2). Thus, it is a JavaScript based app, which uses MongoDB as a database. These technologies were chosen to allow rapid prototyping and flexibility for changes as this idea matures.
 
 
 TO LEARN MORE
